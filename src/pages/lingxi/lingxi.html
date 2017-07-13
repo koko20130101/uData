@@ -1,0 +1,345 @@
+<ion-header>
+    <ion-navbar color="dark">
+        <ion-title>{{'LX_TITLE' | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button outline color="light">日</button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar ngClass="time-list" color="dark" text-center>
+        <button ion-button clear icon-only small>
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+        <button ion-button clear small>
+            2017-7-9
+        </button>
+        <button ion-button clear icon-only small>
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+    </ion-toolbar>
+    <ion-toolbar ngClass="my-toolbar">
+        <ion-segment [(ngModel)]="lingxiType" ngClass="my-segment">
+            <ion-segment-button value="1" (click)="goSegment()">全 部</ion-segment-button>
+            <ion-segment-button value="2" (click)="goSegment()">活 期</ion-segment-button>
+            <ion-segment-button value="3" (click)="goSegment()">稳健型</ion-segment-button>
+            <ion-segment-button value="4" (click)="goSegment()">成长型</ion-segment-button>
+            <ion-segment-button value="5" (click)="goSegment()">进取型</ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-slides #MainSlides ngClass="my-slide" (ionSlideDidChange)="slideChange()">
+        <!--全部-->
+        <ion-slide>
+            <div ngClass="total-data">
+                <p>委托总额</p>
+                <h2>32323223</h2>
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>用户运营</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content">
+                <ion-segment [(ngModel)]="userOperateType" ngClass="my-segment">
+                    <ion-segment-button value="1">用户概况</ion-segment-button>
+                    <ion-segment-button value="2">用户转化</ion-segment-button>
+                </ion-segment>
+                <div [ngSwitch]="userOperateType" padding>
+                    <div *ngSwitchCase="'1'">
+                        <div ngClass="info-list">
+                            <ion-row>
+                                <ion-col text-left>
+                                    委托用户数
+                                </ion-col>
+                                <ion-col text-right>
+                                    2121 人
+                                    <ion-icon name="arrow-up"></ion-icon>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col text-left>
+                                    委托用户数
+                                </ion-col>
+                                <ion-col text-right>
+                                    2121 人
+                                    <ion-icon name="arrow-up"></ion-icon>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'2'">
+                        2
+                    </div>
+                </div>
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>渠道占比</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+        </ion-slide>
+        <!--活期-->
+        <ion-slide>
+            <div ngClass="total-data">
+                <ion-row>
+                    <ion-col text-left>
+                        <p>转入总额</p>
+                        <h2>343243242</h2>
+                    </ion-col>
+                    <ion-col text-left>
+                        <p>余额（实时）</p>
+                        <h2>324234</h2>
+                    </ion-col>
+                </ion-row>
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>年化收益率</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content">
+
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>用户运营</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content">
+                <div ngClass="info-list" padding-horizontal>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托用户数
+                        </ion-col>
+                        <ion-col text-right>
+                           1212 人 <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托订单数
+                        </ion-col>
+                        <ion-col text-right>
+                            32 个<ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            重复委托率
+                        </ion-col>
+                        <ion-col text-right>
+                             3.5 % <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托用户活跃度
+                        </ion-col>
+                        <ion-col text-right>
+                            4.6 % <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </ion-slide>
+        <!--稳健型-->
+        <ion-slide>
+            <div ngClass="total-data">
+                <p>委托总额</p>
+                <h2>32323223</h2>
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>年化收益率</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content">
+
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>用户运营</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content">
+                <div ngClass="info-list" padding-horizontal>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托用户数
+                        </ion-col>
+                        <ion-col text-right>
+                            1212 人 <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托订单数
+                        </ion-col>
+                        <ion-col text-right>
+                            32 个<ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            重复委托率
+                        </ion-col>
+                        <ion-col text-right>
+                            3.5 % <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托用户活跃度
+                        </ion-col>
+                        <ion-col text-right>
+                            4.6 % <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </ion-slide>
+        <!--成长型-->
+        <ion-slide>
+            <div ngClass="total-data">
+                <p>委托总额</p>
+                <h2>32323223</h2>
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>年化收益率</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content">
+
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>用户运营</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content">
+                <div ngClass="info-list" padding-horizontal>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托用户数
+                        </ion-col>
+                        <ion-col text-right>
+                            1212 人 <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托订单数
+                        </ion-col>
+                        <ion-col text-right>
+                            32 个<ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            重复委托率
+                        </ion-col>
+                        <ion-col text-right>
+                            3.5 % <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托用户活跃度
+                        </ion-col>
+                        <ion-col text-right>
+                            4.6 % <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </ion-slide>
+        <!--进取型-->
+        <ion-slide>
+            <div ngClass="total-data">
+                <p>委托总额</p>
+                <h2>32323223</h2>
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>年化收益率</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content">
+
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item>
+                    <h2>用户运营</h2>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content">
+                <div ngClass="info-list" padding-horizontal>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托用户数
+                        </ion-col>
+                        <ion-col text-right>
+                            1212 人 <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托订单数
+                        </ion-col>
+                        <ion-col text-right>
+                            32 个<ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            重复委托率
+                        </ion-col>
+                        <ion-col text-right>
+                            3.5 % <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-left>
+                            委托用户活跃度
+                        </ion-col>
+                        <ion-col text-right>
+                            4.6 % <ion-icon name="arrow-up"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </ion-slide>
+    </ion-slides>
+
+</ion-content>

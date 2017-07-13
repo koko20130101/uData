@@ -15,5 +15,4 @@ export class Item {
       this[f] = fields[f];
     }
   }
-
 }

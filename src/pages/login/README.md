@@ -1,3 +1,3 @@
-# Login
+# Welcome
 
-The Login page renders a login form with email/password by default and an optional username field.
+Welcome is a splash screen that displays some info about the app and directs the user to log in our create an account.

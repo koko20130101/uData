@@ -1,2 +1,47 @@
 page-login {
+  .list-md[inset], .list-ios[inset] {
+    margin-top: 0px;
+  }
+  .item-ios,.item-md{
+    background:none;
+  }
+  .list-md .item-block .item-inner,.list-ios[inset] .item {
+    border-bottom-color: color($colors, gray,mid);
+  }
+  .splash-bg {
+    position: relative;
+    height: 38%;
+    border-bottom:1px solid color($colors,dark,mid2);
+    z-index: 1;
+    overflow: hidden;
+  }
+  .scroll-content{
+    background: url('../assets/img/login-bg.jpg') repeat transparent;
+  }
+
+  .splash-info {
+    position: relative;
+    z-index: 2;
+    margin-top: -50px;
+    text-align: center;
+  }
+  .splash-logo {
+    margin: auto;
+    background: url('../assets/img/appicon.png') repeat transparent;
+    background-size: 100%;
+    background-color: #1e1e28;
+    width: 100px;
+    height: 100px;
+    border-top:1px solid color($colors,gray,mid);
+    border-radius: 50%;
+  }
+  .splash-intro {
+    font-size: 18px;
+    font-weight: bold;
+    max-width: 80%;
+    margin: auto;
+  }
+  button.login {
+    margin-top: 25px;
+  }
 }

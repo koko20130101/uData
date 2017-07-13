@@ -1,0 +1,260 @@
+<ion-header>
+    <ion-navbar color="dark">
+        <ion-title>
+            {{'PLATFORM_TOTAL_TITLE' | translate}}
+        </ion-title>
+        <ion-buttons right>
+            <button ion-button outline color="light" (click)="presentPopover($event)">{{currentUnit}}</button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar class="time-list" color="dark" text-center>
+        <button ion-button clear icon-only small>
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+        <button ion-button clear small>{{activeDate}} </button>
+        <button ion-button clear icon-only small>
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+    </ion-toolbar>
+    <ion-toolbar ngClass="my-toolbar">
+        <ion-segment [(ngModel)]="platformType" ngClass="my-segment">
+            <ion-segment-button value="1" (click)="getPlatformSegment()">网 金</ion-segment-button>
+            <ion-segment-button value="2" (click)="getPlatformSegment()">竞 品</ion-segment-button>
+            <ion-segment-button value="3" (click)="getPlatformSegment()">传统理财</ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-slides #MainSlides pager="false" class="my-slide" (ionSlideDidChange)="slideChange()">
+        <!--网金-->
+        <ion-slide>
+            <div class="padding warning">
+            </div>
+            <div>
+                <div class="total-data">
+                    <p>当日累计交易额</p>
+                    <h2>32432432432</h2>
+                </div>
+                <ion-list class="model-title">
+                    <ion-item>
+                        <h2>各平台指数排行</h2>
+                        <ion-note item-right><ion-icon name="arrow-down"></ion-icon></ion-note>
+                    </ion-item>
+                </ion-list>
+                <div class="data-item-content">
+                    <ion-segment [(ngModel)]="dataType" ngClass="my-segment">
+                        <ion-segment-button value="1" (click)="getPlatformSegment()">交易额</ion-segment-button>
+                        <ion-segment-button value="2" (click)="getPlatformSegment()">收益率</ion-segment-button>
+                        <ion-segment-button value="3" (click)="getPlatformSegment()">期限</ion-segment-button>
+                        <ion-segment-button value="4" (click)="getPlatformSegment()">项目数</ion-segment-button>
+                    </ion-segment>
+                    <div [ngSwitch]="dataType" padding>
+                        <!--交易额-->
+                        <div *ngSwitchCase="'1'">
+                            <ion-row>
+                                <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                                <ion-col text-right><span ion-text color="gray">金额(元)</span></ion-col>
+                            </ion-row>
+                            <div class="info-list info-list-bg">
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right ngClass="abc" color="danger">
+                                        <span ion-text color="danger">32323</span>
+                                        <ion-icon name="arrow-up" color="secondary"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right>32323</ion-col>
+                                </ion-row>
+                            </div>
+                        </div>
+                        <!--收益率-->
+                        <div *ngSwitchCase="'2'">
+                            <ion-row>
+                                <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                                <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
+                            </ion-row>
+                            <div class="info-list info-list-bg">
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right ngClass="abc">
+                                        32323
+                                        <ion-icon name="arrow-down"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right>32323</ion-col>
+                                </ion-row>
+                            </div>
+                        </div>
+                        <!--期限-->
+                        <div *ngSwitchCase="'3'">
+                            <ion-row>
+                                <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                                <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
+                            </ion-row>
+                            <div class="info-list info-list-bg">
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right ngClass="abc">
+                                        32323
+                                        <ion-icon name="arrow-down"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right>32323</ion-col>
+                                </ion-row>
+                            </div>
+                        </div>
+                        <!--项目数-->
+                        <div *ngSwitchCase="'4'">
+                            <ion-row>
+                                <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                                <ion-col text-right><span ion-text color="gray">项目数(个)</span></ion-col>
+                            </ion-row>
+                            <div class="info-list info-list-bg">
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right ngClass="abc">
+                                        32323
+                                        <ion-icon name="arrow-down"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right>32323</ion-col>
+                                </ion-row>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-slide>
+        <!--竞品-->
+        <ion-slide>
+            <div class="padding warning">
+            </div>
+            <div>
+                <div class="total-data">
+                    <p>昨日交易额</p>
+                    <h2>32432432432</h2>
+                </div>
+                <ion-list class="model-title">
+                    <ion-item>
+                        <h2>各平台指数排行</h2>
+                        <ion-note item-right><ion-icon name="arrow-down"></ion-icon></ion-note>
+                    </ion-item>
+                </ion-list>
+                <div class="model-content">
+                    <ion-segment [(ngModel)]="dataType" ngClass="my-segment">
+                        <ion-segment-button value="1" (click)="getPlatformSegment()">交易额</ion-segment-button>
+                        <ion-segment-button value="2" (click)="getPlatformSegment()">收益率</ion-segment-button>
+                        <ion-segment-button value="3" (click)="getPlatformSegment()">期限</ion-segment-button>
+                        <ion-segment-button value="4" (click)="getPlatformSegment()">项目数</ion-segment-button>
+                    </ion-segment>
+                    <div [ngSwitch]="dataType" padding>
+                        <!--交易额-->
+                        <div *ngSwitchCase="'1'">
+                            <ion-row>
+                                <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                                <ion-col text-right><span ion-text color="gray">金额(元)</span></ion-col>
+                            </ion-row>
+                            <div class="info-list info-list-bg">
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right ngClass="abc">
+                                        32323
+                                        <ion-icon name="arrow-down"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right>32323</ion-col>
+                                </ion-row>
+                            </div>
+                        </div>
+                        <!--收益率-->
+                        <div *ngSwitchCase="'2'">
+                            <ion-row>
+                                <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                                <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
+                            </ion-row>
+                            <div class="info-list info-list-bg">
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right ngClass="abc">
+                                        32323
+                                        <ion-icon name="arrow-down"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right>32323</ion-col>
+                                </ion-row>
+                            </div>
+                        </div>
+                        <!--期限-->
+                        <div *ngSwitchCase="'3'">
+                            <ion-row>
+                                <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                                <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
+                            </ion-row>
+                            <div class="info-list info-list-bg">
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right ngClass="abc">
+                                        32323
+                                        <ion-icon name="arrow-down"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right>32323</ion-col>
+                                </ion-row>
+                            </div>
+                        </div>
+                        <!--项目数-->
+                        <div *ngSwitchCase="'4'">
+                            <div class="info-list">
+                                <ion-row>
+                                    <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                                    <ion-col text-right><span ion-text color="gray">项目数(个)</span></ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right ngClass="abc">
+                                        32323
+                                        <ion-icon name="arrow-down"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-left>青岛</ion-col>
+                                    <ion-col text-right>32323</ion-col>
+                                </ion-row>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-slide>
+        <!--传统理财-->
+        <ion-slide>
+            <ion-list class="model-title">
+                <ion-item>
+                    <h2>定期理财利率统计</h2>
+                    <ion-note item-right><ion-icon name="arrow-down"></ion-icon></ion-note>
+                </ion-item>
+            </ion-list>
+            <ion-list class="model-title">
+                <ion-item>
+                    <h2>基金七日年化率统计</h2>
+                    <ion-note item-right><ion-icon name="arrow-down"></ion-icon></ion-note>
+                </ion-item>
+            </ion-list>
+        </ion-slide>
+
+    </ion-slides>
+</ion-content>

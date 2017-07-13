@@ -1,0 +1,82 @@
+{
+  "BACK_BUTTON_TEXT" : "返回",
+
+  "NAME": "名字",
+  "EMAIL": "邮箱",
+  "MOBILE": "手机号码",
+  "USERNAME": "用户名",
+  "PASSWORD": "密 码",
+  "LOGIN": "登 录",
+  "SIGNUP": "注 册",
+
+  "TAB1_TITLE": "主 页",
+  "TAB2_TITLE": "搜 索",
+  "TAB3_TITLE": "设 置",
+
+  "MAP_TITLE": "地 图",
+
+  "TUTORIAL_SKIP_BUTTON" : "跳过",
+  "TUTORIAL_CONTINUE_BUTTON" : "进入应用",
+
+  "TUTORIAL_SLIDE1_TITLE": "Welcome to the Ionic Super Starter",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "The <b>Ionic Super Starter</b> is a fully-featured Ionic starter with many pre-built pages and best practices.",
+
+  "TUTORIAL_SLIDE2_TITLE": "How to use the Super Starter",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Assemble the various page types you want and remove the ones you don't. We've provided many common mobile app page layouts, like login and signup pages, tabs, and this tutorial page.",
+
+  "TUTORIAL_SLIDE3_TITLE": "Getting Started",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Need help? Check out the Super Starter README for a full tutorial",
+
+  "TUTORIAL_SLIDE4_TITLE": "Ready to Play?",
+
+  "WELCOME_INTRO" : "登录后查看网金数据",
+
+  "SETTINGS_TITLE": "Settings",
+  "SETTINGS_OPTION1": "Option 1",
+  "SETTINGS_OPTION2": "Option 2",
+  "SETTINGS_OPTION3": "Option 3",
+  "SETTINGS_OPTION4": "Option 4",
+
+  "SETTINGS_PROFILE_BUTTON" : "Edit Profile",
+
+  "SETTINGS_PAGE_PROFILE": "Edit Profile",
+
+  "WELCOME_TITLE": "Welcome",
+
+  "LOGIN_TITLE": "登 录",
+  "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",
+  "LOGIN_BUTTON": "登 录",
+  "SIGNUP_TITLE": "注 册",
+  "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
+  "SIGNUP_BUTTON": "立即注册",
+  "MAIN_TITLE": "网金控股资产数据统计",
+  "PLATFORM_TOTAL_TITLE":"平台数据统计",
+  "PLATFORM_TITLE_1":"平台累计交易金额",
+  "PLATFORM_TITLE_2":"C2B累计引入金额",
+  "PLATFORM_TITLE_3":"灵犀累计委托金额",
+  "C2B_TITLE":"C2B累计引入金额",
+  "LX_TITLE":"灵犀",
+  "BANK_TITLE":"网金旗下平台",
+
+  "LIST_MASTER_TITLE": "Items",
+
+  "ITEM_CREATE_TITLE": "New Item",
+  "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
+
+  "ITEM_NAME_PLACEHOLDER" : "Name",
+  "ITEM_ABOUT_PLACEHOLDER" : "About",
+
+  "DONE_BUTTON" : "Done",
+  "CANCEL_BUTTON" : "Cancel",
+  "DELETE_BUTTON" : "Delete",
+
+  "CARDS_TITLE": "Social",
+
+  "SEARCH_TITLE": "Search",
+  "SEARCH_PLACEHOLDER" : "Search the items list, e.g. \"Donald Duck\"",
+
+  "PLACEHOLDER_MOBILE":"请输入手机号码",
+  "PLACEHOLDER_IMAGE_CODE":"请输入图形验证码",
+  "PLACEHOLDER_PASSWORD":"请输入密码",
+  "PLACEHOLDER_SMS_CODE":"请输入短信验证码"
+}

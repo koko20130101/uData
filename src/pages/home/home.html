@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-navbar color="dark">
+        <ion-title>
+            {{'MAIN_TITLE' | translate}}
+        </ion-title>
+        <ion-buttons left>
+            <button ion-button icon-only color="light">
+                <ion-icon name="apps"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons right>
+            <button ion-button outline color="light" (click)="presentPopover($event)">{{currentUnit}}</button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar class="time-list" color="dark" text-center>
+        <button ion-button clear icon-only small><ion-icon name="arrow-back"></ion-icon></button>
+        <button ion-button clear small>{{activeDate}} (今天)</button>
+        <button ion-button clear icon-only small><ion-icon name="arrow-forward"></ion-icon></button>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div padding class="platform-data-list">
+        <div class="platform-data data-1" (click)="openPlatformData()">
+            <h5>{{'PLATFORM_TITLE_1' | translate}}</h5>
+            <p>4234232</p>
+        </div>
+        <div class="platform-data data-2" (click)="openC2bPage()">
+            <h5>{{'PLATFORM_TITLE_2' | translate}}</h5>
+            <p>4234232</p>
+        </div>
+        <div class="platform-data data-3" (click)="openLingXiPage()">
+            <h5>{{'PLATFORM_TITLE_3' | translate}}</h5>
+            <p>4234232</p>
+        </div>
+    </div>
+</ion-content>
+<ion-footer no-border>
+    <ion-row text-center>
+        <ion-col no-padding>
+            <button ion-button clear icon-left>
+                <ion-icon name="eye"></ion-icon>
+                隐藏
+            </button>
+        </ion-col>
+        <ion-col no-padding>
+            <button ion-button clear icon-left>
+                <ion-icon name="help-circle"></ion-icon>
+                帮助
+            </button>
+        </ion-col>
+        <ion-col no-padding>
+            <button ion-button clear icon-left>
+                <ion-icon name="exit"></ion-icon>
+                退出
+            </button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

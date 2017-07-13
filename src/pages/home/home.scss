@@ -1,0 +1,53 @@
+page-home {
+  .platform-data-list {
+    padding: 15px;
+  }
+  .platform-data-list .platform-data {
+    width: 100%;
+    height: 150px;
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  .platform-data-list .data-1 {
+    background: url("../assets/img/platform-data-bg01.png") no-repeat;
+    background-size: 100% 150px;
+  }
+  .platform-data-list .data-2 {
+    background: url("../assets/img/platform-data-bg02.png") no-repeat;
+    background-size: 100% 150px;
+  }
+  .platform-data-list .data-3 {
+    background: url("../assets/img/platform-data-bg03.png") no-repeat;
+    background-size: 100% 150px;
+  }
+  .platform-data-list p {
+    padding:16px;
+    margin:0;
+  }
+  .platform-data-list h5{
+    padding-top: 44px;
+    margin-left:16px;
+    margin-bottom:0px;
+    font-size: 1.2rem;
+  }
+  .platform-data-list p {
+    padding-top: 1px;
+    font-size: 3rem;
+  }
+  .platform-data-list p span {
+    font-size: 16px;
+    font-weight: normal;
+  }
+  .footer {
+    .button-clear-ios,.button-clear-md {
+      color: color($colors, gray, mid);
+      font-size:1.4rem;
+    }
+    [icon-left] ion-icon{
+      font-size:2.8rem;
+    }
+    .col{
+      border-right:1px solid color($colors,dark,mid)
+    }
+  }
+}

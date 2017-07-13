@@ -1,0 +1,113 @@
+.toolbar-ios.time-list, .toolbar-md.time-list {
+  color: color($colors, gray, mid2);
+  padding: 0px;
+  min-height: 44px;
+  .button-clear-ios, .button-clear-md {
+    color: color($colors, gray, mid2);
+  }
+}
+
+ion-navbar.toolbar {
+  .bar-button-outline-ios {
+    color: color($colors, gray, mid);
+    border-color: color($colors, gray, mid);
+  }
+}
+
+.my-toolbar {
+  .toolbar-background-ios, .toolbar-background-md {
+    background: none;
+  }
+  /*.segment-ios .segment-button{
+    border-width:0px 0px 1px 0px ;
+  }
+  .segment-ios .segment-button:hover:not(.segment-activated){
+
+  }*/
+}
+
+.my-segment {
+  border-bottom: 1px solid color($colors, dark, mid1);
+  &.segment-ios .segment-button {
+    border: 0px;
+    font-size: 1.5rem;
+    color: color($colors, gray, mid);
+    height: 3.7rem;
+    line-height: 3.6rem;
+  }
+  &.segment-ios .segment-button.segment-activated {
+    background: none;
+    color: color($colors, primary);
+    border-bottom: 2px solid color($colors, primary);
+    border-radius: 0px;
+    font-size: 1.7rem;
+  }
+  &.segment-ios .segment-button:hover:not(.segment-activated) {
+    background: none;
+  }
+}
+
+.my-slide {
+  .swiper-slide {
+    display: block;
+    font-size: 1.4rem;
+  }
+}
+
+.total-data {
+  padding-bottom: 10px;
+  margin: 0 10px;
+  border-bottom: 1px solid color($colors, dark, mid1);
+  p {
+    margin-bottom: 3px;
+    font-size: 1.4rem;
+    color: color($colors, gray);
+  }
+  h2 {
+    margin: 0;
+  }
+}
+
+.model-title.list-ios {
+  margin-bottom: 10px;
+}
+
+.model-title.list-ios .item-block:last-child {
+  border-color: color($colors, dark, mid1);
+}
+
+.model-title {
+  .item-ios {
+    background-color: color($colors, dark, mid);
+  }
+}
+
+.info-list {
+  h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+  }
+
+  .row {
+    margin-bottom: 6px;
+    padding: 4px;
+    font-size: 1.6rem;
+  }
+  .item {
+    background: none;
+    border: 0px;
+  }
+}
+
+.info-list-bg {
+  .row {
+    background-color: color($colors, dark);
+  }
+}
+
+.my-footer {
+  padding: 16px 0;
+  text-align: center;
+  background-color: color($colors, light)
+}

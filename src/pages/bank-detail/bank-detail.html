@@ -1,0 +1,103 @@
+<ion-header>
+    <ion-navbar color="dark">
+        <ion-title>
+            招商银行
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button outline>日</button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar ngClass="time-list" color="dark" text-center>
+        <button ion-button clear small icon-only>
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+        <button ion-button small clear>2017-07-07</button>
+        <button ion-button clear small icon-only>
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div ngClass="total-data" text-center>
+        <p>本日交易额</p>
+        <h2>3243222</h2>
+    </div>
+    <ion-list ngClass="model-title">
+        <ion-item>
+            <h2>项目情况</h2>
+            <ion-note item-right>
+                <ion-icon name="arrow-up"></ion-icon>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content">
+        <ion-segment [(ngModel)]="objectType" ngClass="my-segment">
+            <ion-segment-button value="1">项目情况</ion-segment-button>
+            <ion-segment-button value="2">资产类型</ion-segment-button>
+        </ion-segment>
+        <div [ngSwitch]="objectType" padding>
+            <div *ngSwitchCase="'1'">1</div>
+            <div *ngSwitchCase="'2'">2</div>
+        </div>
+    </div>
+    <ion-list ngClass="model-title">
+        <ion-item>
+            <h2>项目走势分析</h2>
+            <ion-note>
+                <ion-note name="arrow-up"></ion-note>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content">
+        <ion-segment [(ngModel)]="objectStatusType" ngClass="my-segment">
+            <ion-segment-button value="1">收益率走势</ion-segment-button>
+            <ion-segment-button value="2">期限走</ion-segment-button>
+            <ion-segment-button value="3">收益率走势</ion-segment-button>
+        </ion-segment>
+        <div [ngSwitch]="objectStatusType" padding>
+            <div *ngSwitchCase="'1'">1</div>
+            <div *ngSwitchCase="'2'">2</div>
+            <div *ngSwitchCase="'3'">3</div>
+        </div>
+    </div>
+    <ion-list ngClass="model-title">
+        <ion-item>
+            <h2>用户运营</h2>
+            <ion-note item-right>
+                <ion-icon name="arrow-up"></ion-icon>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content">
+        <ion-segment [(ngModel)]="userOperateType" ngClass="my-segment">
+            <ion-segment-button value="1">用户概况</ion-segment-button>
+            <ion-segment-button value="2">用户传化</ion-segment-button>
+        </ion-segment>
+        <div [ngSwitch]="userOperateType" padding>
+            <div *ngSwitchCase="'1'">1</div>
+            <div *ngSwitchCase="'2'">2</div>
+        </div>
+    </div>
+    <ion-list ngClass="model-title">
+        <ion-item>
+            <h2>二级市场</h2>
+            <ion-note item-right>
+                <ion-icon name="arrow-up"></ion-icon>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content">
+
+    </div>
+    <ion-list ngClass="model-title">
+        <ion-item>
+            <h2>渠道占比</h2>
+            <ion-note item-right>
+                <ion-icon name="arrow-up"></ion-icon>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content">
+
+    </div>
+</ion-content>
