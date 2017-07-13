@@ -17,7 +17,7 @@ export class C2bPage {
     operateDataType = '1';
     dateList: any;
     activeDate: any;
-    currentUnit: any;
+    activeUnit: any;
     dateInstance: any;
 
     constructor(public navCtrl: NavController,
@@ -31,14 +31,14 @@ export class C2bPage {
         //全局变量实例
         this.dateInstance = this.globalVars.getInstance();
         this.activeDate = this.dateInstance.dateInfo.currentDate;
-        this.currentUnit = this.dateInstance.dateInfo.unit;
+        this.activeUnit = this.dateInstance.dateInfo.unit;
     }
 
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
             this.activeDate = this.dateInstance.dateInfo.currentDate;
-            this.currentUnit = this.dateInstance.dateInfo.unit;
+            this.activeUnit = this.dateInstance.dateInfo.unit;
             if(data.page = this.pageName) {
                 console.log(data.page)
             }

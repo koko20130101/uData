@@ -18,7 +18,7 @@ export class PlatformTotalPage {
     dataType = "1";  //各平台指数排行
     dateList: any;
     activeDate: any;
-    currentUnit: any;
+    activeUnit: any;
     dateInstance: any;
 
     constructor(public navCtrl: NavController,
@@ -30,14 +30,14 @@ export class PlatformTotalPage {
     ngOnInit() {
         this.dateInstance = this.globalVars.getInstance();
         this.activeDate = this.dateInstance.dateInfo.currentDate;
-        this.currentUnit = this.dateInstance.dateInfo.unit;
+        this.activeUnit = this.dateInstance.dateInfo.unit;
     }
 
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
             this.activeDate = this.dateInstance.dateInfo.currentDate;
-            this.currentUnit = this.dateInstance.dateInfo.unit;
+            this.activeUnit = this.dateInstance.dateInfo.unit;
             if(data.page== this.pageName) {
                 console.log(data.page)
             }

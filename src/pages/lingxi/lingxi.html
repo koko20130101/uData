@@ -2,7 +2,7 @@
     <ion-navbar color="dark">
         <ion-title>{{'LX_TITLE' | translate}}</ion-title>
         <ion-buttons end>
-            <button ion-button outline color="light">日</button>
+            <button ion-button outline color="light" (click)="presentPopover($event)">{{activeUnit}}</button>
         </ion-buttons>
     </ion-navbar>
     <ion-toolbar ngClass="time-list" color="dark" text-center>
@@ -10,7 +10,7 @@
             <ion-icon name="arrow-back"></ion-icon>
         </button>
         <button ion-button clear small>
-            2017-7-9
+            {{activeDate}}
         </button>
         <button ion-button clear icon-only small>
             <ion-icon name="arrow-forward"></ion-icon>

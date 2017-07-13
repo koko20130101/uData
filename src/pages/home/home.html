@@ -4,12 +4,12 @@
             {{'MAIN_TITLE' | translate}}
         </ion-title>
         <ion-buttons left>
-            <button ion-button icon-only color="light">
+            <button ion-button icon-only color="light" (click)="openBankListPage()">
                 <ion-icon name="apps"></ion-icon>
             </button>
         </ion-buttons>
         <ion-buttons right>
-            <button ion-button outline color="light" (click)="presentPopover($event)">{{currentUnit}}</button>
+            <button ion-button outline color="light" (click)="presentPopover($event)">{{activeUnit}}</button>
         </ion-buttons>
     </ion-navbar>
     <ion-toolbar class="time-list" color="dark" text-center>

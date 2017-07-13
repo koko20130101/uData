@@ -5,6 +5,7 @@ import {Storage} from '@ionic/storage';
 import {PlatformTotalPage} from '../platform-total/platform-total';
 import {C2bPage} from '../c2b/c2b';
 import {LingXiPage} from '../lingxi/lingxi';
+import {BankListPage} from '../bank-list/bank-list';
 import {PopOverPage} from '../public/popover';
 
 import {PublicFactory} from  '../../providers/factory/public.factory';
@@ -20,7 +21,7 @@ export class HomePage {
     pageName:any = 'HomePage';
     dateList: any;
     activeDate: any;
-    currentUnit: any;
+    activeUnit: any;
     dateInstance:any;
 
     constructor(public navCtrl: NavController,
@@ -36,7 +37,7 @@ export class HomePage {
         this.dateInstance = this.globalVars.getInstance();
         console.log(this.dateInstance )
         this.activeDate = this.dateInstance.dateInfo.currentDate;
-        this.currentUnit = this.dateInstance.dateInfo.unit;
+        this.activeUnit = this.dateInstance.dateInfo.unit;
     }
 
     ngAfterViewInit() {
@@ -52,7 +53,7 @@ export class HomePage {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
             this.activeDate = this.dateInstance.dateInfo.currentDate;
-            this.currentUnit = this.dateInstance.dateInfo.unit;
+            this.activeUnit = this.dateInstance.dateInfo.unit;
             if( data.page == this.pageName) {
                 console.log(data.page)
             }
@@ -84,5 +85,9 @@ export class HomePage {
 
     openLingXiPage() {
         this.navCtrl.push(LingXiPage)
+    }
+
+    openBankListPage() {
+        this.navCtrl.push(BankListPage)
     }
 }

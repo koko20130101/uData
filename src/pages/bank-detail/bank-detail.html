@@ -4,14 +4,14 @@
             招商银行
         </ion-title>
         <ion-buttons end>
-            <button ion-button outline>日</button>
+            <button ion-button outline (click)="presentPopover($event)">{{activeUnit}}</button>
         </ion-buttons>
     </ion-navbar>
     <ion-toolbar ngClass="time-list" color="dark" text-center>
         <button ion-button clear small icon-only>
             <ion-icon name="arrow-back"></ion-icon>
         </button>
-        <button ion-button small clear>2017-07-07</button>
+        <button ion-button small clear>{{activeDate}}</button>
         <button ion-button clear small icon-only>
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
