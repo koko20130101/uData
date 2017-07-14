@@ -38,7 +38,7 @@ export class PopOverPage {
         //修改父组件属性
         // this.parentPage.resetDate();
         //关闭popover
-        // this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss();
     }
 
 }

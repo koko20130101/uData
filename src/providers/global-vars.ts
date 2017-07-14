@@ -23,25 +23,10 @@ export class GlobalVars {
         sendDate: ''
     };
 
-
     constructor() {
+
     }
 
-    //请求时间列表
-    /*private loadDateList() {
-     this.dateService.getDateList({}).subscribe(resp => {
-     let res: any = resp;
-     if (res._body.code == 1) {
-     Object.assign(this.dateList, res._body.data);
-     //今天日期
-     let today = moment().format('YYYYMMDD');
-     this.dateList.stamp = today;
-     // 存储到本地
-     this.storage.set(CacheField.dateList, this.dateList);
-     this.formatDate();
-     }
-     })
-     }*/
 
     //设置dateInfo
     setDateValue(value?:any,index?:any) {
@@ -65,7 +50,7 @@ export class GlobalVars {
 
         _dateInfo.currentDateList = _dateList[_tip];
         _dateInfo.currentDate = _dateInfo.currentDateList[_index];
-
+        // console.log(_dateInfo)
         switch (this.dateInfo.unit) {
             case '日':
                 if(_index == 0) {
