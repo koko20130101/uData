@@ -1,18 +1,10 @@
 <ion-header>
     <ion-navbar color="dark">
         <ion-title>{{'BANK_TITLE' | translate}}</ion-title>
-        <ion-buttons end>
-            <button ion-button outline color="light" (click)="presentPopover($event)">{{activeUnit}}</button>
-        </ion-buttons>
+        <ucs-unit pageName="{{pageName}}"></ucs-unit>
     </ion-navbar>
     <ion-toolbar ngClass="time-list" color="dark" text-center>
-        <button ion-button small clear icon-only>
-            <ion-icon name="arrow-back"></ion-icon>
-        </button>
-        <button ion-button clear small>{{activeDate}}</button>
-        <button ion-button small clear icon-only>
-            <ion-icon name="arrow-forward"></ion-icon>
-        </button>
+        <ucs-date></ucs-date>
     </ion-toolbar>
 </ion-header>
 <ion-content>

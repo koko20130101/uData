@@ -1,50 +1,45 @@
-import {Component} from '@angular/core';
-import {NavController, PopoverController} from 'ionic-angular';
+import {Component, Input} from '@angular/core';
+import {PopoverController} from 'ionic-angular';
 
-import {PopOverPage} from '../public/popover';
+import {PopOverPage} from './popover';
 
 import {GlobalVars} from '../../providers/global-vars';
 import {PublicFactory} from '../../providers/factory/public.factory'
 
 @Component({
-    selector:'bank-detail-page',
-    templateUrl:'bank-detail.html'
+    selector: 'ucs-unit',
+    template: ` 
+        <ion-buttons end>
+            <button ion-button outline color="light" (click)="presentPopover($event)">{{activeUnit}}</button>
+        </ion-buttons>
+`
 })
-export class BankDetailPage{
-    pageName: any = 'BankDetailPage';
-    objectType = '1';
-    objectStatusType = '1';
-    userOperateType = '1';
+export class Unit {
+    @Input() pageName: any;
     dateInstance: any;
-    activeUnit:any;
+    activeUnit: any;
 
-    constructor(public navCtrl: NavController,
-                public popoverCtrl: PopoverController,
+    constructor(public popoverCtrl: PopoverController,
                 public publicFactory: PublicFactory,
                 public globalVars: GlobalVars) {
-
     }
 
     ngOnInit() {
+        // console.log(0)
         this.dateInstance = this.globalVars.getInstance();
         this.activeUnit = this.dateInstance.dateInfo.unit;
-    }
-
-    ngAfterViewInit() {
-
-    }
-
-    ionViewWillEnter() {
         //订阅选择单位传过来的信息
-        this.publicFactory.unitInfo.subscribe((data) => {
+        this.publicFactory.unitInfo.subscribe(() => {
             this.activeUnit = this.dateInstance.dateInfo.unit;
-            if (data.page == this.pageName) {
-                console.log(data.page)
-            }
         });
     }
 
-    ionViewWillLeave() {
+    ngAfterViewInit() {
+        // console.log(1)
+    }
+
+    ngOnDestroy() {
+        // console.log(2)
         //取消选择单位订阅
         this.publicFactory.unitInfo.observers.pop();
     }

@@ -17,6 +17,7 @@ export class GlobalVars {
     //时间信息
     dateInfo: any = {
         unit: '日',
+        tip: '今天',
         currentDateList: [],
         currentDate: null,
         sendDate: ''
@@ -43,33 +44,67 @@ export class GlobalVars {
      }*/
 
     //设置dateInfo
-    setDateValue(value?:any) {
+    setDateValue(value?:any,index?:any) {
         let _dateInfo = GlobalVars.instance.dateInfo;
         let _dateList;
+        let _tip:any;
+        let _index = index | 0;
+
         if(!!value) {
             _dateList = GlobalVars.instance.dateList = value;
         }else{
             _dateList = GlobalVars.instance.dateList;
         }
+
+        for(let value of this.units) {
+            if(value.title == this.dateInfo.unit) {
+                _tip = value.tip;
+                break;
+            }
+        }
+
+        _dateInfo.currentDateList = _dateList[_tip];
+        _dateInfo.currentDate = _dateInfo.currentDateList[_index];
+
         switch (this.dateInfo.unit) {
             case '日':
-                _dateInfo.currentDateList = _dateList.date;
-                _dateInfo.currentDate = _dateInfo.currentDateList[0];
+                if(_index == 0) {
+                    _dateInfo.tip = '今天';
+                }else if(_index == 1){
+                    _dateInfo.tip = '昨天';
+                }else{
+                    _dateInfo.tip = '';
+                }
                 _dateInfo.sendDate = _dateInfo.currentDate;
                 break;
             case '周':
-                _dateInfo.currentDateList = _dateList.week;
-                _dateInfo.currentDate = _dateInfo.currentDateList[0];
+                if(_index == 0) {
+                    _dateInfo.tip = '本周';
+                }else if(_index == 1){
+                    _dateInfo.tip = '上周';
+                }else{
+                    _dateInfo.tip = '';
+                }
                 _dateInfo.sendDate = _dateInfo.currentDate.split('至')[0];
                 break;
             case '月':
-                _dateInfo.currentDateList = _dateList.month;
-                _dateInfo.currentDate = _dateInfo.currentDateList[0];
+                if(_index == 0) {
+                    _dateInfo.tip = '本月';
+                }else if(_index == 1){
+                    _dateInfo.tip = '上月';
+                }else{
+                    _dateInfo.tip = '';
+                }
                 _dateInfo.sendDate = _dateInfo.currentDate + '-01';
                 break;
             case '年':
-                _dateInfo.currentDateList = _dateList.year;
-                _dateInfo.currentDate = _dateInfo.currentDateList[0];
+                if(_index == 0) {
+                    _dateInfo.tip = '今年';
+                }else if(_index == 1){
+                    _dateInfo.tip = '去年';
+                }else{
+                    _dateInfo.tip = '';
+                }
                 _dateInfo.sendDate = _dateInfo.currentDate + '-01-01';
                 break;
             default:

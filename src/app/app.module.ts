@@ -16,6 +16,8 @@ import {BankListPage} from '../pages/bank-list/bank-list';
 import {BankDetailPage} from '../pages/bank-detail/bank-detail';
 import {SettingsPage} from '../pages/settings/settings';
 import {PopOverPage} from '../pages/public/popover';
+import {Date} from '../pages/public/date';
+import {Unit} from '../pages/public/unit';
 
 import {Api} from '../providers/api';
 import {Items} from '../mocks/providers/items';
@@ -67,7 +69,9 @@ export function provideSettings(storage: Storage) {
         BankDetailPage,
         SettingsPage,
         TutorialPage,
-        PopOverPage
+        PopOverPage,
+        Date,
+        Unit
     ],
     imports: [
         BrowserModule,
@@ -110,7 +114,9 @@ export function provideSettings(storage: Storage) {
         BankDetailPage,
         SettingsPage,
         TutorialPage,
-        PopOverPage
+        PopOverPage,
+        Date,
+        Unit
     ],
     providers: [
         Api,
