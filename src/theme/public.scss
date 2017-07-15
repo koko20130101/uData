@@ -111,3 +111,10 @@ ion-navbar.toolbar {
   text-align: center;
   background-color: color($colors, light)
 }
+
+ion-content.has-refresher > .scroll-content {
+  border-color: color($colors, dark);
+}
+.my-refresher .refresher-refreshing .spinner-ios line{
+  stroke: color($colors, light);
+}

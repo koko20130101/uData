@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavParams, ViewController} from 'ionic-angular';
-import {GlobalVars} from  '../../providers/global-vars';
+
+import {GlobalVars} from  '../../providers/services/global.service';
 
 import{PublicFactory} from '../../providers/factory/public.factory';
 
@@ -32,11 +33,9 @@ export class PopOverPage {
     }
 
     setDateUnit(val) {
-        this.dateInstance.dateInfo.unit = val.title;
+        this.dateInstance.dateInfo.unit = val;
         this.dateInstance.setDateValue();
         this.publicFactory.unitInfo.emit(this.parentPage);
-        //修改父组件属性
-        // this.parentPage.resetDate();
         //关闭popover
         this.viewCtrl.dismiss();
     }

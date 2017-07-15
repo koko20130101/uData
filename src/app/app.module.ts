@@ -25,8 +25,8 @@ import {Settings} from '../providers/settings';
 import {PublicFactory} from '../providers/providers';
 import {PopupFactory} from '../providers/providers';
 import {User} from '../providers/user';
-import {GlobalVars} from '../providers/global-vars';
-import {DateService} from '../providers/services/date';
+import {GlobalVars} from '../providers/services/global.service';
+import {DateService} from '../providers/services/date.service';
 
 import {Camera} from '@ionic-native/camera';
 import {GoogleMaps} from '@ionic-native/google-maps';

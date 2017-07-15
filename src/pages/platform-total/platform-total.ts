@@ -1,7 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {Slides, NavController} from 'ionic-angular';
 
-import {GlobalVars} from '../../providers/global-vars';
+import {GlobalVars} from '../../providers/services/global.service';
+
 import {PublicFactory} from '../../providers/factory/public.factory';
 
 
@@ -23,12 +24,13 @@ export class PlatformTotalPage {
 
     ngOnInit() {
         this.dateInstance = this.globalVars.getInstance();
+        console.log(this.dateInstance);
     }
 
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            if(data.page== this.pageName) {
+            if(data.page == this.pageName) {
                 console.log(data.page)
             }
         });

@@ -3,7 +3,8 @@ import {NavController} from 'ionic-angular';
 
 import {BankDetailPage} from '../bank-detail/bank-detail';
 
-import {GlobalVars} from '../../providers/global-vars';
+import {GlobalVars} from '../../providers/services/global.service';
+
 import {PublicFactory} from '../../providers/factory/public.factory'
 
 @Component({

@@ -1,7 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {Slides, NavController} from 'ionic-angular';
 
-import {GlobalVars} from '../../providers/global-vars';
+import {GlobalVars} from '../../providers/services/global.service';
+
 import {PublicFactory} from '../../providers/factory/public.factory'
 
 @Component({
@@ -11,10 +12,9 @@ import {PublicFactory} from '../../providers/factory/public.factory'
 export class LingXiPage {
     @ViewChild("MainSlides") mainSlides: Slides;
     pageName: any = 'LingXiPage';
-    lingxiType = '1';
+    lingXiType = '1';
     userOperateType = '1';
     dateInstance: any;
-    activeUnit: any;
 
     constructor(public navCtrl: NavController,
                 public publicFactory:PublicFactory,
@@ -45,7 +45,7 @@ export class LingXiPage {
     }
 
     goSegment() {
-        let num = Number(this.lingxiType);
+        let num = Number(this.lingXiType);
         this.mainSlides.slideTo(num - 1);
     }
 
@@ -53,6 +53,6 @@ export class LingXiPage {
         let active = this.mainSlides.getActiveIndex();
         let total = this.mainSlides.length();
         if (active == total) return;
-        this.lingxiType = String(active + 1);
+        this.lingXiType = String(active + 1);
     }
 }

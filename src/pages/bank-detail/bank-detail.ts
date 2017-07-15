@@ -3,7 +3,8 @@ import {NavController, PopoverController} from 'ionic-angular';
 
 import {PopOverPage} from '../public/popover';
 
-import {GlobalVars} from '../../providers/global-vars';
+import {GlobalVars} from '../../providers/services/global.service';
+
 import {PublicFactory} from '../../providers/factory/public.factory'
 
 @Component({

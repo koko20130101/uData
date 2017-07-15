@@ -3,7 +3,8 @@ import {PopoverController} from 'ionic-angular';
 
 import {PopOverPage} from './popover';
 
-import {GlobalVars} from '../../providers/global-vars';
+import {GlobalVars} from '../../providers/services/global.service';
+
 import {PublicFactory} from '../../providers/factory/public.factory'
 
 @Component({
@@ -27,10 +28,10 @@ export class Unit {
     ngOnInit() {
         // console.log(0)
         this.dateInstance = this.globalVars.getInstance();
-        this.activeUnit = this.dateInstance.dateInfo.unit;
+        this.activeUnit = this.dateInstance.dateInfo.unit.title;
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe(() => {
-            this.activeUnit = this.dateInstance.dateInfo.unit;
+            this.activeUnit = this.dateInstance.dateInfo.unit.title;
         });
     }
 

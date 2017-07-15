@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 
-import {GlobalVars} from '../../providers/global-vars';
+import {GlobalVars} from '../../providers/services/global.service';
+
 import {PublicFactory} from '../../providers/factory/public.factory'
 import {PopupFactory} from '../../providers/factory/popup.factory'
 
@@ -10,7 +11,7 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
         <button ion-button clear icon-only small>
             <ion-icon name="arrow-back"></ion-icon>
         </button>
-        <button ion-button clear small (click)="_showAlert()">{{activeDate}} ({{activeTip}})</button>
+        <button ion-button clear small (click)="_showAlert()">{{activeDate}}</button>
         <button ion-button clear icon-only small>
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
@@ -18,11 +19,11 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
 })
 export class Date {
     //输入属性:记录从那个页面引入的 date
-    @Input() pageName: any;
+    @Input()pageName: any;
     dateInstance: any;
     currentDateList: any[]=[];
     activeDate: any;
-    activeTip: any;
+    radioList: any[];
 
     constructor(public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
@@ -51,36 +52,43 @@ export class Date {
     }
 
     _showAlert() {
+        this.radioList = [];
+        //处理弹窗的时间列表
+        for(let value of this.currentDateList) {
+            this.radioList.push({
+                type: 'radio',
+                label: value,
+                value: value,
+                checked: value == this.activeDate ? true :false
+            });
+        }
+        //弹出日期选择弹窗
         this.popupFactory.showAlert({
-            inputs: this.currentDateList,
+            title:'请选择日期',
+            inputs: this.radioList,
             buttons: [
                 {
                     text: '确 定',
                     handler: (data)=> {
-                        this.activeDate = data;
-                        this._setDate();
+                        let index = this.currentDateList.indexOf(data);
+                        this._setDate(data,index);
                     }
                 }
             ]
-
         })
     }
 
-    _setDate() {
+    _setDate(data,index) {
+        console.log(this.pageName)
+        //设置公共变量实例
+        this.dateInstance.setDateValue(null, index);
+        //发布消息
+        this.publicFactory.unitInfo.emit(this.pageName);
+        this._setVars();
     }
 
     _setVars() {
-        let _currentDateList = this.dateInstance.dateInfo.currentDateList;
+        this.currentDateList = this.dateInstance.dateInfo.currentDateList;
         this.activeDate = this.dateInstance.dateInfo.currentDate;
-        this.activeTip = this.dateInstance.dateInfo.tip;
-        this.currentDateList = [];
-        //处理时间列表
-        for(let value of _currentDateList) {
-            this.currentDateList.push({
-                type: 'radio',
-                label: value,
-                value: value
-            });
-        }
     }
 }

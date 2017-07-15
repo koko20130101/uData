@@ -36,12 +36,11 @@ export class DateService {
         let today = moment().format('YYYYMMDD');
         //如果数据符合时间戳
         return this.storage.get(CacheField.dateList).then(data=> {
+            //对比时间戳
             if (!!data && data.stamp == today) {
                 this._date = data;
-                console.log(0)
                 return data;
             } else {
-                console.log(1)
                 return false;
             }
         });

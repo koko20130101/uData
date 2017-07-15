@@ -4,10 +4,10 @@
         <ucs-unit pageName="{{pageName}}"></ucs-unit>
     </ion-navbar>
     <ion-toolbar ngClass="time-list" color="dark" text-center>
-        <ucs-date></ucs-date>
+        <ucs-date pageName="{{pageName}}"></ucs-date>
     </ion-toolbar>
     <ion-toolbar ngClass="my-toolbar">
-        <ion-segment [(ngModel)]="lingxiType" ngClass="my-segment">
+        <ion-segment [(ngModel)]="lingXiType" ngClass="my-segment">
             <ion-segment-button value="1" (click)="goSegment()">全 部</ion-segment-button>
             <ion-segment-button value="2" (click)="goSegment()">活 期</ion-segment-button>
             <ion-segment-button value="3" (click)="goSegment()">稳健型</ion-segment-button>

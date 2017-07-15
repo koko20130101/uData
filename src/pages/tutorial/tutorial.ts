@@ -4,11 +4,11 @@ import {MenuController, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
 import {LoginPage} from '../login/login';
 
-import {User} from '../../providers/user';
-import {DateService} from '../../providers/services/date';
-import {GlobalVars} from  '../../providers/global-vars';
-
 import {TranslateService} from '@ngx-translate/core';
+import {User} from '../../providers/user';
+import {DateService} from '../../providers/services/date.service';
+import {GlobalVars} from  '../../providers/services/global.service';
+
 
 
 export interface Slide {
@@ -24,7 +24,7 @@ export interface Slide {
 export class TutorialPage {
     slides: Slide[];
     showSkip = true;
-    isLogined: boolean = false;
+    isLogged: boolean = false;
     count = 5;  //启动页倒计时
     myInterval: any;
 
@@ -80,12 +80,12 @@ export class TutorialPage {
         this.user.checkLogin({}).subscribe(resp => {
             let res: any = resp;
             if (res._body.code == 1) {
-                this.isLogined = true;
+                this.isLogged = true;
                 //从dateService服务中获取时间列表
                 this.dateService.getValue().then(data=> {
                     //如果没有数据返回，则向服务器请求
                     if (!data) {
-                        this.dateService.loadDateList({})
+                        this.dateService.loadDateList({});
                     }else{
                         //设置全局变量
                         this.globalVars.setDateValue(data);
@@ -111,7 +111,7 @@ export class TutorialPage {
     //进入应用
     startApp() {
         clearInterval(this.myInterval);
-        if (this.isLogined) {
+        if (this.isLogged) {
             this.navCtrl.setRoot(HomePage, {}, {
                 animate: true,
                 direction: 'forward'
