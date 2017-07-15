@@ -63,7 +63,7 @@ export class GlobalVars {
 
         switch (this.dateInfo.unit.title) {
             case '日':
-                _dateInfo.sendDate = _dateInfo.currentDate;
+                _dateInfo.sendDate = _dateInfo.currentDate.split(' ')[0];
                 break;
             case '周':
                 _dateInfo.sendDate = _dateInfo.currentDate.split('至')[0];

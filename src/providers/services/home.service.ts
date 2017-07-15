@@ -6,6 +6,7 @@ import {Api} from '../api';
 import {Endpoint} from '../endpoint';
 import {CacheField} from '../cache-field';
 
+import {GlobalVars} from '../services/global.service';
 import {PublicFactory} from '../factory/public.factory';
 
 
@@ -14,6 +15,7 @@ import {PublicFactory} from '../factory/public.factory';
  */
 @Injectable()
 export class HomeService {
+
     //初始化总金额
     _totalAmount: any = {
         platformTotal: 0,
@@ -23,14 +25,24 @@ export class HomeService {
 
     constructor(public publicFactory: PublicFactory,
                 public api:Api,
+                public globalVars:GlobalVars,
                 public storage:Storage,
     ) {
 
     }
 
     //从服务器请求数据
-    loadHomeData(sendData:any){
-        let req = this.api.post(Endpoint.homeData, sendData).share();
+    loadHomeData(sendData?:any){
+        let instance = this.globalVars.getInstance();
+        let _sendData = {
+            type: instance.dateInfo.unit.tip,
+            now: instance.dateInfo.sendDate
+        };
+        if(!!sendData) {
+            Object.assign(_sendData, sendData);
+        }
+        console.log(_sendData)
+        let req = this.api.post(Endpoint.homeData, _sendData).share();
         req.map(res => res.json())
             .subscribe(res=>{
                 this._totalAmount = res.data;

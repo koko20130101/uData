@@ -1,8 +1,8 @@
 // export const HOST = 'https://example.com/api/v1/';
 // export const HOST = 'http://172.17.2.73:8100';
-export const HOST = 'http://localhost:8100';
+// export const HOST = 'http://localhost:8100';
 // export const HOST = 'http://172.17.20.31:8080/';
-// export const HOST = 'http://192.168.0.102:8080';
+export const HOST = 'http://192.168.0.101:8100';
 
 //接口
 export const Endpoint = {

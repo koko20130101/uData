@@ -8,11 +8,11 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
 @Component({
     selector: 'ucs-date',
     template: ` 
-        <button ion-button clear icon-only small>
+        <button ion-button clear icon-only small [disabled]="isStart" (click)="_previousDate()">
             <ion-icon name="arrow-back"></ion-icon>
         </button>
         <button ion-button clear small (click)="_showAlert()">{{activeDate}}</button>
-        <button ion-button clear icon-only small>
+        <button ion-button clear icon-only small [disabled]="isEnd" (click)="_nextDate()">
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
 `
@@ -20,10 +20,12 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
 export class Date {
     //输入属性:记录从那个页面引入的 date
     @Input()pageName: any;
-    dateInstance: any;
-    currentDateList: any[]=[];
+    dateInstance: any;  //单例模式的实例
+    currentDateList: any[]=[];  //活动的时间列表
     activeDate: any;
     radioList: any[];
+    isStart:boolean;
+    isEnd:boolean = false;
 
     constructor(public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
@@ -39,10 +41,6 @@ export class Date {
         this.publicFactory.unitInfo.subscribe((data) => {
             this._setVars();
         });
-    }
-
-    ngAfterViewInit() {
-        // console.log(1)
     }
 
     ngOnDestroy() {
@@ -62,6 +60,7 @@ export class Date {
                 checked: value == this.activeDate ? true :false
             });
         }
+
         //弹出日期选择弹窗
         this.popupFactory.showAlert({
             title:'请选择日期',
@@ -78,17 +77,50 @@ export class Date {
         })
     }
 
+    _previousDate(){
+        let index = this.currentDateList.indexOf(this.activeDate);
+        if(index == this.currentDateList.length-1) {
+            this.isStart = true;
+            return;
+        }else{
+            this.isEnd = false;
+            this._setDate(this.currentDateList[index+1],index+1)
+        }
+    }
+
+    _nextDate(){
+        let index = this.currentDateList.indexOf(this.activeDate);
+        if(index == 0) {
+            this.isEnd = true;
+            return;
+        }else{
+            this.isStart = false;
+            this._setDate(this.currentDateList[index-1],index-1)
+        }
+    }
+
     _setDate(data,index) {
-        console.log(this.pageName)
         //设置公共变量实例
         this.dateInstance.setDateValue(null, index);
         //发布消息
-        this.publicFactory.unitInfo.emit(this.pageName);
+        this.publicFactory.unitInfo.emit({page:this.pageName});
         this._setVars();
     }
 
     _setVars() {
         this.currentDateList = this.dateInstance.dateInfo.currentDateList;
         this.activeDate = this.dateInstance.dateInfo.currentDate;
+        let index = this.currentDateList.indexOf(this.activeDate);
+        let length = this.currentDateList.length;
+        if(index == 0) {
+            this.isEnd = true;
+        }else{
+            this.isEnd = false;
+        }
+        if(index == length-1) {
+            this.isStart = true;
+        }else{
+            this.isStart = false;
+        }
     }
 }

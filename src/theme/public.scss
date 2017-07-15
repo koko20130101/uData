@@ -32,8 +32,8 @@ ion-navbar.toolbar {
     border: 0px;
     font-size: 1.5rem;
     color: color($colors, gray, mid);
-    height: 3.7rem;
-    line-height: 3.6rem;
+    height: 44px;
+    line-height: 44px;
   }
   &.segment-ios .segment-button.segment-activated {
     background: none;
@@ -55,7 +55,8 @@ ion-navbar.toolbar {
 }
 
 .total-data {
-  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 20px;
   margin: 0 10px;
   border-bottom: 1px solid color($colors, dark, mid1);
   p {

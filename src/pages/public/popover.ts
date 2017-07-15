@@ -23,7 +23,6 @@ export class PopOverPage {
                 public publicFactory:PublicFactory,
                 public globalVars: GlobalVars) {
         this.parentPage = params.data;
-        console.log(this.parentPage)
     }
 
     ngOnInit() {

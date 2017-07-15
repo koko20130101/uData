@@ -47,8 +47,9 @@ export class HomePage {
         // console.log(1)
         //订阅选择时间传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
+            console.log(data)
             if (data.page == this.pageName) {
-                console.log(data.page)
+                this.getHomeData();
             }
         });
     }
