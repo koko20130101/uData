@@ -53,7 +53,7 @@ export class HomeService {
                 Object.assign(_res, {stamp: _thisTime});
 
                 //如果本地总数据超过60天(5184000 秒),则清空数据
-                if(!this.totalAmount.stamp || this.totalAmount.stamp + 5184000 < _thisTime) {
+                if(!this.totalAmount.stamp || this.totalAmount.stamp + _instance.cacheTime.long < _thisTime) {
                     this.totalAmount = {};
                     Object.assign(this.totalAmount,{stamp:_thisTime});
                 }

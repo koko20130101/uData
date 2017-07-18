@@ -13,5 +13,8 @@ export const Endpoint = {
     checkLogin:'assets/data/check-login.json',  //检查登录及版本信息
     dateList:'assets/data/date-list.json',  //日期列表
     homeData:'assets/data/main.json',  //日期列表
-    platformTotalData:'assets/data/main-1.json',  //平台数据
+
+    platformTotalData:'assets/data/main-1.json',  //平台总数据
+    platformsCompareData:'assets/data/platforms-compare-1.json',  //平台指数排行
+    trendData:'assets/data/platforms-line-1.json',  //平台折线图数据
 };

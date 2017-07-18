@@ -24,9 +24,13 @@ export class GlobalVars {
     };
     //本地存储时间
     cacheTime: any = {
-        long:10000,
-        short:60,
+        short:60,   //当日、本周、本月、今年的数据过时时间
+        middle:10000,
+        long:5184000
     };
+
+    //请求数量
+    loaders:any[]=[];
 
     constructor() {
 

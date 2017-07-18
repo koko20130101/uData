@@ -1,0 +1,165 @@
+{
+  "data": {
+    "list": [
+      {
+        "bankName": "青岛",
+        "bankCode": "QD",
+        "number": 5.0,
+        "percent": 0,
+        "up": null
+      },
+      {
+        "bankName": "浙商",
+        "bankCode": "ZS",
+        "number": 6.23,
+        "percent": 0,
+        "up": true
+      },
+      {
+        "bankName": "齐鲁",
+        "bankCode": "QL",
+        "number": 5.38,
+        "percent": 0,
+        "up": null
+      },
+      {
+        "bankName": "华兴",
+        "bankCode": "GZHX",
+        "number": 5.3,
+        "percent": 0,
+        "up": true
+      },
+      {
+        "bankName": "西宁",
+        "bankCode": "XN",
+        "number": 7.8,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "华瑞",
+        "bankCode": "HRUI",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "广州农商",
+        "bankCode": "GZNS",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "南充",
+        "bankCode": "NCHONG",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "招行",
+        "bankCode": "CMBC",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "柳州",
+        "bankCode": "GXLZ",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "浦发",
+        "bankCode": "PF",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "尧都",
+        "bankCode": "YD",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "中信",
+        "bankCode": "CiticZX",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "珲春",
+        "bankCode": "HCUN",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "南昌",
+        "bankCode": "NC",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "华润",
+        "bankCode": "HR",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "金谷农商",
+        "bankCode": "JGNS",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "南粤",
+        "bankCode": "GDNY",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "江苏",
+        "bankCode": "JS",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "颍淮",
+        "bankCode": "YH",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "常熟",
+        "bankCode": "CRCB",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      },
+      {
+        "bankName": "灵犀",
+        "bankCode": "LingXi",
+        "number": 0,
+        "percent": 0,
+        "up": false
+      }
+    ]
+  },
+  "code": 1,
+  "Type": "day",
+  "description": "成功返回消息",
+  "Token": null,
+  "datatype": 0
+}

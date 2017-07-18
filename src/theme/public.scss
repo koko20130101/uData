@@ -119,7 +119,7 @@ ion-navbar.toolbar {
 }
 
 ion-content.has-refresher > .scroll-content {
-  border-color: color($colors, dark);
+  border:none;
 }
 
 .my-refresher .refresher-refreshing .spinner-ios line {

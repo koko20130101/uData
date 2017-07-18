@@ -18,6 +18,7 @@ export class PopupFactory {
      * */
     public showAlert(config?) {
         let alertConfig = {
+            cssClass:'my-alert',
             buttons:[
                 {
                     text:'确 定',
