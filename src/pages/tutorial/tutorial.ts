@@ -80,14 +80,19 @@ export class TutorialPage {
         this.user.checkLogin({}).subscribe(resp => {
             let res: any = resp;
             if (res._body.code == 1) {
-                this.isLogged = true;
                 //从dateService服务中获取时间列表
                 this.dateService.getValue().then(data=> {
                     //如果没有数据返回，则向服务器请求
                     if (!data) {
-                        this.dateService.loadDateList({});
+                        this.dateService.loadDateList({}).subscribe(data =>{
+                            let res: any = data;
+                            if(res._body.code ==1) {
+                                this.isLogged = true;
+                            }
+                        });
                     }else{
                         //设置全局变量
+                        this.isLogged = true;
                         this.globalVars.setDateValue(data);
                     }
                 });

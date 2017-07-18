@@ -66,6 +66,11 @@ ion-navbar.toolbar {
   }
   h2 {
     margin: 0;
+    font-size:3rem;
+    font-weight:400;
+    span{
+      font-size:1.8rem;
+    }
   }
 }
 
@@ -116,6 +121,17 @@ ion-navbar.toolbar {
 ion-content.has-refresher > .scroll-content {
   border-color: color($colors, dark);
 }
-.my-refresher .refresher-refreshing .spinner-ios line{
+
+.my-refresher .refresher-refreshing .spinner-ios line {
   stroke: color($colors, light);
+}
+
+.my-loading {
+  &.loading-ios .spinner-ios line {
+    stroke: color($colors, light);
+  }
+  &.loading-ios .loading-wrapper {
+    background: none;
+  }
+
 }

@@ -11,6 +11,7 @@ import {GlobalVars} from  '../../providers/services/global.service';
 import {HomeService} from '../../providers/services/home.service';
 
 import {PublicFactory} from  '../../providers/factory/public.factory';
+import {PopupFactory} from  '../../providers/factory/popup.factory';
 
 @Component({
     selector: 'page-home',
@@ -33,6 +34,7 @@ export class HomePage {
                 public globalVars: GlobalVars,
                 public homeService:HomeService,
                 public publicFactory: PublicFactory,
+                public popupFactory: PopupFactory,
                 public storage: Storage) {
 
     }
@@ -47,7 +49,7 @@ export class HomePage {
         // console.log(1)
         //订阅选择时间传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            console.log(data)
+            console.log(data.page)
             if (data.page == this.pageName) {
                 this.getHomeData();
             }
@@ -61,19 +63,26 @@ export class HomePage {
     //每当当前视图为活动视图时调用
     ionViewWillEnter() {
         // console.log(3)
-        //从本地数据库中取数据
-        this.homeService.getValue().then(data=>{
-            if(!!data) {
-                this.totalAmount = data;
-            }else{
-                //如果没取到，则向服务器取
-                this.getHomeData();
-            }
-        });
+        this.getHomeData();
     }
 
-    getHomeData(refresher?:any){
-        this.homeService.loadHomeData({}).subscribe(data =>{
+    getHomeData(){
+        let _data = this.homeService.getValue();
+        if(!!_data) {
+            this.totalAmount = _data;
+            return;
+        }else{
+            //如果没取到，则向服务器取
+            var loader = this.popupFactory.loading();
+            loader.present().then(()=> {
+                this.loadHomeData(null,loader);
+            });
+        }
+    }
+
+    loadHomeData(refresher?:any,loader?:any){
+        //从服务器取数据
+        this.homeService.loadValue().subscribe(data =>{
             let res:any = data;
             if(res._body.code==1) {
                 this.totalAmount = res._body.data;
@@ -81,12 +90,15 @@ export class HomePage {
             if (!!refresher) {
                 refresher.complete();
             }
+            if(!!loader) {
+                loader.dismiss();
+            }
         })
     }
-
+    //下拉刷新
     doRefresh(refresher: Refresher) {
         setTimeout(() => {
-            this.getHomeData(refresher);
+            this.loadHomeData(refresher);
         }, 500);
     }
 

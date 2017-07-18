@@ -17,9 +17,15 @@ export class GlobalVars {
     //时间信息
     dateInfo: any = {
         unit: {title: '日', tip: 'date'},
+        index:0,
         currentDateList: [],
         currentDate: null,
         sendDate: ''
+    };
+    //本地存储时间
+    cacheTime: any = {
+        long:10000,
+        short:60,
     };
 
     constructor() {
@@ -60,6 +66,7 @@ export class GlobalVars {
 
         _dateInfo.currentDateList = GlobalVars.instance.dateList[this.dateInfo.unit.tip];
         _dateInfo.currentDate = _dateInfo.currentDateList[_index];
+        _dateInfo.index = _index;
 
         switch (this.dateInfo.unit.title) {
             case '日':

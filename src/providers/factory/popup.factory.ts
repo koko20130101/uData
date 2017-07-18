@@ -38,6 +38,7 @@ export class PopupFactory {
     public loading(config?) {
         let loaderConfig = {
             duration:10000,
+            cssClass:'my-loading',
             // dismissOnPageChange:true
         };
         Object.assign(loaderConfig, config);

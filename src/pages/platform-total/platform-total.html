@@ -17,6 +17,9 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)" ngClass="my-refresher">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-slides #MainSlides pager="false" class="my-slide" (ionSlideDidChange)="slideChange()">
         <!--网金-->
         <ion-slide>
@@ -25,7 +28,7 @@
             <div>
                 <div class="total-data">
                     <p>当日累计交易额</p>
-                    <h2>32432432432</h2>
+                    <h2 ion-text [innerHTML]="totalData.totalUCS[0]" color="{{totalData.totalUCS[1]=='true'?'danger':(totalData.totalUCS[1]=='false'?'secondary':'')}}"></h2>
                 </div>
                 <ion-list class="model-title">
                     <ion-item>
@@ -132,7 +135,7 @@
             <div>
                 <div class="total-data">
                     <p>昨日交易额</p>
-                    <h2>32432432432</h2>
+                    <h2 ion-text [innerHTML]="totalData.totalEnemy[0]" color="{{totalData.totalEnemy[1]=='true'?'danger':(totalData.totalEnemy[1]=='false'?'secondary':'')}}"></h2>
                 </div>
                 <ion-list class="model-title">
                     <ion-item>
