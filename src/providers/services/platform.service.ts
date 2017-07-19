@@ -32,7 +32,6 @@ export class PlatformService {
         this.storage.get(CacheField.platformsCompareData).then((data) => {
             if (!!data) {
                 this.platformsCompareData = data;
-                console.log(this.platformsCompareData )
             }
         });
         //从本地存储中取平台比较数据
@@ -61,26 +60,38 @@ export class PlatformService {
         let req = this.api.post(endpoint, _sendData).share();
         req.map(res => res.json())
             .subscribe(res => {
-                let _res: any = res.data;
+                let _res: any = res;
                 //当前时间
                 let _thisTime = moment().unix();
                 let _cacheData:any;
-                //格式化数据
-                for(let key in _res) {
-                    // console.log(key)
-                    _res[key][0] = this.publicFactory.moneyFormatToHtml(_res[key][0]);
-                    // console.log(_res[key][0])
-                }
-
-                //添加时间戳
-                Object.assign(_res, {stamp: _thisTime});
 
                 switch (cacheKey) {
                     case CacheField.platformTotalData:
                         _cacheData = this.totalData;
+                        //格式化数据
+                        for(let key in _res.data) {
+                            // console.log(key)
+                            _res.data[key][0] = this.publicFactory.moneyFormatToHtml(_res.data[key][0]);
+                            // console.log(_res[key][0])
+                        }
+                        //添加时间戳
+                        Object.assign(_res.data, {stamp: _thisTime});
                         break;
                     case CacheField.platformsCompareData:
                         _cacheData = this.platformsCompareData;
+                        if(_res.dataType == 2) {
+                            //格式化数据
+                            for(let item of _res.data.list) {
+                                item.number = this.publicFactory.moneyFormatToHtml(item.number);
+                            }
+                        }
+                        //添加时间戳
+                        let temp: any = {};
+                        temp[_res.dataType] = _res.data.list;
+                        Object.assign(temp, {stamp: _thisTime});
+
+                        _res.data = temp;
+
                         break;
                     case CacheField.trendData:
                         _cacheData = this.trendData;
@@ -92,7 +103,12 @@ export class PlatformService {
                     _cacheData = {};
                     Object.assign(_cacheData,{stamp:_thisTime});
                 }
-                _cacheData[_instance.dateInfo.currentDate] = _res;
+                if(!!_cacheData[_instance.dateInfo.currentDate]) {
+                    Object.assign(_cacheData[_instance.dateInfo.currentDate], _res.data);
+                }else{
+                    _cacheData[_instance.dateInfo.currentDate] = _res.data;
+                }
+
 
                 switch (cacheKey) {
                     case CacheField.platformTotalData:

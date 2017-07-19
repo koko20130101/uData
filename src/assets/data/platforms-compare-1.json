@@ -4,35 +4,35 @@
       {
         "bankName": "青岛",
         "bankCode": "QD",
-        "number": 5.0,
+        "number": 5330,
         "percent": 0,
         "up": null
       },
       {
         "bankName": "浙商",
         "bankCode": "ZS",
-        "number": 6.23,
+        "number": 623,
         "percent": 0,
         "up": true
       },
       {
         "bankName": "齐鲁",
         "bankCode": "QL",
-        "number": 5.38,
+        "number": 538,
         "percent": 0,
         "up": null
       },
       {
         "bankName": "华兴",
         "bankCode": "GZHX",
-        "number": 5.3,
+        "number": 53,
         "percent": 0,
         "up": true
       },
       {
         "bankName": "西宁",
         "bankCode": "XN",
-        "number": 7.8,
+        "number": 72338,
         "percent": 0,
         "up": false
       },
@@ -133,27 +133,6 @@
         "number": 0,
         "percent": 0,
         "up": false
-      },
-      {
-        "bankName": "颍淮",
-        "bankCode": "YH",
-        "number": 0,
-        "percent": 0,
-        "up": false
-      },
-      {
-        "bankName": "常熟",
-        "bankCode": "CRCB",
-        "number": 0,
-        "percent": 0,
-        "up": false
-      },
-      {
-        "bankName": "灵犀",
-        "bankCode": "LingXi",
-        "number": 0,
-        "percent": 0,
-        "up": false
       }
     ]
   },
@@ -161,5 +140,5 @@
   "Type": "day",
   "description": "成功返回消息",
   "Token": null,
-  "datatype": 0
+  "dataType": 2
 }

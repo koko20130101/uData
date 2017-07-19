@@ -9,7 +9,6 @@ import {GlobalVars} from '../../providers/services/global.service';
 import {PublicFactory} from '../../providers/factory/public.factory';
 import {PopupFactory} from '../../providers/factory/popup.factory';
 
-
 @Component({
     selector: 'platform-page',
     templateUrl: 'platform-total.html',
@@ -22,11 +21,11 @@ export class PlatformTotalPage {
     dataType = "2";     //各平台指数排行
     dateInstance: any;
     totalData: any = {
-        totalUCS: ['0', ''],
-        totalEnemy: ['0', ''],
+        totalUCS: ['--', ''],
+        totalEnemy: ['--', ''],
     };
-    platformsCompareData: any;
     trendData: any;
+    platformsCompareData: any={};
     sendData: any = {
         dataType: 2
     };
@@ -46,10 +45,10 @@ export class PlatformTotalPage {
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            console.log(data.page)
+            console.log(data.page);
             if (data.page == this.pageName) {
-                this.getDataFromCache(Endpoint.platformTotalData, CacheField.platformTotalData);
-                this.getDataFromCache(Endpoint.trendData, CacheField.trendData);
+                // this.getDataFromCache(Endpoint.platformTotalData, CacheField.platformTotalData);
+                // this.getDataFromCache(Endpoint.trendData, CacheField.trendData);
                 this.getDataFromCache(Endpoint.platformsCompareData, CacheField.platformsCompareData);
             }
         });
@@ -102,54 +101,51 @@ export class PlatformTotalPage {
 
     /**
      * 从本地存储中获取数据
-     * getDataFromCache(本地存储key)
+     * getDataFromCache(接口,本地存储key)
      * */
     getDataFromCache(endpoint, cacheKey) {
-        let _totalData = this.platformService.getValue(cacheKey);
-        if (!!_totalData) {
-            switch (cacheKey) {
-                case CacheField.platformTotalData:
+        let _totalData:any = this.platformService.getValue(cacheKey);
+        switch (cacheKey) {
+            case CacheField.platformTotalData:
+                if(!!_totalData) {
                     this.totalData = _totalData;
-                    break;
-                case CacheField.platformsCompareData:
-                    this.platformsCompareData = _totalData;
-                    break;
-                case CacheField.trendData:
-                    this.trendData = _totalData;
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            
-            switch (cacheKey) {
-                case CacheField.platformTotalData:
+                    return;
+                }else{
                     this.sendData = null;
                     break;
-                case CacheField.platformsCompareData:
+                };
+            case CacheField.platformsCompareData:
+                if(!!_totalData && !!_totalData[this.dataType]) {
+                    this.platformsCompareData = _totalData;
+                    return;
+                }else{
                     this.sendData = {dataType: parseInt(this.dataType)};
                     break;
-                case CacheField.trendData:
+                };
+            case CacheField.trendData:
+                if(!!_totalData) {
                     this.trendData = _totalData;
+                    return;
+                }else{
                     this.sendData = null;
                     break;
-                default:
-                    break;
-            }
-
-            if (this.globalVars.loaders.length == 0) {
-                //记录加载对象个数
-                this.globalVars.loaders.push(1);
-                //如果没取到，则向服务器取
-                var loader = this.popupFactory.loading();
-                loader.present().then(()=> {
-                    this.loadData(endpoint, cacheKey, null, loader, this.sendData);
-                });
-                return;
-            }
-            this.globalVars.loaders.push(1);
-            this.loadData(endpoint, cacheKey, null, loader);
+                };
+            default:
+                break;
         }
+
+        if (this.globalVars.loaders.length == 0) {
+            //记录加载对象个数
+            this.globalVars.loaders.push(1);
+            //如果没取到，则向服务器取
+            var loader = this.popupFactory.loading();
+            loader.present().then(()=> {
+                this.loadData(endpoint, cacheKey, null, loader, this.sendData);
+            });
+            return;
+        }
+        this.globalVars.loaders.push(1);
+        this.loadData(endpoint, cacheKey, null, loader);
     }
 
     //下拉刷新
