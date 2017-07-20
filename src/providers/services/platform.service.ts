@@ -85,9 +85,9 @@ export class PlatformService {
                                 item.number = this.publicFactory.moneyFormatToHtml(item.number);
                             }
                         }
-                        //添加时间戳
                         let temp: any = {};
                         temp[_res.dataType] = _res.data.list;
+                        //添加时间戳
                         Object.assign(temp, {stamp: _thisTime});
 
                         _res.data = temp;

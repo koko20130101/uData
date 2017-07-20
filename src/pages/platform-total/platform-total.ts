@@ -25,7 +25,12 @@ export class PlatformTotalPage {
         totalEnemy: ['--', ''],
     };
     trendData: any;
-    platformsCompareData: any={};
+    platformsCompareData: any={
+        1:[],
+        2:[],
+        3:[],
+        4:[],
+    };
     sendData: any = {
         dataType: 2
     };
@@ -39,7 +44,6 @@ export class PlatformTotalPage {
 
     ngOnInit() {
         this.dateInstance = this.globalVars.getInstance();
-        console.log(this.dateInstance);
     }
 
     ngAfterViewInit() {
@@ -78,7 +82,7 @@ export class PlatformTotalPage {
                         this.totalData = res._body.data;
                         break;
                     case CacheField.platformsCompareData:
-                        this.platformsCompareData = res._body.data;
+                        Object.assign(this.platformsCompareData,res._body.data);
                         break;
                     case CacheField.trendData:
                         this.trendData = res._body.data;
@@ -117,6 +121,8 @@ export class PlatformTotalPage {
             case CacheField.platformsCompareData:
                 if(!!_totalData && !!_totalData[this.dataType]) {
                     this.platformsCompareData = _totalData;
+                    //重新计算slide的尺寸
+                    this.mainSlides.update();
                     return;
                 }else{
                     this.sendData = {dataType: parseInt(this.dataType)};
