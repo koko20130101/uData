@@ -4,6 +4,7 @@ import {Settings} from './settings';
 import {Items} from '../mocks/providers/items';
 import {PublicFactory} from './factory/public.factory';
 import {PopupFactory} from './factory/popup.factory';
+import {ListPipe} from './pipes/list.pipe';
 
 export {
     Api,
@@ -11,5 +12,6 @@ export {
     Settings,
     Items,
     PublicFactory,
-    PopupFactory
+    PopupFactory,
+    ListPipe
 };

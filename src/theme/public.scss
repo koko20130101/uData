@@ -109,7 +109,7 @@ ion-navbar.toolbar {
 
 .info-list-bg {
   .row {
-    background-color: color($colors, dark);
+    background: color($colors, dark) url("../assets/img/bg-1.png") 0 0 no-repeat;
   }
 }
 

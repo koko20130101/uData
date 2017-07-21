@@ -54,66 +54,10 @@
                                 <ion-col text-right><span ion-text color="gray">金额(元)</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <!--<ion-row *ngFor="let item of platformsCompareData[2]">
-                                    <ion-col text-left>{{item.bankName}}</ion-col>
+                                <ion-row *ngFor="let item of platformsCompareData[2]" [style.background-size]="item.percent*100+'% 100%'">
+                                    <ion-col col-4 text-left>{{item.bankName}}</ion-col>
                                     <ion-col text-right>
                                         <span [innerHTML]="item.number"></span>
-                                        <ion-icon name="arrow-down"></ion-icon>
-                                    </ion-col>
-                                </ion-row>-->
-                                <ion-row>
-                                    <ion-col text-left>23232</ion-col>
-                                    <ion-col text-right>
-                                        <span>323232</span>
-                                        <ion-icon name="arrow-down"></ion-icon>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>23232</ion-col>
-                                    <ion-col text-right>
-                                        <span>323232</span>
-                                        <ion-icon name="arrow-down"></ion-icon>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>23232</ion-col>
-                                    <ion-col text-right>
-                                        <span>323232</span>
-                                        <ion-icon name="arrow-down"></ion-icon>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>23232</ion-col>
-                                    <ion-col text-right>
-                                        <span>323232</span>
-                                        <ion-icon name="arrow-down"></ion-icon>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>23232</ion-col>
-                                    <ion-col text-right>
-                                        <span>323232</span>
-                                        <ion-icon name="arrow-down"></ion-icon>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>23232</ion-col>
-                                    <ion-col text-right>
-                                        <span>323232</span>
-                                        <ion-icon name="arrow-down"></ion-icon>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>23232</ion-col>
-                                    <ion-col text-right>
-                                        <span>323232</span>
-                                        <ion-icon name="arrow-down"></ion-icon>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>23232</ion-col>
-                                    <ion-col text-right>
-                                        <span>323232</span>
                                         <ion-icon name="arrow-down"></ion-icon>
                                     </ion-col>
                                 </ion-row>
@@ -190,13 +134,13 @@
                     </ion-item>
                 </ion-list>
                 <div class="model-content">
-                    <ion-segment [(ngModel)]="dataType" ngClass="my-segment">
-                        <ion-segment-button value="2" (click)="getPlatformSegment()">交易额</ion-segment-button>
-                        <ion-segment-button value="1" (click)="getPlatformSegment()">收益率</ion-segment-button>
-                        <ion-segment-button value="3" (click)="getPlatformSegment()">期限</ion-segment-button>
-                        <ion-segment-button value="4" (click)="getPlatformSegment()">项目数</ion-segment-button>
+                    <ion-segment [(ngModel)]="enemyDataType" ngClass="my-segment">
+                        <ion-segment-button value="2" (click)="enemyPlatformExponent()">交易额</ion-segment-button>
+                        <ion-segment-button value="1" (click)="enemyPlatformExponent()">收益率</ion-segment-button>
+                        <ion-segment-button value="3" (click)="enemyPlatformExponent()">期限</ion-segment-button>
+                        <ion-segment-button value="4" (click)="enemyPlatformExponent()">项目数</ion-segment-button>
                     </ion-segment>
-                    <div [ngSwitch]="dataType" padding>
+                    <div [ngSwitch]="enemyDataType" padding>
                         <!--交易额-->
                         <div *ngSwitchCase="'2'">
                             <ion-row>
@@ -204,16 +148,12 @@
                                 <ion-col text-right><span ion-text color="gray">金额(元)</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row>
-                                    <ion-col text-left>青岛</ion-col>
-                                    <ion-col text-right ngClass="abc">
-                                        32323
+                                <ion-row *ngFor="let item of enemyPlatformsCompareData[2]">
+                                    <ion-col col-4 text-left>{{item.bankName}}</ion-col>
+                                    <ion-col text-right>
+                                        <span [innerHTML]="item.number"></span>
                                         <ion-icon name="arrow-down"></ion-icon>
                                     </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>青岛</ion-col>
-                                    <ion-col text-right>32323</ion-col>
                                 </ion-row>
                             </div>
                         </div>
@@ -224,16 +164,12 @@
                                 <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row>
-                                    <ion-col text-left>青岛</ion-col>
-                                    <ion-col text-right ngClass="abc">
-                                        32323
+                                <ion-row *ngFor="let item of enemyPlatformsCompareData[1]">
+                                    <ion-col col-4 text-left>{{item.bankName}}</ion-col>
+                                    <ion-col text-right>
+                                        <span [innerHTML]="item.number"></span>
                                         <ion-icon name="arrow-down"></ion-icon>
                                     </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>青岛</ion-col>
-                                    <ion-col text-right>32323</ion-col>
                                 </ion-row>
                             </div>
                         </div>
@@ -244,36 +180,28 @@
                                 <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row>
-                                    <ion-col text-left>青岛</ion-col>
-                                    <ion-col text-right ngClass="abc">
-                                        32323
+                                <ion-row *ngFor="let item of enemyPlatformsCompareData[3]">
+                                    <ion-col col-4 text-left>{{item.bankName}}</ion-col>
+                                    <ion-col text-right>
+                                        <span [innerHTML]="item.number"></span>
                                         <ion-icon name="arrow-down"></ion-icon>
                                     </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>青岛</ion-col>
-                                    <ion-col text-right>32323</ion-col>
                                 </ion-row>
                             </div>
                         </div>
                         <!--项目数-->
                         <div *ngSwitchCase="'4'">
-                            <div class="info-list">
-                                <ion-row>
-                                    <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
-                                    <ion-col text-right><span ion-text color="gray">项目数(个)</span></ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>青岛</ion-col>
-                                    <ion-col text-right ngClass="abc">
-                                        32323
+                            <ion-row>
+                                <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                                <ion-col text-right><span ion-text color="gray">项目数(个)</span></ion-col>
+                            </ion-row>
+                            <div class="info-list info-list-bg">
+                                <ion-row *ngFor="let item of enemyPlatformsCompareData[4]">
+                                    <ion-col col-4 text-left>{{item.bankName}}</ion-col>
+                                    <ion-col text-right>
+                                        <span [innerHTML]="item.number"></span>
                                         <ion-icon name="arrow-down"></ion-icon>
                                     </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col text-left>青岛</ion-col>
-                                    <ion-col text-right>32323</ion-col>
                                 </ion-row>
                             </div>
                         </div>

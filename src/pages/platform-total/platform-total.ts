@@ -19,17 +19,25 @@ export class PlatformTotalPage {
     pageName = 'PlatformTotalPage';
     platformType = "1";
     dataType = "2";     //各平台指数排行
+    enemyDataType = "2";     //竞品平台指数排行
     dateInstance: any;
     totalData: any = {
         totalUCS: ['--', ''],
         totalEnemy: ['--', ''],
     };
     trendData: any;
-    platformsCompareData: any={
-        1:[],
-        2:[],
-        3:[],
-        4:[],
+    enemyBarData: any;
+    platformsCompareData: any = {
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+    };
+    enemyPlatformsCompareData: any = {
+        1: [],
+        2: [],
+        3: [],
+        4: [],
     };
     sendData: any = {
         dataType: 2
@@ -51,17 +59,15 @@ export class PlatformTotalPage {
         this.publicFactory.unitInfo.subscribe((data) => {
             console.log(data.page);
             if (data.page == this.pageName) {
-                // this.getDataFromCache(Endpoint.platformTotalData, CacheField.platformTotalData);
-                // this.getDataFromCache(Endpoint.trendData, CacheField.trendData);
-                this.getDataFromCache(Endpoint.platformsCompareData, CacheField.platformsCompareData);
+                this.getPlatformSegment();
             }
         });
     }
 
     ionViewDidEnter() {
-        this.getDataFromCache(Endpoint.platformTotalData, CacheField.platformTotalData);
-        this.getDataFromCache(Endpoint.trendData, CacheField.trendData);
-        this.getDataFromCache(Endpoint.platformsCompareData, CacheField.platformsCompareData);
+        this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
+        this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
+        this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare);
     }
 
     ionViewWillLeave() {
@@ -78,14 +84,17 @@ export class PlatformTotalPage {
             let res: any = data;
             if (res._body.code == 1) {
                 switch (cacheKey) {
-                    case CacheField.platformTotalData:
+                    case CacheField.platformTotal:
                         this.totalData = res._body.data;
                         break;
-                    case CacheField.platformsCompareData:
-                        Object.assign(this.platformsCompareData,res._body.data);
+                    case CacheField.platformsCompare:
+                        Object.assign(this.platformsCompareData, res._body.data);
                         break;
-                    case CacheField.trendData:
+                    case CacheField.platformTrend:
                         this.trendData = res._body.data;
+                        break;
+                    case CacheField.enemyPlatformsCompare:
+                        Object.assign(this.enemyPlatformsCompareData, res._body.data);
                         break;
                     default:
                         break;
@@ -108,38 +117,57 @@ export class PlatformTotalPage {
      * getDataFromCache(接口,本地存储key)
      * */
     getDataFromCache(endpoint, cacheKey) {
-        let _totalData:any = this.platformService.getValue(cacheKey);
+        let _totalData: any = this.platformService.getValue(cacheKey);
         switch (cacheKey) {
-            case CacheField.platformTotalData:
-                if(!!_totalData) {
+            //总额
+            case CacheField.platformTotal:
+                if (!!_totalData) {
                     this.totalData = _totalData;
                     return;
-                }else{
+                } else {
                     this.sendData = null;
                     break;
-                };
-            case CacheField.platformsCompareData:
-                if(!!_totalData && !!_totalData[this.dataType]) {
+                }
+                //网金平台指数排行
+            case CacheField.platformsCompare:
+                if (!!_totalData && !!_totalData[this.dataType]) {
                     this.platformsCompareData = _totalData;
-                    //重新计算slide的尺寸
-                    this.mainSlides.update();
                     return;
-                }else{
+                } else {
                     this.sendData = {dataType: parseInt(this.dataType)};
                     break;
-                };
-            case CacheField.trendData:
-                if(!!_totalData) {
+                }
+                //网金成交额折线图
+            case CacheField.platformTrend:
+                if (!!_totalData) {
                     this.trendData = _totalData;
                     return;
-                }else{
+                } else {
                     this.sendData = null;
                     break;
-                };
+                }
+                //竞品平台指数排行
+            case CacheField.enemyPlatformsCompare:
+                if (!!_totalData && !!_totalData[this.enemyDataType]) {
+                    this.enemyPlatformsCompareData = _totalData;
+                    return;
+                } else {
+                    this.sendData = null;
+                    break;
+                }
+            //竞品柱状图
+            case CacheField.enemyBar:
+                if (!!_totalData) {
+                    this.enemyBarData = _totalData;
+                    return;
+                } else {
+                    this.sendData = null;
+                    break;
+                }
             default:
                 break;
         }
-
+        //判断请求个数
         if (this.globalVars.loaders.length == 0) {
             //记录加载对象个数
             this.globalVars.loaders.push(1);
@@ -158,21 +186,56 @@ export class PlatformTotalPage {
     doRefresh(refresher: Refresher) {
         setTimeout(() => {
             //总数据
-            this.loadData(Endpoint.platformTotalData, CacheField.platformTotalData, refresher);
-            //折线图数据
-            this.loadData(Endpoint.trendData, CacheField.trendData, refresher);
-            //平台指数排行数据
-            this.loadData(Endpoint.platformsCompareData, CacheField.platformsCompareData, refresher, null, this.sendData);
+            this.loadData(Endpoint.platformTotal, CacheField.platformTotal, refresher);
+            switch (this.platformType) {
+                //网金
+                case '1':
+                    //折线图数据
+                    this.loadData(Endpoint.platformTrend, CacheField.platformTrend, refresher);
+                    //平台指数排行数据
+                    this.loadData(Endpoint.platformsCompare, CacheField.platformsCompare, refresher, null, this.sendData);
+                    break;
+                //竞品
+                case '2':
+                    this.loadData(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, refresher, null, this.sendData);
+                    this.loadData(Endpoint.enemyBar, CacheField.enemyBar, refresher, null, this.sendData);
+                    break;
+                //传统理财
+                case '3':
+                    break;
+            }
+
         }, 500);
     }
 
     getPlatformSegment() {
         let num = Number(this.platformType);
         this.mainSlides.slideTo(num - 1);
+
+        this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
+        switch (num) {
+            //网金
+            case 1:
+                this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
+                this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare);
+                break;
+            //竞品
+            case 2:
+                this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare);
+                this.getDataFromCache(Endpoint.enemyBar, CacheField.enemyBar);
+                break;
+            //传统理财
+            case 3:
+                break;
+        }
     }
 
     ucsPlatformExponent() {
-        this.getDataFromCache(Endpoint.platformsCompareData, CacheField.platformsCompareData);
+        this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare);
+    }
+
+    enemyPlatformExponent() {
+        this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare);
     }
 
     slideChange() {

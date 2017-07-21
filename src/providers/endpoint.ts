@@ -14,7 +14,11 @@ export const Endpoint = {
     dateList:'assets/data/date-list.json',  //日期列表
     homeData:'assets/data/main.json',  //日期列表
 
-    platformTotalData:'assets/data/main-1.json',  //平台总数据
-    platformsCompareData:'assets/data/platforms-compare-1.json',  //平台指数排行
-    trendData:'assets/data/platforms-line-1.json',  //平台折线图数据
+    platformTotal:'assets/data/main-1.json',  //平台总数据
+    platformTrend:'assets/data/platforms-line-1.json',  //平台折线图数据
+    platformsCompare:'assets/data/platforms-compare-1.json',  //平台指数排行
+
+    enemyPlatformsCompare:'assets/data/platforms-compare-2.json',  //竞品平台指数排行
+    enemyBar:'assets/data/platforms-bar-1.json',  //竞品平台指数排行
+
 };

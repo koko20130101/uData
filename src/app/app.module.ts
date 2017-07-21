@@ -27,6 +27,7 @@ import {PopupFactory} from '../providers/providers';
 import {User} from '../providers/user';
 import {GlobalVars} from '../providers/services/global.service';
 import {DateService} from '../providers/services/date.service';
+import {ListPipe} from '../providers/pipes/list.pipe';
 
 import {Camera} from '@ionic-native/camera';
 import {GoogleMaps} from '@ionic-native/google-maps';
@@ -130,6 +131,7 @@ export function provideSettings(storage: Storage) {
         StatusBar,
         GlobalVars,
         DateService,
+        ListPipe,
         {provide: Settings, useFactory: provideSettings, deps: [Storage]},
         // Keep this to enable Ionic's runtime error handling during development
         {provide: ErrorHandler, useClass: IonicErrorHandler}
