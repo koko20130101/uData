@@ -51,13 +51,9 @@ export class PlatformTotalPage {
         2: []
     };
     //传统理财折线图
-    regularTrendData: any ;
+    regularTrendData: any;
     //基金折线图
-    fundTrendData: any ;
-
-    sendData: any = {
-        dataType: 2
-    };
+    fundTrendData: any;
 
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
@@ -91,10 +87,10 @@ export class PlatformTotalPage {
         this.publicFactory.unitInfo.observers.pop();
     }
 
-    showContent(value){
-        if(this.modelContent[value]) {
+    showContent(value) {
+        if (this.modelContent[value]) {
             this.modelContent[value] = 0;
-        }else{
+        } else {
             this.modelContent[value] = 1;
         }
     }
@@ -144,6 +140,7 @@ export class PlatformTotalPage {
      * getDataFromCache(接口,本地存储key,资源类型标识)
      * */
     getDataFromCache(endpoint, cacheKey, source?: any) {
+        let _sendData: any = null;
         let _totalData: any = this.platformService.getValue(cacheKey);
         switch (cacheKey) {
             //总额
@@ -152,7 +149,7 @@ export class PlatformTotalPage {
                     this.totalData = _totalData;
                     return;
                 } else {
-                    this.sendData = null;
+                    _sendData = null;
                     break;
                 }
             //网金平台指数排行
@@ -161,7 +158,7 @@ export class PlatformTotalPage {
                     this.platformsCompareData = _totalData;
                     return;
                 } else {
-                    this.sendData = {dataType: parseInt(this.dataType)};
+                    _sendData = {dataType: parseInt(this.dataType)};
                     break;
                 }
             //网金成交额折线图
@@ -170,7 +167,7 @@ export class PlatformTotalPage {
                     this.trendData = _totalData;
                     return;
                 } else {
-                    this.sendData = null;
+                    _sendData = null;
                     break;
                 }
             //竞品平台指数排行
@@ -179,7 +176,7 @@ export class PlatformTotalPage {
                     this.enemyPlatformsCompareData = _totalData;
                     return;
                 } else {
-                    this.sendData = null;
+                    _sendData = {dataType: parseInt(this.enemyDataType)};
                     break;
                 }
             //竞品柱状图
@@ -188,7 +185,7 @@ export class PlatformTotalPage {
                     this.enemyBarData = _totalData;
                     return;
                 } else {
-                    this.sendData = null;
+                    _sendData = null;
                     break;
                 }
             //传统理财和基金渠道收益对比
@@ -197,10 +194,10 @@ export class PlatformTotalPage {
                     this.regularCompareData = _totalData;
                     return;
                 } else if (source == 1) {
-                    this.sendData = {dataType: 1, sourceType: 1};
+                    _sendData = {dataType: 1, sourceType: 1};
                     break;
                 } else if (source == 2) {
-                    this.sendData = {dataType: 1, sourceType: 2};
+                    _sendData = {dataType: 1, sourceType: 2};
                     break;
                 }
             //传统理财额折线图
@@ -209,7 +206,7 @@ export class PlatformTotalPage {
                     this.regularTrendData = _totalData;
                     return;
                 } else {
-                    this.sendData = null;
+                    _sendData = null;
                     break;
                 }
             //基金折线图
@@ -218,7 +215,7 @@ export class PlatformTotalPage {
                     this.fundTrendData = _totalData;
                     return;
                 } else {
-                    this.sendData = null;
+                    _sendData = null;
                     break;
                 }
             default:
@@ -231,12 +228,12 @@ export class PlatformTotalPage {
             //如果没取到，则向服务器取
             var loader = this.popupFactory.loading();
             loader.present().then(()=> {
-                this.loadData(endpoint, cacheKey, null, loader, this.sendData);
+                this.loadData(endpoint, cacheKey, null, loader, _sendData);
             });
             return;
         }
         this.globalVars.loaders.push(1);
-        this.loadData(endpoint, cacheKey, null, loader);
+        this.loadData(endpoint, cacheKey, null, loader, _sendData);
     }
 
     //下拉刷新
@@ -252,14 +249,14 @@ export class PlatformTotalPage {
                     //折线图数据
                     this.loadData(Endpoint.platformTrend, CacheField.platformTrend, refresher);
                     //平台指数排行数据
-                    this.loadData(Endpoint.platformsCompare, CacheField.platformsCompare, refresher, null, this.sendData);
+                    this.loadData(Endpoint.platformsCompare, CacheField.platformsCompare, refresher, null, {dataType: parseInt(this.dataType)});
                     break;
                 //竞品
                 case 2:
                     //总额
                     this.loadData(Endpoint.platformTotal, CacheField.platformTotal, refresher);
-                    this.loadData(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, refresher, null, this.sendData);
-                    this.loadData(Endpoint.enemyBar, CacheField.enemyBar, refresher, null, this.sendData);
+                    this.loadData(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, refresher, null, {dataType:parseInt(this.enemyDataType)});
+                    this.loadData(Endpoint.enemyBar, CacheField.enemyBar, refresher);
                     break;
                 //传统理财
                 case 3:
