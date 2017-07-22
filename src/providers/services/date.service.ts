@@ -13,7 +13,6 @@ export class DateService {
     _date: any;
 
     constructor(public http: Http, public api: Api, public storage: Storage) {
-        console.log(3)
         this.storage.get(CacheField.dateList).then((data)=>{
             if(!!data) {
                 this._date = data;

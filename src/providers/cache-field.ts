@@ -14,5 +14,9 @@ export const CacheField = {
 
     regularCompare:'_regularCompare',  //传统理财和基金渠道收益对比
     regularTrend:'_regularTrend',  //传统理财利率趋势
-    fundTrend:'_fundTrend'  //基金年化收益率趋势
+    fundTrend:'_fundTrend',  //基金年化收益率趋势
+
+    saleTotal:'_saleTotal', //引入额和销售额总数
+    saleChannelIn:'_saleChannelIn', //引入渠道分布
+    saleChannelOut:'_saleChannelOut', //销售渠道分布
 };

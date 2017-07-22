@@ -26,6 +26,13 @@ export const Endpoint = {
 
     regularCompare:'assets/data/platforms-compare-5.json',  //传统理财和基金渠道收益对比
     regularTrend:'assets/data/platforms-line-3.json',  //传统理财利率趋势
-    fundTrend:'assets/data/fund-rate-1.json'  //基金年化收益率趋势
+    fundTrend:'assets/data/fund-rate-1.json',  //基金年化收益率趋势
+
+    /**
+     * C2B 资产运营统计
+     * */
+    saleTotal:'assets/data/main-3.json',  //引入额和销售额总数
+    saleChannelIn:'assets/data/channel-data-1.json',  //引入渠道分布
+    saleChannelOut:'assets/data/channel-data-1.json',  //销售渠道分布
 
 };

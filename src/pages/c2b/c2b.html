@@ -20,7 +20,8 @@
         <ion-slide>
             <div class="total-data">
                 <p>本日引入额</p>
-                <h2><span ion-text color="danger">233</span></h2>
+                <h2 ion-text [innerHTML]="saleTotalData.totalAssetsIn[0]"
+                    color="{{saleTotalData.totalAssetsIn[1]=='true'?'danger':(saleTotalData.totalAssetsIn[1]=='false'?'secondary':'')}}"></h2>
             </div>
             <ion-list ngClass="model-title">
                 <ion-item>
@@ -31,52 +32,38 @@
                 </ion-item>
             </ion-list>
             <div>
-                <ion-segment [(ngModel)]="operateDataType" ngClass="my-segment">
-                    <ion-segment-button value="1">引入额</ion-segment-button>
-                    <ion-segment-button value="2">收益率</ion-segment-button>
-                    <ion-segment-button value="3">期 限</ion-segment-button>
+                <ion-segment [(ngModel)]="saleChannelTypeIn" ngClass="my-segment">
+                    <ion-segment-button value="2" (click)="saleChannelSegmentIn()">引入额</ion-segment-button>
+                    <ion-segment-button value="1" (click)="saleChannelSegmentIn()">收益率</ion-segment-button>
+                    <ion-segment-button value="3" (click)="saleChannelSegmentIn()">期 限</ion-segment-button>
                 </ion-segment>
-                <div [ngSwitch]="operateDataType" padding>
-                    <div *ngSwitchCase="'1'">
+                <div [ngSwitch]="saleChannelTypeIn" padding>
+                    <div *ngSwitchCase="'2'">
                         <ion-row>
                             <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
                             <ion-col text-right><span ion-text color="gray">引入额度(万元)</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
+                            <ion-row *ngFor="let item of saleChannelDataIn[2]" [style.background-size]="item.percent*100+'% 100%'">
+                                <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
-                                <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
+                                    <span [innerHTML]="item.number"></span>
+                                    <ion-icon name="arrow-down"></ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>
                     </div>
-                    <div *ngSwitchCase="'2'">
+                    <div *ngSwitchCase="'1'">
                         <ion-row>
                             <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
                             <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
+                            <ion-row *ngFor="let item of saleChannelDataIn[1]" [style.background-size]="item.percent*100+'% 100%'">
+                                <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
-                                <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
+                                    <span [innerHTML]="item.number"></span>
+                                    <ion-icon name="arrow-down"></ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>
@@ -110,7 +97,8 @@
         <ion-slide>
             <div class="total-data">
                 <p>本日销售额</p>
-                <h2><span ion-text color="danger">233</span></h2>
+                <h2 ion-text [innerHTML]="saleTotalData.totalAssetsOut[0]"
+                    color="{{saleTotalData.totalAssetsOut[1]=='true'?'danger':(saleTotalData.totalAssetsOut[1]=='false'?'secondary':'')}}"></h2>
             </div>
             <ion-list ngClass="model-title">
                 <ion-item>
@@ -121,12 +109,12 @@
                 </ion-item>
             </ion-list>
             <div>
-                <ion-segment [(ngModel)]="operateDataType" ngClass="my-segment">
+                <ion-segment [(ngModel)]="saleChannelTypeOut" ngClass="my-segment">
                     <ion-segment-button value="1">引入额</ion-segment-button>
                     <ion-segment-button value="2">收益率</ion-segment-button>
                     <ion-segment-button value="3">期 限</ion-segment-button>
                 </ion-segment>
-                <div [ngSwitch]="operateDataType" padding>
+                <div [ngSwitch]="saleChannelTypeOut" padding>
                     <div *ngSwitchCase="'1'">
                         <ion-row>
                             <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
@@ -211,13 +199,17 @@
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>利润走势</h2>
-                    <ion-note item-right><ion-icon name="arrow-up"></ion-icon></ion-note>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
                 </ion-item>
             </ion-list>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>资产健康值</h2>
-                    <ion-note item-right><ion-icon name="arrow-up"></ion-icon></ion-note>
+                    <ion-note item-right>
+                        <ion-icon name="arrow-up"></ion-icon>
+                    </ion-note>
                 </ion-item>
             </ion-list>
         </ion-slide>

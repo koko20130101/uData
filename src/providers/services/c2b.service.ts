@@ -1,0 +1,148 @@
+import {Injectable} from '@angular/core';
+import {Storage} from '@ionic/storage';
+import moment from 'moment';
+
+import {Api} from '../api';
+import {CacheField} from '../cache-field'
+
+import {GlobalVars} from '../services/global.service';
+import {PublicFactory} from '../factory/public.factory';
+import {ListPipe} from '../../providers/pipes/list.pipe';
+
+@Injectable()
+export class C2bService {
+
+    //引入额和销售额的总数
+    saleData: any = {};
+    saleChannelDataIn: any = {};
+    saleChannelDataOut: any = {};
+
+    constructor(public api: Api,
+                public globalVars: GlobalVars,
+                public publicFactory: PublicFactory,
+                public listPipe: ListPipe,
+                public storage: Storage) {
+        //从本地存储中取数据
+        this.storage.get(CacheField.saleTotal).then((data)=> {
+            if (!!data) {
+                this.saleData = data;
+            }
+        });
+        this.storage.get(CacheField.saleChannelIn).then((data)=> {
+            if (!!data) {
+                this.saleChannelDataIn = data;
+            }
+        })
+    }
+
+    /**
+     * 从服务器请求数据
+     * loadValue(接口，本地存储key,post数据)
+     * */
+    loadValue(endpoint, cacheKey, sendData?: any) {
+        let _instance = this.globalVars.getInstance();
+        let _sendData = {
+            type: _instance.dateInfo.unit.tip,
+            now: _instance.dateInfo.sendDate
+        };
+        if (!!sendData) {
+            Object.assign(_sendData, sendData);
+        }
+        //发起请求
+        let req = this.api.post(endpoint, _sendData).share();
+        req.map(res => res.json())
+            .subscribe(res => {
+                let _res: any = res;
+                //当前时间
+                let _thisTime = moment().unix();
+                let _cacheData: any;
+
+                switch (cacheKey) {
+                    //==> 总额
+                    case CacheField.saleTotal:
+                        _cacheData = this.saleData;
+                        //格式化数据
+                        for (let key in _res.data) {
+                            // console.log(key)
+                            _res.data[key][0] = this.publicFactory.moneyFormatToHtml(_res.data[key][0]);
+                            // console.log(_res[key][0])
+                        }
+                        //添加时间戳
+                        Object.assign(_res.data, {stamp: _thisTime});
+                        break;
+
+                    //==> 引入渠道分布
+                    case CacheField.saleChannelIn:
+                        _cacheData = this.saleChannelDataIn;
+                        if (_res.dataType == 2) {
+                            //格式化数据
+                            for (let item of _res.data.list) {
+                                item.number = this.publicFactory.moneyFormatToHtml(item.number);
+                            }
+                        }
+                        //通过管道排序:1为降序，0为升序
+                        _res.data.list = this.listPipe.orderBy(_res.data.list, ['percent'], 1);
+                        let temp: any = {};
+                        temp[_res.dataType] = _res.data.list;
+                        //添加时间戳
+                        Object.assign(temp, {stamp: _thisTime});
+                        _res.data = temp;
+                        break;
+                    default:
+                        _cacheData = {};
+                        break;
+                }
+
+                //如果本地总数据超过60天(5184000 秒),则清空数据
+                if (!_cacheData.stamp || _cacheData.stamp + _instance.cacheTime.long < _thisTime) {
+                    _cacheData = {};
+                    Object.assign(_cacheData, {stamp: _thisTime});
+                }
+                if (!!_cacheData[_instance.dateInfo.currentDate]) {
+                    Object.assign(_cacheData[_instance.dateInfo.currentDate], _res.data);
+                } else {
+                    _cacheData[_instance.dateInfo.currentDate] = _res.data;
+                }
+
+                //重新赋值
+                switch (cacheKey) {
+                    case CacheField.saleTotal:
+                        this.saleData = _cacheData;
+                        break;
+                    case CacheField.saleChannelIn:
+                        this.saleChannelDataIn = _cacheData;
+                        break;
+                    default:
+                        _cacheData = {};
+                        break;
+                }
+
+                //存储到本地
+                this.storage.set(cacheKey, _cacheData);
+
+            });
+        return req;
+    }
+
+    /**
+     * @比较本地数据的时间戳
+     * @getValue(本地存储key)
+     * */
+    getValue(key) {
+        let _data: any;
+        switch (key) {
+            case CacheField.saleTotal:
+                //调用公共方法中的对比时间戳方法,得到返回的数据
+                _data = this.publicFactory.checkValueStamp(this.saleData);
+                break;
+            case CacheField.saleChannelIn:
+                _data = this.publicFactory.checkValueStamp(this.saleChannelDataIn);
+                break;
+        }
+        if (!!_data) {
+            return _data;
+        } else {
+            return false;
+        }
+    }
+}
