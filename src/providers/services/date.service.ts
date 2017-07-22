@@ -10,10 +10,15 @@ import {CacheField} from '../cache-field';
 
 @Injectable()
 export class DateService {
-    private _date: any;
+    _date: any;
 
     constructor(public http: Http, public api: Api, public storage: Storage) {
-
+        console.log(3)
+        this.storage.get(CacheField.dateList).then((data)=>{
+            if(!!data) {
+                this._date = data;
+            }
+        })
     }
 
     loadDateList(sendData: any) {
@@ -34,15 +39,11 @@ export class DateService {
 
     getValue() {
         let today = moment().format('YYYYMMDD');
-        //如果数据符合时间戳
-        return this.storage.get(CacheField.dateList).then(data=> {
-            //对比时间戳
-            if (!!data && data.stamp == today) {
-                this._date = data;
-                return data;
-            } else {
-                return false;
-            }
-        });
+        //对比时间戳
+        if (!!this._date && this._date.stamp == today) {
+            return this._date;
+        } else {
+            return false;
+        }
     }
 }

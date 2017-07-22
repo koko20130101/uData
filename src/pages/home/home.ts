@@ -7,6 +7,7 @@ import {C2bPage} from '../c2b/c2b';
 import {LingXiPage} from '../lingxi/lingxi';
 import {BankListPage} from '../bank-list/bank-list';
 
+import {CacheField} from '../../providers/cache-field';
 import {GlobalVars} from  '../../providers/services/global.service';
 import {HomeService} from '../../providers/services/home.service';
 
@@ -95,6 +96,13 @@ export class HomePage {
             }
         })
     }
+
+    removeCache(){
+        for(let key in CacheField) {
+            this.storage.remove(CacheField[key]);
+        }
+    }
+
     //下拉刷新
     doRefresh(refresher: Refresher) {
         setTimeout(() => {
