@@ -32,14 +32,14 @@
                         color="{{totalData.totalUCS[1]=='true'?'danger':(totalData.totalUCS[1]=='false'?'secondary':'')}}"></h2>
                 </div>
                 <ion-list class="model-title">
-                    <ion-item>
+                    <ion-item (click)="showContent(0)">
                         <h2>各平台指数排行</h2>
                         <ion-note item-right>
-                            <ion-icon name="arrow-down"></ion-icon>
+                            <ion-icon name="{{modelContent[0] ? 'arrow-down':'arrow-down'}}"></ion-icon>
                         </ion-note>
                     </ion-item>
                 </ion-list>
-                <div class="data-item-content">
+                <div class="model-content" *ngIf="modelContent[0]">
                     <ion-segment [(ngModel)]="dataType" ngClass="my-segment">
                         <ion-segment-button value="2" (click)="ucsPlatformExponent()">交易额</ion-segment-button>
                         <ion-segment-button value="1" (click)="ucsPlatformExponent()">收益率</ion-segment-button>
@@ -70,7 +70,7 @@
                                 <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row *ngFor="let item of platformsCompareData[1]">
+                                <ion-row *ngFor="let item of platformsCompareData[1]" [style.background-size]="item.percent*100+'% 100%'">
                                     <ion-col text-left>{{item.bankName}}</ion-col>
                                     <ion-col text-right>
                                         {{item.number}}
@@ -86,7 +86,7 @@
                                 <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row *ngFor="let item of platformsCompareData[3]">
+                                <ion-row *ngFor="let item of platformsCompareData[3]" [style.background-size]="item.percent*100+'% 100%'">
                                     <ion-col text-left>{{item.bankName}}</ion-col>
                                     <ion-col text-right>
                                         {{item.number}}
@@ -102,7 +102,7 @@
                                 <ion-col text-right><span ion-text color="gray">项目数(个)</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row *ngFor="let item of platformsCompareData[4]">
+                                <ion-row *ngFor="let item of platformsCompareData[4]" [style.background-size]="item.percent*100+'% 100%'">
                                     <ion-col text-left>{{item.bankName}}</ion-col>
                                     <ion-col text-right>
                                         {{item.number}}
@@ -126,14 +126,14 @@
                         color="{{totalData.totalEnemy[1]=='true'?'danger':(totalData.totalEnemy[1]=='false'?'secondary':'')}}"></h2>
                 </div>
                 <ion-list class="model-title">
-                    <ion-item>
+                    <ion-item (click)="showContent(1)">
                         <h2>各平台指数排行</h2>
                         <ion-note item-right>
                             <ion-icon name="arrow-down"></ion-icon>
                         </ion-note>
                     </ion-item>
                 </ion-list>
-                <div class="model-content">
+                <div class="model-content" *ngIf="modelContent[1]">
                     <ion-segment [(ngModel)]="enemyDataType" ngClass="my-segment">
                         <ion-segment-button value="2" (click)="enemyPlatformExponent()">交易额</ion-segment-button>
                         <ion-segment-button value="1" (click)="enemyPlatformExponent()">收益率</ion-segment-button>
@@ -148,7 +148,7 @@
                                 <ion-col text-right><span ion-text color="gray">金额(元)</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row *ngFor="let item of enemyPlatformsCompareData[2]">
+                                <ion-row *ngFor="let item of enemyPlatformsCompareData[2]" [style.background-size]="item.percent*100+'% 100%'">
                                     <ion-col col-4 text-left>{{item.bankName}}</ion-col>
                                     <ion-col text-right>
                                         <span [innerHTML]="item.number"></span>
@@ -164,7 +164,7 @@
                                 <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row *ngFor="let item of enemyPlatformsCompareData[1]">
+                                <ion-row *ngFor="let item of enemyPlatformsCompareData[1]" [style.background-size]="item.percent*100+'% 100%'">
                                     <ion-col col-4 text-left>{{item.bankName}}</ion-col>
                                     <ion-col text-right>
                                         <span [innerHTML]="item.number"></span>
@@ -180,7 +180,7 @@
                                 <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row *ngFor="let item of enemyPlatformsCompareData[3]">
+                                <ion-row *ngFor="let item of enemyPlatformsCompareData[3]" [style.background-size]="item.percent*100+'% 100%'">
                                     <ion-col col-4 text-left>{{item.bankName}}</ion-col>
                                     <ion-col text-right>
                                         <span [innerHTML]="item.number"></span>
@@ -196,7 +196,7 @@
                                 <ion-col text-right><span ion-text color="gray">项目数(个)</span></ion-col>
                             </ion-row>
                             <div class="info-list info-list-bg">
-                                <ion-row *ngFor="let item of enemyPlatformsCompareData[4]">
+                                <ion-row *ngFor="let item of enemyPlatformsCompareData[4]" [style.background-size]="item.percent*100+'% 100%'">
                                     <ion-col col-4 text-left>{{item.bankName}}</ion-col>
                                     <ion-col text-right>
                                         <span [innerHTML]="item.number"></span>
@@ -213,21 +213,53 @@
         <ion-slide>
             <div padding-vertical>
                 <ion-list class="model-title">
-                    <ion-item>
+                    <ion-item (click)="showContent(2)">
                         <h2>定期理财利率统计</h2>
                         <ion-note item-right>
                             <ion-icon name="arrow-down"></ion-icon>
                         </ion-note>
                     </ion-item>
                 </ion-list>
+                <div padding ngClass="platform-info" *ngIf="modelContent[2]">
+                    <h4>渠道收益率对比</h4>
+                    <ion-row>
+                        <ion-col text-left><span ion-text color="gray">平台名称</span></ion-col>
+                        <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
+                    </ion-row>
+                    <div class="info-list info-list-bg">
+                        <ion-row *ngFor="let item of regularCompareData[1]" [style.background-size]="item.percent*100+'% 100%'">
+                            <ion-col text-left>{{item.bankName}}</ion-col>
+                            <ion-col text-right>
+                                {{item.number}}
+                                <ion-icon name="arrow-down"></ion-icon>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                </div>
                 <ion-list class="model-title">
-                    <ion-item>
+                    <ion-item (click)="showContent(3)">
                         <h2>基金七日年化率统计</h2>
                         <ion-note item-right>
                             <ion-icon name="arrow-down"></ion-icon>
                         </ion-note>
                     </ion-item>
                 </ion-list>
+                <div padding ngClass="platform-info" *ngIf="modelContent[3]">
+                    <h4>渠道收益率对比</h4>
+                    <ion-row>
+                        <ion-col text-left><span ion-text color="gray">平台名称</span></ion-col>
+                        <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
+                    </ion-row>
+                    <div class="info-list info-list-bg">
+                        <ion-row *ngFor="let item of regularCompareData[2]" [style.background-size]="item.percent*100+'% 100%'">
+                            <ion-col text-left>{{item.bankName}}</ion-col>
+                            <ion-col text-right>
+                                {{item.number}}
+                                <ion-icon name="arrow-down"></ion-icon>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                </div>
             </div>
         </ion-slide>
 

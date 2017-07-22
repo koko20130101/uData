@@ -16,7 +16,7 @@ export class ListPipe {
                 data.Duration <= maxTerm;
         });
     }
-    //数组排序 order(要排序的数组,排序字段）
+    //数组排序 order(要排序的数组,排序字段,升0降1）
     orderBy(value,conditions?,direction?){
         return value.sort((a:any,b:any)=>{
             for(let cot of conditions) {

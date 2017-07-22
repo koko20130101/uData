@@ -20,25 +20,41 @@ export class PlatformTotalPage {
     platformType = "1";
     dataType = "2";     //各平台指数排行
     enemyDataType = "2";     //竞品平台指数排行
+    modelContent: any[] = [1, 1, 1, 1];  //list内容展开收起状态
     dateInstance: any;
+    //总额
     totalData: any = {
         totalUCS: ['--', ''],
         totalEnemy: ['--', ''],
     };
+    //折线图数据
     trendData: any;
+    //柱状图数据
     enemyBarData: any;
+    //平台指数数据
     platformsCompareData: any = {
         1: [],
         2: [],
         3: [],
         4: [],
     };
+    //竞口平台指数数据
     enemyPlatformsCompareData: any = {
         1: [],
         2: [],
         3: [],
         4: [],
     };
+    //传统理财和基金渠道收益对比
+    regularCompareData: any = {
+        1: [],
+        2: []
+    };
+    //传统理财折线图
+    regularTrendData: any ;
+    //基金折线图
+    fundTrendData: any ;
+
     sendData: any = {
         dataType: 2
     };
@@ -75,6 +91,14 @@ export class PlatformTotalPage {
         this.publicFactory.unitInfo.observers.pop();
     }
 
+    showContent(value){
+        if(this.modelContent[value]) {
+            this.modelContent[value] = 0;
+        }else{
+            this.modelContent[value] = 1;
+        }
+    }
+
     /**
      * 从服务器加载数据
      * loadData(接口,本地存储key,下拉刷新对象,loading对象)
@@ -96,6 +120,9 @@ export class PlatformTotalPage {
                     case CacheField.enemyPlatformsCompare:
                         Object.assign(this.enemyPlatformsCompareData, res._body.data);
                         break;
+                    case CacheField.regularCompare:
+                        Object.assign(this.regularCompareData, res._body.data);
+                        break;
                     default:
                         break;
                 }
@@ -103,7 +130,7 @@ export class PlatformTotalPage {
 
             this.globalVars.loaders.pop();
 
-            if (!!refresher) {
+            if (!!refresher && this.globalVars.loaders.length == 0) {
                 refresher.complete();
             }
             if (!!loader && this.globalVars.loaders.length == 0) {
@@ -114,9 +141,9 @@ export class PlatformTotalPage {
 
     /**
      * 从本地存储中获取数据
-     * getDataFromCache(接口,本地存储key)
+     * getDataFromCache(接口,本地存储key,资源类型标识)
      * */
-    getDataFromCache(endpoint, cacheKey) {
+    getDataFromCache(endpoint, cacheKey, source?: any) {
         let _totalData: any = this.platformService.getValue(cacheKey);
         switch (cacheKey) {
             //总额
@@ -128,7 +155,7 @@ export class PlatformTotalPage {
                     this.sendData = null;
                     break;
                 }
-                //网金平台指数排行
+            //网金平台指数排行
             case CacheField.platformsCompare:
                 if (!!_totalData && !!_totalData[this.dataType]) {
                     this.platformsCompareData = _totalData;
@@ -137,7 +164,7 @@ export class PlatformTotalPage {
                     this.sendData = {dataType: parseInt(this.dataType)};
                     break;
                 }
-                //网金成交额折线图
+            //网金成交额折线图
             case CacheField.platformTrend:
                 if (!!_totalData) {
                     this.trendData = _totalData;
@@ -146,7 +173,7 @@ export class PlatformTotalPage {
                     this.sendData = null;
                     break;
                 }
-                //竞品平台指数排行
+            //竞品平台指数排行
             case CacheField.enemyPlatformsCompare:
                 if (!!_totalData && !!_totalData[this.enemyDataType]) {
                     this.enemyPlatformsCompareData = _totalData;
@@ -159,6 +186,36 @@ export class PlatformTotalPage {
             case CacheField.enemyBar:
                 if (!!_totalData) {
                     this.enemyBarData = _totalData;
+                    return;
+                } else {
+                    this.sendData = null;
+                    break;
+                }
+            //传统理财和基金渠道收益对比
+            case CacheField.regularCompare:
+                if (!!_totalData && !!_totalData[source]) {
+                    this.regularCompareData = _totalData;
+                    return;
+                } else if (source == 1) {
+                    this.sendData = {dataType: 1, sourceType: 1};
+                    break;
+                } else if (source == 2) {
+                    this.sendData = {dataType: 1, sourceType: 2};
+                    break;
+                }
+            //传统理财额折线图
+            case CacheField.regularTrend:
+                if (!!_totalData) {
+                    this.regularTrendData = _totalData;
+                    return;
+                } else {
+                    this.sendData = null;
+                    break;
+                }
+            //基金折线图
+            case CacheField.fundTrend:
+                if (!!_totalData) {
+                    this.fundTrendData = _totalData;
                     return;
                 } else {
                     this.sendData = null;
@@ -184,24 +241,38 @@ export class PlatformTotalPage {
 
     //下拉刷新
     doRefresh(refresher: Refresher) {
+        let num = Number(this.platformType);
         setTimeout(() => {
             //总数据
-            this.loadData(Endpoint.platformTotal, CacheField.platformTotal, refresher);
-            switch (this.platformType) {
+            switch (num) {
                 //网金
-                case '1':
+                case 1:
+                    //总额
+                    this.loadData(Endpoint.platformTotal, CacheField.platformTotal, refresher);
                     //折线图数据
                     this.loadData(Endpoint.platformTrend, CacheField.platformTrend, refresher);
                     //平台指数排行数据
                     this.loadData(Endpoint.platformsCompare, CacheField.platformsCompare, refresher, null, this.sendData);
                     break;
                 //竞品
-                case '2':
+                case 2:
+                    //总额
+                    this.loadData(Endpoint.platformTotal, CacheField.platformTotal, refresher);
                     this.loadData(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, refresher, null, this.sendData);
                     this.loadData(Endpoint.enemyBar, CacheField.enemyBar, refresher, null, this.sendData);
                     break;
                 //传统理财
-                case '3':
+                case 3:
+                    this.loadData(Endpoint.regularCompare, CacheField.regularCompare, refresher, null, {
+                        dataType: 1,
+                        sourceType: 1
+                    });
+                    this.loadData(Endpoint.regularCompare, CacheField.regularCompare, refresher, null, {
+                        dataType: 1,
+                        sourceType: 2
+                    });
+                    this.loadData(Endpoint.regularTrend, CacheField.regularTrend, refresher);
+                    this.loadData(Endpoint.fundTrend, CacheField.fundTrend, refresher);
                     break;
             }
 
@@ -211,21 +282,25 @@ export class PlatformTotalPage {
     getPlatformSegment() {
         let num = Number(this.platformType);
         this.mainSlides.slideTo(num - 1);
-
-        this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
         switch (num) {
             //网金
             case 1:
+                this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
                 this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
                 this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare);
                 break;
             //竞品
             case 2:
+                this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
                 this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare);
                 this.getDataFromCache(Endpoint.enemyBar, CacheField.enemyBar);
                 break;
             //传统理财
             case 3:
+                this.getDataFromCache(Endpoint.regularCompare, CacheField.regularCompare, 1);
+                this.getDataFromCache(Endpoint.regularCompare, CacheField.regularCompare, 2);
+                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend);
+                this.getDataFromCache(Endpoint.fundTrend, CacheField.fundTrend);
                 break;
         }
     }

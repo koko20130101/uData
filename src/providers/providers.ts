@@ -10,7 +10,6 @@ export {
     Api,
     User,
     Settings,
-    Items,
     PublicFactory,
     PopupFactory,
     ListPipe
