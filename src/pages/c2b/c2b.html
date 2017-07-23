@@ -15,6 +15,9 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)" ngClass="my-refresher">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-slides #MainSlides ngClass="my-slide" (ionSlideDidChange)="slideChange()">
         <!--引入额-->
         <ion-slide>
@@ -74,18 +77,11 @@
                             <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
+                            <ion-row *ngFor="let item of saleChannelDataIn[3]" [style.background-size]="item.percent*100+'% 100%'">
+                                <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
-                                <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
+                                    <span [innerHTML]="item.number"></span>
+                                    <ion-icon name="arrow-down"></ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>
@@ -110,51 +106,37 @@
             </ion-list>
             <div>
                 <ion-segment [(ngModel)]="saleChannelTypeOut" ngClass="my-segment">
-                    <ion-segment-button value="1">引入额</ion-segment-button>
-                    <ion-segment-button value="2">收益率</ion-segment-button>
-                    <ion-segment-button value="3">期 限</ion-segment-button>
+                    <ion-segment-button value="2" (click)="saleChannelSegmentOut()">引入额</ion-segment-button>
+                    <ion-segment-button value="1" (click)="saleChannelSegmentOut()">收益率</ion-segment-button>
+                    <ion-segment-button value="3" (click)="saleChannelSegmentOut()">期 限</ion-segment-button>
                 </ion-segment>
                 <div [ngSwitch]="saleChannelTypeOut" padding>
-                    <div *ngSwitchCase="'1'">
+                    <div *ngSwitchCase="'2'">
                         <ion-row>
                             <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
                             <ion-col text-right><span ion-text color="gray">引入额度(万元)</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
+                            <ion-row *ngFor="let item of saleChannelDataOut[2]" [style.background-size]="item.percent*100+'% 100%'">
+                                <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
-                                <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
+                                    <span [innerHTML]="item.number"></span>
+                                    <ion-icon name="arrow-down"></ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>
                     </div>
-                    <div *ngSwitchCase="'2'">
+                    <div *ngSwitchCase="'1'">
                         <ion-row>
                             <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
                             <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
+                            <ion-row *ngFor="let item of saleChannelDataOut[1]" [style.background-size]="item.percent*100+'% 100%'">
+                                <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
-                                <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
+                                    <span [innerHTML]="item.number"></span>
+                                    <ion-icon name="arrow-down"></ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>
@@ -165,18 +147,11 @@
                             <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
+                            <ion-row *ngFor="let item of saleChannelDataOut[3]" [style.background-size]="item.percent*100+'% 100%'">
+                                <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col text-left>宁波</ion-col>
-                                <ion-col text-right>
-                                    <span ion-text color="secondary">2324324</span>
-                                    <ion-icon name="arrow-up" color="danger"></ion-icon>
+                                    <span [innerHTML]="item.number"></span>
+                                    <ion-icon name="arrow-down"></ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>
@@ -189,11 +164,11 @@
             <ion-row ngClass="total-data">
                 <ion-col text-left>
                     <p>存量资产</p>
-                    <h2>3243242</h2>
+                    <h3 ion-text [innerHTML]="assetsMain.TotalAssetAmount" color="danger"></h3>
                 </ion-col>
                 <ion-col text-left>
                     <p>可用资产</p>
-                    <h2>9888383</h2>
+                    <h3 ion-text [innerHTML]="assetsMain.SurplusAmount" color="danger"></h3>
                 </ion-col>
             </ion-row>
             <ion-list ngClass="model-title">

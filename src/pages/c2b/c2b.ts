@@ -26,11 +26,32 @@ export class C2bPage {
         totalAssetsIn: ['--', ''],
         totalAssetsOut: ['--', ''],
     };
+    //资产运营总额
+    assetsMain: any = {
+        TotalAssetAmount: ['--', ''],
+        SurplusAmount: ['--', ''],
+    };
     //引入渠道分布
     saleChannelDataIn:any={
         1:[],
-        2:[]
+        2:[],
+        3:[]
     };
+    //销售渠道分布
+    saleChannelDataOut:any={
+        1:[],
+        2:[],
+        3:[]
+    };
+    //折线图
+    assetsInOutData:any={
+        "in":[],
+        "out":[]
+    };
+    profitData: any = {};
+    assetsHealthyData: any = {};
+    grossMarginData: any = {};
+    inoutFlag: any = 'in';
 
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
@@ -49,14 +70,16 @@ export class C2bPage {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
             if (data.page == this.pageName) {
-                console.log(data.page)
+                // console.log(data.page)
+                this.goSegment();
             }
         });
     }
 
     ionViewDidEnter() {
         this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
-        this.getDataFromCache(Endpoint.saleChannelIn, CacheField.saleChannelIn);
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
+        this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
     }
 
     ionViewWillLeave() {
@@ -78,7 +101,7 @@ export class C2bPage {
                     this.saleTotalData = _cacheData;
                     return;
                 } else {
-                    _sendData = null
+                    _sendData = null;
                     break;
                 }
             //引入渠道分布
@@ -87,7 +110,61 @@ export class C2bPage {
                     this.saleChannelDataIn = _cacheData;
                     return;
                 } else {
-                    _sendData = {dataType:parseInt(this.saleChannelTypeIn)};;
+                    _sendData = {dataType:parseInt(this.saleChannelTypeIn),inoutFlag:this.inoutFlag};
+                    break;
+                }
+            //销售渠道分布
+            case CacheField.saleChannelOut:
+                if (!!_cacheData && !!_cacheData[this.saleChannelTypeOut]) {
+                    this.saleChannelDataOut = _cacheData;
+                    return;
+                } else {
+                    _sendData = {dataType:parseInt(this.saleChannelTypeOut),inoutFlag:this.inoutFlag};
+                    break;
+                }
+            //折线图
+            case CacheField.assetsInOut:
+                if (!!_cacheData && !!_cacheData[this.inoutFlag]) {
+                    this.assetsInOutData = _cacheData;
+                    return;
+                } else {
+                    _sendData = {inoutFlag:this.inoutFlag};
+                    break;
+                }
+            //运营分析总额
+            case CacheField.assetsMain:
+                if (!!_cacheData) {
+                    this.assetsMain = _cacheData;
+                    return;
+                } else {
+                    _sendData = null;
+                    break;
+                }
+            //运营分析总额
+            case CacheField.profitData:
+                if (!!_cacheData) {
+                    this.profitData = _cacheData;
+                    return;
+                } else {
+                    _sendData = null;
+                    break;
+                }
+            //资产健康值
+            case CacheField.assetsHealthy:
+                if (!!_cacheData) {
+                    this.assetsHealthyData = _cacheData;
+                    return;
+                } else {
+                    _sendData = null;
+                    break;
+                }
+            //资产健康值
+            case CacheField.grossMargin:
+                if (!!_cacheData) {
+                    this.grossMarginData = _cacheData;
+                    return;
+                } else {
+                    _sendData = null;
                     break;
                 }
             default:
@@ -123,6 +200,21 @@ export class C2bPage {
                     case CacheField.saleChannelIn:
                         this.saleChannelDataIn = res._body.data;
                         break;
+                    case CacheField.saleChannelOut:
+                        this.saleChannelDataIn = res._body.data;
+                        break;
+                    case CacheField.assetsMain:
+                        this.assetsMain = res._body.data;
+                        break;
+                    case CacheField.profitData:
+                        this.profitData = res._body.data;
+                        break;
+                    case CacheField.assetsHealthy:
+                        this.assetsHealthyData = res._body.data;
+                        break;
+                    case CacheField.grossMargin:
+                        this.grossMarginData = res._body.data;
+                        break;
                     default:
                         break;
                 }
@@ -145,17 +237,25 @@ export class C2bPage {
         setTimeout(() => {
             //总数据
             switch (num) {
-                //网金
+                //引入
                 case 1:
                     //总额
                     this.loadData(Endpoint.saleTotal, CacheField.saleTotal, refresher);
+                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelIn, refresher,null,{inoutFlag:this.inoutFlag});
+                    this.loadData(Endpoint.assetsInOut, CacheField.assetsInOut, refresher,null,{inoutFlag:this.inoutFlag});
                     break;
-                //竞品
+                //
                 case 2:
-                    //总额
+                    this.loadData(Endpoint.saleTotal, CacheField.saleTotal, refresher);
+                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelOut, refresher,null,{inoutFlag:this.inoutFlag});
+                    this.loadData(Endpoint.assetsInOut, CacheField.assetsInOut, refresher,null,{inoutFlag:this.inoutFlag});
                     break;
                 //传统理财
                 case 3:
+                    this.loadData(Endpoint.assetsMain, CacheField.assetsMain, refresher);
+                    this.loadData(Endpoint.profitData, CacheField.profitData,refresher);
+                    this.loadData(Endpoint.assetsHealthy, CacheField.assetsHealthy,refresher);
+                    this.loadData(Endpoint.grossMargin, CacheField.grossMargin);
                     break;
             }
 
@@ -165,10 +265,37 @@ export class C2bPage {
     goSegment() {
         let num = Number(this.C2BType);
         this.mainSlides.slideTo(num - 1);
+        switch (num) {
+            //引入额
+            case 1:
+                this.inoutFlag = 'in';
+                this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
+                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
+                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
+                break;
+            //销售额
+            case 2:
+                this.inoutFlag = 'out';
+                this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
+                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut);
+                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
+                break;
+            //运营分析
+            case 3:
+                this.getDataFromCache(Endpoint.assetsMain, CacheField.assetsMain);
+                this.getDataFromCache(Endpoint.profitData, CacheField.profitData);
+                this.getDataFromCache(Endpoint.assetsHealthy, CacheField.assetsHealthy);
+                this.getDataFromCache(Endpoint.grossMargin, CacheField.grossMargin);
+                break;
+        }
     }
 
     saleChannelSegmentIn() {
-        this.getDataFromCache(Endpoint.saleChannelIn, CacheField.saleChannelIn);
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
+    }
+
+    saleChannelSegmentOut() {
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut);
     }
 
     slideChange() {

@@ -251,7 +251,6 @@ export class PlatformService {
      * @比较本地数据的时间戳
      * @getValue(本地存储key)
      * */
-
     getValue(key) {
         let _data: any;
         switch (key) {

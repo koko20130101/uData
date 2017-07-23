@@ -19,4 +19,9 @@ export const CacheField = {
     saleTotal:'_saleTotal', //引入额和销售额总数
     saleChannelIn:'_saleChannelIn', //引入渠道分布
     saleChannelOut:'_saleChannelOut', //销售渠道分布
+    assetsInOut:'_assetsInOut',  //销售趋势折线图
+    assetsMain:'_assetsMain',  //资产运营总额
+    profitData:'_profitData',  //资产总额对比
+    assetsHealthy:'_assetsHealthy',  //资产总额对比
+    grossMargin:'_grossMargin',  //毛利率折线图
 };

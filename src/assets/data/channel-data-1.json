@@ -685,6 +685,6 @@
   "Type": "day",
   "description": "成功返回消息",
   "Token": null,
-  "dataType": 1,
-  "sourceType": 0
+  "dataType": 2,
+  "inoutFlag": "in"
 }

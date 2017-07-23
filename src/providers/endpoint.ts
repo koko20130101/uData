@@ -32,7 +32,10 @@ export const Endpoint = {
      * C2B 资产运营统计
      * */
     saleTotal:'assets/data/main-3.json',  //引入额和销售额总数
-    saleChannelIn:'assets/data/channel-data-1.json',  //引入渠道分布
-    saleChannelOut:'assets/data/channel-data-1.json',  //销售渠道分布
-
+    saleChannelInOut:'assets/data/channel-data-1.json',  //引入和销售渠道分布
+    assetsInOut:'assets/data/assets-in.json',  //引入额和销售额趋势折线图
+    assetsMain:'assets/data/asset-main.json',  //资产运营总额
+    profitData:'assets/data/profit-data.json',  //资产总额对比
+    assetsHealthy:'assets/data/assets-healthy.json',  //资产健康值
+    grossMargin:'assets/data/gross-margin-data.json',  //毛利率折线图
 };
