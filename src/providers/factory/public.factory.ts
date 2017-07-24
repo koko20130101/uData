@@ -8,7 +8,7 @@ export class PublicFactory {
     //数据交互：选择单位
     unitInfo: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(public globalVars:GlobalVars) {
+    constructor(public globalVars: GlobalVars) {
 
     }
 
@@ -45,7 +45,7 @@ export class PublicFactory {
     }
 
     //检查数据时间戳
-    checkValueStamp(data,short?:boolean) {
+    checkValueStamp(data, short?: boolean) {
         let _data: any = data;
         //当前时间戳
         let _thisTime = moment().unix();
@@ -71,4 +71,19 @@ export class PublicFactory {
         }
     }
 
+    //格式化时间
+    formatTime(val) {
+        let timeString;
+        let ms = val;
+        let ss = 1000,
+            mi = ss * 60,
+            hh = mi * 60,
+            dd = hh * 24;
+        let day = Math.floor(ms / dd), //天
+            hour = Math.floor((ms - day * dd) / hh), //小时
+            minute = Math.floor((ms - day * dd - hour * hh) / mi), //分钟
+            second = Math.floor((ms - day * dd - hour * hh - minute * mi) / ss); //秒
+        timeString = day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+        return timeString
+    }
 }

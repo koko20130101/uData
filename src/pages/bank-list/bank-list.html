@@ -9,17 +9,10 @@
 </ion-header>
 <ion-content>
     <ul class="bank-info-list" padding-horizontal>
-        <li>
-            <div ngClass="bank-cmb" (click)="openBankDetail()">
-                <h4>323232</h4>
-                <p><span>招商银行</span><i class="icon"></i></p>
-                <div class="bank-logo"><i class="icon"></i></div>
-            </div>
-        </li>
-        <li>
-            <div ngClass="bank-lz" (click)="openBankDetail()">
-                <h4>322323232</h4>
-                <p><span>招商银行</span><i class="icon"></i></p>
+        <li *ngFor="let item of bankListData" >
+            <div ngClass="bank-cmb" (click)="openBankDetail(item)">
+                <h4 ion-text [innerHTML]="item.money"></h4>
+                <p><span>{{item.bankName}}</span><i class="icon"></i></p>
                 <div class="bank-logo"><i class="icon"></i></div>
             </div>
         </li>

@@ -24,4 +24,9 @@ export const CacheField = {
     profitData:'_profitData',  //资产总额对比
     assetsHealthy:'_assetsHealthy',  //资产总额对比
     grossMargin:'_grossMargin',  //毛利率折线图
+
+    bankList:'_bankList',  //网金平台列表
+    bankTotal:'_bankTotal',  //银行总数据
+    bankMoney:'_bankMoney',  //平台交易额折线图
+    bankChannel:'_bankChannel',  //平台交易额折线图
 };

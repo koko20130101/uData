@@ -76,10 +76,13 @@ export class PlatformTotalPage {
         });
     }
 
-    ionViewDidEnter() {
+    ionViewWillEnter() {
         this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
         this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
         this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare);
+    }
+
+    ionViewDidEnter() {
     }
 
     ionViewWillLeave() {
@@ -255,7 +258,7 @@ export class PlatformTotalPage {
                 case 2:
                     //总额
                     this.loadData(Endpoint.platformTotal, CacheField.platformTotal, refresher);
-                    this.loadData(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, refresher, null, {dataType:parseInt(this.enemyDataType)});
+                    this.loadData(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, refresher, null, {dataType: parseInt(this.enemyDataType)});
                     this.loadData(Endpoint.enemyBar, CacheField.enemyBar, refresher);
                     break;
                 //传统理财

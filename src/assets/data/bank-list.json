@@ -1,0 +1,215 @@
+{
+  "data": {
+    "list": [
+      {
+        "money": 14552.73,
+        "bankName": "江西",
+        "bankCode": "NC",
+        "hasB": true,
+        "up": false
+      },
+      {
+        "money": 4496.85,
+        "bankName": "珲春",
+        "bankCode": "HCUN",
+        "hasB": false,
+        "up": true
+      },
+      {
+        "money": 3625.06,
+        "bankName": "颍淮",
+        "bankCode": "YH",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 1480.88,
+        "bankName": "天府银行",
+        "bankCode": "NCHONG",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 1433,
+        "bankName": "甘肃",
+        "bankCode": "GS",
+        "hasB": false,
+        "up": true
+      },
+      {
+        "money": 722,
+        "bankName": "尧都",
+        "bankCode": "YD",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 660,
+        "bankName": "浦发",
+        "bankCode": "PF",
+        "hasB": true,
+        "up": true
+      },
+      {
+        "money": 250,
+        "bankName": "柳州",
+        "bankCode": "GXLZ",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 132.15,
+        "bankName": "浙商",
+        "bankCode": "ZS",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 110,
+        "bankName": "常熟",
+        "bankCode": "CRCB",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 71.48,
+        "bankName": "鄞州",
+        "bankCode": "YZOfZJ",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 18.44,
+        "bankName": "绵阳",
+        "bankCode": "Mysyyh",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 7.9,
+        "bankName": "德清",
+        "bankCode": "DQ",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "广州农商",
+        "bankCode": "GZNS",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "华瑞",
+        "bankCode": "HRUI",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "金谷农商",
+        "bankCode": "JG",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "南粤",
+        "bankCode": "GDNY",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "江苏",
+        "bankCode": "JS",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "齐鲁",
+        "bankCode": "QL",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "华润",
+        "bankCode": "HR",
+        "hasB": true,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "中信",
+        "bankCode": "CiticZX",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "郏县",
+        "bankCode": "JXIAN",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "青岛",
+        "bankCode": "QD",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "华兴",
+        "bankCode": "GZHX",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "泰安",
+        "bankCode": "TAN",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "洛阳",
+        "bankCode": "LUOYANG",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "招行",
+        "bankCode": "CMBC",
+        "hasB": true,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "西宁",
+        "bankCode": "XN",
+        "hasB": false,
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "新昌",
+        "bankCode": "XinChang",
+        "hasB": false,
+        "up": false
+      }
+    ]
+  },
+  "code": 1,
+  "Type": "week",
+  "description": "成功返回消息",
+  "Token": null,
+  "datatype": 0,
+  "sourcetype": 0
+}

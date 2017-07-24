@@ -38,4 +38,9 @@ export const Endpoint = {
     profitData:'assets/data/profit-data.json',  //资产总额对比
     assetsHealthy:'assets/data/assets-healthy.json',  //资产健康值
     grossMargin:'assets/data/gross-margin-data.json',  //毛利率折线图
+
+    bankList:'assets/data/bank-list.json',  //网金银行列表
+    bankTotal:'assets/data/main-2.json',  //银行总数据
+    bankMoney:'assets/data/bank-money.json',  //平台交易额折线图
+    bankChannel:'assets/data/channel-data.json',  //渠道占比
 };

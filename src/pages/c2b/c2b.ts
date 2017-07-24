@@ -76,10 +76,13 @@ export class C2bPage {
         });
     }
 
-    ionViewDidEnter() {
+    ionViewWillEnter() {
         this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
         this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
         this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
+    }
+
+    ionViewDidEnter() {
     }
 
     ionViewWillLeave() {

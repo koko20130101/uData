@@ -1,0 +1,82 @@
+{
+  "data": {
+    "total": [
+      "15619200.000000",
+      "true"
+    ],
+    "AverageRate": [
+      "5.42",
+      "true"
+    ],
+    "AverageDeal": [
+      "261.00",
+      "true"
+    ],
+    "AverageTerm": [
+      "1562.070000",
+      "true"
+    ],
+    "ProjectNumber": [
+      "26",
+      "false"
+    ],
+    "PeopleNumber": [
+      "383",
+      "true"
+    ],
+    "UserNumber": [
+      "12",
+      "false"
+    ],
+    "DealNumber": [
+      "644",
+      "true"
+    ],
+    "time": [
+      "20599",
+      "true"
+    ],
+    "repeatRate": [
+      "40.99",
+      "true"
+    ],
+    "activeRate": [
+      "40.99",
+      "true"
+    ],
+    "selfBank": [
+      "88.17",
+      "false"
+    ],
+    "heavyInvest": [
+      "0",
+      ""
+    ],
+    "newInvest": [
+      "0",
+      ""
+    ],
+    "newBindCard": [
+      "2",
+      "true"
+    ],
+    "newUser": [
+      "12",
+      "false"
+    ],
+    "otherDeal": [
+      "0.00",
+      ""
+    ],
+    "financingNumber": [
+      "16",
+      "true"
+    ]
+  },
+  "code": 1,
+  "Type": "day",
+  "description": "成功返回消息",
+  "Token": null,
+  "datatype": 0,
+  "sourcetype": 0
+}
