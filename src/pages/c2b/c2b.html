@@ -1,7 +1,9 @@
 <ion-header>
     <ion-navbar color="dark">
         <ion-title>{{'C2B_TITLE'| translate}}</ion-title>
-        <ucs-unit pageName="{{pageName}}"></ucs-unit>
+        <ion-buttons end>
+            <ucs-unit pageName="{{pageName}}"></ucs-unit>
+        </ion-buttons>
     </ion-navbar>
     <ion-toolbar ngClass="time-list" color="dark" text-center>
         <ucs-date pageName="{{pageName}}"></ucs-date>

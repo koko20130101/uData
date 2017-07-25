@@ -43,4 +43,10 @@ export const Endpoint = {
     bankTotal:'assets/data/main-2.json',  //银行总数据
     bankMoney:'assets/data/bank-money.json',  //平台交易额折线图
     bankChannel:'assets/data/channel-data.json',  //渠道占比
+    bankTrendRate:'assets/data/project-rate.json', //项目走势 > 收益率走势
+    bankTrendTerm:'assets/data/project-term.json', //项目走势 > 期限走势
+    bankTrendDeal:'assets/data/project-deal.json', //项目走势 > 发布规模走势
+    bankTotalSec:'assets/data/main-2-sec.json',  //二级市场交易总额
+    bankRateTrendSec:'assets/data/sec-rate.json',  //二级市场收益率趋势
+    bankAssetsType:'assets/data/assets-type.json',  //银行资产类型
 };

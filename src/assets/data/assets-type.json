@@ -1,0 +1,47 @@
+{
+  "data": {
+    "list": [
+      {
+        "value": 0.2,
+        "name": "个贷",
+        "number": 10,
+        "money": 554,
+        "term": 89,
+        "rate": 6.0,
+        "up": false
+      },
+      {
+        "value": 0.3,
+        "name": "企业贷",
+        "number": 20,
+        "money": 5468768977,
+        "term": 54,
+        "rate": 8.8,
+        "up": false
+      },
+      {
+        "value": 0.3,
+        "name": "票据",
+        "number": 66,
+        "money": 455,
+        "term": 10,
+        "rate": 4.0,
+        "up": false
+      },
+      {
+        "value": 0.2,
+        "name": "信用证",
+        "number": 66,
+        "money": 55,
+        "term": 100,
+        "rate": 6.0,
+        "up": false
+      }
+    ]
+  },
+  "code": 1,
+  "Type": "week",
+  "description": "sss",
+  "Token": null,
+  "datatype": 0
+}

@@ -83,6 +83,10 @@ ion-navbar.toolbar {
   }
 }
 .sub-total-data{
+  &.have-border {
+    border-top: 1px solid color($colors, dark, mid1);
+    padding-top:16px;
+  }
   h2 {
     margin: 0;
     font-size:2.4rem;
@@ -144,6 +148,13 @@ ion-navbar.toolbar {
   }
 }
 
+.info-list-bg {
+  .row {
+    background: color($colors, dark) url("../assets/img/bg-1.png") 0 0 no-repeat;
+  }
+}
+
+
 /*用户转化*/
 .user{
   height:305px;position: relative;
@@ -168,12 +179,6 @@ ion-navbar.toolbar {
   .item-4{top: -18px;z-index: 1;height: 62px;background: url(../assets/img/pyramid-4.png) 0 0 no-repeat;background-size:auto 100%;-webkit-background-size:auto 100%;
     .number{left: 20px;top: 29px;width: 190px;}
     .title{line-height: 34px;}
-  }
-}
-
-.info-list-bg {
-  .row {
-    background: color($colors, dark) url("../assets/img/bg-1.png") 0 0 no-repeat;
   }
 }
 

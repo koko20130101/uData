@@ -1,13 +1,18 @@
 <ion-header>
     <ion-navbar color="dark">
         <ion-title>{{'BANK_TITLE' | translate}}</ion-title>
-        <ucs-unit pageName="{{pageName}}"></ucs-unit>
+        <ion-buttons end>
+            <ucs-unit pageName="{{pageName}}"></ucs-unit>
+        </ion-buttons>
     </ion-navbar>
     <ion-toolbar ngClass="time-list" color="dark" text-center>
         <ucs-date pageName="{{pageName}}"></ucs-date>
     </ion-toolbar>
 </ion-header>
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)" ngClass="my-refresher">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ul class="bank-info-list" padding-horizontal>
         <li *ngFor="let item of bankListData" >
             <div ngClass="bank-cmb" (click)="openBankDetail(item)">

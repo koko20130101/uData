@@ -16,11 +16,12 @@ import {PopupFactory} from '../../providers/factory/popup.factory';
 })
 export class BankDetailPage {
     pageName: any = 'BankDetailPage';
-    objectType = '1';
-    objectStatusType = '1';
+    projectType = '1';
+    projectTrendType = '1';
     userOperateType = '1';
     dateInstance: any;
     bankInfo: any;
+    //平台数据
     bankTotalData:any = {
         total: ['--',''],
         AverageRate: [],
@@ -41,8 +42,28 @@ export class BankDetailPage {
         otherDeal: [],
         financingNumber: []
     };
+    //交易总额折线图
     bankMoneyData:any;
+    //渠道占比
     bankChannelData:any;
+    //二级市场数据总额
+    bankTotalSecData: any = {
+        secProjectNumber: [],
+        secReleaseNumber: [],
+        secDealNumber: [],
+        secPeriod: [],
+        averageTime: [],
+        secUser: [],
+        secRepeatRate: [],
+        secAverageRate: []
+    };
+    //二级市场收益率折线图
+    bankRateTrendSecData:any;
+    //资产类型
+    bankAssetsTypeData:any;
+    bankTrendRateData: any;
+    bankTrendTermData: any;
+    bankTrendDealData: any;
 
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
@@ -64,6 +85,10 @@ export class BankDetailPage {
                 this.getDataFromCache(Endpoint.bankTotal, CacheField.bankTotal);
                 this.getDataFromCache(Endpoint.bankMoney, CacheField.bankMoney);
                 this.getDataFromCache(Endpoint.bankChannel, CacheField.bankChannel);
+                this.getDataFromCache(Endpoint.bankTotalSec, CacheField.bankTotalSec);
+                this.getDataFromCache(Endpoint.bankRateTrendSec, CacheField.bankRateTrendSec);
+                this.getProjectType();
+                this.getProjectTrendType();
             }
         });
     }
@@ -75,6 +100,10 @@ export class BankDetailPage {
     ionViewDidEnter(){
         this.getDataFromCache(Endpoint.bankMoney, CacheField.bankMoney);
         this.getDataFromCache(Endpoint.bankChannel, CacheField.bankChannel);
+        this.getDataFromCache(Endpoint.bankTotalSec, CacheField.bankTotalSec);
+        this.getDataFromCache(Endpoint.bankRateTrendSec, CacheField.bankRateTrendSec);
+        this.getProjectType();
+        this.getProjectTrendType();
     }
 
     ionViewWillLeave() {
@@ -115,6 +144,54 @@ export class BankDetailPage {
                 } else {
                     break;
                 }
+            case CacheField.bankTotalSec:
+                if (!!_cacheData) {
+                    this.bankTotalSecData = _cacheData;
+                    return;
+                } else {
+                    Object.assign(_sendData, {cd: this.bankInfo.hasB});
+                    break;
+                }
+            case CacheField.bankRateTrendSec:
+                if (!!_cacheData) {
+                    this.bankRateTrendSecData = _cacheData;
+                    return;
+                } else {
+                    Object.assign(_sendData, {cd: this.bankInfo.hasB});
+                    break;
+                }
+            case CacheField.bankAssetsType:
+                if (!!_cacheData) {
+                    this.bankAssetsTypeData = _cacheData;
+                    return;
+                } else {
+                    Object.assign(_sendData, {cd: this.bankInfo.hasB});
+                    break;
+                }
+            case CacheField.bankTrendRate:
+                if (!!_cacheData) {
+                    this.bankTrendRateData = _cacheData;
+                    return;
+                } else {
+                    Object.assign(_sendData, {cd: this.bankInfo.hasB});
+                    break;
+                }
+            case CacheField.bankTrendTerm:
+                if (!!_cacheData) {
+                    this.bankTrendTermData = _cacheData;
+                    return;
+                } else {
+                    Object.assign(_sendData, {cd: this.bankInfo.hasB});
+                    break;
+                }
+            case CacheField.bankTrendDeal:
+                if (!!_cacheData) {
+                    this.bankTrendDealData = _cacheData;
+                    return;
+                } else {
+                    Object.assign(_sendData, {cd: this.bankInfo.hasB});
+                    break;
+                }
             default:
                 break;
         }
@@ -151,6 +228,23 @@ export class BankDetailPage {
                     case CacheField.bankChannel:
                         this.bankChannelData = res._body.data;
                         break;
+                    case CacheField.bankTotalSec:
+                        this.bankTotalSecData = res._body.data;
+                    case CacheField.bankRateTrendSec:
+                        this.bankRateTrendSecData = res._body.data;
+                        break;
+                    case CacheField.bankAssetsType:
+                        this.bankAssetsTypeData = res._body.data;
+                        break;
+                    case CacheField.bankTrendRate:
+                        this.bankTrendRateData = res._body.data;
+                        break;
+                    case CacheField.bankTrendTerm:
+                        this.bankTrendTermData = res._body.data;
+                        break;
+                    case CacheField.bankTrendDeal:
+                        this.bankTrendDealData = res._body.data;
+                        break;
                     default:
                         break;
                 }
@@ -167,12 +261,47 @@ export class BankDetailPage {
         });
     }
 
+    getProjectTrendType(){
+        switch (this.projectTrendType) {
+            case '1':
+                this.getDataFromCache(Endpoint.bankTrendRate, CacheField.bankTrendRate);
+                break;
+            case '2':
+                this.getDataFromCache(Endpoint.bankTrendTerm, CacheField.bankTrendTerm);
+                break;
+            case '3':
+                this.getDataFromCache(Endpoint.bankTrendDeal, CacheField.bankTrendDeal);
+                break;
+        }
+    }
+    getProjectType(){
+        if(this.projectType=='2') {
+            this.getDataFromCache(Endpoint.bankAssetsType, CacheField.bankAssetsType);
+        }
+    }
+
     //下拉刷新
     doRefresh(refresher: Refresher) {
         setTimeout(() => {
             this.loadData(Endpoint.bankTotal, CacheField.bankTotal, refresher);
             this.loadData(Endpoint.bankMoney, CacheField.bankMoney, refresher);
             this.loadData(Endpoint.bankChannel, CacheField.bankChannel, refresher);
+            this.loadData(Endpoint.bankTotalSec, CacheField.bankTotalSec, refresher);
+            this.loadData(Endpoint.bankRateTrendSec, CacheField.bankRateTrendSec, refresher);
+            if(this.projectType == '2') {
+                this.loadData(Endpoint.bankAssetsType, CacheField.bankAssetsType, refresher);
+            }
+            switch (this.projectTrendType) {
+                case '1':
+                    this.loadData(Endpoint.bankTrendRate, CacheField.bankTrendRate,refresher);
+                    break;
+                case '2':
+                    this.loadData(Endpoint.bankTrendTerm, CacheField.bankTrendTerm,refresher);
+                    break;
+                case '3':
+                    this.loadData(Endpoint.bankTrendDeal, CacheField.bankTrendDeal,refresher);
+                    break;
+            }
         }, 500);
     }
 }

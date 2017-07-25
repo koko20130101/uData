@@ -13,6 +13,12 @@ export class BankService {
     bankTotalData: any = {};
     bankMoneyData: any = {};
     bankChannelData: any = {};
+    bankTotalSecData: any = {};
+    bankRateTrendSecData: any = {};
+    bankAssetsTypeData: any = {};
+    bankTrendRateData: any = {};
+    bankTrendTermData: any = {};
+    bankTrendDealData: any = {};
 
     constructor(public api: Api,
                 public publicFactory: PublicFactory,
@@ -32,7 +38,37 @@ export class BankService {
             if (!!data) {
                 this.bankChannelData = data;
             }
-        })
+        });
+        this.storage.get(CacheField.bankTotalSec).then((data) => {
+            if (!!data) {
+                this.bankTotalSecData = data;
+            }
+        });
+        this.storage.get(CacheField.bankRateTrendSec).then((data) => {
+            if (!!data) {
+                this.bankRateTrendSecData = data;
+            }
+        });
+        this.storage.get(CacheField.bankAssetsType).then((data) => {
+            if (!!data) {
+                this.bankAssetsTypeData = data;
+            }
+        });
+        this.storage.get(CacheField.bankTrendRate).then((data) => {
+            if (!!data) {
+                this.bankTrendRateData = data;
+            }
+        });
+        this.storage.get(CacheField.bankTrendTerm).then((data) => {
+            if (!!data) {
+                this.bankTrendTermData = data;
+            }
+        });
+        this.storage.get(CacheField.bankTrendDeal).then((data) => {
+            if (!!data) {
+                this.bankTrendDealData = data;
+            }
+        });
     }
 
     /**
@@ -48,7 +84,7 @@ export class BankService {
         if (!!sendData) {
             Object.assign(_sendData, sendData);
         }
-        console.log(_sendData)
+        console.log(_sendData);
         //发起请求
         let req = this.api.post(endpoint, _sendData).share();
         req.map(res => res.json())
@@ -83,6 +119,51 @@ export class BankService {
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
+
+                    //==> 二级市场交易总额
+                    case CacheField.bankTotalSec:
+                        _cacheData = this.bankTotalSecData;
+                        _res.data['secReleaseNumber'][0] = this.publicFactory.moneyFormatToHtml(_res.data['secReleaseNumber'][0]);
+                        _res.data['secDealNumber'][0] = this.publicFactory.moneyFormatToHtml(_res.data['secDealNumber'][0]);
+                        _res.data['averageTime'][0] = this.publicFactory.formatTime(_res.data['averageTime'][0]*1000);
+                        //添加时间戳
+                        Object.assign(_res.data, {stamp: _thisTime});
+                        break;
+
+                    //==> 二级市场利率趋势图
+                    case CacheField.bankRateTrendSec:
+                        _cacheData = this.bankRateTrendSecData;
+                        //添加时间戳
+                        Object.assign(_res.data, {stamp: _thisTime});
+                        break;
+
+                    //==> 银行资产类型
+                    case CacheField.bankAssetsType:
+                        _cacheData = this.bankAssetsTypeData;
+                        //添加时间戳
+                        Object.assign(_res.data, {stamp: _thisTime});
+                        break;
+
+                    //==> 项目走势 > 收益率走势
+                    case CacheField.bankTrendRate:
+                        _cacheData = this.bankTrendRateData;
+                        //添加时间戳
+                        Object.assign(_res.data, {stamp: _thisTime});
+                        break;
+
+                    //==> 项目走势 > 期限走势
+                    case CacheField.bankTrendTerm:
+                        _cacheData = this.bankTrendTermData;
+                        //添加时间戳
+                        Object.assign(_res.data, {stamp: _thisTime});
+                        break;
+
+                    //==> 项目走势 > 发布规模走势
+                    case CacheField.bankTrendDeal:
+                        _cacheData = this.bankTrendDealData;
+                        //添加时间戳
+                        Object.assign(_res.data, {stamp: _thisTime});
+                        break;
                     default:
                         _cacheData = {};
                         break;
@@ -110,6 +191,24 @@ export class BankService {
                     case CacheField.bankChannel:
                         this.bankChannelData = _cacheData;
                         break;
+                    case CacheField.bankTotalSec:
+                        this.bankTotalSecData = _cacheData;
+                        break;
+                    case CacheField.bankRateTrendSec:
+                        this.bankRateTrendSecData = _cacheData;
+                        break;
+                    case CacheField.bankAssetsType:
+                        this.bankAssetsTypeData = _cacheData;
+                        break;
+                    case CacheField.bankTrendRate:
+                        this.bankTrendRateData = _cacheData;
+                        break;
+                    case CacheField.bankTrendTerm:
+                        this.bankTrendTermData = _cacheData;
+                        break;
+                    case CacheField.bankTrendDeal:
+                        this.bankTrendDealData = _cacheData;
+                        break;
                     default:
                         _cacheData = {};
                         break;
@@ -132,6 +231,25 @@ export class BankService {
             case CacheField.bankChannel:
                 _data = this.publicFactory.checkValueStamp(this.bankChannelData);
                 break;
+            case CacheField.bankTotalSec:
+                _data = this.publicFactory.checkValueStamp(this.bankTotalSecData);
+                break;
+            case CacheField.bankRateTrendSec:
+                _data = this.publicFactory.checkValueStamp(this.bankRateTrendSecData);
+                break;
+            case CacheField.bankAssetsType:
+                _data = this.publicFactory.checkValueStamp(this.bankAssetsTypeData);
+                break;
+            case CacheField.bankTrendRate:
+                _data = this.publicFactory.checkValueStamp(this.bankTrendRateData);
+                break;
+            case CacheField.bankTrendTerm:
+                _data = this.publicFactory.checkValueStamp(this.bankTrendTermData);
+                break;
+            case CacheField.bankTrendDeal:
+                _data = this.publicFactory.checkValueStamp(this.bankTrendDealData);
+                break;
+
             default:
                 break;
         }

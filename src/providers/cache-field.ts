@@ -29,4 +29,10 @@ export const CacheField = {
     bankTotal:'_bankTotal',  //银行总数据
     bankMoney:'_bankMoney',  //平台交易额折线图
     bankChannel:'_bankChannel',  //平台交易额折线图
+    bankTrendRate:'_bankTrendRate', //项目走势 > 收益率走势
+    bankTrendTerm:'_bankTrendTerm', //项目走势 > 期限走势
+    bankTrendDeal:'_bankTrendDeal', //项目走势 > 发布规模走势
+    bankTotalSec:'_bankTotalSec',  //二级市场交易总额
+    bankRateTrendSec:'_bankRateTrendSec',  //二级市场收益率趋势
+    bankAssetsType:'_bankAssetsType',  //银行资产类型
 };
