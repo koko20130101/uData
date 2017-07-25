@@ -4,7 +4,7 @@ import {Storage} from '@ionic/storage';
 
 import {PlatformTotalPage} from '../platform-total/platform-total';
 import {C2bPage} from '../c2b/c2b';
-import {LingXiPage} from '../lingxi/lingxi';
+import {LingXiPage} from '../lingxi/lingXi';
 import {BankListPage} from '../bank-list/bank-list';
 
 import {CacheField} from '../../providers/cache-field';

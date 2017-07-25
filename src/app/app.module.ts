@@ -11,7 +11,7 @@ import {TutorialPage} from '../pages/tutorial/tutorial';
 import {LoginPage} from '../pages/login/login';
 import {PlatformTotalPage} from '../pages/platform-total/platform-total';
 import {C2bPage} from '../pages/c2b/c2b';
-import {LingXiPage} from '../pages/lingxi/lingxi';
+import {LingXiPage} from '../pages/lingxi/lingXi';
 import {BankListPage} from '../pages/bank-list/bank-list';
 import {BankDetailPage} from '../pages/bank-detail/bank-detail';
 import {SettingsPage} from '../pages/settings/settings';

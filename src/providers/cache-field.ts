@@ -35,4 +35,6 @@ export const CacheField = {
     bankTotalSec:'_bankTotalSec',  //二级市场交易总额
     bankRateTrendSec:'_bankRateTrendSec',  //二级市场收益率趋势
     bankAssetsType:'_bankAssetsType',  //银行资产类型
+
+    lingXiTotal:'_lingXiTotal' ,  //灵犀数据总额
 };

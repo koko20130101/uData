@@ -3,8 +3,8 @@ import {Slides, NavController, Refresher} from 'ionic-angular';
 
 import {Endpoint} from '../../providers/endpoint';
 import {CacheField} from '../../providers/cache-field';
-import {PlatformService} from '../../providers/services/platform.service';
 import {GlobalVars} from '../../providers/services/global.service';
+import {PlatformService} from '../../providers/services/platform.service';
 
 import {PublicFactory} from '../../providers/factory/public.factory';
 import {PopupFactory} from '../../providers/factory/popup.factory';

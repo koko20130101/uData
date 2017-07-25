@@ -39,6 +39,9 @@ export const Endpoint = {
     assetsHealthy:'assets/data/assets-healthy.json',  //资产健康值
     grossMargin:'assets/data/gross-margin-data.json',  //毛利率折线图
 
+    /**
+     * 网金旗下平台
+     * */
     bankList:'assets/data/bank-list.json',  //网金银行列表
     bankTotal:'assets/data/main-2.json',  //银行总数据
     bankMoney:'assets/data/bank-money.json',  //平台交易额折线图
@@ -49,4 +52,9 @@ export const Endpoint = {
     bankTotalSec:'assets/data/main-2-sec.json',  //二级市场交易总额
     bankRateTrendSec:'assets/data/sec-rate.json',  //二级市场收益率趋势
     bankAssetsType:'assets/data/assets-type.json',  //银行资产类型
+
+    /**
+     * 灵犀
+     * */
+    lingXiTotal:'assets/data/main-2-lx.json', // 灵犀数据总额
 };
