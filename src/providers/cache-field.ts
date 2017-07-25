@@ -37,4 +37,7 @@ export const CacheField = {
     bankAssetsType:'_bankAssetsType',  //银行资产类型
 
     lingXiTotal:'_lingXiTotal' ,  //灵犀数据总额
+    lingXiTrendDeal:'_lingXiTrendDeal' ,  //成交数据折线图
+    lingXiTrendRate:'_lingXiTrendRate' ,  //收益率折线图
+    lingXiChannel:'_lingXiChannel' ,  //渠道占比
 };

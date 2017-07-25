@@ -43,8 +43,8 @@
                     <ion-segment-button value="1">用户概况</ion-segment-button>
                     <ion-segment-button value="2">用户转化</ion-segment-button>
                 </ion-segment>
-                <div [ngSwitch]="userOperateType" padding>
-                    <div *ngSwitchCase="'1'">
+                <div [ngSwitch]="userOperateType">
+                    <div *ngSwitchCase="'1'" padding>
                         <div ngClass="info-list">
                             <ion-row>
                                 <ion-col text-left>
@@ -89,7 +89,30 @@
                         </div>
                     </div>
                     <div *ngSwitchCase="'2'">
-                        2
+                        <div class="user">
+                            <div class="user-inner">
+                                <div class="user-item item-1">
+                                    <span class="number"><span [innerHTML]="lingXiTotalData.heavyInvest[0] || 0"></span>人</span>
+                                    <span class="title">重复委托
+                                    </span>
+                                </div>
+                                <div class="user-item item-2">
+                                    <span class="number"><span [innerHTML]="lingXiTotalData.newInvest[0] || 0"></span>人</span>
+                                    <span class="title">新增委托
+                                    </span>
+                                </div>
+                                <div class="user-item item-3">
+                                    <span class="number"><span [innerHTML]="lingXiTotalData.newBindCard[0] || 0"></span>人</span>
+                                    <span class="title">新增绑卡
+                                    </span>
+                                </div>
+                                <div class="user-item item-4">
+                                    <span class="number"><span [innerHTML]="lingXiTotalData.newUser[0] || 0"></span>人</span>
+                                    <span class="title">新增注册
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

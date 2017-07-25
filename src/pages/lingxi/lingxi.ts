@@ -34,6 +34,8 @@ export class LingXiPage {
         "newUser":['','']
     };
     lingXiTotalData:any = {};
+    dealTrendData: any = {};
+    rateTrendData: any = {};
 
     constructor(public navCtrl: NavController,
                 public publicFactory:PublicFactory,
@@ -60,7 +62,9 @@ export class LingXiPage {
         this.getDataFromCache(Endpoint.lingXiTotal, CacheField.lingXiTotal);
     }
     ionViewDidEnter() {
-
+        this.getDataFromCache(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal);
+        this.getDataFromCache(Endpoint.lingXiTrendRate, CacheField.lingXiTrendRate);
+        this.getDataFromCache(Endpoint.lingXiChannel, CacheField.lingXiChannel);
     }
 
     ionViewWillLeave() {
@@ -76,14 +80,31 @@ export class LingXiPage {
         let _sendData: any = {
             BankCode:''
         };
+        let _num = parseInt(this.lingXiType);
         let _totalData: any = this.lingXiService.getValue(cacheKey);
         switch (cacheKey) {
             case CacheField.lingXiTotal:
-                if (!!_totalData && _totalData[this.lingXiType]) {
-                    Object.assign(this.lingXiTotalData,_totalData[this.lingXiType]);
+                if (!!_totalData && _totalData[_num]) {
+                    Object.assign(this.lingXiTotalData,_totalData[_num]);
                     return;
                 } else {
-                    _sendData = {proType:parseInt(this.lingXiType)};
+                    _sendData = {proType:_num};
+                    break;
+                }
+            case CacheField.lingXiTrendDeal:
+                if (!!_totalData && _totalData[_num]) {
+                    Object.assign(this.dealTrendData,_totalData[_num]);
+                    return;
+                } else {
+                    _sendData = {proType:_num};
+                    break;
+                }
+            case CacheField.lingXiTrendRate:
+                if (!!_totalData && _totalData[_num]) {
+                    Object.assign(this.rateTrendData,_totalData[_num]);
+                    return;
+                } else {
+                    _sendData = {proType:_num};
                     break;
                 }
             default:
@@ -120,6 +141,9 @@ export class LingXiPage {
                             Object.assign(this.lingXiTotalData,this.model);
                         }
                         break;
+                    case CacheField.lingXiTrendDeal:
+                        this.dealTrendData = res._body.data;
+                        break;
                     default:
                         break;
                 }
@@ -140,6 +164,11 @@ export class LingXiPage {
         let num = Number(this.lingXiType);
         this.mainSlides.slideTo(num);
         this.getDataFromCache(Endpoint.lingXiTotal, CacheField.lingXiTotal);
+        this.getDataFromCache(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal);
+        if(num!=0) {
+            this.getDataFromCache(Endpoint.lingXiTrendRate, CacheField.lingXiTrendRate);
+            this.getDataFromCache(Endpoint.lingXiChannel, CacheField.lingXiChannel);
+        }
     }
 
     //下拉刷新
@@ -148,6 +177,11 @@ export class LingXiPage {
         setTimeout(() => {
             //总数据
             this.loadData(Endpoint.lingXiTotal, CacheField.lingXiTotal,refresher);
+            this.loadData(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal,refresher);
+            if(num!=0) {
+                this.loadData(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal,refresher);
+                this.loadData(Endpoint.lingXiChannel, CacheField.lingXiChannel,refresher);
+            }
         }, 500);
     }
 
