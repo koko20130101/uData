@@ -14,6 +14,7 @@ import {C2bPage} from '../pages/c2b/c2b';
 import {LingXiPage} from '../pages/lingxi/lingXi';
 import {BankListPage} from '../pages/bank-list/bank-list';
 import {BankDetailPage} from '../pages/bank-detail/bank-detail';
+import {HelpPage} from '../pages/help/help';
 import {SettingsPage} from '../pages/settings/settings';
 import {PopOverPage} from '../pages/public/popover';
 import {Date} from '../pages/public/date';
@@ -36,6 +37,9 @@ import {StatusBar} from '@ionic-native/status-bar';
 
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+import {MyECharts} from '../directives/echarts.directive';
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -68,11 +72,13 @@ export function provideSettings(storage: Storage) {
         LingXiPage,
         BankListPage,
         BankDetailPage,
+        HelpPage,
         SettingsPage,
         TutorialPage,
         PopOverPage,
         Date,
-        Unit
+        Unit,
+        MyECharts
     ],
     imports: [
         BrowserModule,
@@ -101,7 +107,8 @@ export function provideSettings(storage: Storage) {
                 }
             }
         }),
-        IonicStorageModule.forRoot()
+        IonicStorageModule.forRoot(),
+        // MyECharts
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -113,6 +120,7 @@ export function provideSettings(storage: Storage) {
         LingXiPage,
         BankListPage,
         BankDetailPage,
+        HelpPage,
         SettingsPage,
         TutorialPage,
         PopOverPage,

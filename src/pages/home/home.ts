@@ -1,11 +1,12 @@
 import {Component} from  '@angular/core';
-import {NavController, PopoverController,Refresher} from 'ionic-angular';
+import {NavController,Refresher} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 
 import {PlatformTotalPage} from '../platform-total/platform-total';
 import {C2bPage} from '../c2b/c2b';
 import {LingXiPage} from '../lingxi/lingXi';
 import {BankListPage} from '../bank-list/bank-list';
+import {HelpPage} from '../help/help';
 
 import {CacheField} from '../../providers/cache-field';
 import {GlobalVars} from  '../../providers/services/global.service';
@@ -23,7 +24,7 @@ export class HomePage {
     pageName: any = 'HomePage';
     dateList: any;
     dateInstance: any;
-
+    isShow:boolean = true;
     totalAmount:any = {
         platformTotal: 0,
         C2BTotal: 0,
@@ -31,7 +32,6 @@ export class HomePage {
     };
 
     constructor(public navCtrl: NavController,
-                public popoverCtrl: PopoverController,
                 public globalVars: GlobalVars,
                 public homeService:HomeService,
                 public publicFactory: PublicFactory,
@@ -110,6 +110,10 @@ export class HomePage {
         }, 500);
     }
 
+    showMomey(){
+        this.isShow = this.isShow ? false :true;
+    }
+
     openPlatformData() {
         this.navCtrl.push(PlatformTotalPage)
     }
@@ -120,6 +124,10 @@ export class HomePage {
 
     openLingXiPage() {
         this.navCtrl.push(LingXiPage)
+    }
+
+    openHelpPage() {
+        this.navCtrl.push(HelpPage)
     }
 
     openBankListPage() {

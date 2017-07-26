@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Slides, NavController, Refresher} from 'ionic-angular';
 
 import {Endpoint} from '../../providers/endpoint';
@@ -8,6 +8,7 @@ import {PlatformService} from '../../providers/services/platform.service';
 
 import {PublicFactory} from '../../providers/factory/public.factory';
 import {PopupFactory} from '../../providers/factory/popup.factory';
+import * as chartOptions from '../../providers/chart-options'
 
 @Component({
     selector: 'platform-page',
@@ -16,6 +17,7 @@ import {PopupFactory} from '../../providers/factory/popup.factory';
 })
 export class PlatformTotalPage {
     @ViewChild('MainSlides') mainSlides: Slides;
+    @ViewChild('MoneyLineChart') moneyLineChart: ElementRef;
     pageName = 'PlatformTotalPage';
     platformType = "1";
     dataType = "2";     //各平台指数排行
@@ -54,6 +56,9 @@ export class PlatformTotalPage {
     regularTrendData: any;
     //基金折线图
     fundTrendData: any;
+    chartOption: any;
+    chartInstance:any;
+    chartData:any;
 
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
@@ -64,6 +69,8 @@ export class PlatformTotalPage {
 
     ngOnInit() {
         this.dateInstance = this.globalVars.getInstance();
+        this.chartOption = chartOptions.BarChartOptions1();
+        this.chartData = chartOptions.BarChartDataset1;
     }
 
     ngAfterViewInit() {
@@ -74,6 +81,8 @@ export class PlatformTotalPage {
                 this.getPlatformSegment();
             }
         });
+        // let canvas = eCharts.init(this.moneyLineChart.nativeElement);
+
     }
 
     ionViewWillEnter() {
@@ -89,6 +98,16 @@ export class PlatformTotalPage {
         //取消选择单位订阅
         this.publicFactory.unitInfo.observers.pop();
     }
+
+    onChartInit(ec) {
+        this.chartInstance = ec;
+        console.log(this.chartInstance);
+    }
+
+    changeDataSet(){
+        this.chartData = chartOptions.BarChartDataset2;
+    }
+
 
     showContent(value) {
         if (this.modelContent[value]) {

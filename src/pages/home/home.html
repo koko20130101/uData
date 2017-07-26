@@ -23,15 +23,18 @@
     <div padding class="platform-data-list">
         <div class="platform-data data-1" (click)="openPlatformData()">
             <h5>{{'PLATFORM_TITLE_1' | translate}}</h5>
-            <p [innerHTML]="totalAmount.platformTotal"></p>
+            <p [innerHTML]="totalAmount.platformTotal" *ngIf="isShow"></p>
+            <p *ngIf="!isShow">******</p>
         </div>
         <div class="platform-data data-2" (click)="openC2bPage()">
             <h5>{{'PLATFORM_TITLE_2' | translate}}</h5>
-            <p [innerHtml]="totalAmount.C2BTotal"></p>
+            <p [innerHtml]="totalAmount.C2BTotal" *ngIf="isShow"></p>
+            <p *ngIf="!isShow">******</p>
         </div>
         <div class="platform-data data-3" (click)="openLingXiPage()">
             <h5>{{'PLATFORM_TITLE_3' | translate}}</h5>
-            <p [innerHtml]="totalAmount.LingXiTotal"></p>
+            <p [innerHtml]="totalAmount.LingXiTotal" *ngIf="isShow"></p>
+            <p *ngIf="!isShow">******</p>
         </div>
     </div>
 </ion-content>
@@ -39,13 +42,13 @@
     <ion-navbar color="dark">
         <ion-row text-center>
             <ion-col no-padding>
-                <button ion-button clear icon-left>
+                <button ion-button clear icon-left (click)="showMomey()">
                     <ion-icon name="eye"></ion-icon>
                     隐藏
                 </button>
             </ion-col>
             <ion-col no-padding>
-                <button ion-button clear icon-left>
+                <button ion-button clear icon-left (click)="openHelpPage()">
                     <ion-icon name="help-circle"></ion-icon>
                     帮助
                 </button>
