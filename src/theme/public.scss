@@ -54,7 +54,7 @@ ion-navbar.toolbar {
     display: block;
     font-size: 1.4rem;
   }
-  .slide-zoom{
+  .slide-zoom {
     text-align: left;
   }
 }
@@ -64,7 +64,7 @@ ion-navbar.toolbar {
   padding-bottom: 20px;
   margin: 0 10px;
   border-bottom: 1px solid color($colors, dark, mid1);
-  text-align:center;
+  text-align: center;
   p {
     margin-bottom: 3px;
     font-size: 1.4rem;
@@ -126,11 +126,11 @@ ion-navbar.toolbar {
 }
 
 .list-ios.my-list {
-  .item-block .item-inner,.item-block:first-child,.item-block:last-child{
-    border-color: color($colors, dark,mid2);
+  .item-block .item-inner, .item-block:first-child, .item-block:last-child {
+    border-color: color($colors, dark, mid2);
   }
-  ion-label{
-    white-space:normal;
+  ion-label {
+    white-space: normal;
   }
 }
 
@@ -168,6 +168,21 @@ ion-navbar.toolbar {
 .info-list-bg {
   .row {
     background: color($colors, dark) url("../assets/img/bg-1.png") 0 0 no-repeat;
+  }
+}
+
+.model-content {
+  position: relative;
+  .axis-label {
+    position: absolute;
+    left: 16px;
+    color: #666;
+    &.top{
+      top:8px;
+    }
+    &.bottom{
+      bottom:38px;
+    }
   }
 }
 

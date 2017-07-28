@@ -36,6 +36,8 @@ export const BarChartOptions_1 = () => ({
     legend: {
         top: 20,
         left: 10,
+        itemWidth: 20,
+        itemHeight: 15,
         data: ['发布金额','融资金额'],
         textStyle: {
             color: '#787878',
@@ -106,6 +108,154 @@ export const BarChartOptions_1 = () => ({
             barGap:0,
             barWidth:0,
         },
+    ]
+});
+
+export const BarChartOption_2 = () =>({
+    color: ['#db9713', '#fcc355', '#1d8a8e', '#40cacc', '#b2162c', '#ec1e3b'],
+    tooltip : {
+        trigger: 'axis',
+        backgroundColor: 'rgba(0,0,0,.7)',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    legend: {
+        top: 10,
+        left: 10,
+        itemWidth: 10,
+        itemHeight: 15,
+        textStyle: {
+            color: '#787878',
+            fontWeight: 700
+        },
+        data: ['引入', '存量', '销售', '回滚', '引入利率', '销售利率'],
+        selectedMode: false
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'value',
+            show :false
+        }
+    ],
+    yAxis : [
+        {
+            type: 'category', //类目型
+            axisLine: {
+                show: true,  //Y轴
+                lineStyle: {
+                    color: '#1e1e28',
+                    width: 2,
+                    type: 'solid'
+                }
+            },
+            axisLabel: {  //Y坐标标签属性
+                textStyle: {
+                    color: '#565475',
+                    fontWeight: 700
+                }
+            },
+            splitLine: {   //水平网格线
+                show: true,
+                lineStyle: {
+                    color: ['#262633']
+                }
+            },
+            axisTick: {show: false},  //坐标小标记
+            data: ['7月01日', '7月02日', '7月03日', '7月04日', '7月05日', '7月06日', '7月07日']
+        }
+    ],
+    series : [
+        {
+            name: '引入',
+            type: 'bar',
+            stack: '资金',
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false,
+                        position: 'insideLeft',
+                        formatter: function (params) {
+                            return Math.abs(params.value);
+                        }
+                    }
+                }
+            },
+            data: [-200, -170, -240, -326, -200, -220, -210]
+        },
+        {
+            name: '存量',
+            type: 'bar',
+            stack: '资金',
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: true,
+                        position: 'insideRight',
+                        formatter: function (params) {
+                            return Math.abs(params.value);
+                        }
+                    }
+                }
+            },
+            data: [-120, -32, -41, -74, -90, -50, -20]
+        },
+        {
+            name: '销售',
+            type: 'bar',
+            stack: '资金',
+            itemStyle: {
+                normal: {
+                    label: {show: false, position: 'insideLeft'}
+                }
+            },
+            data: [120, 132, 101, 134, 190, 230, 210]
+        },
+        {
+            name: '回滚',
+            type: 'bar',
+            stack: '资金',
+            itemStyle: {
+                normal: {
+                    label: {show: true, position: 'insideLeft'}
+                }
+            },
+            data: [120, 132, 101, 134, 190, 230, 210]
+        },
+        {
+            name: '引入利率',
+            type: 'bar',
+            stack: '利率',
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: true,
+                        position: 'insideRight',
+                        formatter: function (params) {
+                            return Math.abs(params.value);
+                        }
+                    }
+                }
+            },
+            data: [-120, -132, -101, -134, -190, -230, -210]
+        },
+        {
+            name: '销售利率',
+            type: 'bar',
+            stack: '利率',
+            itemStyle: {
+                normal: {
+                    label: {show: true, position: 'insideLeft'}
+                }
+            },
+            data: [120, 132, 101, 134, 190, 230, 210]
+        }
     ]
 });
 

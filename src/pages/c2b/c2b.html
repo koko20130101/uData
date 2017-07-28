@@ -49,7 +49,8 @@
                             <ion-col text-right><span ion-text color="gray">引入额度(万元)</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row *ngFor="let item of saleChannelDataIn[2]" [style.background-size]="item.percent*100+'% 100%'">
+                            <ion-row *ngFor="let item of saleChannelDataIn[2]"
+                                     [style.background-size]="item.percent*100+'% 100%'">
                                 <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
                                     <span [innerHTML]="item.number"></span>
@@ -64,7 +65,8 @@
                             <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row *ngFor="let item of saleChannelDataIn[1]" [style.background-size]="item.percent*100+'% 100%'">
+                            <ion-row *ngFor="let item of saleChannelDataIn[1]"
+                                     [style.background-size]="item.percent*100+'% 100%'">
                                 <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
                                     <span [innerHTML]="item.number"></span>
@@ -79,7 +81,8 @@
                             <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row *ngFor="let item of saleChannelDataIn[3]" [style.background-size]="item.percent*100+'% 100%'">
+                            <ion-row *ngFor="let item of saleChannelDataIn[3]"
+                                     [style.background-size]="item.percent*100+'% 100%'">
                                 <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
                                     <span [innerHTML]="item.number"></span>
@@ -119,7 +122,8 @@
                             <ion-col text-right><span ion-text color="gray">引入额度(万元)</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row *ngFor="let item of saleChannelDataOut[2]" [style.background-size]="item.percent*100+'% 100%'">
+                            <ion-row *ngFor="let item of saleChannelDataOut[2]"
+                                     [style.background-size]="item.percent*100+'% 100%'">
                                 <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
                                     <span [innerHTML]="item.number"></span>
@@ -134,7 +138,8 @@
                             <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row *ngFor="let item of saleChannelDataOut[1]" [style.background-size]="item.percent*100+'% 100%'">
+                            <ion-row *ngFor="let item of saleChannelDataOut[1]"
+                                     [style.background-size]="item.percent*100+'% 100%'">
                                 <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
                                     <span [innerHTML]="item.number"></span>
@@ -149,7 +154,8 @@
                             <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
                         </ion-row>
                         <div ngClass="info-list info-list-bg">
-                            <ion-row *ngFor="let item of saleChannelDataOut[3]" [style.background-size]="item.percent*100+'% 100%'">
+                            <ion-row *ngFor="let item of saleChannelDataOut[3]"
+                                     [style.background-size]="item.percent*100+'% 100%'">
                                 <ion-col col-5 text-left>{{item.bankName}}</ion-col>
                                 <ion-col text-right>
                                     <span [innerHTML]="item.number"></span>
@@ -173,6 +179,7 @@
                     <h3 ion-text [innerHTML]="assetsMain.SurplusAmount" color="danger"></h3>
                 </ion-col>
             </ion-row>
+            <div eCharts [options]="barChartOption" style="height: 420px;"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>利润走势</h2>
@@ -189,6 +196,11 @@
                     </ion-note>
                 </ion-item>
             </ion-list>
+            <div ngClass="model-content" padding>
+                <div class="axis-label top">资产<br>不足</div>
+                <div class="axis-label bottom">资金<br>不足</div>
+                <div eCharts [options]="lineChartOption_2" [dataSet]="lineChartData" style="height:250px"></div>
+            </div>
         </ion-slide>
     </ion-slides>
 </ion-content>

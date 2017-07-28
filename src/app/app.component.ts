@@ -19,6 +19,7 @@ export class MyApp {
     constructor(private translate: TranslateService, private platform: Platform,private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
         this.initTranslate();
     }
+
     //当组件都加载完成后调用
     ionViewDidLoad() {
         //平台准备好后调用
@@ -28,15 +29,16 @@ export class MyApp {
             this.splashScreen.hide();
         });
     }
+
     //初始化语言版本
     initTranslate() {
-        // 设置默认语言版本.
+        //设置默认语言版本
         this.translate.setDefaultLang('zh');
         //如果浏览器语言版本存在的话
         if (this.translate.getBrowserLang() !== undefined) {
             this.translate.use(this.translate.getBrowserLang());
         } else {
-            this.translate.use('zh'); // 设置语言版本
+            this.translate.use('zh'); //设置语言版本
         }
 
         this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {

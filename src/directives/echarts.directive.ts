@@ -8,6 +8,8 @@ import 'echarts/lib/component/legend';
 import 'echarts/lib/chart/line';
 //引入柱状图
 import 'echarts/lib/chart/bar';
+//引入饼图
+import 'echarts/lib/chart/pie';
 
 @Directive({
     selector:'[eCharts]'

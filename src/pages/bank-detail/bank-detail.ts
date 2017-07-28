@@ -9,6 +9,8 @@ import {BankService} from '../../providers/services/bank.service';
 import {PublicFactory} from '../../providers/factory/public.factory';
 import {PopupFactory} from '../../providers/factory/popup.factory';
 
+import * as chartOptions from '../../providers/charts-option';
+
 @Component({
     selector: 'bank-detail-page',
     templateUrl: 'bank-detail.html',
@@ -65,6 +67,8 @@ export class BankDetailPage {
     bankTrendTermData: any;
     bankTrendDealData: any;
 
+    pieChartOption:any;
+
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
@@ -94,6 +98,7 @@ export class BankDetailPage {
     }
 
     ionViewWillEnter() {
+        this.pieChartOption = chartOptions.PieChartOptions_1();
         this.getDataFromCache(Endpoint.bankTotal, CacheField.bankTotal);
     }
 

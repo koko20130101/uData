@@ -9,6 +9,8 @@ import {GlobalVars} from '../../providers/services/global.service';
 import {PublicFactory} from '../../providers/factory/public.factory';
 import {PopupFactory} from '../../providers/factory/popup.factory';
 
+import * as chartOptions from '../../providers/charts-option'
+
 @Component({
     selector: 'c2b-page',
     templateUrl: 'c2b.html',
@@ -53,6 +55,11 @@ export class C2bPage {
     grossMarginData: any = {};
     inoutFlag: any = 'in';
 
+    barChartOption:any;
+    lineChartOption_2:any;
+    chartData:any;
+    lineChartData:any;
+
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
@@ -77,6 +84,10 @@ export class C2bPage {
     }
 
     ionViewWillEnter() {
+        this.barChartOption = chartOptions.BarChartOption_2();
+        this.lineChartOption_2 = chartOptions.LineChartOption_2();
+        this.chartData = [[144,556,66,666,993,333,444],[200, 32, 444, 666, 88, 352, 380]];
+        this.lineChartData = [[0,0,0,0,0,0,0]];
         this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
         this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
         this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
