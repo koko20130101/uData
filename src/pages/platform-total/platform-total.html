@@ -128,6 +128,8 @@
                     <h2 ion-text [innerHTML]="totalData.totalEnemy[0]"
                         color="{{totalData.totalEnemy[1]=='true'?'danger':(totalData.totalEnemy[1]=='false'?'secondary':'')}}"></h2>
                 </div>
+                <div eCharts [options]="barChartOption" [dataSet]="chartData" style="height: 260px;" (chartInit)="onChartInit($event)"> </div>
+
                 <ion-list class="model-title">
                     <ion-item (click)="showContent(1)">
                         <h2>各平台指数排行</h2>

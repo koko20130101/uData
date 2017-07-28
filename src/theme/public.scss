@@ -54,6 +54,9 @@ ion-navbar.toolbar {
     display: block;
     font-size: 1.4rem;
   }
+  .slide-zoom{
+    text-align: left;
+  }
 }
 
 .total-data {
@@ -61,6 +64,7 @@ ion-navbar.toolbar {
   padding-bottom: 20px;
   margin: 0 10px;
   border-bottom: 1px solid color($colors, dark, mid1);
+  text-align:center;
   p {
     margin-bottom: 3px;
     font-size: 1.4rem;

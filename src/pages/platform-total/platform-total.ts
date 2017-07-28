@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Slides, NavController, Refresher} from 'ionic-angular';
 
 import {Endpoint} from '../../providers/endpoint';
@@ -8,7 +8,7 @@ import {PlatformService} from '../../providers/services/platform.service';
 
 import {PublicFactory} from '../../providers/factory/public.factory';
 import {PopupFactory} from '../../providers/factory/popup.factory';
-import * as chartOptions from '../../providers/chart-options'
+import * as chartOptions from '../../providers/charts-option';
 
 @Component({
     selector: 'platform-page',
@@ -17,7 +17,6 @@ import * as chartOptions from '../../providers/chart-options'
 })
 export class PlatformTotalPage {
     @ViewChild('MainSlides') mainSlides: Slides;
-    @ViewChild('MoneyLineChart') moneyLineChart: ElementRef;
     pageName = 'PlatformTotalPage';
     platformType = "1";
     dataType = "2";     //各平台指数排行
@@ -57,6 +56,7 @@ export class PlatformTotalPage {
     //基金折线图
     fundTrendData: any;
     chartOption: any;
+    barChartOption: any;
     chartInstance:any;
     chartData:any;
 
@@ -69,8 +69,9 @@ export class PlatformTotalPage {
 
     ngOnInit() {
         this.dateInstance = this.globalVars.getInstance();
-        this.chartOption = chartOptions.BarChartOptions1();
-        this.chartData = chartOptions.BarChartDataset1;
+        this.chartOption = chartOptions.LineChartOption_1();
+        this.barChartOption = chartOptions.BarChartOptions_1();
+        this.chartData = [[144,556,66,666,993,333,444],[200, 32, 444, 666, 88, 352, 380]];
     }
 
     ngAfterViewInit() {
@@ -217,11 +218,10 @@ export class PlatformTotalPage {
                     return;
                 } else if (source == 1) {
                     _sendData = {dataType: 1, sourceType: 1};
-                    break;
                 } else if (source == 2) {
                     _sendData = {dataType: 1, sourceType: 2};
-                    break;
                 }
+                break;
             //传统理财额折线图
             case CacheField.regularTrend:
                 if (!!_totalData) {
