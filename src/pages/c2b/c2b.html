@@ -181,7 +181,7 @@
                     <h3 ion-text [innerHTML]="assetsMain.SurplusAmount" color="danger"></h3>
                 </ion-col>
             </ion-row>
-            <div eCharts [options]="barChartOption" (chartInit)="onChartInit($event)" ngClass="bar-chart-1"></div>
+            <div eCharts [options]="barChartOption" [dataSet]="profitData" (chartInit)="onChartInit($event)" ngClass="bar-chart-1"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>利润走势</h2>

@@ -295,9 +295,9 @@ export class C2bPage {
                     } else if (params.seriesName == '销售利率') {
                         return _data.series[5][num] + '%';
                     } else if (params.seriesName == '存量') {
-                        return this.publicFactory.moneyFormat(Math.abs(_data.series[1] - _data.series[0][num]))
+                        return this.publicFactory.moneyFormat(Math.abs(params.value - _data.series[0][num]))
                     } else if (params.seriesName == '回滚') {
-                        return this.publicFactory.moneyFormat(Math.abs(_data.series[2]+ _data.series[3][num]), true)
+                        return this.publicFactory.moneyFormat(Math.abs(params.value + _data.series[3][num]), true)
                     } else {
                         return this.publicFactory.moneyFormat(Math.abs(params.value), true)
                     }
@@ -316,9 +316,8 @@ export class C2bPage {
                     }
                     return res;
                 }.bind(this);
-                _options.series[i].data = _data.series[i];
+                // _options.series[i].data = _data.series[i];
             }
-            this.barChartInstance.clear();
             this.barChartInstance.setOption(_options);
             clearTimeout(_timeOut);
         }.bind(this), 100);
