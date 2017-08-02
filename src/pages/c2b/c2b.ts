@@ -168,7 +168,6 @@ export class C2bPage {
             //运营分析总额柱状图
             case CacheField.profitData:
                 if (!!_cacheData) {
-                    this.profitData = _cacheData;
                     this.setBarChartOption(_cacheData);
                     return;
                 } else {
@@ -266,61 +265,61 @@ export class C2bPage {
      * loadData(本地或远程数据)
      * */
     setBarChartOption(_data: any) {
-        let _timeOut = setTimeout(function () {
-            //得到柱状图实例的设置
-            let _options = this.barChartInstance.getOption();
-            let _concat = _options.series[2].data.concat(_options.series[3].data);  //合并数据
-            let topNumberRight = Math.ceil(Math.max.apply(Math, _concat)); //取最大值：获取X轴右侧的最大值
-            _options.xAxis.min = -topNumberRight * 4 / 5;
-            _options.xAxis.max = topNumberRight;
+        let _options = this.barChartOption;
+        //深拷贝
+        let _tempData: any = JSON.stringify(_data);
+        _tempData = JSON.parse(_tempData);
+        //格式化提示的值
+        this.barChartOption.tooltip.formatter = function (params) {
+            let res = params[0].name;
+            for (let i = 0; i < params.length; i++) {
+                if (i == 4) {
+                    res += '<br/>' + params[i].seriesName + ' : ' + _data.series[4][params[i].dataIndex] + ' %';
+                } else if (i == 5) {
+                    res += '<br/>' + params[i].seriesName + ' : ' + _data.series[5][params[i].dataIndex] + ' %';
+                } else {
+                    res += '<br/>' + params[i].seriesName + ' : ' + this.publicFactory.moneyFormat(Math.abs(params[i].data), true);
+                }
+            }
+            return res;
+        }.bind(this);
+        //格式化柱子上的值
+        for (let i = 0; i < _options.series.length; i++) {
+            _options.series[i].label.normal.formatter = function (params: any) {
+                let num = _data.yAxis[0].data.indexOf(params.name);
+                if (params.seriesName == '引入利率') {
+                    return _data.series[4][num] + '%';
+                } else if (params.seriesName == '销售利率') {
+                    return _data.series[5][num] + '%';
+                } else if (params.seriesName == '引入') {
+                    return this.publicFactory.moneyFormat(Math.abs(params.value - _data.series[1][num]))
+                } else if (params.seriesName == '回滚') {
+                    return this.publicFactory.moneyFormat(Math.abs(params.value + _data.series[3][num]), true)
+                } else {
+                    return this.publicFactory.moneyFormat(Math.abs(params.value), true)
+                }
+            }.bind(this);
+        }
 
-            for (let i = 0; i < _options.series[0].data.length; i++) {
-                _options.series[0].data[i] = _data.series[0][i] * -1
-            }
-            for (let i = 0; i < _options.series[1].data.length; i++) {
-                _options.series[1].data[i] = _data.series[1][i] * -1
-            }
-            for (let i = 0; i < _options.series[4].data.length; i++) {
-                _options.series[4].data[i] = Math.round(_data.series[4][i] / 20 * topNumberRight * -1)
-            }
-            for (let i = 0; i < _options.series[5].data.length; i++) {
-                _options.series[5].data[i] = Math.round(_data.series[5][i] / 20 * topNumberRight)
-            }
-            //修改设置：1、格式化label  2、格式化tips
-            for (let i = 0; i < _options.series.length; i++) {
-                _options.series[i].label.normal.formatter = _options.series[i].label.emphasis.formatter = function (params: any) {
-                    let num = _data.yAxis[0].data.indexOf(params.name);
-                    if (params.seriesName == '引入利率') {
-                        return _data.series[4][num] + '%';
-                    } else if (params.seriesName == '销售利率') {
-                        return _data.series[5][num] + '%';
-                    } else if (params.seriesName == '存量') {
-                        return this.publicFactory.moneyFormat(Math.abs(params.value - _data.series[0][num]))
-                    } else if (params.seriesName == '回滚') {
-                        return this.publicFactory.moneyFormat(Math.abs(params.value + _data.series[3][num]), true)
-                    } else {
-                        return this.publicFactory.moneyFormat(Math.abs(params.value), true)
-                    }
-                }.bind(this);
-                //console.log($scope.myChart.bar_option)
-                _options.tooltip[0].formatter = function (params) {
-                    let res = params[0].name;
-                    for (let i = 0; i < params.length; i++) {
-                        if (i == 4) {
-                            res += '<br/>' + params[i].seriesName + ' : ' + _data.series[4][params[i].dataIndex] + ' %';
-                        } else if (i == 5) {
-                            res += '<br/>' + params[i].seriesName + ' : ' + _data.series[5][params[i].dataIndex] + ' %';
-                        } else {
-                            res += '<br/>' + params[i].seriesName + ' : ' + this.publicFactory.moneyFormat(Math.abs(params[i].data), true);
-                        }
-                    }
-                    return res;
-                }.bind(this);
-                // _options.series[i].data = _data.series[i];
-            }
-            this.barChartInstance.setOption(_options);
-            clearTimeout(_timeOut);
-        }.bind(this), 100);
+        //重新计算柱子的比例
+        let _concat = _data.series[2].concat(_data.series[3]);  //合并数据
+        let topNumberRight = Math.ceil(Math.max.apply(Math, _concat)); //取最大值：获取X轴右侧的最大值
+        _options.xAxis.min = -topNumberRight * 4 / 5;
+        _options.xAxis.max = topNumberRight;
+
+        for (let i = 0; i < _tempData.series[0].length; i++) {
+            _tempData.series[0][i] = _tempData.series[0][i] * -1
+        }
+        for (let i = 0; i < _tempData.series[1].length; i++) {
+            _tempData.series[1][i] = _tempData.series[1][i] * -1
+        }
+        for (let i = 0; i < _tempData.series[4].length; i++) {
+            _tempData.series[4][i] = Math.round(_tempData.series[4][i] / 20 * topNumberRight * -1)
+        }
+        for (let i = 0; i < _tempData.series[5].length; i++) {
+            _tempData.series[5][i] = Math.round(_tempData.series[5][i] / 20 * topNumberRight)
+        }
+        this.profitData = _tempData;
     }
 
     //下拉刷新

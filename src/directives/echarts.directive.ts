@@ -169,6 +169,5 @@ export class MyECharts implements OnChanges, OnDestroy {
     private updateChart() {
         this.myChart.setOption(this.options);
         this.myChart.resize();
-
     }
 }

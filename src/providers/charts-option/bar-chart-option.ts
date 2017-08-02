@@ -180,7 +180,7 @@ export const BarChartOption_2 = () =>({
             stack: '资金',
             label: {
                 normal:{
-                    show: false,
+                    show: true,
                     position: 'insideRight',
                     formatter: function (params) {
                         return Math.abs(params.value);
@@ -194,7 +194,7 @@ export const BarChartOption_2 = () =>({
             stack: '资金',
             label: {
                 normal:{
-                    show: true,
+                    show: false,
                     position: 'insideRight'
                 }
             }

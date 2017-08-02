@@ -194,37 +194,6 @@ export class C2bService {
                         _newData.series[4] = _res.data.series[1].data;
                         _newData.series[5] = _res.data.series[0].data;
                         _newData.yAxis.push({data: _res.data.yAxis[0].ydata});
-                        let _concat = _newData.series[2].concat(_newData.series[3]);  //合并数据
-                        let topNumberRight = Math.ceil(Math.max.apply(Math, _concat)); //取最大值：获取X轴右侧的最大值
-                        _newData.xAxis.push({
-                            min: -topNumberRight * 4 / 5,
-                            max: topNumberRight
-                        });
-
-
-                        /*let _concat = _newData.series[2].concat(_newData.series[3]);  //合并数据
-                         let topNumberRight = Math.ceil(Math.max.apply(Math, _concat)); //取最大值：获取X轴右侧的最大值
-                         _newData.xAxis.push({
-                         data: _res.data.yAxis[0].ydata,
-                         min: -topNumberRight * 4 / 5,
-                         max: topNumberRight,
-                         });
-
-                         for (let i = 0;i< _newData.series[0].length;i++) {
-                         _newData.series[0][i] = _newData.series[0][i] * -1
-                         }
-                         for (let i = 0;i< _newData.series[1].length;i++) {
-                         _newData.series[1][i] = _newData.series[1][i] * -1
-                         }
-                         for (let i = 0;i< _newData.series[4].length;i++) {
-                         _newData.series[4][i] = Math.round(_newData.series[4][i] / 20 * topNumberRight * -1)
-                         }
-                         for (let i = 0;i< _newData.series[5].length;i++) {
-                         _newData.series[5][i] = Math.round(_newData.series[5][i] / 20 * topNumberRight)
-                         }
-                         for(let i=0;i<_newData.series.length;i++) {
-
-                         }*/
 
                         _res.data = _newData;
                         //添加时间戳
