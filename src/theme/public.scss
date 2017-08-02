@@ -171,6 +171,13 @@ ion-navbar.toolbar {
   }
 }
 
+.line-chart-1{
+  height:260px;
+}
+.bar-chart-1{
+  height:420px;
+}
+
 .model-content {
   position: relative;
   .axis-label {
@@ -183,6 +190,13 @@ ion-navbar.toolbar {
     &.bottom{
       bottom:38px;
     }
+  }
+  .scroll-box{
+    position:absolute;left:70px;top:0;right:0;
+  }
+  .scroll-bg{
+    position:absolute;left:70px;top:50px;bottom:0;right:0;
+    background-color: #1e1e28;
   }
 }
 
@@ -285,6 +299,9 @@ ion-navbar.toolbar {
     }
   }
 }
+
+
+
 
 .my-footer {
   padding: 16px 0;

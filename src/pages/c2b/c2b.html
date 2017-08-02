@@ -28,6 +28,7 @@
                 <h2 ion-text [innerHTML]="saleTotalData.totalAssetsIn[0]"
                     color="{{saleTotalData.totalAssetsIn[1]=='true'?'danger':(saleTotalData.totalAssetsIn[1]=='false'?'secondary':'')}}"></h2>
             </div>
+            <div eCharts [options]="lineChartOption_1" [dataSet]="assetsInOutData.in" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>渠道分布</h2>
@@ -101,6 +102,7 @@
                 <h2 ion-text [innerHTML]="saleTotalData.totalAssetsOut[0]"
                     color="{{saleTotalData.totalAssetsOut[1]=='true'?'danger':(saleTotalData.totalAssetsOut[1]=='false'?'secondary':'')}}"></h2>
             </div>
+            <div eCharts [options]="lineChartOption_2" [dataSet]="assetsInOutData.out" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>渠道分布</h2>
@@ -179,7 +181,7 @@
                     <h3 ion-text [innerHTML]="assetsMain.SurplusAmount" color="danger"></h3>
                 </ion-col>
             </ion-row>
-            <div eCharts [options]="barChartOption" style="height: 420px;"></div>
+            <div eCharts [options]="barChartOption" (chartInit)="onChartInit($event)" ngClass="bar-chart-1"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>利润走势</h2>

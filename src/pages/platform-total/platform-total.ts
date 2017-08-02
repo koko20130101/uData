@@ -29,9 +29,10 @@ export class PlatformTotalPage {
         totalEnemy: ['--', ''],
     };
     //折线图数据
-    trendData: any;
+    trendData: any={};
     //柱状图数据
-    enemyBarData: any;
+    enemyBarData: any={};
+    enemyBarData_1: any={};
     //平台指数数据
     platformsCompareData: any = {
         1: [],
@@ -52,13 +53,17 @@ export class PlatformTotalPage {
         2: []
     };
     //传统理财折线图
-    regularTrendData: any;
+    regularTrendData: any={};
     //基金折线图
-    fundTrendData: any;
-    chartOption: any;
-    barChartOption: any;
+    fundTrendData: any={};
+
+    lineChartOption_1: any;
+    lineChartOption_2: any;
+    lineChartOption_3: any;
+    barChartOption_1: any;
+    barChartOption_2: any;
+    barChartWidth:any = 320;
     chartInstance:any;
-    chartData:any;
 
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
@@ -69,9 +74,20 @@ export class PlatformTotalPage {
 
     ngOnInit() {
         this.dateInstance = this.globalVars.getInstance();
-        this.chartOption = chartOptions.LineChartOption_1();
-        this.barChartOption = chartOptions.BarChartOptions_1();
-        this.chartData = [[144,556,66,666,993,333,444],[200, 32, 444, 666, 88, 352, 380]];
+        this.lineChartOption_1 = chartOptions.LineChartOption_1();
+        this.lineChartOption_2 = chartOptions.LineChartOption_3();
+        this.lineChartOption_3 = chartOptions.LineChartOption_3({
+            color:['#f45a1e', '#294181']
+        });
+
+        this.barChartOption_1 = chartOptions.BarChartOptions_1();
+        this.barChartOption_1.xAxis[0].show = false;
+        this.barChartOption_2 = chartOptions.BarChartOptions_1();
+        this.barChartOption_2.legend.show = false;
+        this.barChartOption_2.title.show = false;
+        this.barChartOption_2.yAxis[0].axisLabel.show = false;
+        this.barChartOption_2.grid.left = '0%';
+
     }
 
     ngAfterViewInit() {
@@ -105,11 +121,6 @@ export class PlatformTotalPage {
         console.log(this.chartInstance);
     }
 
-    changeDataSet(){
-        this.chartData = chartOptions.BarChartDataset2;
-    }
-
-
     showContent(value) {
         if (this.modelContent[value]) {
             this.modelContent[value] = 0;
@@ -141,6 +152,19 @@ export class PlatformTotalPage {
                         break;
                     case CacheField.regularCompare:
                         Object.assign(this.regularCompareData, res._body.data);
+                        break;
+                    case CacheField.enemyBar:
+                        this.barChartWidth = res._body.data.xAxis[0].length * 50;
+                        let _myTimeOut = setTimeout(function () {
+                            this.enemyBarData = res._body.data;
+                            clearTimeout(_myTimeOut);
+                        }.bind(this), 300);
+                        break;
+                    case CacheField.regularTrend:
+                        this.regularTrendData = res._body.data;
+                        break;
+                    case CacheField.fundTrend:
+                        this.fundTrendData = res._body.data;
                         break;
                     default:
                         break;
@@ -205,7 +229,14 @@ export class PlatformTotalPage {
             //竞品柱状图
             case CacheField.enemyBar:
                 if (!!_totalData) {
-                    this.enemyBarData = _totalData;
+                    this.barChartWidth = _totalData.xAxis[0].length * 50;
+                    let _myTimeOut=setTimeout(function () {
+                        this.enemyBarData = _totalData;
+                        this.enemyBarData_1 = {
+                            yAxis:this.enemyBarData.yAxis
+                        };
+                        clearTimeout(_myTimeOut);
+                    }.bind(this), 300);
                     return;
                 } else {
                     _sendData = null;

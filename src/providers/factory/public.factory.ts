@@ -44,6 +44,25 @@ export class PublicFactory {
         return format.toString();
     }
 
+    //格式化 money
+    moneyFormat(num, isShort?: boolean) {
+        num = Number(num);
+        let ohm = parseInt((num / Math.pow(10, 8)).toFixed(9)),  //有多少亿
+            tenth = Math.floor((num % Math.pow(10, 8)) / Math.pow(10, 4)), //除以亿的余数后，有多少个万
+            yuan = Math.floor((num % Math.pow(10, 8)) % Math.pow(10, 4)), //除以亿和万的余数后，有多少元
+            format = '';
+        if (ohm <= 0 && tenth <= 0) {
+            format = yuan + '元';
+        } else if (ohm <= 0 && tenth > 0) {
+            format = tenth + '万' + yuan + '元';
+        } else if (isShort) {
+            format = ohm + '亿' + tenth + '万元';
+        } else {
+            format = ohm + '亿' + tenth + '万' + yuan + '元';
+        }
+        return format.toString();
+    }
+
     //检查数据时间戳
     checkValueStamp(data, short?: boolean) {
         let _data: any = data;

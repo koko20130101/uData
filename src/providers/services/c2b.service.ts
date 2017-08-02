@@ -92,6 +92,11 @@ export class C2bService {
                 //当前时间
                 let _thisTime = moment().unix();
                 let _cacheData: any;
+                let _newData: any = {
+                    xAxis: [],
+                    yAxis: [],
+                    series: []
+                };
 
                 switch (cacheKey) {
                     //==> 总额
@@ -146,8 +151,23 @@ export class C2bService {
                     //==> 引入额及销售额折线图
                     case CacheField.assetsInOut:
                         _cacheData = this.assetsInOutData;
+                        //处理数据
+                        for (let key in _res.data) {
+                            let _key = key.split('_');
+                            switch (_key[0]) {
+                                case 'name':
+                                    _newData.legend = _res.data['name'];
+                                    break;
+                                case 'time':
+                                    _newData.xAxis.push({data: _res.data['time']});
+                                    break;
+                                case 'data':
+                                    _newData.series.push(_res.data['data_' + _key[1]]);
+                                    break;
+                            }
+                        }
                         let _assetsData: any = {};
-                        _assetsData[_res.dataType] = _res.data;
+                        _assetsData[_res.dataType] = _newData;
                         //添加时间戳
                         Object.assign(_assetsData, {stamp: _thisTime});
                         _res.data = _assetsData;
@@ -164,14 +184,54 @@ export class C2bService {
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
 
-                    //==> 资产总额对比
+                    //==> 资产总额对比折线图
                     case CacheField.profitData:
                         _cacheData = this.profitData;
+                        _newData.series[0] = _res.data.series[5].data;
+                        _newData.series[1] = _res.data.series[2].data;
+                        _newData.series[2] = _res.data.series[3].data;
+                        _newData.series[3] = _res.data.series[4].data;
+                        _newData.series[4] = _res.data.series[1].data;
+                        _newData.series[5] = _res.data.series[0].data;
+                        _newData.yAxis.push({data: _res.data.yAxis[0].ydata});
+                        let _concat = _newData.series[2].concat(_newData.series[3]);  //合并数据
+                        let topNumberRight = Math.ceil(Math.max.apply(Math, _concat)); //取最大值：获取X轴右侧的最大值
+                        _newData.xAxis.push({
+                            min: -topNumberRight * 4 / 5,
+                            max: topNumberRight
+                        });
+
+
+                        /*let _concat = _newData.series[2].concat(_newData.series[3]);  //合并数据
+                         let topNumberRight = Math.ceil(Math.max.apply(Math, _concat)); //取最大值：获取X轴右侧的最大值
+                         _newData.xAxis.push({
+                         data: _res.data.yAxis[0].ydata,
+                         min: -topNumberRight * 4 / 5,
+                         max: topNumberRight,
+                         });
+
+                         for (let i = 0;i< _newData.series[0].length;i++) {
+                         _newData.series[0][i] = _newData.series[0][i] * -1
+                         }
+                         for (let i = 0;i< _newData.series[1].length;i++) {
+                         _newData.series[1][i] = _newData.series[1][i] * -1
+                         }
+                         for (let i = 0;i< _newData.series[4].length;i++) {
+                         _newData.series[4][i] = Math.round(_newData.series[4][i] / 20 * topNumberRight * -1)
+                         }
+                         for (let i = 0;i< _newData.series[5].length;i++) {
+                         _newData.series[5][i] = Math.round(_newData.series[5][i] / 20 * topNumberRight)
+                         }
+                         for(let i=0;i<_newData.series.length;i++) {
+
+                         }*/
+
+                        _res.data = _newData;
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
 
-                    //==> 资产总额对比
+                    //==> 资产健康值折线图
                     case CacheField.assetsHealthy:
                         _cacheData = this.assetsHealthyData;
                         //添加时间戳
@@ -183,7 +243,7 @@ export class C2bService {
                         _cacheData = this.grossMarginData;
                         //格式化数据
                         _res.data['total'] = this.publicFactory.moneyFormatToHtml(_res.data['total']);
-                        for(let item of _res.data['grossProfit']) {
+                        for (let item of _res.data['grossProfit']) {
                             item = this.publicFactory.moneyFormatToHtml(item)
                         }
                         //添加时间戳
