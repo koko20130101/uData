@@ -1,5 +1,5 @@
 export const PieChartOptions_1 = () => ({
-    color: ['#f31a52', '#f7bb2b', '#32a1ff'],
+    color: ['#f31a52','#2aa4c4', '#f7bb2b', '#32a1ff','#3b61e3'],
     tooltip: {
         trigger: 'item',
         formatter: "{b}: {d}%",

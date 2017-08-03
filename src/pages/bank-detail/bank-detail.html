@@ -20,6 +20,7 @@
         <h2 ion-text [innerHTML]="bankTotalData.total[0]"
             color="{{bankTotalData.total[1]=='true'?'danger':(bankTotalData.total[1]=='false'?'secondary':'')}}"></h2>
     </div>
+    <div eCharts [options]="lineChartOption_1" [dataSet]="bankMoneyData" ngClass="line-chart-1"></div>
     <ion-list ngClass="model-title">
         <ion-item>
             <h2>项目情况</h2>
@@ -33,8 +34,8 @@
             <ion-segment-button value="1">项目情况</ion-segment-button>
             <ion-segment-button value="2" (click)="getProjectType()">资产类型</ion-segment-button>
         </ion-segment>
-        <div [ngSwitch]="projectType" padding>
-            <div *ngSwitchCase="'1'">
+        <div [ngSwitch]="projectType">
+            <div *ngSwitchCase="'1'" padding>
                 <div ngClass="info-list">
                     <ion-row>
                         <ion-col col-5 text-left>发布项目数</ion-col>
@@ -59,7 +60,9 @@
                     </ion-row>
                 </div>
             </div>
-            <div *ngSwitchCase="'2'">2</div>
+            <div *ngSwitchCase="'2'" padding-horizontal>
+                <div eCharts [options]="pieChartOption_1" [dataSet]="bankAssetsTypeData" ngClass="pie-chart-1"></div>
+            </div>
         </div>
     </div>
     <ion-list ngClass="model-title">
@@ -74,9 +77,9 @@
         <ion-segment [(ngModel)]="projectTrendType" ngClass="my-segment">
             <ion-segment-button value="1" (click)="getProjectTrendType()">收益率走势</ion-segment-button>
             <ion-segment-button value="2" (click)="getProjectTrendType()">期限走势</ion-segment-button>
-            <ion-segment-button value="3" (click)="getProjectTrendType()">收益率走势</ion-segment-button>
+            <ion-segment-button value="3" (click)="getProjectTrendType()">项目规模走势</ion-segment-button>
         </ion-segment>
-        <div [ngSwitch]="projectTrendType" padding>
+        <div [ngSwitch]="projectTrendType" padding-vertical>
             <div *ngSwitchCase="'1'">
                 <div ngClass="sub-total-data" text-center>
                     <p>平均收益率</p>
@@ -86,6 +89,7 @@
                         <span>%</span>
                     </h2>
                 </div>
+                <div eCharts [options]="lineChartOption_2" [dataSet]="bankTrendRateData" ngClass="line-chart-1"></div>
             </div>
             <div *ngSwitchCase="'2'">
                 <div ngClass="sub-total-data" text-center>
@@ -96,6 +100,7 @@
                         <span>天</span>
                     </h2>
                 </div>
+                <div eCharts [options]="lineChartOption_3" [dataSet]="bankTrendTermData" ngClass="line-chart-1"></div>
             </div>
             <div *ngSwitchCase="'3'">
                 <div ngClass="sub-total-data" text-center>
@@ -106,6 +111,7 @@
                         <span>万元</span>
                     </h2>
                 </div>
+                <div eCharts [options]="lineChartOption_4" [dataSet]="bankTrendDealData" ngClass="line-chart-1"></div>
             </div>
         </div>
     </div>
@@ -278,6 +284,7 @@
                 <span>%</span>
             </h2>
         </div>
+        <div eCharts [options]="lineChartOption_2" [dataSet]="bankRateTrendSecData" ngClass="line-chart-1"></div>
     </div>
     <ion-list ngClass="model-title">
         <ion-item>
@@ -287,8 +294,8 @@
             </ion-note>
         </ion-item>
     </ion-list>
-    <div ngClass="model-content" padding>
-        <div eCharts [options]="pieChartOption" style="height:300px"></div>
+    <div ngClass="model-content" padding-horizontal>
+        <div eCharts [options]="pieChartOption_2" [dataSet]="bankChannelData" ngClass="pie-chart-1"></div>
         <div ngClass="info-list">
             <ion-row>
                 <ion-col col-5 text-left>注册人数</ion-col>

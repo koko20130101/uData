@@ -1,4 +1,4 @@
-export class Item {
+export class BankTotal {
 
   constructor(private fields: any) {
     // Quick and dirty extend/assign fields to this model

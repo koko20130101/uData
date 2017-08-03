@@ -5,7 +5,7 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {FirstRunPage} from '../pages/pages';
-import {PlatformTotalPage} from '../pages/platform-total/platform-total';
+import {BankDetailPage} from '../pages/bank-detail/bank-detail';
 
 import {TranslateService} from '@ngx-translate/core'
 

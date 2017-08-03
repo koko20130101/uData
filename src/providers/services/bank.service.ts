@@ -93,6 +93,12 @@ export class BankService {
                 //当前时间
                 let _thisTime = moment().unix();
                 let _cacheData: any;
+                let _newData: any = {
+                    legend: [],
+                    xAxis: [],
+                    yAxis: [],
+                    series: []
+                };
 
                 switch (cacheKey) {
                     //==> 总额
@@ -109,6 +115,8 @@ export class BankService {
                     //==> 平台交易额折线图
                     case CacheField.bankMoney:
                         _cacheData = this.bankMoneyData;
+                        //处理数据
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -116,6 +124,12 @@ export class BankService {
                     //==> 渠道占比饼图
                     case CacheField.bankChannel:
                         _cacheData = this.bankChannelData;
+                        //处理数据
+                        for (let item of _res.data.list) {
+                            _newData.legend.push(item.name);
+                        }
+                        _newData.series.push(_res.data.list);
+                        _res.data = _newData;
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -133,6 +147,8 @@ export class BankService {
                     //==> 二级市场利率趋势图
                     case CacheField.bankRateTrendSec:
                         _cacheData = this.bankRateTrendSecData;
+                        //处理数据
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -140,6 +156,12 @@ export class BankService {
                     //==> 银行资产类型
                     case CacheField.bankAssetsType:
                         _cacheData = this.bankAssetsTypeData;
+                        //处理数据
+                        for (let item of _res.data.list) {
+                            _newData.legend.push(item.name);
+                        }
+                        _newData.series.push(_res.data.list);
+                        _res.data = _newData;
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -147,6 +169,8 @@ export class BankService {
                     //==> 项目走势 > 收益率走势
                     case CacheField.bankTrendRate:
                         _cacheData = this.bankTrendRateData;
+                        //处理数据
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -154,6 +178,8 @@ export class BankService {
                     //==> 项目走势 > 期限走势
                     case CacheField.bankTrendTerm:
                         _cacheData = this.bankTrendTermData;
+                        //处理数据
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -161,6 +187,8 @@ export class BankService {
                     //==> 项目走势 > 发布规模走势
                     case CacheField.bankTrendDeal:
                         _cacheData = this.bankTrendDealData;
+                        //处理数据
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -258,6 +286,30 @@ export class BankService {
         } else {
             return false;
         }
+    }
 
+    private handleValue(_data:any){
+        let _newData: any = {
+            legend: [],
+            xAxis: [],
+            yAxis: [],
+            series: []
+        };
+        //处理数据
+        for (let key in _data) {
+            let _key = key.split('_');
+            switch (_key[0]) {
+                case 'name':
+                    _newData.legend = _data['name'];
+                    break;
+                case 'time':
+                    _newData.xAxis.push({data: _data['time']});
+                    break;
+                case 'data':
+                    _newData.series.push(_data['data_' + _key[1]]);
+                    break;
+            }
+        }
+        return  _newData;
     }
 }
