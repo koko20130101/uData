@@ -30,14 +30,14 @@
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="assetsInOutData.in" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(0)">
                     <h2>渠道分布</h2>
                     <ion-note item-right>
                         <ion-icon name="arrow-down"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div>
+            <div ngClass="model-content" *ngIf="modelContent[0]">
                 <ion-segment [(ngModel)]="saleChannelTypeIn" ngClass="my-segment">
                     <ion-segment-button value="2" (click)="saleChannelSegmentIn()">引入额</ion-segment-button>
                     <ion-segment-button value="1" (click)="saleChannelSegmentIn()">收益率</ion-segment-button>
@@ -102,16 +102,16 @@
                 <h2 ion-text [innerHTML]="saleTotalData.totalAssetsOut[0]"
                     color="{{saleTotalData.totalAssetsOut[1]=='true'?'danger':(saleTotalData.totalAssetsOut[1]=='false'?'secondary':'')}}"></h2>
             </div>
-            <div eCharts [options]="lineChartOption_2" [dataSet]="assetsInOutData.out" ngClass="line-chart-1"></div>
+            <div eCharts [options]="lineChartOption_1" [dataSet]="assetsInOutData.out" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(1)">
                     <h2>渠道分布</h2>
                     <ion-note item-right>
                         <ion-icon name="arrow-down"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div>
+            <div ngClass="model-content" *ngIf="modelContent[1]">
                 <ion-segment [(ngModel)]="saleChannelTypeOut" ngClass="my-segment">
                     <ion-segment-button value="2" (click)="saleChannelSegmentOut()">引入额</ion-segment-button>
                     <ion-segment-button value="1" (click)="saleChannelSegmentOut()">收益率</ion-segment-button>
@@ -183,25 +183,34 @@
             </ion-row>
             <div eCharts [options]="barChartOption" [dataSet]="profitData" (chartInit)="onChartInit($event)" ngClass="bar-chart-1"></div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(2)">
                     <h2>利润走势</h2>
                     <ion-note item-right>
                         <ion-icon name="arrow-up"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
+            <div ngClass="model-content" *ngIf="modelContent[2]">
+                <ion-row ngClass="total-data-1">
+                    <ion-col text-left>
+                        <p>累计营收额</p>
+                        <h3 ion-text [innerHTML]="grossMarginData.total" color="danger"></h3>
+                    </ion-col>
+                </ion-row>
+                <div eCharts [options]="lineChartOption_2" [dataSet]="grossMarginData" ngClass="line-chart-1"></div>
+            </div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(3)">
                     <h2>资产健康值</h2>
                     <ion-note item-right>
                         <ion-icon name="arrow-up"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content" padding>
+            <div ngClass="model-content" padding *ngIf="modelContent[3]">
                 <div class="axis-label top">资产<br>不足</div>
                 <div class="axis-label bottom">资金<br>不足</div>
-                <div eCharts [options]="lineChartOption_2" [dataSet]="lineChartData" style="height:250px"></div>
+                <div eCharts [options]="lineChartOption_3" [dataSet]="assetsHealthyData" ngClass="line-chart-1"></div>
             </div>
         </ion-slide>
     </ion-slides>

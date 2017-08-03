@@ -83,7 +83,7 @@ export class C2bService {
         if (!!sendData) {
             Object.assign(_sendData, sendData);
         }
-        console.log(_sendData);
+        // console.log(_sendData);
         //发起请求
         let req = this.api.post(endpoint, _sendData).share();
         req.map(res => res.json())
@@ -203,6 +203,19 @@ export class C2bService {
                     //==> 资产健康值折线图
                     case CacheField.assetsHealthy:
                         _cacheData = this.assetsHealthyData;
+                        //处理数据
+                        for (let key in _res.data) {
+                            let _key = key.split('_');
+                            switch (_key[0]) {
+                                case 'time':
+                                    _newData.xAxis.push({data: _res.data['time']});
+                                    break;
+                                case 'data':
+                                    _newData.series.push(_res.data['data_' + _key[1]]);
+                                    break;
+                            }
+                        }
+                        _res.data = _newData;
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -211,15 +224,31 @@ export class C2bService {
                     case CacheField.grossMargin:
                         _cacheData = this.grossMarginData;
                         //格式化数据
-                        _res.data['total'] = this.publicFactory.moneyFormatToHtml(_res.data['total']);
-                        for (let item of _res.data['grossProfit']) {
-                            item = this.publicFactory.moneyFormatToHtml(item)
+                        for (let i=0;i< _res.data['grossProfit'].length;i++) {
+                            _res.data['grossProfit'][i] = this.publicFactory.moneyFormatToHtml(_res.data['grossProfit'][i])
                         }
+                        _newData['total'] = this.publicFactory.moneyFormatToHtml(_res.data['total']);
+                        _newData['grossProfit'] = _res.data['grossProfit'];
+                        //处理数据
+                        for (let key in _res.data) {
+                            let _key = key.split('_');
+                            switch (_key[0]) {
+                                case 'name':
+                                    _newData.legend = _res.data['name'];
+                                    break;
+                                case 'time':
+                                    _newData.xAxis.push({data: _res.data['time']});
+                                    break;
+                                case 'data':
+                                    _newData.series.push(_res.data['data_' + _key[1]]);
+                                    break;
+                            }
+                        }
+                        _res.data = _newData;
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
                     default:
-
                         _cacheData = {};
                         break;
                 }
@@ -251,6 +280,7 @@ export class C2bService {
                         break;
                     case CacheField.assetsMain:
                         this.assetsMainData = _cacheData;
+                        break;
                     case CacheField.profitData:
                         this.profitData = _cacheData;
                         break;

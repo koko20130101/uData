@@ -46,7 +46,7 @@ export const LineChartOption_1 = (value?:any) => {
         grid: {
             left: '3%',
             right: '5%',
-            bottom: '3%',
+            bottom: '5%',
             containLabel: true
         },
         xAxis: [
@@ -62,7 +62,9 @@ export const LineChartOption_1 = (value?:any) => {
                 axisLabel: {
                     textStyle: {
                         color: "#565475"
-                    }
+                    },
+                    margin: 16,
+
                 },
                 splitLine: {
                     lineStyle: {
@@ -84,7 +86,8 @@ export const LineChartOption_1 = (value?:any) => {
                 axisLabel: {
                     textStyle: {
                         color: "#565475"
-                    }
+                    },
+                    formatter:null
                 },
                 splitLine: {
                     lineStyle: {
@@ -108,8 +111,7 @@ export const LineChartOption_1 = (value?:any) => {
     }
     return option;
 };
-export const LineChartOption_2 = () => (
-{
+export const LineChartOption_2 = () => ({
     color: ['#21f33b', '#294181'],
     title: {
         show: false
@@ -125,13 +127,14 @@ export const LineChartOption_2 = () => (
     grid: {
         left: '12%',
         right: '0%',
-        bottom: '4%',
+        bottom: '10%',
         top: '5%',
         containLabel: true
     },
     xAxis: [
         {
             type: 'category',
+            boundaryGap: false,
             splitLine: {
                 lineStyle: {
                     color: 'transparent'
@@ -146,10 +149,13 @@ export const LineChartOption_2 = () => (
                 show: false
             },
             axisLabel: {
+                interval:0,   //显示所有的label
+                rotate:45,
+                align:'right',
                 textStyle: {
                     color: '#666'
                 },
-                margin: 20
+                margin: 16
             },
             data: []
         }
@@ -201,8 +207,7 @@ export const LineChartOption_2 = () => (
             data: []
         }
     ]
-}
-);
+});
 export const LineChartOption_3 = (value?:any) => {
     let option = {
         color: ['#f23e3e', '#1eec66', '#1e7fec'],

@@ -40,7 +40,7 @@ export class MyECharts implements OnChanges, OnDestroy {
         if (changes['dataSet']) {
             this.onDataSetChange(this.dataSet);
         }
-        console.log(this.options);
+        // console.log(this.options);
         if (changes['options']) {
             this.onOptionsChange(this.options);
         }
@@ -50,7 +50,7 @@ export class MyECharts implements OnChanges, OnDestroy {
         if (this.myChart) {
             this.myChart.dispose();
             this.myChart = null;
-            console.log(99)
+            // console.log(99)
         }
     }
 
@@ -121,13 +121,13 @@ export class MyECharts implements OnChanges, OnDestroy {
                                 this.options.legend.data[i].name = dataSet.legend[i];
                             }
                         }
-                        if(!!this.options.series) {
+                        /*if(!!this.options.series) {
                             if (!this.options.series[i]) {
                                 this.options.series[i] = {name: dataSet.legend[i]};
                             } else {
                                 this.options.series[i].name = dataSet.legend[i];
                             }
-                        }
+                        }*/
                     }
                     break;
                 case 'xAxis':

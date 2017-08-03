@@ -22,6 +22,7 @@ export class C2bPage {
     C2BType = '1';
     saleChannelTypeIn = '2';
     saleChannelTypeOut = '2';
+    modelContent: any[] = [1, 0, 0, 0];  //list内容展开收起状态
     dateInstance: any;
     //引入及销售总额
     saleTotalData: any = {
@@ -56,10 +57,9 @@ export class C2bPage {
     inoutFlag: any = 'in';
 
     barChartOption: any;
-    lineChartOption_1: any;
-    lineChartOption_2: any;
-    chartData: any;
-    lineChartData: any;
+    lineChartOption_1: any;  // 引入额和销售额折线图设置
+    lineChartOption_2: any;  // 利润走势
+    lineChartOption_3: any;  // 资产健康值折线图
 
     barChartInstance: any;
 
@@ -77,10 +77,14 @@ export class C2bPage {
         //设置图表数据
         this.barChartOption = chartOptions.BarChartOption_2();
         this.lineChartOption_1 = chartOptions.LineChartOption_1();
+        //利润走势
         this.lineChartOption_2 = chartOptions.LineChartOption_1();
+        this.lineChartOption_2.yAxis[0].axisLabel.formatter = '{value} %';
+        this.lineChartOption_2.title.show = false;
+        this.lineChartOption_2.grid.top = '8%';
+        //资产健康值
+        this.lineChartOption_3 = chartOptions.LineChartOption_2();
 
-        this.chartData = [[144, 556, 66, 666, 993, 333, 444], [200, 32, 444, 666, 88, 352, 380]];
-        this.lineChartData = [[0, 0, 0, 0, 0, 0, 0]];
     }
 
     ngAfterViewInit() {
@@ -94,8 +98,8 @@ export class C2bPage {
     }
 
     ionViewWillEnter() {
-        // this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
-        // this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
+        this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
         this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
     }
 
@@ -186,7 +190,7 @@ export class C2bPage {
             //毛利率折线图
             case CacheField.grossMargin:
                 if (!!_cacheData) {
-                    this.grossMarginData = _cacheData;
+                    this.setLineChartOption_2(_cacheData);
                     return;
                 } else {
                     _sendData = null;
@@ -235,14 +239,13 @@ export class C2bPage {
                         this.assetsMain = res._body.data;
                         break;
                     case CacheField.profitData:
-                        this.profitData = res._body.data;
                         this.setBarChartOption(res._body.data);
                         break;
                     case CacheField.assetsHealthy:
                         this.assetsHealthyData = res._body.data;
                         break;
                     case CacheField.grossMargin:
-                        this.grossMarginData = res._body.data;
+                        this.setLineChartOption_2(res._body.data);
                         break;
                     default:
                         break;
@@ -263,6 +266,7 @@ export class C2bPage {
     /**
      * 格式化柱状图
      * loadData(本地或远程数据)
+     *
      * */
     setBarChartOption(_data: any) {
         let _options = this.barChartOption;
@@ -322,6 +326,29 @@ export class C2bPage {
         this.profitData = _tempData;
     }
 
+    /**
+     * 格式化利润走势折线图
+     * loadData(本地或远程数据)
+     * */
+    setLineChartOption_2(_data:any){
+        this.lineChartOption_2.tooltip.formatter = function (params: any) {
+            var res = params[0].name;
+            for (var i = 0; i < params.length; i++) {
+                res += '<br/>毛利率' + ' : ' + params[i].data + ' %<br/>毛利润' + ' : ' + _data.grossProfit[i];
+            }
+            return res;
+        };
+        this.grossMarginData = _data;
+    }
+
+    showContent(value) {
+        if (this.modelContent[value]) {
+            this.modelContent[value] = 0;
+        } else {
+            this.modelContent[value] = 1;
+        }
+    }
+
     //下拉刷新
     doRefresh(refresher: Refresher) {
         let num = Number(this.C2BType);
@@ -335,18 +362,18 @@ export class C2bPage {
                     this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelIn, refresher, null, {inoutFlag: this.inoutFlag});
                     this.loadData(Endpoint.assetsInOut, CacheField.assetsInOut, refresher, null, {inoutFlag: this.inoutFlag});
                     break;
-                //
+                //销售
                 case 2:
                     this.loadData(Endpoint.saleTotal, CacheField.saleTotal, refresher);
                     this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelOut, refresher, null, {inoutFlag: this.inoutFlag});
                     this.loadData(Endpoint.assetsInOut, CacheField.assetsInOut, refresher, null, {inoutFlag: this.inoutFlag});
                     break;
-                //传统理财
+                //远营分析
                 case 3:
-                    // this.loadData(Endpoint.assetsMain, CacheField.assetsMain, refresher);
+                    this.loadData(Endpoint.assetsMain, CacheField.assetsMain, refresher);
                     this.loadData(Endpoint.profitData, CacheField.profitData, refresher);
-                    // this.loadData(Endpoint.assetsHealthy, CacheField.assetsHealthy,refresher);
-                    // this.loadData(Endpoint.grossMargin, CacheField.grossMargin);
+                    this.loadData(Endpoint.assetsHealthy, CacheField.assetsHealthy,refresher);
+                    this.loadData(Endpoint.grossMargin, CacheField.grossMargin);
                     break;
             }
 
@@ -360,6 +387,7 @@ export class C2bPage {
             //引入额
             case 1:
                 this.inoutFlag = 'in';
+                this.modelContent = [1, 0, 0, 0];
                 this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
                 this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
                 this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
@@ -367,16 +395,18 @@ export class C2bPage {
             //销售额
             case 2:
                 this.inoutFlag = 'out';
+                this.modelContent = [0, 1, 0, 0];
                 this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
                 this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut);
                 this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
                 break;
             //运营分析
             case 3:
-                // this.getDataFromCache(Endpoint.assetsMain, CacheField.assetsMain);
+                this.modelContent = [0, 0, 1, 1];
+                this.getDataFromCache(Endpoint.assetsMain, CacheField.assetsMain);
                 this.getDataFromCache(Endpoint.profitData, CacheField.profitData);
-                // this.getDataFromCache(Endpoint.assetsHealthy, CacheField.assetsHealthy);
-                // this.getDataFromCache(Endpoint.grossMargin, CacheField.grossMargin);
+                this.getDataFromCache(Endpoint.assetsHealthy, CacheField.assetsHealthy);
+                this.getDataFromCache(Endpoint.grossMargin, CacheField.grossMargin);
                 break;
         }
     }

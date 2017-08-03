@@ -61,10 +61,12 @@ export class LingXiService {
                 //当前时间
                 let _thisTime = moment().unix();
                 let _cacheData: any;
-
-                if(_res.code == 0) {
-
-                }
+                let _newData: any = {
+                    legend: [],
+                    xAxis: [],
+                    yAxis: [],
+                    series: []
+                };
 
                 switch (cacheKey) {
                     //==> 总额
@@ -84,8 +86,23 @@ export class LingXiService {
                     //==> 交易额折线图
                     case CacheField.lingXiTrendDeal:
                         _cacheData = this.dealTrendData;
+                        //处理数据
+                        for (let key in _res.data) {
+                            let _key = key.split('_');
+                            switch (_key[0]) {
+                                case 'name':
+                                    _newData.legend = _res.data['name'];
+                                    break;
+                                case 'time':
+                                    _newData.xAxis.push({data: _res.data['time']});
+                                    break;
+                                case 'data':
+                                    _newData.series.push(_res.data['data_' + _key[1]]);
+                                    break;
+                            }
+                        }
                         let _trendDeal: any = {};
-                        _trendDeal[_res.dataType] = _res.data;
+                        _trendDeal[_res.dataType] = _newData;
                         //添加时间戳
                         Object.assign(_trendDeal, {stamp: _thisTime});
                         _res.data = _trendDeal;
@@ -94,8 +111,23 @@ export class LingXiService {
                     //==> 收益率折线图
                     case CacheField.lingXiTrendRate:
                         _cacheData = this.rateTrendData;
+                        //处理数据
+                        for (let key in _res.data) {
+                            let _key = key.split('_');
+                            switch (_key[0]) {
+                                case 'name':
+                                    _newData.legend = _res.data['name'];
+                                    break;
+                                case 'time':
+                                    _newData.xAxis.push({data: _res.data['time']});
+                                    break;
+                                case 'data':
+                                    _newData.series.push(_res.data['data_' + _key[1]]);
+                                    break;
+                            }
+                        }
                         let _trendRate: any = {};
-                        _trendRate[_res.dataType] = _res.data;
+                        _trendRate[_res.dataType] = _newData;
                         //添加时间戳
                         Object.assign(_trendRate, {stamp: _thisTime});
                         _res.data = _trendRate;
@@ -104,6 +136,12 @@ export class LingXiService {
                     //==> 渠道占比
                     case CacheField.lingXiChannel:
                         _cacheData = this.lingXiChannelData;
+                        //处理数据
+                        for (let item of _res.data.list) {
+                            _newData.legend.push(item.name);
+                        }
+                        _newData.series.push(_res.data.list);
+                        _res.data = _newData;
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;

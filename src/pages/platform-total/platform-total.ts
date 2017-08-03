@@ -91,7 +91,6 @@ export class PlatformTotalPage {
         this.barChartOption_1 = chartOptions.BarChartOptions_1();
         this.barChartOption_1.xAxis[0].show = false;
 
-
         this.barChartOption_2 = chartOptions.BarChartOptions_1();
         this.barChartOption_2.legend.show = false;
         this.barChartOption_2.title.show = false;

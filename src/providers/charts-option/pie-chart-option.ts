@@ -9,7 +9,7 @@ export const PieChartOptions_1 = () => ({
         orient: 'vertical',
         x: 'left',
         y:'center',
-        data: [{name: 'PC', icon: 'circle'},{name: 'APP', icon: 'circle'},{name: 'WAP', icon: 'circle'}],
+        data: [{name: '', icon: 'circle'}],
         textStyle: {
             color: '#787878',
             fontWeight: 700
@@ -47,11 +47,7 @@ export const PieChartOptions_1 = () => ({
                     show: false
                 }
             },
-            data:[
-                {value:.5, name:'PC'},
-                {value:.4, name:'APP'},
-                {value:.1, name:'WAP'}
-            ]
+            data:[]
         }
     ]
 });

@@ -76,14 +76,14 @@ export class PublicFactory {
         if (_index == 0 || short) {
             //过期时间: 60秒前 (在global.service中设置)
             if (!!_data && !!_data[_currentDate] && _data[_currentDate].stamp + _instance.cacheTime.short > _thisTime) {
-                return data[_currentDate];
+                return _data[_currentDate];
             } else {
                 return false;
             }
         } else {
             //过期时间: 30天 (在global.service中设置)
             if (!!_data && !!_data[_currentDate] && _data[_currentDate].stamp + _instance.cacheTime.middle > _thisTime) {
-                return data[_currentDate];
+                return _data[_currentDate];
             } else {
                 return false;
             }

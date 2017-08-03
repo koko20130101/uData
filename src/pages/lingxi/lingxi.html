@@ -30,6 +30,7 @@
                 <h2 ion-text [innerHTML]="lingXiTotalData.total[0]"
                     color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}"></h2>
             </div>
+            <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>用户运营</h2>
@@ -124,6 +125,9 @@
                     </ion-note>
                 </ion-item>
             </ion-list>
+            <div ngClass="model-content" padding-horizontal>
+                <div eCharts [options]="pieChartOption" [dataSet]="lingXiChannelData" ngClass="pie-chart-1"></div>
+            </div>
         </ion-slide>
         <!--活期-->
         <ion-slide>
@@ -141,6 +145,7 @@
                     </ion-col>
                 </ion-row>
             </div>
+            <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>年化收益率</h2>
@@ -150,7 +155,7 @@
                 </ion-item>
             </ion-list>
             <div ngClass="model-content">
-
+                <div eCharts [options]="lineChartOption_2" [dataSet]="rateTrendData" ngClass="line-chart-1"></div>
             </div>
             <ion-list ngClass="model-title">
                 <ion-item>
@@ -212,6 +217,7 @@
                 <h2 ion-text [innerHTML]="lingXiTotalData.total[0]"
                     color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}"></h2>
             </div>
+            <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>年化收益率</h2>
@@ -221,7 +227,7 @@
                 </ion-item>
             </ion-list>
             <div ngClass="model-content">
-
+                <div eCharts [options]="lineChartOption_2" [dataSet]="rateTrendData" ngClass="line-chart-1"></div>
             </div>
             <ion-list ngClass="model-title">
                 <ion-item>
@@ -283,6 +289,7 @@
                 <h2 ion-text [innerHTML]="lingXiTotalData.total[0]"
                     color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}"></h2>
             </div>
+            <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>年化收益率</h2>
@@ -292,7 +299,7 @@
                 </ion-item>
             </ion-list>
             <div ngClass="model-content">
-
+                <div eCharts [options]="lineChartOption_2" [dataSet]="rateTrendData" ngClass="line-chart-1"></div>
             </div>
             <ion-list ngClass="model-title">
                 <ion-item>
@@ -354,6 +361,7 @@
                 <h2 ion-text [innerHTML]="lingXiTotalData.total[0]"
                     color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}"></h2>
             </div>
+            <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
                 <ion-item>
                     <h2>年化收益率</h2>
@@ -363,7 +371,7 @@
                 </ion-item>
             </ion-list>
             <div ngClass="model-content">
-
+                <div eCharts [options]="lineChartOption_2" [dataSet]="rateTrendData" ngClass="line-chart-1"></div>
             </div>
             <ion-list ngClass="model-title">
                 <ion-item>
