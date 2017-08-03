@@ -128,7 +128,7 @@ export class LingXiPage {
                 }
             case CacheField.lingXiTrendDeal:
                 if (!!_cacheData && _cacheData[_num]) {
-                    this.dealTrendData = _cacheData[_num];
+                    this.dealTrendData[_num] = _cacheData[_num];
                     return;
                 } else {
                     _sendData = {proType: _num};
@@ -136,7 +136,7 @@ export class LingXiPage {
                 }
             case CacheField.lingXiTrendRate:
                 if (!!_cacheData && _cacheData[_num]) {
-                    this.rateTrendData = _cacheData[_num];
+                    this.rateTrendData[_num] = _cacheData[_num];
                     return;
                 } else {
                     _sendData = {proType: _num};
@@ -185,13 +185,12 @@ export class LingXiPage {
                         }
                         break;
                     case CacheField.lingXiTrendDeal:
-                        this.dealTrendData = res._body.data[this.lingXiType];
+                        this.dealTrendData[this.lingXiType] = res._body.data[this.lingXiType];
                         break;
                     case CacheField.lingXiTrendRate:
-                        this.rateTrendData = res._body.data[this.lingXiType];
+                        this.rateTrendData[this.lingXiType] = res._body.data[this.lingXiType];
                         break;
                     case CacheField.lingXiChannel:
-                        console.log(this.pieChartOption)
                         this.lingXiChannelData = res._body.data;
                         break;
                     default:
