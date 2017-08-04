@@ -22,14 +22,14 @@
     </div>
     <div eCharts [options]="lineChartOption_1" [dataSet]="bankMoneyData" ngClass="line-chart-1"></div>
     <ion-list ngClass="model-title">
-        <ion-item>
+        <ion-item (click)="showContent(0)">
             <h2>项目情况</h2>
             <ion-note item-right>
                 <ion-icon name="arrow-up"></ion-icon>
             </ion-note>
         </ion-item>
     </ion-list>
-    <div ngClass="model-content">
+    <div ngClass="model-content" *ngIf="modelContent[0]">
         <ion-segment [(ngModel)]="projectType" ngClass="my-segment">
             <ion-segment-button value="1">项目情况</ion-segment-button>
             <ion-segment-button value="2" (click)="getProjectType()">资产类型</ion-segment-button>
@@ -66,14 +66,14 @@
         </div>
     </div>
     <ion-list ngClass="model-title">
-        <ion-item>
+        <ion-item (click)="showContent(1)">
             <h2>项目走势分析</h2>
             <ion-note>
                 <ion-note name="arrow-up"></ion-note>
             </ion-note>
         </ion-item>
     </ion-list>
-    <div ngClass="model-content">
+    <div ngClass="model-content" *ngIf="modelContent[1]">
         <ion-segment [(ngModel)]="projectTrendType" ngClass="my-segment">
             <ion-segment-button value="1" (click)="getProjectTrendType()">收益率走势</ion-segment-button>
             <ion-segment-button value="2" (click)="getProjectTrendType()">期限走势</ion-segment-button>
@@ -116,14 +116,14 @@
         </div>
     </div>
     <ion-list ngClass="model-title">
-        <ion-item>
+        <ion-item (click)="showContent(2)">
             <h2>用户运营</h2>
             <ion-note item-right>
                 <ion-icon name="arrow-up"></ion-icon>
             </ion-note>
         </ion-item>
     </ion-list>
-    <div ngClass="model-content">
+    <div ngClass="model-content" *ngIf="modelContent[2]">
         <ion-segment [(ngModel)]="userOperateType" ngClass="my-segment">
             <ion-segment-button value="1">用户概况</ion-segment-button>
             <ion-segment-button value="2">用户传化</ion-segment-button>
@@ -210,14 +210,14 @@
         </div>
     </div>
     <ion-list ngClass="model-title">
-        <ion-item>
+        <ion-item (click)="showContent(3)">
             <h2>二级市场</h2>
             <ion-note item-right>
                 <ion-icon name="arrow-up"></ion-icon>
             </ion-note>
         </ion-item>
     </ion-list>
-    <div ngClass="model-content">
+    <div ngClass="model-content" *ngIf="modelContent[3]">
         <div ngClass="info-list">
             <ion-row>
                 <ion-col col-5 text-left>发布项目数</ion-col>
@@ -287,14 +287,14 @@
         <div eCharts [options]="lineChartOption_2" [dataSet]="bankRateTrendSecData" ngClass="line-chart-1"></div>
     </div>
     <ion-list ngClass="model-title">
-        <ion-item>
+        <ion-item (click)="showContent(4)">
             <h2>渠道占比</h2>
             <ion-note item-right>
                 <ion-icon name="arrow-up"></ion-icon>
             </ion-note>
         </ion-item>
     </ion-list>
-    <div ngClass="model-content" padding-horizontal>
+    <div ngClass="model-content" padding-horizontal *ngIf="modelContent[4]">
         <div eCharts [options]="pieChartOption_2" [dataSet]="bankChannelData" ngClass="pie-chart-1"></div>
         <div ngClass="info-list">
             <ion-row>

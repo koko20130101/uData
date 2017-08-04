@@ -21,6 +21,7 @@ export class BankDetailPage {
     projectType = '1';
     projectTrendType = '1';
     userOperateType = '1';
+    modelContent: any[] = [1, 1, 1, 1,1];  //list内容展开收起状态
     dateInstance: any;
     bankInfo: any;
     //平台数据
@@ -170,6 +171,14 @@ export class BankDetailPage {
     ionViewWillLeave() {
         //取消选择单位订阅
         this.publicFactory.unitInfo.observers.pop();
+    }
+
+    showContent(value) {
+        if (this.modelContent[value]) {
+            this.modelContent[value] = 0;
+        } else {
+            this.modelContent[value] = 1;
+        }
     }
 
     /**

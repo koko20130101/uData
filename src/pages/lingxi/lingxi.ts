@@ -20,6 +20,7 @@ export class LingXiPage {
     pageName: any = 'LingXiPage';
     lingXiType = '0';
     userOperateType = '1';
+    modelContent: any[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];  //list内容展开收起状态
     dateInstance: any;
     model: any = {
         "total": ['--', ''],
@@ -39,11 +40,11 @@ export class LingXiPage {
     rateTrendData: any = {};
     lingXiChannelData: any = {};
     //成交额折线图
-    lineChartOption_1:any;
+    lineChartOption_1: any;
     //年化收益率折线图
-    lineChartOption_2:any;
+    lineChartOption_2: any;
     //渠道占比饼图设置
-    pieChartOption:any;
+    pieChartOption: any;
 
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
@@ -58,10 +59,10 @@ export class LingXiPage {
 
         //交易额折线图设置
         this.lineChartOption_1 = chartOptions.LineChartOption_1();
-        this.lineChartOption_1.tooltip.formatter=function (params) {
+        this.lineChartOption_1.tooltip.formatter = function (params) {
             let res = params[0].name;
             for (var i = 0; i < params.length; i++) {
-                res += '<br/>' + params[i].seriesName + ' : ' + this.publicFactory.moneyFormat(params[i].data,true);
+                res += '<br/>' + params[i].seriesName + ' : ' + this.publicFactory.moneyFormat(params[i].data, true);
             }
             return res;
         }.bind(this);
@@ -217,7 +218,7 @@ export class LingXiPage {
         if (num != 0) {
             this.getDataFromCache(Endpoint.lingXiTrendRate, CacheField.lingXiTrendRate);
         }
-        if(num == 0) {
+        if (num == 0) {
             this.getDataFromCache(Endpoint.lingXiChannel, CacheField.lingXiChannel);
         }
     }
@@ -232,11 +233,20 @@ export class LingXiPage {
             if (num != 0) {
                 this.loadData(Endpoint.lingXiTrendRate, CacheField.lingXiTrendRate, refresher);
             }
-            if(num == 0) {
+            if (num == 0) {
                 this.loadData(Endpoint.lingXiChannel, CacheField.lingXiChannel, refresher);
             }
         }, 500);
     }
+
+    showContent(value) {
+        if (this.modelContent[value]) {
+            this.modelContent[value] = 0;
+        } else {
+            this.modelContent[value] = 1;
+        }
+    }
+
 
     slideChange() {
         let active = this.mainSlides.getActiveIndex();

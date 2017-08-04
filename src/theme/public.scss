@@ -48,6 +48,12 @@ ion-navbar.toolbar {
   }
 }
 
+.my-segment-1 {
+  &.segment-ios .segment-button {
+    height: 2.4rem;
+    line-height: 2.3rem;
+  }
+}
 .my-slide {
   height: auto;
   .swiper-slide {

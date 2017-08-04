@@ -244,13 +244,13 @@
                 </ion-list>
                 <div padding-horizontal padding-bottom ngClass="platform-info" *ngIf="modelContent[2]">
                     <div eCharts [options]="lineChartOption_2" [dataSet]="regularTrendData"  class="line-chart-1"></div>
-                    <ion-segment [(ngModel)]="rateTime" color="gray">
+                    <ion-segment [(ngModel)]="rateTime" color="gray" ngClass="my-segment-1">
                         <ion-segment-button value="0" (click)="getRateTimeSegment()">1个月</ion-segment-button>
                         <ion-segment-button value="1" (click)="getRateTimeSegment()">1到3个月</ion-segment-button>
                         <ion-segment-button value="2" (click)="getRateTimeSegment()">3到6个月</ion-segment-button>
                         <ion-segment-button value="3" (click)="getRateTimeSegment()">6个月以上</ion-segment-button>
                     </ion-segment>
-                    <h4>渠道收益率对比</h4>
+                    <h4 padding-top>渠道收益率对比</h4>
                     <ion-row>
                         <ion-col text-left><span ion-text color="gray">平台名称</span></ion-col>
                         <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>

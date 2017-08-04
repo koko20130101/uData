@@ -9,5 +9,5 @@
     "Type": "week",
     "description": "成功返回消息",
     "Token": null,
-    "dataType": 1
+    "dataType": 0
 }
