@@ -101,8 +101,8 @@ export const LineChartOption_1 = (value?:any) => {
                 name: '',
                 type: 'line',
                 smooth: false,   //平滑曲线
-                symbol: 'circle',   //节点
-                symbolSize: 2,
+                symbol: 'emptyCircle',   //节点
+                symbolSize: 4,
             }
         ]
     };
@@ -220,6 +220,7 @@ export const LineChartOption_3 = (value?:any) => {
             hideDelay: 1000, //tips隐藏延迟
             transitionDuration: 0,  //tips动画间隔
             backgroundColor: 'rgba(244,90,30,1)',
+            confine:true,  //是否将 tooltip 框限制在图表的区域内
             axisPointer: {  //坐标轴指示器
                 type: 'line',  // 默认为直线，可选为：'line' | 'shadow'
                 lineStyle: {
@@ -231,7 +232,7 @@ export const LineChartOption_3 = (value?:any) => {
             formatter: function (params) {
                 var res = params[0].name;
                 for (var i = 0; i < params.length; i++) {
-                    res += '<br/>' + params[i].seriesName + ' : ' + params[i].data;
+                    res += '<br/>' + params[i].seriesName + ' : ' + params[i].data + '%';
                 }
                 return res;
             }
@@ -248,7 +249,7 @@ export const LineChartOption_3 = (value?:any) => {
         grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '5%',
             containLabel: true
         },
         xAxis: [
@@ -264,14 +265,15 @@ export const LineChartOption_3 = (value?:any) => {
                 axisLabel: {
                     textStyle: {
                         color: "#565475"
-                    }
+                    },
+                    margin: 16
                 },
                 splitLine: {
                     lineStyle: {
                         color: '#333'
                     }
                 },
-                data: ['1:00', '5:00', '13:00', '17:00', '21:00', '22:00', '23:00'],
+                data: [],
             }
         ],
         yAxis: [

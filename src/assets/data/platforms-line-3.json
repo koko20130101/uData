@@ -32,7 +32,7 @@
       "24:00"
     ],
     "data_0": [
-      4.060000,
+      5.060000,
       4.060000,
       4.060000,
       4.060000,
@@ -87,6 +87,6 @@
   "Type": "day",
   "description": "成功返回消息",
   "Token": null,
-  "datatype": 0,
-  "sourcetype": 1
+  "dataType": 0,
+  "sourceType": 1
 }

@@ -40,6 +40,32 @@ export class LingXiService {
             }
         });
     }
+
+    private handleValue(_data:any){
+        let _newData: any = {
+            legend: [],
+            xAxis: [],
+            yAxis: [],
+            series: []
+        };
+        //处理数据
+        for (let key in _data) {
+            let _key = key.split('_');
+            switch (_key[0]) {
+                case 'name':
+                    _newData.legend = _data['name'];
+                    break;
+                case 'time':
+                    _newData.xAxis.push({data: _data['time']});
+                    break;
+                case 'data':
+                    _newData.series.push(_data['data_' + _key[1]]);
+                    break;
+            }
+        }
+        return  _newData;
+    }
+
     /**
      * 从服务器请求数据
      * loadValue(接口，本地存储key,post数据)
@@ -87,22 +113,8 @@ export class LingXiService {
                     case CacheField.lingXiTrendDeal:
                         _cacheData = this.dealTrendData;
                         //处理数据
-                        for (let key in _res.data) {
-                            let _key = key.split('_');
-                            switch (_key[0]) {
-                                case 'name':
-                                    _newData.legend = _res.data['name'];
-                                    break;
-                                case 'time':
-                                    _newData.xAxis.push({data: _res.data['time']});
-                                    break;
-                                case 'data':
-                                    _newData.series.push(_res.data['data_' + _key[1]]);
-                                    break;
-                            }
-                        }
                         let _trendDeal: any = {};
-                        _trendDeal[_res.dataType] = _newData;
+                        _trendDeal[_res.dataType] = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_trendDeal, {stamp: _thisTime});
                         _res.data = _trendDeal;
@@ -112,22 +124,8 @@ export class LingXiService {
                     case CacheField.lingXiTrendRate:
                         _cacheData = this.rateTrendData;
                         //处理数据
-                        for (let key in _res.data) {
-                            let _key = key.split('_');
-                            switch (_key[0]) {
-                                case 'name':
-                                    _newData.legend = _res.data['name'];
-                                    break;
-                                case 'time':
-                                    _newData.xAxis.push({data: _res.data['time']});
-                                    break;
-                                case 'data':
-                                    _newData.series.push(_res.data['data_' + _key[1]]);
-                                    break;
-                            }
-                        }
                         let _trendRate: any = {};
-                        _trendRate[_res.dataType] = _newData;
+                        _trendRate[_res.dataType] = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_trendRate, {stamp: _thisTime});
                         _res.data = _trendRate;

@@ -70,6 +70,31 @@ export class C2bService {
         });
     }
 
+    private handleValue(_data:any){
+        let _newData: any = {
+            legend: [],
+            xAxis: [],
+            yAxis: [],
+            series: []
+        };
+        //处理数据
+        for (let key in _data) {
+            let _key = key.split('_');
+            switch (_key[0]) {
+                case 'name':
+                    _newData.legend = _data['name'];
+                    break;
+                case 'time':
+                    _newData.xAxis.push({data: _data['time']});
+                    break;
+                case 'data':
+                    _newData.series.push(_data['data_' + _key[1]]);
+                    break;
+            }
+        }
+        return  _newData;
+    }
+
     /**
      * 从服务器请求数据
      * loadValue(接口，本地存储key,post数据)
@@ -151,23 +176,8 @@ export class C2bService {
                     //==> 引入额及销售额折线图
                     case CacheField.assetsInOut:
                         _cacheData = this.assetsInOutData;
-                        //处理数据
-                        for (let key in _res.data) {
-                            let _key = key.split('_');
-                            switch (_key[0]) {
-                                case 'name':
-                                    _newData.legend = _res.data['name'];
-                                    break;
-                                case 'time':
-                                    _newData.xAxis.push({data: _res.data['time']});
-                                    break;
-                                case 'data':
-                                    _newData.series.push(_res.data['data_' + _key[1]]);
-                                    break;
-                            }
-                        }
                         let _assetsData: any = {};
-                        _assetsData[_res.dataType] = _newData;
+                        _assetsData[_res.dataType] = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_assetsData, {stamp: _thisTime});
                         _res.data = _assetsData;
@@ -203,19 +213,7 @@ export class C2bService {
                     //==> 资产健康值折线图
                     case CacheField.assetsHealthy:
                         _cacheData = this.assetsHealthyData;
-                        //处理数据
-                        for (let key in _res.data) {
-                            let _key = key.split('_');
-                            switch (_key[0]) {
-                                case 'time':
-                                    _newData.xAxis.push({data: _res.data['time']});
-                                    break;
-                                case 'data':
-                                    _newData.series.push(_res.data['data_' + _key[1]]);
-                                    break;
-                            }
-                        }
-                        _res.data = _newData;
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -230,21 +228,7 @@ export class C2bService {
                         _newData['total'] = this.publicFactory.moneyFormatToHtml(_res.data['total']);
                         _newData['grossProfit'] = _res.data['grossProfit'];
                         //处理数据
-                        for (let key in _res.data) {
-                            let _key = key.split('_');
-                            switch (_key[0]) {
-                                case 'name':
-                                    _newData.legend = _res.data['name'];
-                                    break;
-                                case 'time':
-                                    _newData.xAxis.push({data: _res.data['time']});
-                                    break;
-                                case 'data':
-                                    _newData.series.push(_res.data['data_' + _key[1]]);
-                                    break;
-                            }
-                        }
-                        _res.data = _newData;
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;

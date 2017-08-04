@@ -33,7 +33,7 @@
                     <h2 ion-text [innerHTML]="totalData.totalUCS[0]"
                         color="{{totalData.totalUCS[1]=='true'?'danger':(totalData.totalUCS[1]=='false'?'secondary':'')}}"></h2>
                 </div>
-                <div eCharts [options]="lineChartOption_1" [dataSet]="trendData" style="height: 260px;"
+                <div eCharts [options]="lineChartOption_1" [dataSet]="trendData" ngClass="line-chart-1"
                      (chartInit)="onChartInit($event)"></div>
                 <ion-list class="model-title">
                     <ion-item (click)="showContent(0)">
@@ -242,8 +242,14 @@
                         </ion-note>
                     </ion-item>
                 </ion-list>
-                <div padding ngClass="platform-info" *ngIf="modelContent[2]">
+                <div padding-horizontal padding-bottom ngClass="platform-info" *ngIf="modelContent[2]">
                     <div eCharts [options]="lineChartOption_2" [dataSet]="regularTrendData"  class="line-chart-1"></div>
+                    <ion-segment [(ngModel)]="rateTime" color="gray">
+                        <ion-segment-button value="0" (click)="getRateTimeSegment()">1个月</ion-segment-button>
+                        <ion-segment-button value="1" (click)="getRateTimeSegment()">1到3个月</ion-segment-button>
+                        <ion-segment-button value="2" (click)="getRateTimeSegment()">3到6个月</ion-segment-button>
+                        <ion-segment-button value="3" (click)="getRateTimeSegment()">6个月以上</ion-segment-button>
+                    </ion-segment>
                     <h4>渠道收益率对比</h4>
                     <ion-row>
                         <ion-col text-left><span ion-text color="gray">平台名称</span></ion-col>
@@ -288,6 +294,5 @@
                 </div>
             </div>
         </ion-slide>
-
     </ion-slides>
 </ion-content>

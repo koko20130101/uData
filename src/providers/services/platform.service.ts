@@ -105,10 +105,6 @@ export class PlatformService {
                 //当前时间
                 let _thisTime = moment().unix();
                 let _cacheData: any;
-                let _newData:any = {
-                    xAxis:[],
-                    series:[]
-                };
 
                 switch (cacheKey) {
                     //==> 总额
@@ -145,22 +141,7 @@ export class PlatformService {
                     //==> 网金成交额折线图
                     case CacheField.platformTrend:
                         _cacheData = this.trendData;
-                        //处理数据
-                        for(let key in _res.data ) {
-                            let _key = key.split('_');
-                            switch (_key[0]) {
-                                case 'name':
-                                    _newData.legend = _res.data['name'];
-                                    break;
-                                case 'time':
-                                    _newData.xAxis.push(_res.data['time']);
-                                    break;
-                                case 'data':
-                                    _newData.series.push(_res.data['data_'+_key[1]]);
-                                    break;
-                            }
-                        }
-                        _res.data = _newData;
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -186,21 +167,7 @@ export class PlatformService {
                     //==> 竞品成交额柱状图
                     case CacheField.enemyBar:
                         _cacheData = this.enemyBarData;//处理数据
-                        for(let key in _res.data ) {
-                            let _key = key.split('_');
-                            switch (_key[0]) {
-                                case 'name':
-                                    _newData.legend = _res.data['name'];
-                                    break;
-                                case 'bank':
-                                    _newData.xAxis.push(_res.data['bank']);
-                                    break;
-                                case 'data':
-                                    _newData.series.push(_res.data['data_'+_key[1]]);
-                                    break;
-                            }
-                        }
-                        _res.data = _newData;
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -220,21 +187,9 @@ export class PlatformService {
                     //==> 传统理财折线图
                     case CacheField.regularTrend:
                         _cacheData = this.regularTrendData;
-                        for(let key in _res.data ) {
-                            let _key = key.split('_');
-                            switch (_key[0]) {
-                                case 'name':
-                                    _newData.legend = _res.data['name'];
-                                    break;
-                                case 'time':
-                                    _newData.xAxis.push(_res.data['time']);
-                                    break;
-                                case 'data':
-                                    _newData.series.push(_res.data['data_'+_key[1]]);
-                                    break;
-                            }
-                        }
-                        _res.data = _newData;
+                        let _regularRate: any = {};
+                        _regularRate[_res.dataType] = this.handleValue(_res.data);
+                        _res.data = _regularRate;
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -242,21 +197,7 @@ export class PlatformService {
                     //==> 基金折线图
                     case CacheField.fundTrend:
                         _cacheData = this.fundTrendData;
-                        for(let key in _res.data ) {
-                            let _key = key.split('_');
-                            switch (_key[0]) {
-                                case 'name':
-                                    _newData.legend = _res.data['name'];
-                                    break;
-                                case 'time':
-                                    _newData.xAxis.push(_res.data['time']);
-                                    break;
-                                case 'data':
-                                    _newData.series.push(_res.data['data_'+_key[1]]);
-                                    break;
-                            }
-                        }
-                        _res.data = _newData;
+                        _res.data = this.handleValue(_res.data);
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;
@@ -350,5 +291,33 @@ export class PlatformService {
         } else {
             return false;
         }
+    }
+
+    private handleValue(_data:any){
+        let _newData: any = {
+            legend: [],
+            xAxis: [],
+            yAxis: [],
+            series: []
+        };
+        //处理数据
+        for (let key in _data) {
+            let _key = key.split('_');
+            switch (_key[0]) {
+                case 'name':
+                    _newData.legend = _data['name'];
+                    break;
+                case 'time':
+                    _newData.xAxis.push({data: _data['time']});
+                    break;
+                case 'bank':
+                    _newData.xAxis.push({data: _data['bank']});
+                    break;
+                case 'data':
+                    _newData.series.push(_data['data_' + _key[1]]);
+                    break;
+            }
+        }
+        return  _newData;
     }
 }
