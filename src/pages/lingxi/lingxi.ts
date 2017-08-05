@@ -35,7 +35,13 @@ export class LingXiPage {
         "newBindCard": ['', ''],
         "newUser": ['', '']
     };
-    lingXiTotalData: any = {};
+    lingXiTotalData: any = {
+        0:{},
+        1:{},
+        2:{},
+        3:{},
+        4:{}
+    };
     dealTrendData: any = {};
     rateTrendData: any = {};
     lingXiChannelData: any = {};
@@ -51,7 +57,11 @@ export class LingXiPage {
                 public popupFactory: PopupFactory,
                 public lingXiService: LingXiService,
                 public globalVars: GlobalVars) {
-        Object.assign(this.lingXiTotalData, this.model);
+        Object.assign(this.lingXiTotalData[0], this.model);
+        Object.assign(this.lingXiTotalData[1], this.model);
+        Object.assign(this.lingXiTotalData[2], this.model);
+        Object.assign(this.lingXiTotalData[3], this.model);
+        Object.assign(this.lingXiTotalData[4], this.model);
     }
 
     ngOnInit() {
@@ -121,7 +131,7 @@ export class LingXiPage {
         switch (cacheKey) {
             case CacheField.lingXiTotal:
                 if (!!_cacheData && _cacheData[_num]) {
-                    Object.assign(this.lingXiTotalData, _cacheData[_num]);
+                    Object.assign(this.lingXiTotalData[this.lingXiType], _cacheData[_num]);
                     return;
                 } else {
                     _sendData = {proType: _num};
@@ -180,9 +190,9 @@ export class LingXiPage {
                 switch (cacheKey) {
                     case CacheField.lingXiTotal:
                         if (!!res._body.data[this.lingXiType]) {
-                            this.lingXiTotalData = res._body.data[this.lingXiType];
+                            this.lingXiTotalData[this.lingXiType] = res._body.data[this.lingXiType];
                         } else {
-                            Object.assign(this.lingXiTotalData, this.model);
+                            Object.assign(this.lingXiTotalData[this.lingXiType], this.model);
                         }
                         break;
                     case CacheField.lingXiTrendDeal:

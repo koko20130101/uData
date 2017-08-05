@@ -25,11 +25,13 @@
     <ion-slides #MainSlides ngClass="my-slide" (ionSlideDidChange)="slideChange()">
         <!--全部-->
         <ion-slide>
-                <div ngClass="total-data">
+            <div ngClass="total-data">
                 <p>委托总额</p>
-                <h2 ion-text color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}">
-                    <span [innerHTML]="lingXiTotalData.total[0]"></span>
-                    <ion-icon name="{{lingXiTotalData.total[1]=='true' ?'arrow-up':(lingXiTotalData.total[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                <h2 ion-text
+                    color="{{lingXiTotalData[0].total[1]=='true'?'danger':(lingXiTotalData[0].total[1]=='false'?'secondary':'')}}">
+                    <span [innerHTML]="lingXiTotalData[0].total[0]"></span>
+                    <ion-icon
+                            name="{{lingXiTotalData[0].total[1]=='true' ?'arrow-up':(lingXiTotalData[0].total[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
                 </h2>
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[0]" ngClass="line-chart-1"></div>
@@ -49,69 +51,52 @@
                 <div [ngSwitch]="userOperateType">
                     <div *ngSwitchCase="'1'" padding>
                         <div ngClass="info-list">
-                            <ion-row>
-                                <ion-col text-left>
-                                    委托用户数
-                                </ion-col>
-                                <ion-col text-right ion-text
-                                         color="{{lingXiTotalData.entrustUser[1]=='true'?'danger':(lingXiTotalData.entrustUser[1]=='false'?'secondary':'')}}">
-                                    <span [innerHTML]="lingXiTotalData.entrustUser[0]"></span><span ngClass="unit">人</span>
-                                    <ion-icon name="arrow-down"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col text-left>
-                                    委托订单数
-                                </ion-col>
-                                <ion-col text-right ion-text
-                                         color="{{lingXiTotalData.entrustOrder[1]=='true'?'danger':(lingXiTotalData.entrustOrder[1]=='false'?'secondary':'')}}">
-                                    <span [innerHTML]="lingXiTotalData.entrustOrder[0]"></span><span ngClass="unit">个</span>
-                                    <ion-icon name="arrow-down"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col text-left>
-                                    重复委托率
-                                </ion-col>
-                                <ion-col text-right ion-text
-                                         color="{{lingXiTotalData.entrustRepeatRate[1]=='true'?'danger':(lingXiTotalData.entrustRepeatRate[1]=='false'?'secondary':'')}}">
-                                    <span [innerHTML]="lingXiTotalData.entrustRepeatRate[0]"></span><span ngClass="unit">%</span>
-                                    <ion-icon name="arrow-down"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col text-left>
-                                    委托用户活跃度
-                                </ion-col>
-                                <ion-col text-right ion-text
-                                         color="{{lingXiTotalData.entrustActiveRate[1]=='true'?'danger':(lingXiTotalData.entrustActiveRate[1]=='false'?'secondary':'')}}">
-                                    <span [innerHTML]="lingXiTotalData.entrustActiveRate[0]"></span><span ngClass="unit">%</span>
-                                    <ion-icon name="arrow-down"></ion-icon>
-                                </ion-col>
-                            </ion-row>
+                            <info-item [itemTitle]="'委托用户数'" [itemInfo]="lingXiTotalData[0].entrustUser"
+                                       [unit]="'人'"></info-item>
+                            <info-item [itemTitle]="'委托订单数'" [itemInfo]="lingXiTotalData[0].entrustOrder"
+                                       [unit]="'个'"></info-item>
+                            <info-item [itemTitle]="'重复委托率'" [itemInfo]="lingXiTotalData[0].entrustRepeatRate"
+                                       [unit]="'%'"></info-item>
+                            <info-item [itemTitle]="'委托用户活跃度'" [itemInfo]="lingXiTotalData[0].entrustActiveRate"
+                                       [unit]="'%'"></info-item>
                         </div>
                     </div>
                     <div *ngSwitchCase="'2'">
                         <div class="user">
                             <div class="user-inner">
                                 <div class="user-item item-1">
-                                    <span class="number"><span [innerHTML]="lingXiTotalData.heavyInvest[0] || 0"></span>人</span>
+                                    <span class="number"><span
+                                            [innerHTML]="lingXiTotalData[0].heavyInvest[0] || 0"></span>人</span>
                                     <span class="title">重复委托
+                                        <ion-icon
+                                                color="{{lingXiTotalData[0].heavyInvest[1] == 'true' ? 'danger':(lingXiTotalData[0].heavyInvest[1] == 'false' ? 'secondary':'')}}"
+                                                name="{{lingXiTotalData[0].heavyInvest[1] == 'true' ? 'arrow-up':(lingXiTotalData[0].heavyInvest[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
                                     </span>
                                 </div>
                                 <div class="user-item item-2">
-                                    <span class="number"><span [innerHTML]="lingXiTotalData.newInvest[0] || 0"></span>人</span>
+                                    <span class="number"><span
+                                            [innerHTML]="lingXiTotalData[0].newInvest[0] || 0"></span>人</span>
                                     <span class="title">新增委托
+                                        <ion-icon
+                                                color="{{lingXiTotalData[0].newInvest[1] == 'true' ? 'danger':(lingXiTotalData[0].newInvest[1] == 'false' ? 'secondary':'')}}"
+                                                name="{{lingXiTotalData[0].newInvest[1] == 'true' ? 'arrow-up':(lingXiTotalData[0].newInvest[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
                                     </span>
                                 </div>
                                 <div class="user-item item-3">
-                                    <span class="number"><span [innerHTML]="lingXiTotalData.newBindCard[0] || 0"></span>人</span>
+                                    <span class="number"><span
+                                            [innerHTML]="lingXiTotalData[0].newBindCard[0] || 0"></span>人</span>
                                     <span class="title">新增绑卡
+                                        <ion-icon
+                                                color="{{lingXiTotalData[0].newBindCard[1] == 'true' ? 'danger':(lingXiTotalData[0].newBindCard[1] == 'false' ? 'secondary':'')}}"
+                                                name="{{lingXiTotalData[0].newBindCard[1] == 'true' ? 'arrow-up':(lingXiTotalData[0].newBindCard[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
                                     </span>
                                 </div>
                                 <div class="user-item item-4">
-                                    <span class="number"><span [innerHTML]="lingXiTotalData.newUser[0] || 0"></span>人</span>
+                                    <span class="number"><span [innerHTML]="lingXiTotalData[0].newUser[0] || 0"></span>人</span>
                                     <span class="title">新增注册
+                                        <ion-icon
+                                                color="{{lingXiTotalData[0].newUser[1] == 'true' ? 'danger':(lingXiTotalData[0].newUser[1] == 'false' ? 'secondary':'')}}"
+                                                name="{{lingXiTotalData[0].newUser[1] == 'true' ? 'arrow-up':(lingXiTotalData[0].newUser[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
                                     </span>
                                 </div>
                             </div>
@@ -127,23 +112,23 @@
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content" *ngIf="modelContent[1]"  padding-horizontal>
+            <div ngClass="model-content" *ngIf="modelContent[1]" padding-horizontal>
                 <div eCharts [options]="pieChartOption" [dataSet]="lingXiChannelData" ngClass="pie-chart-1"></div>
             </div>
         </ion-slide>
         <!--活期-->
         <ion-slide>
             <div ngClass="total-data">
-                <ion-row>
+                <ion-row align-items-center>
                     <ion-col text-left>
                         <p>转入总额</p>
-                        <h3 ion-text [innerHTML]="lingXiTotalData.inTotal[0]"
-                            color="{{lingXiTotalData.inTotal[1]=='true'?'danger':(lingXiTotalData.inTotal[1]=='false'?'secondary':'')}}"></h3>
+                        <h3 ion-text [innerHTML]="lingXiTotalData[1].inTotal[0]"
+                            color="{{lingXiTotalData[1].inTotal[1]=='true'?'danger':(lingXiTotalData[1].inTotal[1]=='false'?'secondary':'')}}"></h3>
                     </ion-col>
                     <ion-col text-left>
                         <p>余额（实时）</p>
-                        <h3 ion-text [innerHTML]="lingXiTotalData.outTotal[0]"
-                            color="{{lingXiTotalData.outTotal[1]=='true'?'danger':(lingXiTotalData.outTotal[1]=='false'?'secondary':'')}}"></h3>
+                        <h3 ion-text [innerHTML]="lingXiTotalData[1].outTotal[0]"
+                            color="{{lingXiTotalData[1].outTotal[1]=='true'?'danger':(lingXiTotalData[1].outTotal[1]=='false'?'secondary':'')}}"></h3>
                     </ion-col>
                 </ion-row>
             </div>
@@ -169,46 +154,14 @@
             </ion-list>
             <div ngClass="model-content" *ngIf="modelContent[3]">
                 <div ngClass="info-list" padding-horizontal>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托用户数
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustUser[1]=='true'?'danger':(lingXiTotalData.entrustUser[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustUser[0]"></span><span ngClass="unit">人</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托订单数
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustOrder[1]=='true'?'danger':(lingXiTotalData.entrustOrder[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustOrder[0]"></span><span ngClass="unit">个</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            重复委托率
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustRepeatRate[1]=='true'?'danger':(lingXiTotalData.entrustRepeatRate[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustRepeatRate[0]"></span><span ngClass="unit">%</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托用户活跃度
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustActiveRate[1]=='true'?'danger':(lingXiTotalData.entrustActiveRate[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustActiveRate[0]"></span><span ngClass="unit">%</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
+                    <info-item [itemTitle]="'委托用户数'" [itemInfo]="lingXiTotalData[1].entrustUser"
+                               [unit]="'人'"></info-item>
+                    <info-item [itemTitle]="'委托订单数'" [itemInfo]="lingXiTotalData[1].entrustOrder"
+                               [unit]="'个'"></info-item>
+                    <info-item [itemTitle]="'重复委托率'" [itemInfo]="lingXiTotalData[1].entrustRepeatRate"
+                               [unit]="'%'"></info-item>
+                    <info-item [itemTitle]="'委托用户活跃度'" [itemInfo]="lingXiTotalData[1].entrustActiveRate"
+                               [unit]="'%'"></info-item>
                 </div>
             </div>
         </ion-slide>
@@ -216,8 +169,8 @@
         <ion-slide>
             <div ngClass="total-data">
                 <p>委托总额</p>
-                <h2 ion-text [innerHTML]="lingXiTotalData.total[0]"
-                    color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}"></h2>
+                <h2 ion-text [innerHTML]="lingXiTotalData[2].total[0]"
+                    color="{{lingXiTotalData[2].total[1]=='true'?'danger':(lingXiTotalData[2].total[1]=='false'?'secondary':'')}}"></h2>
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[2]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
@@ -241,46 +194,14 @@
             </ion-list>
             <div ngClass="model-content" *ngIf="modelContent[5]">
                 <div ngClass="info-list" padding-horizontal>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托用户数
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustUser[1]=='true'?'danger':(lingXiTotalData.entrustUser[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustUser[0]"></span><span ngClass="unit">人</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托订单数
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustOrder[1]=='true'?'danger':(lingXiTotalData.entrustOrder[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustOrder[0]"></span><span ngClass="unit">个</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            重复委托率
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustRepeatRate[1]=='true'?'danger':(lingXiTotalData.entrustRepeatRate[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustRepeatRate[0]"></span><span ngClass="unit">%</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托用户活跃度
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustActiveRate[1]=='true'?'danger':(lingXiTotalData.entrustActiveRate[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustActiveRate[0]"></span><span ngClass="unit">%</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
+                    <info-item [itemTitle]="'委托用户数'" [itemInfo]="lingXiTotalData[2].entrustUser"
+                               [unit]="'人'"></info-item>
+                    <info-item [itemTitle]="'委托订单数'" [itemInfo]="lingXiTotalData[2].entrustOrder"
+                               [unit]="'个'"></info-item>
+                    <info-item [itemTitle]="'重复委托率'" [itemInfo]="lingXiTotalData[2].entrustRepeatRate"
+                               [unit]="'%'"></info-item>
+                    <info-item [itemTitle]="'委托用户活跃度'" [itemInfo]="lingXiTotalData[2].entrustActiveRate"
+                               [unit]="'%'"></info-item>
                 </div>
             </div>
         </ion-slide>
@@ -288,8 +209,8 @@
         <ion-slide>
             <div ngClass="total-data">
                 <p>委托总额</p>
-                <h2 ion-text [innerHTML]="lingXiTotalData.total[0]"
-                    color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}"></h2>
+                <h2 ion-text [innerHTML]="lingXiTotalData[3].total[0]"
+                    color="{{lingXiTotalData[3].total[1]=='true'?'danger':(lingXiTotalData[3].total[1]=='false'?'secondary':'')}}"></h2>
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[3]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
@@ -313,46 +234,14 @@
             </ion-list>
             <div ngClass="model-content" *ngIf="modelContent[7]">
                 <div ngClass="info-list" padding-horizontal>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托用户数
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustUser[1]=='true'?'danger':(lingXiTotalData.entrustUser[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustUser[0]"></span><span ngClass="unit">人</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托订单数
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustOrder[1]=='true'?'danger':(lingXiTotalData.entrustOrder[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustOrder[0]"></span><span ngClass="unit">个</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            重复委托率
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustRepeatRate[1]=='true'?'danger':(lingXiTotalData.entrustRepeatRate[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustRepeatRate[0]"></span><span ngClass="unit">%</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托用户活跃度
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustActiveRate[1]=='true'?'danger':(lingXiTotalData.entrustActiveRate[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustActiveRate[0]"></span><span ngClass="unit">%</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
+                    <info-item [itemTitle]="'委托用户数'" [itemInfo]="lingXiTotalData[3].entrustUser"
+                               [unit]="'人'"></info-item>
+                    <info-item [itemTitle]="'委托订单数'" [itemInfo]="lingXiTotalData[3].entrustOrder"
+                               [unit]="'个'"></info-item>
+                    <info-item [itemTitle]="'重复委托率'" [itemInfo]="lingXiTotalData[3].entrustRepeatRate"
+                               [unit]="'%'"></info-item>
+                    <info-item [itemTitle]="'委托用户活跃度'" [itemInfo]="lingXiTotalData[3].entrustActiveRate"
+                               [unit]="'%'"></info-item>
                 </div>
             </div>
         </ion-slide>
@@ -360,8 +249,8 @@
         <ion-slide>
             <div ngClass="total-data">
                 <p>委托总额</p>
-                <h2 ion-text [innerHTML]="lingXiTotalData.total[0]"
-                    color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}"></h2>
+                <h2 ion-text [innerHTML]="lingXiTotalData[4].total[0]"
+                    color="{{lingXiTotalData[4].total[1]=='true'?'danger':(lingXiTotalData[4].total[1]=='false'?'secondary':'')}}"></h2>
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[4]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
@@ -385,46 +274,14 @@
             </ion-list>
             <div ngClass="model-content" *ngIf="modelContent[9]">
                 <div ngClass="info-list" padding-horizontal>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托用户数
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustUser[1]=='true'?'danger':(lingXiTotalData.entrustUser[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustUser[0]"></span><span ngClass="unit">人</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托订单数
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustOrder[1]=='true'?'danger':(lingXiTotalData.entrustOrder[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustOrder[0]"></span><span ngClass="unit">个</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            重复委托率
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustRepeatRate[1]=='true'?'danger':(lingXiTotalData.entrustRepeatRate[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustRepeatRate[0]"></span><span ngClass="unit">%</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col text-left>
-                            委托用户活跃度
-                        </ion-col>
-                        <ion-col text-right ion-text
-                                 color="{{lingXiTotalData.entrustActiveRate[1]=='true'?'danger':(lingXiTotalData.entrustActiveRate[1]=='false'?'secondary':'')}}">
-                            <span [innerHTML]="lingXiTotalData.entrustActiveRate[0]"></span><span ngClass="unit">%</span>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </ion-col>
-                    </ion-row>
+                    <info-item [itemTitle]="'委托用户数'" [itemInfo]="lingXiTotalData[4].entrustUser"
+                               [unit]="'人'"></info-item>
+                    <info-item [itemTitle]="'委托订单数'" [itemInfo]="lingXiTotalData[4].entrustOrder"
+                               [unit]="'个'"></info-item>
+                    <info-item [itemTitle]="'重复委托率'" [itemInfo]="lingXiTotalData[4].entrustRepeatRate"
+                               [unit]="'%'"></info-item>
+                    <info-item [itemTitle]="'委托用户活跃度'" [itemInfo]="lingXiTotalData[4].entrustActiveRate"
+                               [unit]="'%'"></info-item>
                 </div>
             </div>
         </ion-slide>

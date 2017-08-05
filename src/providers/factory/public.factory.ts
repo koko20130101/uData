@@ -102,7 +102,7 @@ export class PublicFactory {
             hour = Math.floor((ms - day * dd) / hh), //小时
             minute = Math.floor((ms - day * dd - hour * hh) / mi), //分钟
             second = Math.floor((ms - day * dd - hour * hh - minute * mi) / ss); //秒
-        timeString = day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+        timeString = day + "<i>天</i>" + hour + "<i>小时</i>" + minute + "<i>分钟</i>" + second + "<i>秒</i>";
         return timeString
     }
 }

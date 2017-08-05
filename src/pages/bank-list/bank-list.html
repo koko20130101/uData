@@ -17,7 +17,9 @@
         <li *ngFor="let item of bankListData" >
             <div ngClass="bank-cmb" (click)="openBankDetail(item)">
                 <h4 ion-text [innerHTML]="item.money"></h4>
-                <p><span>{{item.bankName}}</span><i class="icon"></i></p>
+                <p><span>{{item.bankName}}</span>
+                    <ion-icon name="{{item['up'] ? 'up':'down'}}"></ion-icon>
+                </p>
                 <div class="bank-logo"><i class="icon"></i></div>
             </div>
         </li>

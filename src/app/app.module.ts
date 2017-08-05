@@ -20,6 +20,7 @@ import {PopOverPage} from '../pages/public/popover';
 import {Date} from '../pages/public/date';
 import {Unit} from '../pages/public/unit';
 import {ListPlatform} from '../pages/public/list-platform';
+import {InfoItem} from '../pages/public/info-item';
 
 import {Api} from '../providers/api';
 import {Items} from '../mocks/providers/items';
@@ -80,6 +81,7 @@ export function provideSettings(storage: Storage) {
         Date,
         Unit,
         ListPlatform,
+        InfoItem,
         MyECharts
     ],
     imports: [
@@ -128,7 +130,8 @@ export function provideSettings(storage: Storage) {
         PopOverPage,
         Date,
         Unit,
-        ListPlatform
+        ListPlatform,
+        InfoItem
     ],
     providers: [
         Api,
