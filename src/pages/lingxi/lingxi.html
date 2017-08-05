@@ -25,21 +25,23 @@
     <ion-slides #MainSlides ngClass="my-slide" (ionSlideDidChange)="slideChange()">
         <!--全部-->
         <ion-slide>
-            <div ngClass="total-data">
+                <div ngClass="total-data">
                 <p>委托总额</p>
-                <h2 ion-text [innerHTML]="lingXiTotalData.total[0]"
-                    color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}"></h2>
+                <h2 ion-text color="{{lingXiTotalData.total[1]=='true'?'danger':(lingXiTotalData.total[1]=='false'?'secondary':'')}}">
+                    <span [innerHTML]="lingXiTotalData.total[0]"></span>
+                    <ion-icon name="{{lingXiTotalData.total[1]=='true' ?'arrow-up':(lingXiTotalData.total[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                </h2>
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[0]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(0)">
                     <h2>用户运营</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[0]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content">
+            <div ngClass="model-content" *ngIf="modelContent[0]">
                 <ion-segment [(ngModel)]="userOperateType" ngClass="my-segment">
                     <ion-segment-button value="1">用户概况</ion-segment-button>
                     <ion-segment-button value="2">用户转化</ion-segment-button>
@@ -118,14 +120,14 @@
                 </div>
             </div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(1)">
                     <h2>渠道占比</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[1]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content" padding-horizontal>
+            <div ngClass="model-content" *ngIf="modelContent[1]"  padding-horizontal>
                 <div eCharts [options]="pieChartOption" [dataSet]="lingXiChannelData" ngClass="pie-chart-1"></div>
             </div>
         </ion-slide>
@@ -147,25 +149,25 @@
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[1]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(2)">
                     <h2>年化收益率</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[2]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content">
+            <div ngClass="model-content" *ngIf="modelContent[2]">
                 <div eCharts [options]="lineChartOption_2" [dataSet]="rateTrendData[1]" ngClass="line-chart-1"></div>
             </div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(3)">
                     <h2>用户运营</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[3]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content">
+            <div ngClass="model-content" *ngIf="modelContent[3]">
                 <div ngClass="info-list" padding-horizontal>
                     <ion-row>
                         <ion-col text-left>
@@ -219,25 +221,25 @@
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[2]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(4)">
                     <h2>年化收益率</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[4]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content">
+            <div ngClass="model-content" *ngIf="modelContent[4]">
                 <div eCharts [options]="lineChartOption_2" [dataSet]="rateTrendData[2]" ngClass="line-chart-1"></div>
             </div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(5)">
                     <h2>用户运营</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[5]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content">
+            <div ngClass="model-content" *ngIf="modelContent[5]">
                 <div ngClass="info-list" padding-horizontal>
                     <ion-row>
                         <ion-col text-left>
@@ -291,25 +293,25 @@
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[3]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(6)">
                     <h2>年化收益率</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[6]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content">
+            <div ngClass="model-content" *ngIf="modelContent[6]">
                 <div eCharts [options]="lineChartOption_2" [dataSet]="rateTrendData[3]" ngClass="line-chart-1"></div>
             </div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(7)">
                     <h2>用户运营</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[7]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content">
+            <div ngClass="model-content" *ngIf="modelContent[7]">
                 <div ngClass="info-list" padding-horizontal>
                     <ion-row>
                         <ion-col text-left>
@@ -363,25 +365,25 @@
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[4]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(8)">
                     <h2>年化收益率</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[8]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content">
+            <div ngClass="model-content" *ngIf="modelContent[8]">
                 <div eCharts [options]="lineChartOption_2" [dataSet]="rateTrendData[4]" ngClass="line-chart-1"></div>
             </div>
             <ion-list ngClass="model-title">
-                <ion-item>
+                <ion-item (click)="showContent(9)">
                     <h2>用户运营</h2>
                     <ion-note item-right>
-                        <ion-icon name="arrow-up"></ion-icon>
+                        <ion-icon name="{{modelContent[9]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
                     </ion-note>
                 </ion-item>
             </ion-list>
-            <div ngClass="model-content">
+            <div ngClass="model-content" *ngIf="modelContent[9]">
                 <div ngClass="info-list" padding-horizontal>
                     <ion-row>
                         <ion-col text-left>

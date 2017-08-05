@@ -17,15 +17,17 @@
     </ion-refresher>
     <div ngClass="total-data" text-center>
         <p>本日交易额</p>
-        <h2 ion-text [innerHTML]="bankTotalData.total[0]"
-            color="{{bankTotalData.total[1]=='true'?'danger':(bankTotalData.total[1]=='false'?'secondary':'')}}"></h2>
+        <h2 ion-text color="{{bankTotalData.total[1]=='true'?'danger':(bankTotalData.total[1]=='false'?'secondary':'')}}">
+            <span [innerHTML]="bankTotalData.total[0]"></span>
+            <ion-icon name="{{bankTotalData.total[1]=='true' ?'arrow-up':(bankTotalData.total[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+        </h2>
     </div>
     <div eCharts [options]="lineChartOption_1" [dataSet]="bankMoneyData" ngClass="line-chart-1"></div>
     <ion-list ngClass="model-title">
         <ion-item (click)="showContent(0)">
             <h2>项目情况</h2>
             <ion-note item-right>
-                <ion-icon name="arrow-up"></ion-icon>
+                <ion-icon name="{{modelContent[0]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
             </ion-note>
         </ion-item>
     </ion-list>
@@ -68,8 +70,8 @@
     <ion-list ngClass="model-title">
         <ion-item (click)="showContent(1)">
             <h2>项目走势分析</h2>
-            <ion-note>
-                <ion-note name="arrow-up"></ion-note>
+            <ion-note item-right>
+                <ion-icon name="{{modelContent[1]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
             </ion-note>
         </ion-item>
     </ion-list>
@@ -119,7 +121,7 @@
         <ion-item (click)="showContent(2)">
             <h2>用户运营</h2>
             <ion-note item-right>
-                <ion-icon name="arrow-up"></ion-icon>
+                <ion-icon name="{{modelContent[2]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
             </ion-note>
         </ion-item>
     </ion-list>
@@ -213,7 +215,7 @@
         <ion-item (click)="showContent(3)">
             <h2>二级市场</h2>
             <ion-note item-right>
-                <ion-icon name="arrow-up"></ion-icon>
+                <ion-icon name="{{modelContent[3]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
             </ion-note>
         </ion-item>
     </ion-list>
@@ -290,7 +292,7 @@
         <ion-item (click)="showContent(4)">
             <h2>渠道占比</h2>
             <ion-note item-right>
-                <ion-icon name="arrow-up"></ion-icon>
+                <ion-icon name="{{modelContent[4]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
             </ion-note>
         </ion-item>
     </ion-list>

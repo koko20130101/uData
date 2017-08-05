@@ -30,8 +30,10 @@
             <div>
                 <div class="total-data">
                     <p>当日累计交易额</p>
-                    <h2 ion-text [innerHTML]="totalData.totalUCS[0]"
-                        color="{{totalData.totalUCS[1]=='true'?'danger':(totalData.totalUCS[1]=='false'?'secondary':'')}}"></h2>
+                    <h2 ion-text  color="{{totalData.totalUCS[1]=='true'?'danger':(totalData.totalUCS[1]=='false'?'secondary':'')}}">
+                        <span [innerHTML]="totalData.totalUCS[0]"></span>
+                        <ion-icon name="{{totalData.totalUCS[1]=='true' ?'arrow-up':(totalData.totalUCS[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                    </h2>
                 </div>
                 <div eCharts [options]="lineChartOption_1" [dataSet]="trendData" ngClass="line-chart-1"
                      (chartInit)="onChartInit($event)"></div>
@@ -68,7 +70,7 @@
                             <list-platform [listData]="platformsCompareData[1]" [unit]="'%'"></list-platform>
                         </div>
                         <!--期限-->
-                        <div *ngSwitchCase="'3'">'
+                        <div *ngSwitchCase="'3'">
                             <ion-row>
                                 <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
                                 <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
@@ -94,8 +96,10 @@
             <div>
                 <div class="total-data">
                     <p>昨日交易额</p>
-                    <h2 ion-text [innerHTML]="totalData.totalEnemy[0]"
-                        color="{{totalData.totalEnemy[1]=='true'?'danger':(totalData.totalEnemy[1]=='false'?'secondary':'')}}"></h2>
+                    <h2 ion-text color="{{totalData.totalEnemy[1]=='true'?'danger':(totalData.totalEnemy[1]=='false'?'secondary':'')}}">
+                        <span [innerHTML]="totalData.totalEnemy[0]"></span>
+                        <ion-icon name="{{totalData.totalEnemy[1]=='true' ?'arrow-up':(totalData.totalEnemy[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                    </h2>
                 </div>
                 <div class="model-content">
                     <div eCharts [options]="barChartOption_1" [dataSet]="enemyBarData" style="height: 420px;"></div>

@@ -19,9 +19,9 @@ import * as chartOptions from '../../providers/charts-option'
 export class C2bPage {
     @ViewChild('MainSlides') mainSlides: Slides;
     pageName = 'C2bPage';
-    C2BType = '1';
-    saleChannelTypeIn = '2';
-    saleChannelTypeOut = '2';
+    C2BType = 1;
+    saleChannelTypeIn = 2;
+    saleChannelTypeOut = 2;
     modelContent: any[] = [1, 1, 1, 1];  //list内容展开收起状态
     dateInstance: any;
     //引入及销售总额
@@ -139,7 +139,7 @@ export class C2bPage {
                     this.saleChannelDataIn = _cacheData;
                     return;
                 } else {
-                    _sendData = {dataType: parseInt(this.saleChannelTypeIn), inoutFlag: this.inoutFlag};
+                    _sendData = {dataType: this.saleChannelTypeIn, inoutFlag: this.inoutFlag};
                     break;
                 }
             //销售渠道分布
@@ -148,7 +148,7 @@ export class C2bPage {
                     this.saleChannelDataOut = _cacheData;
                     return;
                 } else {
-                    _sendData = {dataType: parseInt(this.saleChannelTypeOut), inoutFlag: this.inoutFlag};
+                    _sendData = {dataType: this.saleChannelTypeOut, inoutFlag: this.inoutFlag};
                     break;
                 }
             //折线图
@@ -233,7 +233,7 @@ export class C2bPage {
                         this.saleChannelDataIn = res._body.data;
                         break;
                     case CacheField.saleChannelOut:
-                        this.saleChannelDataIn = res._body.data;
+                        this.saleChannelDataOut = res._body.data;
                         break;
                     case CacheField.assetsMain:
                         this.assetsMain = res._body.data;
@@ -291,7 +291,6 @@ export class C2bPage {
         for (let i = 0; i < _options.series.length; i++) {
             _options.series[i].label.normal.formatter = function (params: any) {
                 let num = _data.yAxis[0].data.indexOf(params.name);
-                console.log(params);
                 if (params.seriesName == '引入利率') {
                     return _data.series[4][num] + '%';
                 } else if (params.seriesName == '销售利率') {
@@ -371,10 +370,10 @@ export class C2bPage {
                     break;
                 //远营分析
                 case 3:
-                    // this.loadData(Endpoint.assetsMain, CacheField.assetsMain, refresher);
+                    this.loadData(Endpoint.assetsMain, CacheField.assetsMain, refresher);
                     this.loadData(Endpoint.profitData, CacheField.profitData, refresher);
-                    // this.loadData(Endpoint.assetsHealthy, CacheField.assetsHealthy,refresher);
-                    // this.loadData(Endpoint.grossMargin, CacheField.grossMargin);
+                    this.loadData(Endpoint.assetsHealthy, CacheField.assetsHealthy,refresher);
+                    this.loadData(Endpoint.grossMargin, CacheField.grossMargin);
                     break;
             }
 
@@ -424,6 +423,6 @@ export class C2bPage {
         let active = this.mainSlides.getActiveIndex();
         let total = this.mainSlides.length();
         if (active == total) return;
-        this.C2BType = String(active + 1);
+        this.C2BType = active + 1;
     }
 }
