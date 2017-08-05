@@ -33,13 +33,13 @@ export class PublicFactory {
             yuan = Math.floor((num % Math.pow(10, 8)) % Math.pow(10, 4)), //除以亿和万的余数后，有多少元
             format = '';
         if (ohm <= 0 && tenth <= 0) {
-            format = yuan + '<span>元</span>';
+            format = yuan + '<i>元</i>';
         } else if (ohm <= 0 && tenth > 0) {
-            format = tenth + '<span>万</span>' + yuan + '<span>元</span>';
+            format = tenth + '<i>万</i>' + yuan + '<i>元</i>';
         } else if (isShort) {
-            format = ohm + '<span>亿</span>' + tenth + '<span>万元';
+            format = ohm + '<i>亿</i>' + tenth + '<i>万元';
         } else {
-            format = ohm + '<span>亿</span>' + tenth + '<span>万</span>' + yuan + '<span>元</span>';
+            format = ohm + '<i>亿</i>' + tenth + '<i>万</i>' + yuan + '<i>元</i>';
         }
         return format.toString();
     }

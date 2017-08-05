@@ -19,7 +19,7 @@ export class PlatformTotalPage {
     @ViewChild('MainSlides') mainSlides: Slides;
     pageName = 'PlatformTotalPage';
     platformType = "1";
-    dataType = "2";     //各平台指数排行
+    dataType = 2;     //各平台指数排行
     enemyDataType = "2";     //竞品平台指数排行
     rateTime = '0';  //定期理财利率统计
     modelContent: any[] = [1, 1, 1, 1];  //list内容展开收起状态
@@ -108,8 +108,6 @@ export class PlatformTotalPage {
                 this.getPlatformSegment();
             }
         });
-        // let canvas = eCharts.init(this.moneyLineChart.nativeElement);
-
     }
 
     ionViewWillEnter() {
@@ -143,7 +141,6 @@ export class PlatformTotalPage {
      * loadData(接口,本地存储key,下拉刷新对象,loading对象)
      * */
     loadData(endpoint, cacheKey, refresher?: any, loader?: any, sendData?: any) {
-        console.log(this.lineChartOption_2)
         this.platformService.loadValue(endpoint, cacheKey, sendData).subscribe(data => {
             let res: any = data;
             if (res._body.code == 1) {
@@ -216,7 +213,7 @@ export class PlatformTotalPage {
                     this.platformsCompareData = _totalData;
                     return;
                 } else {
-                    _sendData = {dataType: parseInt(this.dataType)};
+                    _sendData = {dataType: this.dataType};
                     break;
                 }
             //网金成交额折线图
@@ -314,7 +311,7 @@ export class PlatformTotalPage {
                     //折线图数据
                     this.loadData(Endpoint.platformTrend, CacheField.platformTrend, refresher);
                     //平台指数排行数据
-                    this.loadData(Endpoint.platformsCompare, CacheField.platformsCompare, refresher, null, {dataType: parseInt(this.dataType)});
+                    this.loadData(Endpoint.platformsCompare, CacheField.platformsCompare, refresher, null, {dataType: this.dataType});
                     break;
                 //竞品
                 case 2:
@@ -325,16 +322,16 @@ export class PlatformTotalPage {
                     break;
                 //传统理财
                 case 3:
-                    /*this.loadData(Endpoint.regularCompare, CacheField.regularCompare, refresher, null, {
+                    this.loadData(Endpoint.regularCompare, CacheField.regularCompare, refresher, null, {
                         dataType: 1,
                         sourceType: 1
                     });
                     this.loadData(Endpoint.regularCompare, CacheField.regularCompare, refresher, null, {
                         dataType: 1,
                         sourceType: 2
-                    });*/
+                    });
                     this.loadData(Endpoint.regularTrend, CacheField.regularTrend, refresher);
-                    // this.loadData(Endpoint.fundTrend, CacheField.fundTrend, refresher);
+                    this.loadData(Endpoint.fundTrend, CacheField.fundTrend, refresher);
                     break;
             }
 

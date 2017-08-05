@@ -9,11 +9,11 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
     selector: 'ucs-date',
     template: ` 
         <button ion-button clear icon-only small [disabled]="isStart" (click)="_previousDate()">
-            <ion-icon name="arrow-back"></ion-icon>
+            <ion-icon name="arrow-left-1"></ion-icon>
         </button>
         <button ion-button clear small (click)="_showAlert()">{{activeDate}}</button>
         <button ion-button clear icon-only small [disabled]="isEnd" (click)="_nextDate()">
-            <ion-icon name="arrow-forward"></ion-icon>
+            <ion-icon name="arrow-right-1"></ion-icon>
         </button>
 `
 })

@@ -5,7 +5,7 @@
         </ion-title>
         <ion-buttons left>
             <button ion-button icon-only color="light" (click)="openBankListPage()">
-                <ion-icon name="apps"></ion-icon>
+                <ion-icon name="list"></ion-icon>
             </button>
         </ion-buttons>
         <ion-buttons end>
@@ -43,19 +43,20 @@
         <ion-row text-center>
             <ion-col no-padding>
                 <button ion-button clear icon-left (click)="showMomey()">
-                    <ion-icon name="eye"></ion-icon>
-                    隐藏
+                    <ion-icon name="{{isShow ? 'show':'hide'}}"></ion-icon>
+                    <span *ngIf="isShow">隐藏</span>
+                    <span *ngIf="!isShow">显示</span>
                 </button>
             </ion-col>
             <ion-col no-padding>
                 <button ion-button clear icon-left (click)="openHelpPage()">
-                    <ion-icon name="help-circle"></ion-icon>
+                    <ion-icon name="help"></ion-icon>
                     帮助
                 </button>
             </ion-col>
             <ion-col no-padding>
                 <button ion-button clear icon-left (click)="removeCache()">
-                    <ion-icon name="exit"></ion-icon>
+                    <ion-icon name="leave"></ion-icon>
                     退出
                 </button>
             </ion-col>
