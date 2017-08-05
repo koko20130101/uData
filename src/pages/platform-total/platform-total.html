@@ -12,9 +12,9 @@
     </ion-toolbar>
     <ion-toolbar ngClass="my-toolbar" no-border>
         <ion-segment [(ngModel)]="platformType" ngClass="my-segment">
-            <ion-segment-button value="1" (click)="getPlatformSegment()">网 金</ion-segment-button>
-            <ion-segment-button value="2" (click)="getPlatformSegment()">竞 品</ion-segment-button>
-            <ion-segment-button value="3" (click)="getPlatformSegment()">传统理财</ion-segment-button>
+            <ion-segment-button [value]="1" (click)="getPlatformSegment()">网 金</ion-segment-button>
+            <ion-segment-button [value]="2" (click)="getPlatformSegment()">竞 品</ion-segment-button>
+            <ion-segment-button [value]="3" (click)="getPlatformSegment()">传统理财</ion-segment-button>
         </ion-segment>
     </ion-toolbar>
 </ion-header>
@@ -45,10 +45,10 @@
                 </ion-list>
                 <div class="model-content" *ngIf="modelContent[0]">
                     <ion-segment [(ngModel)]="dataType" ngClass="my-segment">
-                        <ion-segment-button value="2" (click)="ucsPlatformExponent()">交易额</ion-segment-button>
-                        <ion-segment-button value="1" (click)="ucsPlatformExponent()">收益率</ion-segment-button>
-                        <ion-segment-button value="3" (click)="ucsPlatformExponent()">期限</ion-segment-button>
-                        <ion-segment-button value="4" (click)="ucsPlatformExponent()">项目数</ion-segment-button>
+                        <ion-segment-button [value]="2" (click)="ucsPlatformExponent()">交易额</ion-segment-button>
+                        <ion-segment-button [value]="1" (click)="ucsPlatformExponent()">收益率</ion-segment-button>
+                        <ion-segment-button [value]="3" (click)="ucsPlatformExponent()">期限</ion-segment-button>
+                        <ion-segment-button [value]="4" (click)="ucsPlatformExponent()">项目数</ion-segment-button>
                     </ion-segment>
                     <div [ngSwitch]="dataType" padding>
                         <!--交易额-->
@@ -117,10 +117,10 @@
                 </ion-list>
                 <div class="model-content" *ngIf="modelContent[1]">
                     <ion-segment [(ngModel)]="enemyDataType" ngClass="my-segment">
-                        <ion-segment-button value="2" (click)="enemyPlatformExponent()">交易额</ion-segment-button>
-                        <ion-segment-button value="1" (click)="enemyPlatformExponent()">收益率</ion-segment-button>
-                        <ion-segment-button value="3" (click)="enemyPlatformExponent()">期限</ion-segment-button>
-                        <ion-segment-button value="4" (click)="enemyPlatformExponent()">项目数</ion-segment-button>
+                        <ion-segment-button [value]="2" (click)="enemyPlatformExponent()">交易额</ion-segment-button>
+                        <ion-segment-button [value]="1" (click)="enemyPlatformExponent()">收益率</ion-segment-button>
+                        <ion-segment-button [value]="3" (click)="enemyPlatformExponent()">期限</ion-segment-button>
+                        <ion-segment-button [value]="4" (click)="enemyPlatformExponent()">项目数</ion-segment-button>
                     </ion-segment>
                     <div [ngSwitch]="enemyDataType" padding>
                         <!--交易额-->
@@ -173,17 +173,17 @@
                 <div padding-horizontal padding-bottom ngClass="platform-info" *ngIf="modelContent[2]">
                     <div eCharts [options]="lineChartOption_2" [dataSet]="regularTrendData"  class="line-chart-1"></div>
                     <ion-segment [(ngModel)]="rateTime" color="gray" ngClass="my-segment-1">
-                        <ion-segment-button value="0" (click)="getRateTimeSegment()">1个月</ion-segment-button>
-                        <ion-segment-button value="1" (click)="getRateTimeSegment()">1到3个月</ion-segment-button>
-                        <ion-segment-button value="2" (click)="getRateTimeSegment()">3到6个月</ion-segment-button>
-                        <ion-segment-button value="3" (click)="getRateTimeSegment()">6个月以上</ion-segment-button>
+                        <ion-segment-button [value]="0" (click)="getRateTimeSegment()">1个月</ion-segment-button>
+                        <ion-segment-button [value]="1" (click)="getRateTimeSegment()">1到3个月</ion-segment-button>
+                        <ion-segment-button [value]="2" (click)="getRateTimeSegment()">3到6个月</ion-segment-button>
+                        <ion-segment-button [value]="3" (click)="getRateTimeSegment()">6个月以上</ion-segment-button>
                     </ion-segment>
                     <h4 padding-top>渠道收益率对比</h4>
                     <ion-row>
                         <ion-col text-left><span ion-text color="gray">平台名称</span></ion-col>
                         <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
                     </ion-row>
-                    <list-platform [listData]="regularCompareData[1]"></list-platform>
+                    <list-platform [listData]="regularCompareData[1]" [unit]="'%'"></list-platform>
                 </div>
                 <ion-list class="model-title">
                     <ion-item (click)="showContent(3)">
@@ -200,7 +200,7 @@
                         <ion-col text-left><span ion-text color="gray">平台名称</span></ion-col>
                         <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
                     </ion-row>
-                    <list-platform [listData]="regularCompareData[2]"></list-platform>
+                    <list-platform [listData]="regularCompareData[2]" [unit]="'%'"></list-platform>
                 </div>
             </div>
         </ion-slide>

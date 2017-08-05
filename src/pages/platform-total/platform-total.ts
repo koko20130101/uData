@@ -18,10 +18,10 @@ import * as chartOptions from '../../providers/charts-option';
 export class PlatformTotalPage {
     @ViewChild('MainSlides') mainSlides: Slides;
     pageName = 'PlatformTotalPage';
-    platformType = "1";
+    platformType = 1;
     dataType = 2;     //各平台指数排行
-    enemyDataType = "2";     //竞品平台指数排行
-    rateTime = '0';  //定期理财利率统计
+    enemyDataType = 2;     //竞品平台指数排行
+    rateTime = 0;  //定期理财利率统计
     modelContent: any[] = [1, 1, 1, 1];  //list内容展开收起状态
     dateInstance: any;
     //总额
@@ -231,7 +231,7 @@ export class PlatformTotalPage {
                     this.enemyPlatformsCompareData = _totalData;
                     return;
                 } else {
-                    _sendData = {dataType: parseInt(this.enemyDataType)};
+                    _sendData = {dataType: this.enemyDataType};
                     break;
                 }
             //竞品柱状图
@@ -317,7 +317,7 @@ export class PlatformTotalPage {
                 case 2:
                     //总额
                     this.loadData(Endpoint.platformTotal, CacheField.platformTotal, refresher);
-                    this.loadData(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, refresher, null, {dataType: parseInt(this.enemyDataType)});
+                    this.loadData(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, refresher, null, {dataType: this.enemyDataType});
                     this.loadData(Endpoint.enemyBar, CacheField.enemyBar, refresher);
                     break;
                 //传统理财
@@ -398,7 +398,7 @@ export class PlatformTotalPage {
         let active = this.mainSlides.getActiveIndex();
         let total = this.mainSlides.length();
         if (active == total) return;
-        this.platformType = String(active + 1);
+        this.platformType = active + 1;
     }
 
 }
