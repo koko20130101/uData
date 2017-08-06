@@ -2,9 +2,20 @@
   "data": {
     "list": [
       {
+        "money": 0,
+        "bankName": "富滇",
+        "bankCode": "XinChang",
+        "bankLogo":"../assets/img/bank/富滇银行.svg",
+        "logoBg":["#4a0888" , "#3a0888"],
+        "hasB": false,
+        "up": false
+      },
+      {
         "money": 14552.73,
         "bankName": "江西",
         "bankCode": "NC",
+        "bankLogo":"../assets/img/bank/江西银行.svg",
+        "logoBg":["#006fbf" , "#005bac"],
         "hasB": true,
         "up": false
       },
@@ -12,12 +23,16 @@
         "money": 4496.85,
         "bankName": "珲春",
         "bankCode": "HCUN",
+        "bankLogo":"../assets/img/bank/珲春农商.svg",
+        "logoBg":["#f38d38" , "#f28535"],
         "hasB": false,
         "up": true
       },
       {
         "money": 3625.06,
         "bankName": "颍淮",
+        "bankLogo":"../assets/img/bank/颍淮银行.svg",
+        "logoBg":["#df3036" , "#d6272c"],
         "bankCode": "YH",
         "hasB": false,
         "up": false
@@ -26,6 +41,8 @@
         "money": 1480.88,
         "bankName": "天府银行",
         "bankCode": "NCHONG",
+        "bankLogo":"../assets/img/bank/天府银行.svg",
+        "logoBg":["#deb51e" , "#dbb01c"],
         "hasB": false,
         "up": false
       },
@@ -33,6 +50,8 @@
         "money": 1433,
         "bankName": "甘肃",
         "bankCode": "GS",
+        "bankLogo":"../assets/img/bank/甘肃银行.svg",
+        "logoBg":["#cf773b" , "#cc7138"],
         "hasB": false,
         "up": true
       },
@@ -40,6 +59,8 @@
         "money": 722,
         "bankName": "尧都",
         "bankCode": "YD",
+        "bankLogo":"../assets/img/bank/尧都银行.svg",
+        "logoBg":["#11ae66" , "#0e9553"],
         "hasB": false,
         "up": false
       },
@@ -47,6 +68,8 @@
         "money": 660,
         "bankName": "浦发",
         "bankCode": "PF",
+        "bankLogo":"../assets/img/bank/浦发银行.svg",
+        "logoBg":["#5259d0" , "#3337a8"],
         "hasB": true,
         "up": true
       },
@@ -54,6 +77,8 @@
         "money": 250,
         "bankName": "柳州",
         "bankCode": "GXLZ",
+        "bankLogo":"../assets/img/bank/柳州银行.svg",
+        "logoBg":["#f39e28" , "#f29625"],
         "hasB": false,
         "up": false
       },
@@ -61,6 +86,8 @@
         "money": 132.15,
         "bankName": "浙商",
         "bankCode": "ZS",
+        "bankLogo":"../assets/img/bank/浙商银行.svg",
+        "logoBg":["#de262e" , "#d41f25"],
         "hasB": false,
         "up": false
       },
@@ -68,6 +95,8 @@
         "money": 110,
         "bankName": "常熟",
         "bankCode": "CRCB",
+        "bankLogo":"../assets/img/bank/常熟银行.svg",
+        "logoBg":["#b71a38" , "#b11834"],
         "hasB": false,
         "up": false
       },
@@ -75,6 +104,8 @@
         "money": 71.48,
         "bankName": "鄞州",
         "bankCode": "YZOfZJ",
+        "bankLogo":"../assets/img/bank/鄞州银行.svg",
+        "logoBg":["#29ae3d" , "#27a839"],
         "hasB": false,
         "up": false
       },
@@ -82,6 +113,8 @@
         "money": 18.44,
         "bankName": "绵阳",
         "bankCode": "Mysyyh",
+        "bankLogo":"../assets/img/bank/绵阳.svg",
+        "logoBg":["#1c31e5" , "#1a2ee3"],
         "hasB": false,
         "up": false
       },
@@ -89,6 +122,8 @@
         "money": 7.9,
         "bankName": "德清",
         "bankCode": "DQ",
+        "bankLogo":"../assets/img/bank/德清农商.svg",
+        "logoBg":["#0052a9" , "#004da2"],
         "hasB": false,
         "up": false
       },
@@ -96,6 +131,8 @@
         "money": 0,
         "bankName": "广州农商",
         "bankCode": "GZNS",
+        "bankLogo":"../assets/img/bank/广州农商.svg",
+        "logoBg":["#1194b4" , "#0e799e"],
         "hasB": false,
         "up": false
       },
@@ -103,6 +140,8 @@
         "money": 0,
         "bankName": "华瑞",
         "bankCode": "HRUI",
+        "bankLogo":"../assets/img/bank/华瑞银行.svg",
+        "logoBg":["#4a0888" , "#3a0888"],
         "hasB": false,
         "up": false
       },
@@ -110,6 +149,8 @@
         "money": 0,
         "bankName": "金谷农商",
         "bankCode": "JG",
+        "bankLogo":"../assets/img/bank/金谷农商行.svg",
+        "logoBg":["#d9b054" , "#cb9241"],
         "hasB": false,
         "up": false
       },
@@ -117,6 +158,8 @@
         "money": 0,
         "bankName": "南粤",
         "bankCode": "GDNY",
+        "bankLogo":"../assets/img/bank/南粤银行.svg",
+        "logoBg":["#d60a19" , "#cf0916"],
         "hasB": false,
         "up": false
       },
@@ -124,6 +167,8 @@
         "money": 0,
         "bankName": "江苏",
         "bankCode": "JS",
+        "bankLogo":"../assets/img/bank/江苏银行.svg",
+        "logoBg":["#debe53" , "#d4ab44"],
         "hasB": false,
         "up": false
       },
@@ -131,6 +176,8 @@
         "money": 0,
         "bankName": "齐鲁",
         "bankCode": "QL",
+        "bankLogo":"../assets/img/bank/齐鲁银行.svg",
+        "logoBg":["#006cba" , "#005bab"],
         "hasB": false,
         "up": false
       },
@@ -138,6 +185,8 @@
         "money": 0,
         "bankName": "华润",
         "bankCode": "HR",
+        "bankLogo":"../assets/img/bank/华润银行.svg",
+        "logoBg":["#eeb109" , "#e89907"],
         "hasB": true,
         "up": false
       },
@@ -145,6 +194,8 @@
         "money": 0,
         "bankName": "中信",
         "bankCode": "CiticZX",
+        "bankLogo":"../assets/img/bank/中信银行.svg",
+        "logoBg":["#f3314c" , "#f22e47"],
         "hasB": false,
         "up": false
       },
@@ -152,6 +203,8 @@
         "money": 0,
         "bankName": "郏县",
         "bankCode": "JXIAN",
+        "bankLogo":"../assets/img/bank/郏县农信社.svg",
+        "logoBg":["#da2e09" , "#d82b09"],
         "hasB": false,
         "up": false
       },
@@ -159,6 +212,8 @@
         "money": 0,
         "bankName": "青岛",
         "bankCode": "QD",
+        "bankLogo":"../assets/img/bank/青岛银行.svg",
+        "logoBg":["#e52336" , "#dd1d2c"],
         "hasB": false,
         "up": false
       },
@@ -166,6 +221,8 @@
         "money": 0,
         "bankName": "华兴",
         "bankCode": "GZHX",
+        "bankLogo":"../assets/img/bank/华兴银行.svg",
+        "logoBg":["#b3232e" , "#ab202a"],
         "hasB": false,
         "up": false
       },
@@ -173,6 +230,8 @@
         "money": 0,
         "bankName": "泰安",
         "bankCode": "TAN",
+        "bankLogo":"../assets/img/bank/泰安银行.svg",
+        "logoBg":["#db2a31" , "#d9272e"],
         "hasB": false,
         "up": false
       },
@@ -180,6 +239,8 @@
         "money": 0,
         "bankName": "洛阳",
         "bankCode": "LUOYANG",
+        "bankLogo":"../assets/img/bank/洛阳银行.svg",
+        "logoBg":["#054195" , "#053d8e"],
         "hasB": false,
         "up": false
       },
@@ -187,6 +248,8 @@
         "money": 0,
         "bankName": "招行",
         "bankCode": "CMBC",
+        "bankLogo":"../assets/img/bank/招商银行.svg",
+        "logoBg":["#f3394a" , "#ef2e3c"],
         "hasB": true,
         "up": false
       },
@@ -194,6 +257,8 @@
         "money": 0,
         "bankName": "西宁",
         "bankCode": "XN",
+        "bankLogo":"../assets/img/bank/西宁农商.svg",
+        "logoBg":["#006cba" , "#005bab"],
         "hasB": false,
         "up": false
       },
@@ -201,6 +266,8 @@
         "money": 0,
         "bankName": "新昌",
         "bankCode": "XinChang",
+        "bankLogo":"../assets/img/bank/新昌农商.svg",
+        "logoBg":["#4a0888" , "#3a0888"],
         "hasB": false,
         "up": false
       }

@@ -122,7 +122,7 @@ export class C2bPage {
      * */
     getDataFromCache(endpoint, cacheKey, source?: any) {
         let _sendData: any = null;
-        let _cacheData: any = this.c2bService.getValue(cacheKey);
+        let _cacheData: any = this.c2bService.getValue(cacheKey,source);
         switch (cacheKey) {
             //引入及销售总额
             case CacheField.saleTotal:
@@ -135,8 +135,8 @@ export class C2bPage {
                 }
             //引入渠道分布
             case CacheField.saleChannelIn:
-                if (!!_cacheData && !!_cacheData[this.saleChannelTypeIn]) {
-                    this.saleChannelDataIn = _cacheData;
+                if (!!_cacheData) {
+                    this.saleChannelDataIn[source] = _cacheData;
                     return;
                 } else {
                     _sendData = {dataType: this.saleChannelTypeIn, inoutFlag: this.inoutFlag};
@@ -144,8 +144,8 @@ export class C2bPage {
                 }
             //销售渠道分布
             case CacheField.saleChannelOut:
-                if (!!_cacheData && !!_cacheData[this.saleChannelTypeOut]) {
-                    this.saleChannelDataOut = _cacheData;
+                if (!!_cacheData) {
+                    this.saleChannelDataOut[source] = _cacheData;
                     return;
                 } else {
                     _sendData = {dataType: this.saleChannelTypeOut, inoutFlag: this.inoutFlag};
@@ -153,8 +153,8 @@ export class C2bPage {
                 }
             //折线图
             case CacheField.assetsInOut:
-                if (!!_cacheData && !!_cacheData[this.inoutFlag]) {
-                    this.assetsInOutData = _cacheData;
+                if (!!_cacheData) {
+                    this.assetsInOutData[source] = _cacheData;
                     return;
                 } else {
                     _sendData = {inoutFlag: this.inoutFlag};
@@ -389,16 +389,16 @@ export class C2bPage {
                 this.inoutFlag = 'in';
                 this.modelContent = [1, 0, 0, 0];
                 this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
-                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
-                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
+                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn,this.saleChannelTypeIn);
+                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut,this.inoutFlag);
                 break;
             //销售额
             case 2:
                 this.inoutFlag = 'out';
                 this.modelContent = [0, 1, 0, 0];
                 this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
-                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut);
-                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
+                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut,this.saleChannelTypeOut);
+                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut,this.inoutFlag);
                 break;
             //运营分析
             case 3:
@@ -412,11 +412,11 @@ export class C2bPage {
     }
 
     saleChannelSegmentIn() {
-        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn,this.saleChannelTypeIn);
     }
 
     saleChannelSegmentOut() {
-        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut);
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut,this.saleChannelTypeOut);
     }
 
     slideChange() {

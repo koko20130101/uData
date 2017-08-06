@@ -151,7 +151,7 @@ export class C2bService {
                         let temp: any = {};
                         temp[_res.dataType] = _res.data.list;
                         //添加时间戳
-                        Object.assign(temp, {stamp: _thisTime});
+                        Object.assign(temp[_res.dataType], {stamp: _thisTime});
                         _res.data = temp;
                         break;
 
@@ -169,7 +169,7 @@ export class C2bService {
                         let _channelOut: any = {};
                         _channelOut[_res.dataType] = _res.data.list;
                         //添加时间戳
-                        Object.assign(_channelOut, {stamp: _thisTime});
+                        Object.assign(_channelOut[_res.dataType], {stamp: _thisTime});
                         _res.data = _channelOut;
                         break;
 
@@ -179,7 +179,7 @@ export class C2bService {
                         let _assetsData: any = {};
                         _assetsData[_res.dataType] = this.handleValue(_res.data);
                         //添加时间戳
-                        Object.assign(_assetsData, {stamp: _thisTime});
+                        Object.assign(_assetsData[_res.dataType], {stamp: _thisTime});
                         _res.data = _assetsData;
                         break;
 
@@ -287,9 +287,9 @@ export class C2bService {
 
     /**
      * @比较本地数据的时间戳
-     * @getValue(本地存储key)
+     * @getValue(本地存储key,资源标识)
      * */
-    getValue(key) {
+    getValue(key,source?:any) {
         let _data: any;
         switch (key) {
             case CacheField.saleTotal:
@@ -297,13 +297,13 @@ export class C2bService {
                 _data = this.publicFactory.checkValueStamp(this.saleData);
                 break;
             case CacheField.saleChannelIn:
-                _data = this.publicFactory.checkValueStamp(this.saleChannelDataIn);
+                _data = this.publicFactory.checkValueStamp(this.saleChannelDataIn,false,source);
                 break;
             case CacheField.saleChannelOut:
-                _data = this.publicFactory.checkValueStamp(this.saleChannelDataOut);
+                _data = this.publicFactory.checkValueStamp(this.saleChannelDataOut,false,source);
                 break;
             case CacheField.assetsInOut:
-                _data = this.publicFactory.checkValueStamp(this.assetsInOutData);
+                _data = this.publicFactory.checkValueStamp(this.assetsInOutData,false,source);
                 break;
             case CacheField.assetsMain:
                 _data = this.publicFactory.checkValueStamp(this.assetsMainData, true);
