@@ -10,11 +10,11 @@
     </ion-toolbar>
     <ion-toolbar ngClass="my-toolbar">
         <ion-segment [(ngModel)]="lingXiType" ngClass="my-segment">
-            <ion-segment-button value="0" (click)="goSegment()">全 部</ion-segment-button>
-            <ion-segment-button value="1" (click)="goSegment()">活 期</ion-segment-button>
-            <ion-segment-button value="2" (click)="goSegment()">稳健型</ion-segment-button>
-            <ion-segment-button value="3" (click)="goSegment()">成长型</ion-segment-button>
-            <ion-segment-button value="4" (click)="goSegment()">进取型</ion-segment-button>
+            <ion-segment-button [value]="0" (click)="goSegment()">全 部</ion-segment-button>
+            <ion-segment-button [value]="1" (click)="goSegment()">活 期</ion-segment-button>
+            <ion-segment-button [value]="2" (click)="goSegment()">稳健型</ion-segment-button>
+            <ion-segment-button [value]="3" (click)="goSegment()">成长型</ion-segment-button>
+            <ion-segment-button [value]="4" (click)="goSegment()">进取型</ion-segment-button>
         </ion-segment>
     </ion-toolbar>
 </ion-header>

@@ -46,13 +46,13 @@
                     </ion-item>
                 </ion-list>
                 <div class="model-content" *ngIf="modelContent[0]">
-                    <ion-segment [(ngModel)]="dataType" ngClass="my-segment">
+                    <ion-segment [(ngModel)]="ucsDataType" ngClass="my-segment">
                         <ion-segment-button [value]="2" (click)="ucsPlatformExponent()">交易额</ion-segment-button>
                         <ion-segment-button [value]="1" (click)="ucsPlatformExponent()">收益率</ion-segment-button>
                         <ion-segment-button [value]="3" (click)="ucsPlatformExponent()">期限</ion-segment-button>
                         <ion-segment-button [value]="4" (click)="ucsPlatformExponent()">项目数</ion-segment-button>
                     </ion-segment>
-                    <div [ngSwitch]="dataType" padding>
+                    <div [ngSwitch]="ucsDataType" padding>
                         <!--交易额-->
                         <div *ngSwitchCase="'2'">
                             <ion-row>

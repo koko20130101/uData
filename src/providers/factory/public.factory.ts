@@ -64,7 +64,7 @@ export class PublicFactory {
     }
 
     //检查数据时间戳
-    checkValueStamp(data, short?: boolean) {
+    checkValueStamp(data, short?: boolean,tip?:any) {
         let _data: any = data;
         //当前时间戳
         let _thisTime = moment().unix();
@@ -75,16 +75,20 @@ export class PublicFactory {
 
         if (_index == 0 || short) {
             //过期时间: 60秒前 (在global.service中设置)
-            if (!!_data && !!_data[_currentDate] && _data[_currentDate].stamp + _instance.cacheTime.short > _thisTime) {
+            if (!!_data && !!_data[_currentDate] && !!_data[_currentDate].stamp && _data[_currentDate].stamp + _instance.cacheTime.short > _thisTime) {
                 return _data[_currentDate];
-            } else {
+            } else if(!!_data[_currentDate]  && !!_data[_currentDate][tip] && _data[_currentDate][tip].stamp + _instance.cacheTime.short > _thisTime ) {
+                return _data[_currentDate][tip];
+            }else{
                 return false;
             }
         } else {
             //过期时间: 30天 (在global.service中设置)
-            if (!!_data && !!_data[_currentDate] && _data[_currentDate].stamp + _instance.cacheTime.middle > _thisTime) {
+            if (!!_data && !!_data[_currentDate] && !!_data[_currentDate].stamp && _data[_currentDate].stamp + _instance.cacheTime.middle > _thisTime) {
                 return _data[_currentDate];
-            } else {
+            } else if(!!_data[_currentDate]  && !!_data[_currentDate][tip] && _data[_currentDate][tip].stamp + _instance.cacheTime.middle > _thisTime ) {
+                return _data[_currentDate][tip];
+            }else{
                 return false;
             }
         }

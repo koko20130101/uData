@@ -18,7 +18,7 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
 export class LingXiPage {
     @ViewChild("MainSlides") mainSlides: Slides;
     pageName: any = 'LingXiPage';
-    lingXiType = '0';
+    lingXiType = 0;
     userOperateType = '1';
     modelContent: any[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];  //list内容展开收起状态
     dateInstance: any;
@@ -126,28 +126,28 @@ export class LingXiPage {
         let _sendData: any = {
             BankCode: ''
         };
-        let _num = parseInt(this.lingXiType);
-        let _cacheData: any = this.lingXiService.getValue(cacheKey);
+        let _num = this.lingXiType;
+        let _cacheData: any = this.lingXiService.getValue(cacheKey,_num);
         switch (cacheKey) {
             case CacheField.lingXiTotal:
-                if (!!_cacheData && _cacheData[_num]) {
-                    Object.assign(this.lingXiTotalData[this.lingXiType], _cacheData[_num]);
+                if (!!_cacheData) {
+                    this.lingXiTotalData[_num] = _cacheData;
                     return;
                 } else {
                     _sendData = {proType: _num};
                     break;
                 }
             case CacheField.lingXiTrendDeal:
-                if (!!_cacheData && _cacheData[_num]) {
-                    this.dealTrendData[_num] = _cacheData[_num];
+                if (!!_cacheData) {
+                    this.dealTrendData[_num] = _cacheData;
                     return;
                 } else {
                     _sendData = {proType: _num};
                     break;
                 }
             case CacheField.lingXiTrendRate:
-                if (!!_cacheData && _cacheData[_num]) {
-                    this.rateTrendData[_num] = _cacheData[_num];
+                if (!!_cacheData) {
+                    this.rateTrendData[_num] = _cacheData;
                     return;
                 } else {
                     _sendData = {proType: _num};
@@ -262,6 +262,6 @@ export class LingXiPage {
         let active = this.mainSlides.getActiveIndex();
         let total = this.mainSlides.length();
         if (active == total) return;
-        this.lingXiType = String(active);
+        this.lingXiType = active;
     }
 }

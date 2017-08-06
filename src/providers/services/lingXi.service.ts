@@ -105,7 +105,7 @@ export class LingXiService {
                         let temp: any = {};
                         temp[_res.dataType] = _res.data;
                         //添加时间戳
-                        Object.assign(temp, {stamp: _thisTime});
+                        Object.assign(temp[_res.dataType], {stamp: _thisTime});
                         _res.data = temp;
                         break;
 
@@ -116,7 +116,7 @@ export class LingXiService {
                         let _trendDeal: any = {};
                         _trendDeal[_res.dataType] = this.handleValue(_res.data);
                         //添加时间戳
-                        Object.assign(_trendDeal, {stamp: _thisTime});
+                        Object.assign(_trendDeal[_res.dataType], {stamp: _thisTime});
                         _res.data = _trendDeal;
                         break;
 
@@ -127,7 +127,7 @@ export class LingXiService {
                         let _trendRate: any = {};
                         _trendRate[_res.dataType] = this.handleValue(_res.data);
                         //添加时间戳
-                        Object.assign(_trendRate, {stamp: _thisTime});
+                        Object.assign(_trendRate[_res.dataType], {stamp: _thisTime});
                         _res.data = _trendRate;
                         break;
 
@@ -184,17 +184,17 @@ export class LingXiService {
         return req;
     }
 
-    getValue(key){
+    getValue(key,tip?:any){
         let _data:any;
         switch (key){
             case CacheField.lingXiTotal:
-                _data = this.publicFactory.checkValueStamp(this.lingXiTotalData);
+                _data = this.publicFactory.checkValueStamp(this.lingXiTotalData,false,tip);
                 break;
             case CacheField.lingXiTrendDeal:
-                _data = this.publicFactory.checkValueStamp(this.dealTrendData);
+                _data = this.publicFactory.checkValueStamp(this.dealTrendData,false,tip);
                 break;
             case CacheField.lingXiTrendRate:
-                _data = this.publicFactory.checkValueStamp(this.rateTrendData);
+                _data = this.publicFactory.checkValueStamp(this.rateTrendData,false,tip);
                 break;
             case CacheField.lingXiChannel:
                 _data = this.publicFactory.checkValueStamp(this.lingXiChannelData);

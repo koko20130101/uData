@@ -134,7 +134,7 @@ export class PlatformService {
                         let temp: any = {};
                         temp[_res.dataType] = _res.data.list;
                         //添加时间戳
-                        Object.assign(temp, {stamp: _thisTime});
+                        Object.assign(temp[_res.dataType], {stamp: _thisTime});
                         _res.data = temp;
                         break;
 
@@ -160,7 +160,7 @@ export class PlatformService {
                         let _enemyData: any = {};
                         _enemyData[_res.dataType] = _res.data.list;
                         //添加时间戳
-                        Object.assign(_enemyData, {stamp: _thisTime});
+                        Object.assign(_enemyData[_res.dataType], {stamp: _thisTime});
                         _res.data = _enemyData;
                         break;
 
@@ -180,7 +180,7 @@ export class PlatformService {
                         let _regularData: any = {};
                         _regularData[_res.sourceType] = _res.data.list;
                         //添加时间戳
-                        Object.assign(_regularData, {stamp: _thisTime});
+                        Object.assign(_regularData[_res.sourceType], {stamp: _thisTime});
                         _res.data = _regularData;
                         break;
 
@@ -189,9 +189,9 @@ export class PlatformService {
                         _cacheData = this.regularTrendData;
                         let _regularRate: any = {};
                         _regularRate[_res.dataType] = this.handleValue(_res.data);
-                        _res.data = _regularRate;
                         //添加时间戳
-                        Object.assign(_res.data, {stamp: _thisTime});
+                        Object.assign(_regularRate[_res.dataType], {stamp: _thisTime});
+                        _res.data = _regularRate;
                         break;
 
                     //==> 基金折线图
@@ -257,7 +257,7 @@ export class PlatformService {
      * @比较本地数据的时间戳
      * @getValue(本地存储key)
      * */
-    getValue(key) {
+    getValue(key,source?:any) {
         let _data: any;
         switch (key) {
             case CacheField.platformTotal:
@@ -265,22 +265,22 @@ export class PlatformService {
                 _data = this.publicFactory.checkValueStamp(this.totalData);
                 break;
             case CacheField.platformsCompare:
-                _data = this.publicFactory.checkValueStamp(this.platformsCompareData);
+                _data = this.publicFactory.checkValueStamp(this.platformsCompareData,false,source);
                 break;
             case CacheField.platformTrend:
                 _data = this.publicFactory.checkValueStamp(this.trendData);
                 break;
             case CacheField.enemyPlatformsCompare:
-                _data = this.publicFactory.checkValueStamp(this.enemyPlatformsCompareData);
+                _data = this.publicFactory.checkValueStamp(this.enemyPlatformsCompareData,false,source);
                 break;
             case CacheField.enemyBar:
                 _data = this.publicFactory.checkValueStamp(this.enemyBarData);
                 break;
             case CacheField.regularCompare:
-                _data = this.publicFactory.checkValueStamp(this.regularCompareData);
+                _data = this.publicFactory.checkValueStamp(this.regularCompareData,false,source);
                 break;
             case CacheField.regularTrend:
-                _data = this.publicFactory.checkValueStamp(this.regularTrendData);
+                _data = this.publicFactory.checkValueStamp(this.regularTrendData,false,source);
                 break;
             case CacheField.fundTrend:
                 _data = this.publicFactory.checkValueStamp(this.fundTrendData);
