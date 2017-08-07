@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Storage} from '@ionic/storage';
-import {Api} from './api';
-import {Endpoint} from './endpoint';
+import {Api} from '../api';
+import {Endpoint} from '../endpoint';
+import {GlobalVars} from '../services/global.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
@@ -29,7 +30,10 @@ import 'rxjs/add/operator/toPromise';
 export class User {
     _user: any;
 
-    constructor(public http: Http, public api: Api, public storage: Storage) {
+    constructor(public http: Http,
+                public api: Api,
+                public globalVars: GlobalVars,
+                public storage: Storage) {
     }
 
     login(accountInfo: any) {
@@ -54,17 +58,20 @@ export class User {
     /**
      * 检查是否登录
      * */
-    checkLogin(accountInfo: any) {
-        let seq = this.api.post(Endpoint.checkLogin, accountInfo).share();
-
-        seq
-            .map(res => res.json())
-            .subscribe(res => {
-
-            }, err=> {
-
-            });
-        return seq;
+    checkLogin(sendData: any) {
+        return new Promise((resolve, reject)=> {
+            let seq = this.api.post(Endpoint.checkLogin, sendData).share()
+            seq .map(res => res.json())
+                .subscribe(
+                    (data)=> {
+                        // console.log(data)
+                        resolve(data);
+                    }, (err)=> {
+                        reject(err)
+                    }
+                );
+            return seq;
+        });
     }
 
 
@@ -74,7 +81,6 @@ export class User {
      */
     signup(accountInfo: any) {
         let seq = this.api.post('signup', accountInfo).share();
-
         seq
             .map(res => res.json())
             .subscribe(res => {
@@ -98,9 +104,35 @@ export class User {
     }
 
     /**
+     * 获取用户权限
+     * */
+    getUserPower(sendData?: any) {
+        return new Promise((resolve, reject)=> {
+            let seq = this.api.post(Endpoint.userPower, sendData).share()
+                .map(res => res.json())
+                .subscribe(
+                    (res) => {
+                        if(res.code==1) {
+                            //把用权限存到全局变量
+                            let dateInstance = this.globalVars.getInstance();
+                            for(let item of res.data) {
+                                dateInstance.adminCode[item.PCode] = true;
+                            }
+                        }
+                        resolve(res)
+                    }, (err)=> {
+                        reject(err);
+                    });
+            return seq;
+        });
+    }
+
+    /**
      * Process a login/signup response to store user data
      */
     _loggedIn(resp) {
         this._user = resp.user;
     }
+
+
 }

@@ -22,6 +22,7 @@ export class PlatformTotalPage {
     ucsDataType = 2;     //各平台指数排行
     enemyDataType = 2;     //竞品平台指数排行
     rateTime = 0;  //定期理财利率统计
+    backCount = 1; //slides 和 segment的数值差
     modelContent: any[] = [1, 1, 1, 1];  //list内容展开收起状态
     dateInstance: any;
     //总额
@@ -75,6 +76,15 @@ export class PlatformTotalPage {
 
     ngOnInit() {
         this.dateInstance = this.globalVars.getInstance();
+        //判断有无查看网金平台数据权限
+        if(this.dateInstance.adminCode['05']) {
+            this.platformType = 1;
+            this.backCount = 1;
+        }else{
+            this.platformType = 2;
+            this.backCount = 2;
+        }
+
         this.lineChartOption_1 = chartOptions.LineChartOption_1();
         this.lineChartOption_1.tooltip.formatter=function (params) {
             let res = params[0].name;
@@ -111,9 +121,7 @@ export class PlatformTotalPage {
     }
 
     ionViewWillEnter() {
-        this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
-        this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
-        this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare);
+        this.getPlatformSegment();
     }
 
     ionViewDidEnter() {
@@ -337,8 +345,8 @@ export class PlatformTotalPage {
     }
 
     getPlatformSegment() {
-        let num = Number(this.platformType);
-        this.mainSlides.slideTo(num - 1);
+        let num = this.platformType;
+        this.mainSlides.slideTo(num - this.backCount);
         switch (num) {
             //网金
             case 1:
@@ -396,7 +404,7 @@ export class PlatformTotalPage {
         let active = this.mainSlides.getActiveIndex();
         let total = this.mainSlides.length();
         if (active == total) return;
-        this.platformType = active + 1;
+        this.platformType = active + this.backCount;
     }
 
 }

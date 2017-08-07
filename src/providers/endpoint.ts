@@ -10,7 +10,8 @@ export const Endpoint = {
     getSmsCode: 'getVerifyCode',     //获取短信
     login: 'assets/data/user.json',   //登录
     signOut:'user/signOut',          //登出
-    checkLogin:'assets/data/check-login.json',  //检查登录及版本信息
+    checkLogin:'assets/data/check-login.json',  //检查登录
+    userPower:'assets/data/user.json',  //用户权限
     dateList:'assets/data/date-list.json',  //日期列表
     homeData:'assets/data/main.json',  //日期列表
 

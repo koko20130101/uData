@@ -39,16 +39,4 @@ page-home {
     font-weight: normal;
     font-style:normal;
   }
-  .footer {
-    .button-clear-ios,.button-clear-md {
-      color: color($colors, gray, mid);
-      font-size:1.4rem;
-    }
-    [icon-left] ion-icon{
-      font-size:2.8rem;
-    }
-    .col{
-      border-right:1px solid color($colors,dark,mid)
-    }
-  }
 }

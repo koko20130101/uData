@@ -3,7 +3,7 @@ import {NavController} from 'ionic-angular';
 
 import {HomePage} from '../home/home';
 
-import {User} from  '../../providers/user';
+import {User} from  '../../providers/services/user.service';
 import {PopupFactory} from '../../providers/providers'
 
 /**

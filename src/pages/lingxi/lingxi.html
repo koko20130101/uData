@@ -122,13 +122,19 @@
                 <ion-row align-items-center>
                     <ion-col text-left>
                         <p>转入总额</p>
-                        <h3 ion-text [innerHTML]="lingXiTotalData[1].inTotal[0]"
-                            color="{{lingXiTotalData[1].inTotal[1]=='true'?'danger':(lingXiTotalData[1].inTotal[1]=='false'?'secondary':'')}}"></h3>
+                        <h3 ion-text color="{{lingXiTotalData[1].inTotal[1]=='true'?'danger':(lingXiTotalData[1].inTotal[1]=='false'?'secondary':'')}}">
+                            <span [innerHTML]="lingXiTotalData[1].inTotal[0]"></span>
+                            <ion-icon
+                                    name="{{lingXiTotalData[1].inTotal[1]=='true' ?'arrow-up':(lingXiTotalData[1].inTotal[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                        </h3>
                     </ion-col>
                     <ion-col text-left>
                         <p>余额（实时）</p>
-                        <h3 ion-text [innerHTML]="lingXiTotalData[1].outTotal[0]"
-                            color="{{lingXiTotalData[1].outTotal[1]=='true'?'danger':(lingXiTotalData[1].outTotal[1]=='false'?'secondary':'')}}"></h3>
+                        <h3 ion-text color="{{lingXiTotalData[1].outTotal[1]=='true'?'danger':(lingXiTotalData[1].outTotal[1]=='false'?'secondary':'')}}">
+                            <span [innerHTML]="lingXiTotalData[1].outTotal[0]"></span>
+                            <ion-icon
+                                    name="{{lingXiTotalData[1].outTotal[1]=='true' ?'arrow-up':(lingXiTotalData[1].outTotal[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                        </h3>
                     </ion-col>
                 </ion-row>
             </div>
@@ -169,8 +175,11 @@
         <ion-slide>
             <div ngClass="total-data">
                 <p>委托总额</p>
-                <h2 ion-text [innerHTML]="lingXiTotalData[2].total[0]"
-                    color="{{lingXiTotalData[2].total[1]=='true'?'danger':(lingXiTotalData[2].total[1]=='false'?'secondary':'')}}"></h2>
+                <h2 ion-text color="{{lingXiTotalData[2].total[1]=='true'?'danger':(lingXiTotalData[2].total[1]=='false'?'secondary':'')}}">
+                    <span [innerHTML]="lingXiTotalData[2].total[0]"></span>
+                    <ion-icon
+                            name="{{lingXiTotalData[2].total[1]=='true' ?'arrow-up':(lingXiTotalData[2].total[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                </h2>
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[2]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
@@ -209,8 +218,11 @@
         <ion-slide>
             <div ngClass="total-data">
                 <p>委托总额</p>
-                <h2 ion-text [innerHTML]="lingXiTotalData[3].total[0]"
-                    color="{{lingXiTotalData[3].total[1]=='true'?'danger':(lingXiTotalData[3].total[1]=='false'?'secondary':'')}}"></h2>
+                <h2 ion-text color="{{lingXiTotalData[3].total[1]=='true'?'danger':(lingXiTotalData[3].total[1]=='false'?'secondary':'')}}">
+                    <span [innerHTML]="lingXiTotalData[3].total[0]"></span>
+                    <ion-icon
+                            name="{{lingXiTotalData[3].total[1]=='true' ?'arrow-up':(lingXiTotalData[3].total[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                </h2>
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[3]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">
@@ -249,8 +261,11 @@
         <ion-slide>
             <div ngClass="total-data">
                 <p>委托总额</p>
-                <h2 ion-text [innerHTML]="lingXiTotalData[4].total[0]"
-                    color="{{lingXiTotalData[4].total[1]=='true'?'danger':(lingXiTotalData[4].total[1]=='false'?'secondary':'')}}"></h2>
+                <h2 ion-text color="{{lingXiTotalData[4].total[1]=='true'?'danger':(lingXiTotalData[4].total[1]=='false'?'secondary':'')}}">
+                    <span  [innerHTML]="lingXiTotalData[4].total[0]"></span>
+                    <ion-icon
+                            name="{{lingXiTotalData[4].total[1]=='true' ?'arrow-up':(lingXiTotalData[4].total[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                </h2>
             </div>
             <div eCharts [options]="lineChartOption_1" [dataSet]="dealTrendData[4]" ngClass="line-chart-1"></div>
             <ion-list ngClass="model-title">

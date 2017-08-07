@@ -37,7 +37,6 @@ export class HomePage {
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
                 public storage: Storage) {
-
     }
 
     ngOnInit() {

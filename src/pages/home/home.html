@@ -3,7 +3,7 @@
         <ion-title>
             {{'MAIN_TITLE' | translate}}
         </ion-title>
-        <ion-buttons left>
+        <ion-buttons left *ngIf="dateInstance.adminCode['01']">
             <button ion-button icon-only color="light" (click)="openBankListPage()">
                 <ion-icon name="list"></ion-icon>
             </button>
@@ -21,27 +21,27 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <div padding class="platform-data-list">
-        <div class="platform-data data-1" (click)="openPlatformData()">
+        <div class="platform-data data-1" (click)="openPlatformData()" *ngIf="dateInstance.adminCode['01']">
             <h5>{{'PLATFORM_TITLE_1' | translate}}</h5>
             <p [innerHTML]="totalAmount.platformTotal" *ngIf="isShow"></p>
             <p *ngIf="!isShow">******</p>
         </div>
-        <div class="platform-data data-2" (click)="openC2bPage()">
+        <div class="platform-data data-2" (click)="openC2bPage()" *ngIf="dateInstance.adminCode['02']">
             <h5>{{'PLATFORM_TITLE_2' | translate}}</h5>
             <p [innerHtml]="totalAmount.C2BTotal" *ngIf="isShow"></p>
             <p *ngIf="!isShow">******</p>
         </div>
-        <div class="platform-data data-3" (click)="openLingXiPage()">
+        <div class="platform-data data-3" (click)="openLingXiPage()" *ngIf="dateInstance.adminCode['12']">
             <h5>{{'PLATFORM_TITLE_3' | translate}}</h5>
             <p [innerHtml]="totalAmount.LingXiTotal" *ngIf="isShow"></p>
             <p *ngIf="!isShow">******</p>
         </div>
     </div>
 </ion-content>
-<ion-footer>
+<ion-footer ngClass="footer-bar">
     <ion-navbar color="dark">
         <ion-row text-center>
-            <ion-col no-padding>
+            <ion-col no-padding *ngIf="dateInstance.adminCode['04']">
                 <button ion-button clear icon-left (click)="showMomey()">
                     <ion-icon name="{{isShow ? 'show':'hide'}}"></ion-icon>
                     <span *ngIf="isShow">隐藏</span>
@@ -62,5 +62,4 @@
             </ion-col>
         </ion-row>
     </ion-navbar>
-
 </ion-footer>

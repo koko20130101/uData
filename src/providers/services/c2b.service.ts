@@ -227,8 +227,9 @@ export class C2bService {
                         }
                         _newData['total'] = this.publicFactory.moneyFormatToHtml(_res.data['total']);
                         _newData['grossProfit'] = _res.data['grossProfit'];
+                        Object.assign(_newData, this.handleValue(_res.data));
                         //处理数据
-                        _res.data = this.handleValue(_res.data);
+                        _res.data = _newData;
                         //添加时间戳
                         Object.assign(_res.data, {stamp: _thisTime});
                         break;

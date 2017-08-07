@@ -20,6 +20,7 @@ export class C2bPage {
     @ViewChild('MainSlides') mainSlides: Slides;
     pageName = 'C2bPage';
     C2BType = 1;
+    C2BTypeValue:any[] = [];
     saleChannelTypeIn = 2;
     saleChannelTypeOut = 2;
     modelContent: any[] = [1, 1, 1, 1];  //list内容展开收起状态
@@ -74,6 +75,19 @@ export class C2bPage {
     ngOnInit() {
         //全局变量实例
         this.dateInstance = this.globalVars.getInstance();
+        //判断有无模块权限
+        if(this.dateInstance.adminCode['09']) {
+            this.C2BTypeValue.push(1);
+        }
+        if(this.dateInstance.adminCode['10']) {
+            this.C2BTypeValue.push(2);
+        }
+        if(this.dateInstance.adminCode['11']) {
+            this.C2BTypeValue.push(3);
+        }
+
+        this.C2BType = this.C2BTypeValue[0];
+
         //设置图表数据
         this.barChartOption = chartOptions.BarChartOption_2();
         this.lineChartOption_1 = chartOptions.LineChartOption_1();
@@ -98,9 +112,7 @@ export class C2bPage {
     }
 
     ionViewWillEnter() {
-        this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
-        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn);
-        this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut);
+        this.goSegment();
     }
 
     ionViewDidEnter() {
@@ -351,7 +363,7 @@ export class C2bPage {
 
     //下拉刷新
     doRefresh(refresher: Refresher) {
-        let num = Number(this.C2BType);
+        let num = this.C2BType;
         setTimeout(() => {
             //总数据
             switch (num) {
@@ -381,8 +393,8 @@ export class C2bPage {
     }
 
     goSegment() {
-        let num = Number(this.C2BType);
-        this.mainSlides.slideTo(num - 1);
+        let num = this.C2BType;
+        this.mainSlides.slideTo(this.C2BTypeValue.indexOf(num));
         switch (num) {
             //引入额
             case 1:
@@ -423,6 +435,6 @@ export class C2bPage {
         let active = this.mainSlides.getActiveIndex();
         let total = this.mainSlides.length();
         if (active == total) return;
-        this.C2BType = active + 1;
+        this.C2BType = this.C2BTypeValue[active];
     }
 }

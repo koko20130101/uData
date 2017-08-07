@@ -2,11 +2,13 @@ import {Component} from '@angular/core';
 import {NavController,Refresher} from 'ionic-angular';
 
 import {BankDetailPage} from '../bank-detail/bank-detail';
+import {HelpPage} from '../help/help';
 
 import {CacheField} from '../../providers/cache-field';
 import {Endpoint} from '../../providers/endpoint';
 import {GlobalVars} from '../../providers/services/global.service';
 import {BankListService} from '../../providers/services/bank-lsit.service';
+import {User} from '../../providers/services/user.service';
 
 import {PublicFactory} from '../../providers/factory/public.factory'
 import {PopupFactory} from '../../providers/factory/popup.factory'
@@ -25,6 +27,7 @@ export class BankListPage {
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
                 public bankListService: BankListService,
+                public user: User,
                 public globalVars: GlobalVars) {
 
     }
@@ -105,6 +108,14 @@ export class BankListPage {
 
     openBankDetail(bank) {
         this.navCtrl.push(BankDetailPage,bank);
+    }
+
+    openHelpPage(){
+        this.navCtrl.push(HelpPage);
+    }
+
+    logout(){
+        this.user.logout();
     }
 
 }

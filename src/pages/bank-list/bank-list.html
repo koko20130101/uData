@@ -25,3 +25,21 @@
         </li>
     </ul>
 </ion-content>
+<ion-footer *ngIf="!dateInstance.adminCode['06']" ngClass="footer-bar">
+    <ion-navbar color="dark">
+        <ion-row text-center>
+            <ion-col no-padding>
+                <button ion-button clear icon-left color="light" (click)="openHelpPage()">
+                    <ion-icon name="help"></ion-icon>
+                    帮助
+                </button>
+            </ion-col>
+            <ion-col no-padding>
+                <button ion-button clear icon-left color="light" (click)="logout()">
+                    <ion-icon name="leave"></ion-icon>
+                    退出
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-navbar>
+</ion-footer>

@@ -184,8 +184,9 @@ ion-navbar.toolbar {
     margin: 0;
     font-size: 2.4rem;
     font-weight: 400;
-    span {
+    i {
       font-size: 1.4rem;
+      font-style:normal;
     }
   }
 }
@@ -421,20 +422,23 @@ ion-navbar.toolbar {
   background-color: color($colors, light)
 }
 
+.footer-bar{
+  &.footer {
+    .button-clear-ios,.button-clear-md {
+      color: color($colors, gray, mid);
+      font-size:1.4rem;
+    }
+    [icon-left] ion-icon{
+      font-size:2.8rem;
+    }
+    .col{
+      border-right:1px solid color($colors,dark,mid)
+    }
+  }
+}
+
+
 ion-content.has-refresher > .scroll-content {
   border: none;
 }
 
-.my-refresher .refresher-refreshing .spinner-ios line {
-  stroke: color($colors, light);
-}
-
-.my-loading {
-  &.loading-ios .spinner-ios line {
-    stroke: color($colors, light);
-  }
-  &.loading-ios .loading-wrapper {
-    background: none;
-  }
-
-}

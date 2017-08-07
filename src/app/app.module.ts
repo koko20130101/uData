@@ -27,7 +27,7 @@ import {Items} from '../mocks/providers/items';
 import {Settings} from '../providers/settings';
 import {PublicFactory} from '../providers/providers';
 import {PopupFactory} from '../providers/providers';
-import {User} from '../providers/user';
+import {User} from '../providers/services/user.service';
 import {GlobalVars} from '../providers/services/global.service';
 import {DateService} from '../providers/services/date.service';
 import {ListPipe} from '../providers/pipes/list.pipe';

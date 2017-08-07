@@ -29,6 +29,9 @@ export class GlobalVars {
         long:5184000
     };
 
+    //权限
+    adminCode: any = {};
+
     //请求数量
     loaders:any[]=[];
 
