@@ -4,19 +4,7 @@ $font-path: "../assets/fonts";
 
 @import "ionic.globals";
 
-// Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
-$text-color: #FFF;
-$background-color: #1e1e28;
-$refresher-icon-color:#FFF;
-$loading-ios-spinner-color:#FFF;
-$loading-ios-background:none;
-$loading-md-background:none;
 
 // Named Color Variables
 // --------------------------------------------------
@@ -34,6 +22,27 @@ $colors: (
         gray:(base:#666,contrast:#FFF,mid:#999,mid1:#b7b7b7,mid2:#ddd,mid3:#eee,low:#f0f0f0),
         dark:(base:#282836,contrast:#FFF,mid:#262633,mid1:#353546,mid2:#444)
 );
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+$text-color: color($colors,light);
+$background-color: #1e1e28;
+$refresher-icon-color:color($colors,light);
+$loading-ios-spinner-color:color($colors,light);
+$loading-ios-background:none;
+$loading-md-background:none;
+$list-ios-background-color:color($colors,dark,mid);
+$list-ios-border-color:color($colors,dark,mid1);
+$note-ios-color:color($colors,gray,mid);
+
+$list-md-background-color:color($colors,dark,mid1);
+$list-md-border-color:color($colors,dark,mid1);
+$note-md-color:color($colors,gray,mid);
 
 // App iOS Variables
 // --------------------------------------------------

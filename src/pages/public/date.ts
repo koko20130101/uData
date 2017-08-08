@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
-
+import {Storage} from '@ionic/storage';
+import moment from 'moment';
 import {GlobalVars} from '../../providers/services/global.service';
+import {CacheField} from '../../providers/cache-field';
 
 import {PublicFactory} from '../../providers/factory/public.factory'
 import {PopupFactory} from '../../providers/factory/popup.factory'
@@ -19,27 +21,53 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
 })
 export class Date {
     //输入属性:记录从那个页面引入的 date
-    @Input()pageName: any;
+    @Input() pageName: any;
     dateInstance: any;  //单例模式的实例
-    currentDateList: any[]=[];  //活动的时间列表
+    currentDateList: any[] = [];  //活动的时间列表
     activeDate: any;
     radioList: any[];
-    isStart:boolean;
-    isEnd:boolean = false;
+    isStart: boolean;
+    isEnd: boolean = false;
+
+    _hour: any;
+    _today: any;
+    _week: any;
+    _day: any;
+    popupKey: any;
 
     constructor(public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
+                public storage: Storage,
                 public globalVars: GlobalVars) {
     }
 
     ngOnInit() {
-        // console.log(0)
+        this._hour = moment().hour(); //现在几点
+        this._today = moment().format('YYYY-MM-DD');  //今天
+        this._week = moment().day();   //星期几
+        this._day = moment().date();  //几号
+
+        //存储弹窗点击信息
+        this.storage.get(CacheField.popupKey).then(data => {
+            if (!!data) {
+                if (data.date != this._today) {
+                    this.popupKey = {date: this._today};
+                } else {
+                    this.popupKey = data;
+                }
+            } else {
+                this.popupKey = {date: this._today};
+            }
+            this.storage.set(CacheField.popupKey, this.popupKey);
+            this._autoAlert(this.dateInstance.dateInfo.unit.title);
+        });
+
         //全局变量实例
         this.dateInstance = this.globalVars.getInstance();
         this._setVars();
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            this._setVars();
+            this._setVars(data.unit);
         });
     }
 
@@ -52,75 +80,167 @@ export class Date {
     _showAlert() {
         this.radioList = [];
         //处理弹窗的时间列表
-        for(let value of this.currentDateList) {
+        for (let value of this.currentDateList) {
             this.radioList.push({
                 type: 'radio',
                 label: value,
                 value: value,
-                checked: value == this.activeDate ? true :false
+                checked: value == this.activeDate ? true : false
             });
         }
 
         //弹出日期选择弹窗
         this.popupFactory.showAlert({
-            title:'请选择日期',
+            title: '请选择日期',
             inputs: this.radioList,
             buttons: [
                 {
                     text: '确 定',
                     handler: (data)=> {
                         let index = this.currentDateList.indexOf(data);
-                        this._setDate(data,index);
+                        this._setDate(data, index);
                     }
                 }
             ]
         })
     }
 
-    _previousDate(){
+    _autoAlert(unit) {
+        switch (unit) {
+            case '日':
+                //判断是否是今天的 在多少小时之前
+                if (this.popupKey.hour == null && this._hour < 21) {
+                    this.popupFactory.showAlert({
+                        title: '',
+                        message: "部分项目尚未开售，是否切换为" + this.currentDateList[1] + "的数据？",
+                        enableBackdropDismiss: false,
+                        buttons: [
+                            {
+                                text: '取 消',
+                                handler: (data)=> {
+                                    this.popupKey.hour = false;
+                                    this.storage.set(CacheField.popupKey, this.popupKey);
+
+                                }
+                            },
+                            {
+                                text: '确认切换',
+                                handler: (data)=> {
+                                    this.popupKey.hour = true;
+                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                    this._setDate(null, 1);
+                                }
+                            }
+                        ]
+                    });
+                }else if(this.popupKey.hour && this._hour < 21){
+                    this._setDate(null, 1);
+                }
+                break;
+            case '周':
+                //判断是否是周一，
+                if (this.popupKey.week == null && this._week == 2) {
+                    this.popupFactory.showAlert({
+                        title: '',
+                        message: "本周才刚刚开始，是否切换为" + this.currentDateList[1] + "的数据？",
+                        enableBackdropDismiss: false,
+                        buttons: [
+                            {
+                                text: '取 消',
+                                handler: (data)=> {
+                                    this.popupKey.week = false;
+                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                }
+                            }, {
+                                text: '确认切换',
+                                handler: (data)=> {
+                                    this.popupKey.week = true;
+                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                    this._setDate(null, 1);
+                                }
+                            }
+                        ]
+                    })
+                }
+                break;
+            case '月':
+                //判断是否是周一，
+                if (this.popupKey.day == null && this._day == 8) {
+                    this.popupFactory.showAlert({
+                        title: '',
+                        message: "本月才刚刚开始，是否切换为" + this.currentDateList[1] + "的数据？",
+                        enableBackdropDismiss: false,
+                        buttons: [
+                            {
+                                text: '取 消',
+                                handler: (data)=> {
+                                    this.popupKey.day = false;
+                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                }
+                            },
+                            {
+                                text: '确认切换',
+                                handler: (data)=> {
+                                    this.popupKey.day = true;
+                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                    this._setDate(null, 1);
+                                }
+                            }
+                        ]
+                    });
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    _previousDate() {
         let index = this.currentDateList.indexOf(this.activeDate);
-        if(index == this.currentDateList.length-1) {
+        if (index == this.currentDateList.length - 1) {
             this.isStart = true;
             return;
-        }else{
+        } else {
             this.isEnd = false;
-            this._setDate(this.currentDateList[index+1],index+1)
+            this._setDate(this.currentDateList[index + 1], index + 1)
         }
     }
 
-    _nextDate(){
+    _nextDate() {
         let index = this.currentDateList.indexOf(this.activeDate);
-        if(index == 0) {
+        if (index == 0) {
             this.isEnd = true;
             return;
-        }else{
+        } else {
             this.isStart = false;
-            this._setDate(this.currentDateList[index-1],index-1)
+            this._setDate(this.currentDateList[index - 1], index - 1)
         }
     }
 
-    _setDate(data,index) {
+    _setDate(data, index) {
         //设置公共变量实例
         this.dateInstance.setDateValue(null, index);
         //发布消息
-        this.publicFactory.unitInfo.emit({page:this.pageName});
+        this.publicFactory.unitInfo.emit({page: this.pageName});
         this._setVars();
     }
 
-    _setVars() {
+    _setVars(unit?: any) {
         this.currentDateList = this.dateInstance.dateInfo.currentDateList;
         this.activeDate = this.dateInstance.dateInfo.currentDate;
         let index = this.currentDateList.indexOf(this.activeDate);
         let length = this.currentDateList.length;
-        if(index == 0) {
+
+        if (index == 0) {
             this.isEnd = true;
-        }else{
+        } else {
             this.isEnd = false;
         }
-        if(index == length-1) {
+        if (index == length - 1) {
             this.isStart = true;
-        }else{
+        } else {
             this.isStart = false;
         }
+        this._autoAlert(unit);
     }
 }

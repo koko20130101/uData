@@ -32,12 +32,12 @@ export class PopOverPage {
     }
 
     setDateUnit(val) {
+        //关闭popover
+        this.viewCtrl.dismiss();
         //设置全局变量值
         this.dateInstance.dateInfo.unit = val;
         this.dateInstance.setDateValue();
-        this.publicFactory.unitInfo.emit(this.parentPage);
-        //关闭popover
-        this.viewCtrl.dismiss();
+        this.publicFactory.unitInfo.emit({page:this.parentPage.page,unit:val.title});
     }
 
 }

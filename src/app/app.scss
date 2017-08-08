@@ -99,14 +99,14 @@ ion-navbar.toolbar {
 .my-segment {
   border-bottom: 1px solid color($colors, dark, mid1);
   background-color: #1e1e28;
-  &.segment-ios .segment-button {
+  &.segment-ios .segment-button,&.segment-md .segment-button {
     border: 0px;
     font-size: 1.5rem;
     color: color($colors, gray, mid);
     height: 44px;
     line-height: 44px;
   }
-  &.segment-ios .segment-button.segment-activated {
+  &.segment-ios .segment-button.segment-activated,&.segment-md .segment-button.segment-activated  {
     background: none;
     color: color($colors, primary);
     border-bottom: 2px solid color($colors, primary);
@@ -219,22 +219,15 @@ ion-navbar.toolbar {
   margin-bottom: 10px;
 }
 
-.model-title.list-ios .item-block:last-child {
-  border-color: color($colors, dark, mid1);
-}
-
-.model-title {
-  .item-ios {
-    background-color: color($colors, dark, mid);
-  }
-}
-
-.list-ios.my-list {
+.my-list {
   .item-block .item-inner, .item-block:first-child, .item-block:last-child {
     border-color: color($colors, dark, mid2);
   }
   ion-label {
     white-space: normal;
+  }
+  .item-md,.item-ios{
+    background:none;
   }
 }
 
