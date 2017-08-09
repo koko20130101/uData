@@ -17,7 +17,10 @@ import * as chartOptions from '../../providers/charts-option';
 })
 export class PlatformTotalPage {
     @ViewChild('MainSlides') mainSlides: Slides;
-    pageName = 'PlatformTotalPage';
+    pageInfo: any = {
+        name:'PlatformTotalPage',
+        id:2
+    };
     platformType = 1;
     ucsDataType = 2;     //各平台指数排行
     enemyDataType = 2;     //竞品平台指数排行
@@ -114,7 +117,7 @@ export class PlatformTotalPage {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
             console.log(data.page);
-            if (data.page == this.pageName) {
+            if (data.page == this.pageInfo.name) {
                 this.getPlatformSegment();
             }
         });

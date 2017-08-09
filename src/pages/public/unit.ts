@@ -16,7 +16,7 @@ import {PublicFactory} from '../../providers/factory/public.factory'
 `
 })
 export class Unit {
-    @Input() pageName: any;
+    @Input() pageInfo: any;
     dateInstance: any;
     activeUnit: any;
 
@@ -47,7 +47,7 @@ export class Unit {
 
     //弹出时间单位
     presentPopover(ev: UIEvent) {
-        let popover = this.popoverCtrl.create(PopOverPage, {page: this.pageName}, {
+        let popover = this.popoverCtrl.create(PopOverPage, {page: this.pageInfo.name}, {
             cssClass: 'my-popover',
         });
         popover.present({

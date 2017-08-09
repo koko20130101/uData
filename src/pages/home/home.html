@@ -9,11 +9,11 @@
             </button>
         </ion-buttons>
         <ion-buttons end>
-            <ucs-unit pageName="{{pageName}}"></ucs-unit>
+            <ucs-unit [pageInfo]="pageInfo"></ucs-unit>
         </ion-buttons>
     </ion-navbar>
     <ion-toolbar class="time-list" color="dark" text-center>
-        <ucs-date pageName="{{pageName}}"></ucs-date>
+        <ucs-date [pageInfo]="pageInfo"></ucs-date>
     </ion-toolbar>
 </ion-header>
 <ion-content>

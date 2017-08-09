@@ -61,4 +61,9 @@ export const Endpoint = {
     lingXiTrendDeal:'assets/data/lingXi-deal.json', // 成交数据折线图
     lingXiTrendRate:'assets/data/lingXi-rate.json', // 收益率折线图
     lingXiChannel:'assets/data/channel-lx.json', // 渠道占比
+
+    /**
+     * 埋点
+     * */
+    recordOperationLog:'',
 };

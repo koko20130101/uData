@@ -21,7 +21,10 @@ import {PopupFactory} from  '../../providers/factory/popup.factory';
     providers:[HomeService]
 })
 export class HomePage {
-    pageName: any = 'HomePage';
+    pageInfo: any = {
+        name:'HomePage',
+        id:1
+    };
     dateList: any;
     dateInstance: any;
     isShow:boolean = true;
@@ -49,8 +52,7 @@ export class HomePage {
         // console.log(1)
         //订阅选择时间传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            console.log(data.page)
-            if (data.page == this.pageName) {
+            if (data.page == this.pageInfo.name) {
                 this.getHomeData();
             }
         });

@@ -19,7 +19,10 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
     providers: [BankListService]
 })
 export class BankListPage {
-    pageName: any = 'BankListPage';
+    pageInfo: any = {
+        name:'BankListPage',
+        id:5
+    };
     dateInstance: any;
     bankListData: any;
 
@@ -45,7 +48,7 @@ export class BankListPage {
         // console.log(2);
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            if (data.page == this.pageName) {
+            if (data.page == this.pageInfo.name) {
                 this.getDataFromCache(Endpoint.bankList, CacheField.bankList);
             }
         });

@@ -17,7 +17,10 @@ import * as chartOptions from '../../providers/charts-option';
     providers: [BankService]
 })
 export class BankDetailPage {
-    pageName: any = 'BankDetailPage';
+    pageInfo: any = {
+        name:'BankDetailPage',
+        id:6
+    };
     projectType = '1';
     projectTrendType = '1';
     userOperateType = '1';
@@ -143,7 +146,7 @@ export class BankDetailPage {
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            if (data.page == this.pageName) {
+            if (data.page == this.pageInfo.name) {
                 this.getDataFromCache(Endpoint.bankTotal, CacheField.bankTotal);
                 this.getDataFromCache(Endpoint.bankMoney, CacheField.bankMoney);
                 this.getDataFromCache(Endpoint.bankChannel, CacheField.bankChannel);

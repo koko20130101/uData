@@ -2,11 +2,11 @@
     <ion-navbar color="dark">
         <ion-title>{{'LX_TITLE' | translate}}</ion-title>
         <ion-buttons end>
-            <ucs-unit pageName="{{pageName}}"></ucs-unit>
+            <ucs-unit [pageInfo]="pageInfo"></ucs-unit>
         </ion-buttons>
     </ion-navbar>
     <ion-toolbar ngClass="time-list" color="dark" text-center>
-        <ucs-date pageName="{{pageName}}"></ucs-date>
+        <ucs-date [pageInfo]="pageInfo"></ucs-date>
     </ion-toolbar>
     <ion-toolbar ngClass="my-toolbar">
         <ion-segment [(ngModel)]="lingXiType" ngClass="my-segment">

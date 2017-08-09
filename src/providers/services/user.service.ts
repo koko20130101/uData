@@ -112,10 +112,10 @@ export class User {
                 .map(res => res.json())
                 .subscribe(
                     (res) => {
-                        if(res.code==1) {
+                        if (res.code == 1) {
                             //把用权限存到全局变量
                             let dateInstance = this.globalVars.getInstance();
-                            for(let item of res.data) {
+                            for (let item of res.data) {
                                 dateInstance.adminCode[item.PCode] = true;
                             }
                         }
@@ -126,6 +126,26 @@ export class User {
             return seq;
         });
     }
+
+    /**
+     * 设置埋点
+     * */
+    setRecordOperationLog(sendData?: any) {
+        let _sendData = {
+            CurrentPage: sendData.pageID,  //页面
+            BankCode: sendData.bankCode,
+            PointID: sendData.point, //埋点位置
+            AppVersion: 'v1.3'
+        };
+        console.log('当前页面：' + _sendData.CurrentPage);
+        console.log('埋点：' + _sendData.PointID);
+        let seq = this.api.post(Endpoint.recordOperationLog, _sendData).share();
+        seq.map(res => res.json())
+            .subscribe(res => {
+
+            });
+        return seq;
+    };
 
     /**
      * Process a login/signup response to store user data

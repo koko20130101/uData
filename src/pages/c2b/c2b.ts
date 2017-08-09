@@ -18,7 +18,10 @@ import * as chartOptions from '../../providers/charts-option'
 })
 export class C2bPage {
     @ViewChild('MainSlides') mainSlides: Slides;
-    pageName = 'C2bPage';
+    pageInfo: any = {
+        name:'C2bPage',
+        id:3
+    };
     C2BType = 1;
     C2BTypeValue:any[] = [];
     saleChannelTypeIn = 2;
@@ -104,7 +107,7 @@ export class C2bPage {
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            if (data.page == this.pageName) {
+            if (data.page == this.pageInfo.name) {
                 // console.log(data.page)
                 this.goSegment();
             }

@@ -17,7 +17,10 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
 })
 export class LingXiPage {
     @ViewChild("MainSlides") mainSlides: Slides;
-    pageName: any = 'LingXiPage';
+    pageInfo: any = {
+        name:'LingXiPage',
+        id:4
+    };
     lingXiType = 0;
     userOperateType = '1';
     modelContent: any[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];  //list内容展开收起状态
@@ -98,7 +101,7 @@ export class LingXiPage {
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            if (data.page == this.pageName) {
+            if (data.page == this.pageInfo.name) {
                 this.goSegment();
             }
         });
