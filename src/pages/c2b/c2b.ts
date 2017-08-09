@@ -398,7 +398,23 @@ export class C2bPage {
     goSegment() {
         let num = this.C2BType;
         this.mainSlides.slideTo(this.C2BTypeValue.indexOf(num));
-        switch (num) {
+        this.slideChange();
+    }
+
+    saleChannelSegmentIn() {
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn,this.saleChannelTypeIn);
+    }
+
+    saleChannelSegmentOut() {
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut,this.saleChannelTypeOut);
+    }
+
+    slideChange() {
+        let active = this.mainSlides.getActiveIndex();
+        let total = this.mainSlides.length();
+        if (active == total) return;
+        this.C2BType = this.C2BTypeValue[active];
+        switch (this.C2BType) {
             //引入额
             case 1:
                 this.inoutFlag = 'in';
@@ -424,20 +440,5 @@ export class C2bPage {
                 this.getDataFromCache(Endpoint.grossMargin, CacheField.grossMargin);
                 break;
         }
-    }
-
-    saleChannelSegmentIn() {
-        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn,this.saleChannelTypeIn);
-    }
-
-    saleChannelSegmentOut() {
-        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut,this.saleChannelTypeOut);
-    }
-
-    slideChange() {
-        let active = this.mainSlides.getActiveIndex();
-        let total = this.mainSlides.length();
-        if (active == total) return;
-        this.C2BType = this.C2BTypeValue[active];
     }
 }

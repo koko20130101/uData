@@ -2,15 +2,6 @@
   "data": {
     "list": [
       {
-        "money": 0,
-        "bankName": "富滇",
-        "bankCode": "XinChang",
-        "bankLogo":"../assets/img/bank/富滇银行.svg",
-        "logoBg":["#4a0888" , "#3a0888"],
-        "hasB": false,
-        "up": false
-      },
-      {
         "money": 14552.73,
         "bankName": "江西",
         "bankCode": "NC",
@@ -268,6 +259,22 @@
         "bankCode": "XinChang",
         "bankLogo":"../assets/img/bank/新昌农商.svg",
         "logoBg":["#4a0888" , "#3a0888"],
+        "hasB": false,
+        "up": false
+      },{
+        "money": 0,
+        "bankName": "富滇",
+        "bankCode": "XinChang",
+        "bankLogo":"../assets/img/bank/富滇银行.svg",
+        "logoBg":["#a32533" , "#9d2330"],
+        "hasB": false,
+        "up": false
+      },{
+        "money": 0,
+        "bankName": "乌当",
+        "bankCode": "WuDang",
+        "bankLogo":"../assets/img/bank/乌当.svg",
+        "logoBg":["#12a138" , "#119b35"],
         "hasB": false,
         "up": false
       }

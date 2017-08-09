@@ -226,14 +226,7 @@ export class LingXiPage {
     goSegment() {
         let num = Number(this.lingXiType);
         this.mainSlides.slideTo(num);
-        this.getDataFromCache(Endpoint.lingXiTotal, CacheField.lingXiTotal);
-        this.getDataFromCache(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal);
-        if (num != 0) {
-            this.getDataFromCache(Endpoint.lingXiTrendRate, CacheField.lingXiTrendRate);
-        }
-        if (num == 0) {
-            this.getDataFromCache(Endpoint.lingXiChannel, CacheField.lingXiChannel);
-        }
+        this.slideChange();
     }
 
     //下拉刷新
@@ -266,5 +259,14 @@ export class LingXiPage {
         let total = this.mainSlides.length();
         if (active == total) return;
         this.lingXiType = active;
+
+        this.getDataFromCache(Endpoint.lingXiTotal, CacheField.lingXiTotal);
+        this.getDataFromCache(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal);
+        if (this.lingXiType != 0) {
+            this.getDataFromCache(Endpoint.lingXiTrendRate, CacheField.lingXiTrendRate);
+        }
+        if (this.lingXiType == 0) {
+            this.getDataFromCache(Endpoint.lingXiChannel, CacheField.lingXiChannel);
+        }
     }
 }

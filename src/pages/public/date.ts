@@ -98,7 +98,8 @@ export class Date {
 
         //弹出日期选择弹窗
         this.popupFactory.showAlert({
-            title: '请选择日期',
+            title: '',
+            subTitle: '请选择时间',
             inputs: this.radioList,
             buttons: [
                 {
