@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController,ToastController} from 'ionic-angular';
 import co from 'co';
 
 import {HomePage} from '../home/home';
@@ -9,6 +9,7 @@ import {User} from  '../../providers/services/user.service';
 import {GlobalVars} from '../../providers/providers';
 import {PopupFactory} from '../../providers/providers';
 import {PublicFactory} from '../../providers/providers';
+import {ValidatorFactory} from '../../providers/providers';
 import {DateService} from '../../providers/services/date.service';
 
 /**
@@ -28,12 +29,14 @@ export class LoginPage {
     globalInstance:any;
     private hackerInterval;
     // 登录表单的账户字段
-    private account: { mobile: string, password: string } = {
+    private account: { mobile: string, imgCode: string,smsCode: string  } = {
         mobile: '',
-        password: ''
+        imgCode: '',
+        smsCode: ''
     };
 
     constructor(public navCtrl: NavController,
+                private toastCtrl:ToastController,
                 public user: User,
                 public dateService:DateService,
                 public globalVars:GlobalVars,
@@ -82,7 +85,43 @@ export class LoginPage {
         clearInterval(this.hackerInterval);
     }
 
+    //验证表单
+    validateForm() {
+        //验证对象实例
+        let validator = new ValidatorFactory();
+        validator.addStrategy(this.account.mobile, [{
+            strategy: 'isNonEmpty',
+            errorMsg: '手机号码不能为空'
+        }, {
+            strategy: 'isMobile',
+            errorMsg: '手机号码格式不正确'
+        }]);
+
+        validator.addStrategy(this.account.imgCode, [{
+            strategy: 'isNonEmpty',
+            errorMsg: '图形验证码不能为空'
+        }]);
+
+        validator.addStrategy(this.account.smsCode, [{
+            strategy: 'isNonEmpty',
+            errorMsg: '图形验证码不能为空'
+        }]);
+
+        //开始验证
+        let errorMsg = validator.startValidate();
+        return errorMsg;
+    }
+
     doLogin() {
+
+        let errorMsg = this.validateForm();
+        if (!!errorMsg) {
+            this.popupFactory.showToast({
+                message:errorMsg,
+                showCloseButton:true
+            });
+            return false;
+        }
         co(function *() {
             let loader = this.popupFactory.loading();
             loader.present();

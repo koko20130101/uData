@@ -4,6 +4,7 @@ import {Settings} from './settings';
 import {GlobalVars} from './services/global.service';
 import {PublicFactory} from './factory/public.factory';
 import {PopupFactory} from './factory/popup.factory';
+import {ValidatorFactory} from './factory/validator.factory';
 import {ListPipe} from './pipes/list.pipe';
 
 export {
@@ -13,5 +14,6 @@ export {
     GlobalVars,
     PublicFactory,
     PopupFactory,
+    ValidatorFactory,
     ListPipe
 };

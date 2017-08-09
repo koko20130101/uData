@@ -12,13 +12,21 @@
             <ion-list inset>
                 <ion-item>
                     <ion-input type="mobile" maxlength="11"
+                               name="mobile"
+                               [(ngModel)]="account.mobile"
                                placeholder="{{'PLACEHOLDER_MOBILE' | translate}}"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-input type="text" placeholder="{{'PLACEHOLDER_IMAGE_CODE' | translate}}"></ion-input>
+                    <ion-input type="text"
+                               name="imgCode"
+                               placeholder="{{'PLACEHOLDER_IMAGE_CODE' | translate}}"
+                               [(ngModel)]="account.imgCode" ></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-input type="tel" placeholder="{{'PLACEHOLDER_SMS_CODE' | translate}}"></ion-input>
+                    <ion-input type="tel"
+                               name="smsCode"
+                               placeholder="{{'PLACEHOLDER_SMS_CODE' | translate}}"
+                               [(ngModel)]="account.smsCode"></ion-input>
                 </ion-item>
                 <button ion-button block class="login">{{ 'LOGIN' | translate }}</button>
             </ion-list>
