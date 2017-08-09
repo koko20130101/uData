@@ -6,6 +6,7 @@
         <div class="splash-logo">
         </div>
     </div>
+    <h5 ngClass="app-title">网金平台数据统计</h5>
     <div padding-horizontal>
         <form (submit)="doLogin()">
             <ion-list inset>
@@ -19,9 +20,7 @@
                 <ion-item>
                     <ion-input type="tel" placeholder="{{'PLACEHOLDER_SMS_CODE' | translate}}"></ion-input>
                 </ion-item>
-                <div padding-top>
-                    <button ion-button block class="login">{{ 'LOGIN' | translate }}</button>
-                </div>
+                <button ion-button block class="login">{{ 'LOGIN' | translate }}</button>
             </ion-list>
         </form>
     </div>

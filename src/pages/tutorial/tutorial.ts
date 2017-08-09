@@ -72,12 +72,9 @@ export class TutorialPage {
         this.dataInstance = this.globalVars.getInstance();
     }
 
-    ngAfterViewInit() {
-        console.log(1)
-    }
 
     ionViewDidLoad() {
-        console.log(2)
+        console.log(2);
         //视图加载完成时启用倒计时
         this.myInterval = setInterval(()=> {
             this.count--;

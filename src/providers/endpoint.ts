@@ -8,8 +8,8 @@ export const HOST = 'http://localhost:8100';
 export const Endpoint = {
     getImgCode: 'captcha',     //获取图形验证码
     getSmsCode: 'getVerifyCode',     //获取短信
-    login: 'assets/data/user.json',   //登录
-    signOut:'user/signOut',          //登出
+    login: 'assets/data/login.json',   //登录
+    logout:'assets/data/logout.json',          //登出
     checkLogin:'assets/data/check-login.json',  //检查登录
     userPower:'assets/data/user.json',  //用户权限
     dateList:'assets/data/date-list.json',  //日期列表

@@ -2,6 +2,7 @@ import {Component} from  '@angular/core';
 import {NavController,Refresher} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 
+import {LoginPage} from '../login/login';
 import {PlatformTotalPage} from '../platform-total/platform-total';
 import {C2bPage} from '../c2b/c2b';
 import {LingXiPage} from '../lingxi/lingXi';
@@ -11,6 +12,7 @@ import {HelpPage} from '../help/help';
 import {CacheField} from '../../providers/cache-field';
 import {GlobalVars} from  '../../providers/services/global.service';
 import {HomeService} from '../../providers/services/home.service';
+import {User} from '../../providers/providers';
 
 import {PublicFactory} from  '../../providers/factory/public.factory';
 import {PopupFactory} from  '../../providers/factory/popup.factory';
@@ -37,6 +39,7 @@ export class HomePage {
     constructor(public navCtrl: NavController,
                 public globalVars: GlobalVars,
                 public homeService:HomeService,
+                public user:User,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
                 public storage: Storage) {
@@ -102,6 +105,15 @@ export class HomePage {
         for(let key in CacheField) {
             this.storage.remove(CacheField[key]);
         }
+    }
+
+    doLogout(){
+        this.user.logout({}).subscribe((data) =>{
+            let res: any = data;
+            if(res._body.code==1) {
+                this.navCtrl.setRoot(LoginPage);
+            }
+        });
     }
 
     //下拉刷新

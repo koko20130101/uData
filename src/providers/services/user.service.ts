@@ -3,6 +3,7 @@ import {Http} from '@angular/http';
 import {Storage} from '@ionic/storage';
 import {Api} from '../api';
 import {Endpoint} from '../endpoint';
+import {CacheField} from '../cache-field';
 import {GlobalVars} from '../services/global.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -28,7 +29,6 @@ import 'rxjs/add/operator/toPromise';
  */
 @Injectable()
 export class User {
-    _user: any;
 
     constructor(public http: Http,
                 public api: Api,
@@ -37,22 +37,23 @@ export class User {
     }
 
     login(accountInfo: any) {
-        let seq = this.api.post(Endpoint.login, accountInfo).share();
-
-        seq
-            .map(res => res.json());
-        /*.subscribe(res => {
-         // If the API returned a successful response, mark the user as logged in
-         if (res.status == 'success') {
-         // this.storage.set('userInfo', res);
-         this._loggedIn(res);
-         } else {
-         }
-         }, err => {
-         console.error('ERROR', err);
-         });*/
-
-        return seq;
+        return new Promise((resolve, reject)=> {
+            let globalInstance = this.globalVars.getInstance();
+            let seq = this.api.post(Endpoint.login, accountInfo).share();
+            seq
+                .map(res => res.json())
+                .subscribe(res => {
+                    if (res.code == 1) {
+                        this.storage.set('MTK', res.data.token);
+                        globalInstance.sendMassage.token = res.data.token;
+                        resolve(res);
+                    }
+                }, err => {
+                    console.error('ERROR', err);
+                    reject(err);
+                });
+            return seq;
+        });
     }
 
     /**
@@ -64,7 +65,6 @@ export class User {
             seq .map(res => res.json())
                 .subscribe(
                     (data)=> {
-                        // console.log(data)
                         resolve(data);
                     }, (err)=> {
                         reject(err)
@@ -74,33 +74,18 @@ export class User {
         });
     }
 
-
-    /**
-     * Send a POST request to our signup endpoint with the data
-     * the user entered on the form.
-     */
-    signup(accountInfo: any) {
-        let seq = this.api.post('signup', accountInfo).share();
-        seq
-            .map(res => res.json())
-            .subscribe(res => {
-                // If the API returned a successful response, mark the user as logged in
-                if (res.status == 'success') {
-
-                    this._loggedIn(res);
-                }
-            }, err => {
-                console.error('ERROR', err);
-            });
-
-        return seq;
-    }
-
     /**
      * 登出
      */
-    logout() {
-        this._user = null;
+    logout(sendData?:any) {
+        let seq = this.api.post(Endpoint.logout,sendData).share();
+        seq.map(res => res.json())
+            .subscribe(res => {
+                if(res.code == 1) {
+                    this.storage.remove(CacheField.MTK);
+                }
+            });
+        return seq;
     }
 
     /**
@@ -146,13 +131,4 @@ export class User {
             });
         return seq;
     };
-
-    /**
-     * Process a login/signup response to store user data
-     */
-    _loggedIn(resp) {
-        this._user = resp.user;
-    }
-
-
 }

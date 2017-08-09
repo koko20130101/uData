@@ -36,11 +36,20 @@ export class GlobalVars {
     loaders:any[]=[];
     //自动弹窗
     popupKey:any;
+    //请求头
+    sendMassage = {
+        head: {
+            appVersion: '',    // app版本
+            clientModel: '',   // 客户端类型
+            iMEI: '',          // 机器唯一识别码
+            oSVersion: '',     // 机器型号
+        },
+        token: ''
+    };
 
     constructor() {
 
     }
-
 
     //设置dateInfo: index时间列表中active数据
     setDateValue(data?:any,index?:any) {

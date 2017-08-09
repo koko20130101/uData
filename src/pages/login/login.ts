@@ -1,10 +1,15 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {NavController} from 'ionic-angular';
+import co from 'co';
 
 import {HomePage} from '../home/home';
+import {BankListPage} from '../bank-list/bank-list';
 
 import {User} from  '../../providers/services/user.service';
-import {PopupFactory} from '../../providers/providers'
+import {GlobalVars} from '../../providers/providers';
+import {PopupFactory} from '../../providers/providers';
+import {PublicFactory} from '../../providers/providers';
+import {DateService} from '../../providers/services/date.service';
 
 /**
  * The Welcome Page is a splash page that quickly describes the app,
@@ -20,6 +25,7 @@ export class LoginPage {
     //子元素 #hackerBox  #hacker
     @ViewChild("hackerBox") hackerBox: ElementRef;
     @ViewChild("hacker") hacker: ElementRef;
+    globalInstance:any;
     private hackerInterval;
     // 登录表单的账户字段
     private account: { mobile: string, password: string } = {
@@ -29,7 +35,14 @@ export class LoginPage {
 
     constructor(public navCtrl: NavController,
                 public user: User,
-                public popup: PopupFactory) {
+                public dateService:DateService,
+                public globalVars:GlobalVars,
+                public publicFactory:PublicFactory,
+                public popupFactory: PopupFactory) {
+    }
+
+    ngOnInit() {
+        this.globalInstance = this.globalVars.getInstance();
     }
 
     ngAfterViewInit() {
@@ -70,23 +83,40 @@ export class LoginPage {
     }
 
     doLogin() {
-        this.user.login(this.account).subscribe((resp) => {
-            let res: any = resp;
-            //如果登录状态为1,则成功
-            if (res._body.code == 1) {
-                this.navCtrl.setRoot(HomePage, {}, {
-                    animate: true,
-                    direction: 'forward'
+        co(function *() {
+            let loader = this.popupFactory.loading();
+            loader.present();
+
+            let loginStatus:any = yield this.user.login(this.account);
+            let userPower: any = {};
+            if (loginStatus.code == 1) {
+                userPower = yield this.user.getUserPower();
+            }
+            if (userPower.code == 1) {
+                this.dateService.loadDateList({}).subscribe(data => {
+                    let res: any = data;
+                    if (res._body.code == 1) {
+                        this.globalInstance.setDateValue(res._body.data);
+                        if (this.globalInstance.adminCode['06']) {
+                            this.navCtrl.setRoot(HomePage, {}, {
+                                animate: true,
+                                direction: 'forward'
+                            });
+                        } else if (this.globalInstance.adminCode['13']) {
+                            this.navCtrl.setRoot(BankListPage, {}, {
+                                animate: true,
+                                direction: 'forward'
+                            })
+                        } else {
+                            this.popupFactory.showAlert({
+                                title:'提示',
+                                message:'您还未开通数据查看权限，请联系管理员！'
+                            })
+                        }
+                        loader.dismiss();
+                    }
                 });
             }
-            if (res._body.code == 0) {
-                this.popup.showAlert({
-                    message: res._body.description
-                });
-            }
-        }, (err) => {
-            // 无法登录
-            let res: any = err;
-        });
+        }.bind(this));
     }
 }
