@@ -47,7 +47,7 @@ export class Unit {
 
     //弹出时间单位
     presentPopover(ev: UIEvent) {
-        let popover = this.popoverCtrl.create(PopOverPage, {page: this.pageInfo.name}, {
+        let popover = this.popoverCtrl.create(PopOverPage, {pageInfo: this.pageInfo}, {
             cssClass: 'my-popover',
         });
         popover.present({
