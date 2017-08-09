@@ -24,7 +24,7 @@ import {PopupFactory} from '../../providers/factory/popup.factory';
 export class Date {
     //输入属性:记录从那个页面引入的 date
     @Input() pageInfo: any;
-    dateInstance: any;  //单例模式的实例
+    globalInstance: any;  //单例模式的实例
     currentDateList: any[] = [];  //活动的时间列表
     activeDate: any;
     radioList: any[];
@@ -35,7 +35,6 @@ export class Date {
     _today: any;
     _week: any;
     _day: any;
-    popupKey: any;
 
     constructor(public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
@@ -45,6 +44,9 @@ export class Date {
     }
 
     ngOnInit() {
+        //全局变量实例
+        this.globalInstance = this.globalVars.getInstance();
+
         this._hour = moment().hour(); //现在几点
         this._today = moment().format('YYYY-MM-DD');  //今天
         this._week = moment().day();   //星期几
@@ -54,23 +56,25 @@ export class Date {
         this.storage.get(CacheField.popupKey).then(data => {
             if (!!data) {
                 if (data.date != this._today) {
-                    this.popupKey = {date: this._today};
+                    this.globalInstance.popupKey = {date: this._today};
                 } else {
-                    this.popupKey = data;
+                    this.globalInstance.popupKey = data;
                 }
             } else {
-                this.popupKey = {date: this._today};
+                this.globalInstance.popupKey = {date: this._today};
             }
-            this.storage.set(CacheField.popupKey, this.popupKey);
-            this._autoAlert(this.dateInstance.dateInfo.unit.title);
+            this.storage.set(CacheField.popupKey, this.globalInstance.popupKey);
+            this._autoAlert(this.globalInstance.dateInfo.unit.title);
         });
 
-        //全局变量实例
-        this.dateInstance = this.globalVars.getInstance();
+
         this._setVars();
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
-            this._setVars(data.unit);
+            console.log(data)
+            if(data.page == this.pageInfo.name) {
+                this._setVars(data.unit);
+            }
         });
     }
 
@@ -113,7 +117,7 @@ export class Date {
         switch (unit) {
             case '日':
                 //判断是否是今天的 在多少小时之前
-                if (this.popupKey.hour == null && this._hour < 21) {
+                if (this.globalInstance.popupKey.hour == null && this._hour < 21) {
                     this.popupFactory.showAlert({
                         title: '',
                         message: "部分项目尚未开售，是否切换为" + this.currentDateList[1] + "的数据？",
@@ -122,11 +126,11 @@ export class Date {
                             {
                                 text: '取 消',
                                 handler: (data)=> {
-                                    this.popupKey.hour = false;
-                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                    this.globalInstance.popupKey.hour = false;
+                                    this.storage.set(CacheField.popupKey, this.globalInstance.popupKey);
                                     //埋点
                                     this.user.setRecordOperationLog({
-                                        pageIndex: this.pageInfo.id,
+                                        pageID: this.pageInfo.id,
                                         point: 6
                                     });
                                 }
@@ -134,8 +138,8 @@ export class Date {
                             {
                                 text: '确认切换',
                                 handler: (data)=> {
-                                    this.popupKey.hour = true;
-                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                    this.globalInstance.popupKey.hour = true;
+                                    this.storage.set(CacheField.popupKey, this.globalInstance.popupKey);
                                     //埋点
                                     this.user.setRecordOperationLog({
                                         pageID: this.pageInfo.id,
@@ -146,13 +150,13 @@ export class Date {
                             }
                         ]
                     });
-                } else if (this.popupKey.hour && this._hour < 21) {
+                } else if (this.globalInstance.hour && this._hour < 21) {
                     this._setDate(null, 1);
                 }
                 break;
             case '周':
                 //判断是否是周一，
-                if (this.popupKey.week == null && this._week == 3) {
+                if (this.globalInstance.popupKey.week == null && this._week == 3) {
                     this.popupFactory.showAlert({
                         title: '',
                         message: "本周才刚刚开始，是否切换为" + this.currentDateList[1] + "的数据？",
@@ -161,8 +165,8 @@ export class Date {
                             {
                                 text: '取 消',
                                 handler: (data)=> {
-                                    this.popupKey.week = false;
-                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                    this.globalInstance.popupKey.week = false;
+                                    this.storage.set(CacheField.popupKey, this.globalInstance.popupKey);
                                     //埋点
                                     this.user.setRecordOperationLog({
                                         pageID: this.pageInfo.id,
@@ -172,8 +176,8 @@ export class Date {
                             }, {
                                 text: '确认切换',
                                 handler: (data)=> {
-                                    this.popupKey.week = true;
-                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                    this.globalInstance.popupKey.week = true;
+                                    this.storage.set(CacheField.popupKey, this.globalInstance.popupKey);
                                     //埋点
                                     this.user.setRecordOperationLog({
                                         pageID: this.pageInfo.id,
@@ -188,7 +192,7 @@ export class Date {
                 break;
             case '月':
                 //判断是否是周一，
-                if (this.popupKey.day == null && this._day == 9) {
+                if (this.globalInstance.popupKey.day == null && this._day == 9) {
                     this.popupFactory.showAlert({
                         title: '',
                         message: "本月才刚刚开始，是否切换为" + this.currentDateList[1] + "的数据？",
@@ -197,15 +201,25 @@ export class Date {
                             {
                                 text: '取 消',
                                 handler: (data)=> {
-                                    this.popupKey.day = false;
-                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                    this.globalInstance.popupKey.day = false;
+                                    this.storage.set(CacheField.popupKey, this.globalInstance.popupKey);
+                                    //埋点
+                                    this.user.setRecordOperationLog({
+                                        pageID: this.pageInfo.id,
+                                        point: 10
+                                    });
                                 }
                             },
                             {
                                 text: '确认切换',
                                 handler: (data)=> {
-                                    this.popupKey.day = true;
-                                    this.storage.set(CacheField.popupKey, this.popupKey);
+                                    this.globalInstance.popupKey.day = true;
+                                    this.storage.set(CacheField.popupKey, this.globalInstance.popupKey);
+                                    //埋点
+                                    this.user.setRecordOperationLog({
+                                        pageID: this.pageInfo.id,
+                                        point: 9
+                                    });
                                     this._setDate(null, 1);
                                 }
                             }
@@ -242,15 +256,15 @@ export class Date {
 
     _setDate(data, index) {
         //设置公共变量实例
-        this.dateInstance.setDateValue(null, index);
+        this.globalInstance.setDateValue(null, index);
         //发布消息
         this.publicFactory.unitInfo.emit({page: this.pageInfo.name});
         this._setVars();
     }
 
     _setVars(unit?: any) {
-        this.currentDateList = this.dateInstance.dateInfo.currentDateList;
-        this.activeDate = this.dateInstance.dateInfo.currentDate;
+        this.currentDateList = this.globalInstance.dateInfo.currentDateList;
+        this.activeDate = this.globalInstance.dateInfo.currentDate;
         let index = this.currentDateList.indexOf(this.activeDate);
         let length = this.currentDateList.length;
 

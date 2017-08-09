@@ -34,6 +34,8 @@ export class GlobalVars {
 
     //请求数量
     loaders:any[]=[];
+    //自动弹窗
+    popupKey:any;
 
     constructor() {
 
