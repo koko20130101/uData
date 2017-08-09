@@ -117,8 +117,7 @@ export class LoginPage {
         let errorMsg = this.validateForm();
         if (!!errorMsg) {
             this.popupFactory.showToast({
-                message:errorMsg,
-                showCloseButton:true
+                message:errorMsg
             });
             return false;
         }
