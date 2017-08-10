@@ -37,6 +37,7 @@ export class User {
     }
 
     login(accountInfo: any) {
+        console.log(accountInfo)
         return new Promise((resolve, reject)=> {
             let globalInstance = this.globalVars.getInstance();
             let seq = this.api.post(Endpoint.login, accountInfo).share();
@@ -131,4 +132,9 @@ export class User {
             });
         return seq;
     };
+
+    loadSmsCode(sendData?:any){
+        let seq = this.api.post(Endpoint.smsCode,sendData).share();
+        return seq;
+    }
 }

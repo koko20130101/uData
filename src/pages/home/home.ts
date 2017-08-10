@@ -46,7 +46,6 @@ export class HomePage {
     }
 
     ngOnInit() {
-        // console.log(0)
         //全局变量实例
         this.dateInstance = this.globalVars.getInstance();
     }
@@ -58,6 +57,12 @@ export class HomePage {
             if (data.page == this.pageInfo.name) {
                 this.getHomeData();
             }
+        });
+        //订阅请求错误信息
+        this.publicFactory.error.subscribe((data)=> {
+            this.popupFactory.showAlert({
+                message: data.message
+            });
         });
     }
 

@@ -8,7 +8,7 @@
     </div>
     <h5 ngClass="app-title">网金平台数据统计</h5>
     <div padding-horizontal>
-        <form (submit)="doLogin()">
+        <form>
             <ion-list inset>
                 <ion-item>
                     <ion-input type="mobile" maxlength="11"
@@ -21,14 +21,16 @@
                                name="imgCode"
                                placeholder="{{'PLACEHOLDER_IMAGE_CODE' | translate}}"
                                [(ngModel)]="account.imgCode" ></ion-input>
+                    <button ion-button item-right clear (click)="getImgCode()" ngClass="btn-1"><img [src]="imgCodeLink" alt=""></button>
                 </ion-item>
                 <ion-item>
                     <ion-input type="tel"
                                name="smsCode"
                                placeholder="{{'PLACEHOLDER_SMS_CODE' | translate}}"
                                [(ngModel)]="account.smsCode"></ion-input>
+                    <button ion-button item-right clear color="light" [disabled]="count" (click)="getSmsCode()">{{!count ? '获取验证码':count+'s'}}</button>
                 </ion-item>
-                <button ion-button block class="login">{{ 'LOGIN' | translate }}</button>
+                <button ion-button block class="login" (click)="doLogin()">{{ 'LOGIN' | translate }}</button>
             </ion-list>
         </form>
     </div>

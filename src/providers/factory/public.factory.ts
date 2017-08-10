@@ -7,6 +7,8 @@ import {GlobalVars} from '../services/global.service';
 export class PublicFactory {
     //数据交互：选择单位
     unitInfo: EventEmitter<any> = new EventEmitter<any>();
+    //数据交互：当与远程服务器会话返回的code不为1时
+    error:EventEmitter<any> = new EventEmitter<any>();
 
     constructor(public globalVars: GlobalVars) {
 

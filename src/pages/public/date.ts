@@ -157,7 +157,7 @@ export class Date {
                 break;
             case '周':
                 //判断是否是周一，
-                if (this.globalInstance.popupKey.week == null && this._week == 3) {
+                if (this.globalInstance.popupKey.week == null && this._week == 4) {
                     this.popupFactory.showAlert({
                         title: '',
                         message: "本周才刚刚开始，是否切换为" + this.currentDateList[1] + "的数据？",
@@ -193,7 +193,7 @@ export class Date {
                 break;
             case '月':
                 //判断是否是周一，
-                if (this.globalInstance.popupKey.day == null && this._day == 9) {
+                if (this.globalInstance.popupKey.day == null && this._day == 10) {
                     this.popupFactory.showAlert({
                         title: '',
                         message: "本月才刚刚开始，是否切换为" + this.currentDateList[1] + "的数据？",

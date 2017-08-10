@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {NavController,ToastController} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import co from 'co';
 
 import {HomePage} from '../home/home';
@@ -28,6 +28,8 @@ export class LoginPage {
     @ViewChild("hacker") hacker: ElementRef;
     globalInstance:any;
     private hackerInterval;
+    imgCodeLink:any;
+    count:any;
     // 登录表单的账户字段
     private account: { mobile: string, imgCode: string,smsCode: string  } = {
         mobile: '',
@@ -36,7 +38,6 @@ export class LoginPage {
     };
 
     constructor(public navCtrl: NavController,
-                private toastCtrl:ToastController,
                 public user: User,
                 public dateService:DateService,
                 public globalVars:GlobalVars,
@@ -46,6 +47,17 @@ export class LoginPage {
 
     ngOnInit() {
         this.globalInstance = this.globalVars.getInstance();
+        //订阅请求错误信息
+        this.publicFactory.error.subscribe((data) => {
+            this.popupFactory.showAlert({
+                message:data.message
+            })
+        });
+    }
+
+    ionViewWillLeave() {
+        //取消选择单位订阅
+        this.publicFactory.error.observers.pop();
     }
 
     ngAfterViewInit() {
@@ -73,6 +85,7 @@ export class LoginPage {
             });
         };
         this.hackerInterval = setInterval(draw, 33);
+        this.getImgCode();
     }
 
     /**
@@ -113,7 +126,6 @@ export class LoginPage {
     }
 
     doLogin() {
-
         let errorMsg = this.validateForm();
         if (!!errorMsg) {
             this.popupFactory.showToast({
@@ -156,5 +168,53 @@ export class LoginPage {
                 });
             }
         }.bind(this));
+    }
+
+    getImgCode(){
+        this.imgCodeLink = 'https://reportcenterapi.ucsmy.com/View/Web/GetImageCode.ashx?'+Math.random();
+    }
+
+    //获取短信验证码
+    getSmsCode(){
+        //验证对象实例
+        let validator = new ValidatorFactory();
+        validator.addStrategy(this.account.mobile, [{
+            strategy: 'isNonEmpty',
+            errorMsg: '手机号码不能为空'
+        }, {
+            strategy: 'isMobile',
+            errorMsg: '手机号码格式不正确'
+        }]);
+
+        validator.addStrategy(this.account.imgCode, [{
+            strategy: 'isNonEmpty',
+            errorMsg: '图形验证码不能为空'
+        }]);
+        //开始验证
+        let errorMsg = validator.startValidate();
+        if (!!errorMsg) {
+            this.popupFactory.showToast({
+                message:errorMsg
+            });
+            return false;
+        }
+
+        let _sendData: any = {
+            mobile: this.account.mobile,
+            imgCode: this.account.imgCode
+        };
+        this.user.loadSmsCode(_sendData).subscribe((data)=>{
+            let res: any = data;
+            if(res._body.code == 1) {
+                this.count = 60;
+                let myInterval = setInterval(()=> {
+                    this.count--;
+                    if (this.count == 0) {
+                        this.count = null;
+                        clearInterval(myInterval)
+                    }
+                }, 1000);
+            }
+        });
     }
 }
