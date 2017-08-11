@@ -19,11 +19,11 @@ import * as chartOptions from '../../providers/charts-option'
 export class C2bPage {
     @ViewChild('MainSlides') mainSlides: Slides;
     pageInfo: any = {
-        name:'C2bPage',
-        id:3
+        name: 'C2bPage',
+        id: 3
     };
     C2BType = 1;
-    C2BTypeValue:any[] = [];
+    C2BTypeValue: any[] = [];
     saleChannelTypeIn = 2;
     saleChannelTypeOut = 2;
     modelContent: any[] = [1, 1, 1, 1];  //list内容展开收起状态
@@ -79,13 +79,13 @@ export class C2bPage {
         //全局变量实例
         this.dateInstance = this.globalVars.getInstance();
         //判断有无模块权限
-        if(this.dateInstance.adminCode['09']) {
+        if (this.dateInstance.adminCode['09']) {
             this.C2BTypeValue.push(1);
         }
-        if(this.dateInstance.adminCode['10']) {
+        if (this.dateInstance.adminCode['10']) {
             this.C2BTypeValue.push(2);
         }
-        if(this.dateInstance.adminCode['11']) {
+        if (this.dateInstance.adminCode['11']) {
             this.C2BTypeValue.push(3);
         }
 
@@ -137,7 +137,7 @@ export class C2bPage {
      * */
     getDataFromCache(endpoint, cacheKey, source?: any) {
         let _sendData: any = null;
-        let _cacheData: any = this.c2bService.getValue(cacheKey,source);
+        let _cacheData: any = this.c2bService.getValue(cacheKey, source);
         switch (cacheKey) {
             //引入及销售总额
             case CacheField.saleTotal:
@@ -234,53 +234,57 @@ export class C2bPage {
      * loadData(接口,本地存储key,下拉刷新对象,loading对象)
      * */
     loadData(endpoint, cacheKey, refresher?: any, loader?: any, sendData?: any) {
-        this.c2bService.loadValue(endpoint, cacheKey, sendData).subscribe((data)=> {
-            let res: any = data;
-            if (res._body.code == 1) {
-                switch (cacheKey) {
-                    case CacheField.saleTotal:
-                        this.saleTotalData = res._body.data;
-                        break;
-                    case CacheField.assetsInOut:
-                        this.assetsInOutData = res._body.data;
-                        break;
-                    case CacheField.saleChannelIn:
-                        this.saleChannelDataIn = res._body.data;
-                        break;
-                    case CacheField.saleChannelOut:
-                        this.saleChannelDataOut = res._body.data;
-                        break;
-                    case CacheField.assetsMain:
-                        this.assetsMain = res._body.data;
-                        break;
-                    case CacheField.profitData:
-                        this.setBarChartOption(res._body.data);
-                        break;
-                    case CacheField.assetsHealthy:
-                        this.assetsHealthyData = res._body.data;
-                        break;
-                    case CacheField.grossMargin:
-                        this.setLineChartOption_2(res._body.data);
-                        break;
-                    default:
-                        break;
+        this.c2bService.loadValue(endpoint, cacheKey, sendData)
+            .map(res => res.json())
+            .subscribe((res)=> {
+                if (res.code == 1) {
+                    switch (cacheKey) {
+                        case CacheField.saleTotal:
+                            this.saleTotalData = res.data;
+                            break;
+                        case CacheField.assetsInOut:
+                            this.assetsInOutData = res.data;
+                            break;
+                        case CacheField.saleChannelIn:
+                            this.saleChannelDataIn = res.data;
+                            break;
+                        case CacheField.saleChannelOut:
+                            this.saleChannelDataOut = res.data;
+                            break;
+                        case CacheField.assetsMain:
+                            this.assetsMain = res.data;
+                            break;
+                        case CacheField.profitData:
+                            this.setBarChartOption(res.data);
+                            break;
+                        case CacheField.assetsHealthy:
+                            this.assetsHealthyData = res.data;
+                            break;
+                        case CacheField.grossMargin:
+                            this.setLineChartOption_2(res.data);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
 
-            this.globalVars.loaders.pop();
+                this.globalVars.loaders.pop();
 
-            if (!!refresher && this.globalVars.loaders.length == 0) {
-                refresher.complete();
-            }
-            if (!!loader && this.globalVars.loaders.length == 0) {
-                loader.dismiss();
-            }
-        }, err => {
-            this.globalVars.loaders.pop();
-            if (!!loader && this.globalVars.loaders.length == 0) {
-                loader.dismiss();
-            }
-        });
+                if (!!refresher && this.globalVars.loaders.length == 0) {
+                    refresher.complete();
+                }
+                if (!!loader && this.globalVars.loaders.length == 0) {
+                    loader.dismiss();
+                }
+            }, err => {
+                this.globalVars.loaders.pop();
+                if (!!refresher && this.globalVars.loaders.length == 0) {
+                    refresher.complete();
+                }
+                if (!!loader && this.globalVars.loaders.length == 0) {
+                    loader.dismiss();
+                }
+            });
     }
 
     /**
@@ -350,7 +354,7 @@ export class C2bPage {
      * 格式化利润走势折线图
      * loadData(本地或远程数据)
      * */
-    setLineChartOption_2(_data:any){
+    setLineChartOption_2(_data: any) {
         this.lineChartOption_2.tooltip.formatter = function (params: any) {
             var res = params[0].name;
             for (var i = 0; i < params.length; i++) {
@@ -392,7 +396,7 @@ export class C2bPage {
                 case 3:
                     this.loadData(Endpoint.assetsMain, CacheField.assetsMain, refresher);
                     this.loadData(Endpoint.profitData, CacheField.profitData, refresher);
-                    this.loadData(Endpoint.assetsHealthy, CacheField.assetsHealthy,refresher);
+                    this.loadData(Endpoint.assetsHealthy, CacheField.assetsHealthy, refresher);
                     this.loadData(Endpoint.grossMargin, CacheField.grossMargin);
                     break;
             }
@@ -406,11 +410,11 @@ export class C2bPage {
     }
 
     saleChannelSegmentIn() {
-        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn,this.saleChannelTypeIn);
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn, this.saleChannelTypeIn);
     }
 
     saleChannelSegmentOut() {
-        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut,this.saleChannelTypeOut);
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut, this.saleChannelTypeOut);
     }
 
     slideChange() {
@@ -424,16 +428,16 @@ export class C2bPage {
                 this.inoutFlag = 'in';
                 this.modelContent = [1, 0, 0, 0];
                 this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
-                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn,this.saleChannelTypeIn);
-                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut,this.inoutFlag);
+                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn, this.saleChannelTypeIn);
+                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut, this.inoutFlag);
                 break;
             //销售额
             case 2:
                 this.inoutFlag = 'out';
                 this.modelContent = [0, 1, 0, 0];
                 this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
-                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut,this.saleChannelTypeOut);
-                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut,this.inoutFlag);
+                this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut, this.saleChannelTypeOut);
+                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut, this.inoutFlag);
                 break;
             //运营分析
             case 3:

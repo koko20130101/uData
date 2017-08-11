@@ -282,6 +282,7 @@ export class C2bService {
                 //存储到本地
                 this.storage.set(cacheKey, _cacheData);
 
+            },err=>{
             });
         return req;
     }

@@ -18,8 +18,8 @@ import * as chartOptions from '../../providers/charts-option';
 export class PlatformTotalPage {
     @ViewChild('MainSlides') mainSlides: Slides;
     pageInfo: any = {
-        name:'PlatformTotalPage',
-        id:2
+        name: 'PlatformTotalPage',
+        id: 2
     };
     platformType = 1;
     ucsDataType = 2;     //各平台指数排行
@@ -34,10 +34,10 @@ export class PlatformTotalPage {
         totalEnemy: ['--', ''],
     };
     //折线图数据
-    trendData: any={};
+    trendData: any = {};
     //柱状图数据
-    enemyBarData: any={};
-    enemyBarData_1: any={};
+    enemyBarData: any = {};
+    enemyBarData_1: any = {};
     //平台指数数据
     platformsCompareData: any = {
         1: [],
@@ -58,17 +58,17 @@ export class PlatformTotalPage {
         2: []
     };
     //传统理财折线图
-    regularTrendData: any={};
+    regularTrendData: any = {};
     //基金折线图
-    fundTrendData: any={};
+    fundTrendData: any = {};
 
     lineChartOption_1: any;
     lineChartOption_2: any;
     lineChartOption_3: any;
     barChartOption_1: any;
     barChartOption_2: any;
-    barChartWidth:any = 320;
-    chartInstance:any;
+    barChartWidth: any = 320;
+    chartInstance: any;
 
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
@@ -80,26 +80,26 @@ export class PlatformTotalPage {
     ngOnInit() {
         this.dateInstance = this.globalVars.getInstance();
         //判断有无查看网金平台数据权限
-        if(this.dateInstance.adminCode['05']) {
+        if (this.dateInstance.adminCode['05']) {
             this.platformType = 1;
             this.backCount = 1;
-        }else{
+        } else {
             this.platformType = 2;
             this.backCount = 2;
         }
 
         this.lineChartOption_1 = chartOptions.LineChartOption_1();
-        this.lineChartOption_1.tooltip.formatter=function (params) {
+        this.lineChartOption_1.tooltip.formatter = function (params) {
             let res = params[0].name;
             for (var i = 0; i < params.length; i++) {
-                res += '<br/>' + params[i].seriesName + ' : ' + this.publicFactory.moneyFormat(params[i].data,true);
+                res += '<br/>' + params[i].seriesName + ' : ' + this.publicFactory.moneyFormat(params[i].data, true);
             }
             return res;
         }.bind(this);
 
         this.lineChartOption_2 = chartOptions.LineChartOption_3();
         this.lineChartOption_3 = chartOptions.LineChartOption_3({
-            color:['#f45a1e', '#294181']
+            color: ['#f45a1e', '#294181']
         });
 
         this.barChartOption_1 = chartOptions.BarChartOptions_1();
@@ -128,7 +128,7 @@ export class PlatformTotalPage {
     }
 
     ionViewDidEnter() {
-        this.getPlatformSegment();
+        this.slideChange();
     }
 
     ionViewWillLeave() {
@@ -156,55 +156,57 @@ export class PlatformTotalPage {
         this.platformService.loadValue(endpoint, cacheKey, sendData)
             .map(res => res.json())
             .subscribe(res => {
-            if (res.code == 1) {
-                switch (cacheKey) {
-                    case CacheField.platformTotal:
-                        this.totalData = res.data;
-                        break;
-                    case CacheField.platformsCompare:
-                        Object.assign(this.platformsCompareData, res.data);
-                        break;
-                    case CacheField.platformTrend:
-                        this.trendData = res.data;
-                        break;
-                    case CacheField.enemyPlatformsCompare:
-                        Object.assign(this.enemyPlatformsCompareData, res.data);
-                        break;
-                    case CacheField.regularCompare:
-                        Object.assign(this.regularCompareData, res.data);
-                        break;
-                    case CacheField.enemyBar:
-                        this.barChartWidth = res.data.xAxis[0].length * 50;
-                        let _myTimeOut = setTimeout(function () {
-                            this.enemyBarData = res.data;
-                            clearTimeout(_myTimeOut);
-                        }.bind(this), 300);
-                        break;
-                    case CacheField.regularTrend:
-                        this.regularTrendData = res.data[this.rateTime];
-                        break;
-                    case CacheField.fundTrend:
-                        this.fundTrendData = res.data;
-                        break;
-                    default:
-                        break;
+                if (res.code == 1) {
+                    switch (cacheKey) {
+                        case CacheField.platformTotal:
+                            this.totalData = res.data;
+                            break;
+                        case CacheField.platformsCompare:
+                            Object.assign(this.platformsCompareData, res.data);
+                            break;
+                        case CacheField.platformTrend:
+                            this.trendData = res.data;
+                            break;
+                        case CacheField.enemyPlatformsCompare:
+                            Object.assign(this.enemyPlatformsCompareData, res.data);
+                            break;
+                        case CacheField.regularCompare:
+                            Object.assign(this.regularCompareData, res.data);
+                            break;
+                        case CacheField.enemyBar:
+                            this.barChartWidth = res.data.xAxis[0].length * 50;
+                            let _myTimeOut = setTimeout(function () {
+                                this.enemyBarData = res.data;
+                                clearTimeout(_myTimeOut);
+                            }.bind(this), 300);
+                            break;
+                        case CacheField.regularTrend:
+                            this.regularTrendData = res.data[this.rateTime];
+                            break;
+                        case CacheField.fundTrend:
+                            this.fundTrendData = res.data;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
 
-            this.globalVars.loaders.pop();
-
-            if (!!refresher && this.globalVars.loaders.length == 0) {
-                refresher.complete();
-            }
-            if (!!loader && this.globalVars.loaders.length == 0) {
-                loader.dismiss();
-            }
-        }, err => {
-            this.globalVars.loaders.pop();
-            if (!!loader && this.globalVars.loaders.length == 0) {
-                loader.dismiss();
-            }
-        });
+                this.globalVars.loaders.pop();
+                if (!!refresher && this.globalVars.loaders.length == 0) {
+                    refresher.complete();
+                }
+                if (!!loader && this.globalVars.loaders.length == 0) {
+                    loader.dismiss();
+                }
+            }, err => {
+                this.globalVars.loaders.pop();
+                if (!!refresher && this.globalVars.loaders.length == 0) {
+                    refresher.complete();
+                }
+                if (!!loader && this.globalVars.loaders.length == 0) {
+                    loader.dismiss();
+                }
+            });
     }
 
     /**
@@ -213,7 +215,7 @@ export class PlatformTotalPage {
      * */
     getDataFromCache(endpoint, cacheKey, source?: any) {
         let _sendData: any = null;
-        let _totalData: any = this.platformService.getValue(cacheKey,source);
+        let _totalData: any = this.platformService.getValue(cacheKey, source);
         switch (cacheKey) {
             //总额
             case CacheField.platformTotal:
@@ -255,10 +257,10 @@ export class PlatformTotalPage {
             case CacheField.enemyBar:
                 if (!!_totalData) {
                     this.barChartWidth = _totalData.xAxis[0].length * 50;
-                    let _myTimeOut=setTimeout(function () {
+                    let _myTimeOut = setTimeout(function () {
                         this.enemyBarData = _totalData;
                         this.enemyBarData_1 = {
-                            yAxis:this.enemyBarData.yAxis
+                            yAxis: this.enemyBarData.yAxis
                         };
                         clearTimeout(_myTimeOut);
                     }.bind(this), 300);
@@ -357,34 +359,33 @@ export class PlatformTotalPage {
     getPlatformSegment() {
         let num = this.platformType;
         this.mainSlides.slideTo(num - this.backCount);
-        this.slideChange();
     }
 
-    getRateTimeSegment(){
+    getRateTimeSegment() {
         let num = this.rateTime;
         switch (num) {
             case 0:
-                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend,0);
+                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend, 0);
                 break;
             case 1:
-                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend,1);
+                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend, 1);
                 break;
             case 2:
-                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend,2);
+                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend, 2);
                 break;
             case 3:
-                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend,3);
+                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend, 3);
                 break;
         }
     }
 
 
     ucsPlatformExponent() {
-        this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare,this.ucsDataType);
+        this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare, this.ucsDataType);
     }
 
     enemyPlatformExponent() {
-        this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare,this.enemyDataType);
+        this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, this.enemyDataType);
     }
 
     slideChange() {
@@ -398,13 +399,13 @@ export class PlatformTotalPage {
                 this.modelContent = [1, 0, 0, 0];
                 this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
                 this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
-                this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare,this.ucsDataType);
+                this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare, this.ucsDataType);
                 break;
             //竞品
             case 2:
                 this.modelContent = [0, 1, 1, 0];
                 this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
-                this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare,this.enemyDataType);
+                this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, this.enemyDataType);
                 this.getDataFromCache(Endpoint.enemyBar, CacheField.enemyBar);
                 break;
             //传统理财
@@ -412,7 +413,7 @@ export class PlatformTotalPage {
                 this.modelContent = [0, 0, 1, 1];
                 this.getDataFromCache(Endpoint.regularCompare, CacheField.regularCompare, 1);
                 this.getDataFromCache(Endpoint.regularCompare, CacheField.regularCompare, 2);
-                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend,0);
+                this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend, 0);
                 this.getDataFromCache(Endpoint.fundTrend, CacheField.fundTrend);
                 break;
         }

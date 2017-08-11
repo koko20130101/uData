@@ -60,6 +60,8 @@ export class HomeService {
                 this.totalAmount[_instance.dateInfo.currentDate] = _res;
 
                 this.storage.set(CacheField.homeData, this.totalAmount);
+            },err=>{
+
             });
         return req
     }

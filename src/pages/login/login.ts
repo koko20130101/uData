@@ -55,7 +55,7 @@ export class LoginPage {
         });
     }
 
-    ionViewWillLeave() {
+    ionViewDidLoad() {
         //取消选择单位订阅
         this.publicFactory.error.observers.pop();
     }

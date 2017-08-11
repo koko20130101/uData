@@ -18,13 +18,13 @@ import * as chartOptions from '../../providers/charts-option';
 })
 export class BankDetailPage {
     pageInfo: any = {
-        name:'BankDetailPage',
-        id:6
+        name: 'BankDetailPage',
+        id: 6
     };
     projectType = '1';
     projectTrendType = '1';
     userOperateType = '1';
-    modelContent: any[] = [1, 1, 1, 1,1];  //list内容展开收起状态
+    modelContent: any[] = [1, 1, 1, 1, 1];  //list内容展开收起状态
     dateInstance: any;
     bankInfo: any;
     //平台数据
@@ -109,7 +109,7 @@ export class BankDetailPage {
         this.lineChartOption_2.tooltip.formatter = function (params: any) {
             let res = params[0].name;
             for (var i = 0; i < params.length; i++) {
-                res += '<br/>' + params[i].seriesName +'：' + params[i].data + '%';
+                res += '<br/>' + params[i].seriesName + '：' + params[i].data + '%';
             }
             return res;
         };
@@ -119,7 +119,7 @@ export class BankDetailPage {
         this.lineChartOption_3.tooltip.formatter = function (params: any) {
             let res = params[0].name;
             for (var i = 0; i < params.length; i++) {
-                res += '<br/>' + params[i].seriesName +'：' + params[i].data + '天';
+                res += '<br/>' + params[i].seriesName + '：' + params[i].data + '天';
             }
             return res;
         };
@@ -137,7 +137,7 @@ export class BankDetailPage {
         //资产类型饼图设置
         this.pieChartOption_1 = chartOptions.PieChartOptions_1();
         this.pieChartOption_1.legend.x = 'right';
-        this.pieChartOption_1.series[0].center = ['40%','50%'];
+        this.pieChartOption_1.series[0].center = ['40%', '50%'];
 
         //渠道占比饼图
         this.pieChartOption_2 = chartOptions.PieChartOptions_1();
@@ -289,54 +289,63 @@ export class BankDetailPage {
      * loadData(接口,本地存储key,下拉刷新对象,loading对象)
      * */
     loadData(endpoint, cacheKey, refresher?: any, loader?: any, sendData?: any) {
-        this.bankService.loadValue(endpoint, cacheKey, sendData).subscribe((data)=> {
-            let res: any = data;
-            if (res._body.code == 1) {
-                switch (cacheKey) {
-                    case CacheField.bankTotal:
-                        this.bankTotalData = res._body.data;
-                        break;
-                    case CacheField.bankMoney:
-                        this.bankMoneyData = res._body.data;
-                        break;
-                    case CacheField.bankChannel:
-                        this.bankChannelData = res._body.data;
-                        break;
-                    case CacheField.bankTotalSec:
-                        this.bankTotalSecData = res._body.data;
-                    case CacheField.bankRateTrendSec:
-                        this.bankRateTrendSecData = res._body.data;
-                        break;
-                    //资产类型饼图
-                    case CacheField.bankAssetsType:
-                        this.setPieOption_1(res._body.data);
-                        break;
-                    //收益率走势
-                    case CacheField.bankTrendRate:
-                        this.bankTrendRateData = res._body.data;
-                        break;
-                    //期限走势
-                    case CacheField.bankTrendTerm:
-                        this.bankTrendTermData = res._body.data;
-                        break;
-                    //项目规模走势
-                    case CacheField.bankTrendDeal:
-                        this.bankTrendDealData = res._body.data;
-                        break;
-                    default:
-                        break;
+        this.bankService.loadValue(endpoint, cacheKey, sendData)
+            .map(res =>res.json())
+            .subscribe(res => {
+                if (res.code == 1) {
+                    switch (cacheKey) {
+                        case CacheField.bankTotal:
+                            this.bankTotalData = res.data;
+                            break;
+                        case CacheField.bankMoney:
+                            this.bankMoneyData = res.data;
+                            break;
+                        case CacheField.bankChannel:
+                            this.bankChannelData = res.data;
+                            break;
+                        case CacheField.bankTotalSec:
+                            this.bankTotalSecData = res.data;
+                        case CacheField.bankRateTrendSec:
+                            this.bankRateTrendSecData = res.data;
+                            break;
+                        //资产类型饼图
+                        case CacheField.bankAssetsType:
+                            this.setPieOption_1(res.data);
+                            break;
+                        //收益率走势
+                        case CacheField.bankTrendRate:
+                            this.bankTrendRateData = res.data;
+                            break;
+                        //期限走势
+                        case CacheField.bankTrendTerm:
+                            this.bankTrendTermData = res.data;
+                            break;
+                        //项目规模走势
+                        case CacheField.bankTrendDeal:
+                            this.bankTrendDealData = res.data;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
 
-            this.globalVars.loaders.pop();
+                this.globalVars.loaders.pop();
 
-            if (!!refresher && this.globalVars.loaders.length == 0) {
-                refresher.complete();
-            }
-            if (!!loader && this.globalVars.loaders.length == 0) {
-                loader.dismiss();
-            }
-        });
+                if (!!refresher && this.globalVars.loaders.length == 0) {
+                    refresher.complete();
+                }
+                if (!!loader && this.globalVars.loaders.length == 0) {
+                    loader.dismiss();
+                }
+            }, err=> {
+                this.globalVars.loaders.pop();
+                if (!!refresher && this.globalVars.loaders.length == 0) {
+                    refresher.complete();
+                }
+                if (!!loader && this.globalVars.loaders.length == 0) {
+                    loader.dismiss();
+                }
+            });
     }
 
     getProjectTrendType() {
@@ -365,12 +374,12 @@ export class BankDetailPage {
      * */
     setPieOption_1(_data: any) {
         this.pieChartOption_1.tooltip.formatter = function (params) {
-            let mySeries:any = _data.series[0];
-            let res = '<b style="color:'+ this.pieChartOption_1.color[params.dataIndex] +'">'+ params.name + '</b><br>';
+            let mySeries: any = _data.series[0];
+            let res = '<b style="color:' + this.pieChartOption_1.color[params.dataIndex] + '">' + params.name + '</b><br>';
             for (var i = 0; i < mySeries.length; i++) {
                 if (params.name == mySeries[i].name) {
                     res += '项目量：' + mySeries[i].number + '<br/>';
-                    res += '发布规模：' + this.publicFactory.moneyFormat(mySeries[i].money,true)+ '<br/>';
+                    res += '发布规模：' + this.publicFactory.moneyFormat(mySeries[i].money, true) + '<br/>';
                     res += '平均利率：' + mySeries[i].rate + '%<br/>';
                     res += '平均期限：' + mySeries[i].term + '天</span>';
                 }

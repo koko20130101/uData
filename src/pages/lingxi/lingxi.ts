@@ -18,8 +18,8 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
 export class LingXiPage {
     @ViewChild("MainSlides") mainSlides: Slides;
     pageInfo: any = {
-        name:'LingXiPage',
-        id:4
+        name: 'LingXiPage',
+        id: 4
     };
     lingXiType = 0;
     userOperateType = '1';
@@ -39,11 +39,11 @@ export class LingXiPage {
         "newUser": ['', '']
     };
     lingXiTotalData: any = {
-        0:{},
-        1:{},
-        2:{},
-        3:{},
-        4:{}
+        0: {},
+        1: {},
+        2: {},
+        3: {},
+        4: {}
     };
     dealTrendData: any = {};
     rateTrendData: any = {};
@@ -130,7 +130,7 @@ export class LingXiPage {
             BankCode: ''
         };
         let _num = this.lingXiType;
-        let _cacheData: any = this.lingXiService.getValue(cacheKey,_num);
+        let _cacheData: any = this.lingXiService.getValue(cacheKey, _num);
         switch (cacheKey) {
             case CacheField.lingXiTotal:
                 if (!!_cacheData) {
@@ -187,46 +187,54 @@ export class LingXiPage {
      * loadData(接口,本地存储key,下拉刷新对象,loading对象)
      * */
     loadData(endpoint, cacheKey, refresher?: any, loader?: any, sendData?: any) {
-        this.lingXiService.loadValue(endpoint, cacheKey, sendData).subscribe(data => {
-            let res: any = data;
-            if (res._body.code == 1) {
-                switch (cacheKey) {
-                    case CacheField.lingXiTotal:
-                        if (!!res._body.data[this.lingXiType]) {
-                            this.lingXiTotalData[this.lingXiType] = res._body.data[this.lingXiType];
-                        } else {
-                            Object.assign(this.lingXiTotalData[this.lingXiType], this.model);
-                        }
-                        break;
-                    case CacheField.lingXiTrendDeal:
-                        this.dealTrendData[this.lingXiType] = res._body.data[this.lingXiType];
-                        break;
-                    case CacheField.lingXiTrendRate:
-                        this.rateTrendData[this.lingXiType] = res._body.data[this.lingXiType];
-                        break;
-                    case CacheField.lingXiChannel:
-                        this.lingXiChannelData = res._body.data;
-                        break;
-                    default:
-                        break;
+        this.lingXiService.loadValue(endpoint, cacheKey, sendData)
+            .map(res =>res.json())
+            .subscribe(res => {
+                if (res.code == 1) {
+                    switch (cacheKey) {
+                        case CacheField.lingXiTotal:
+                            if (!!res.data[this.lingXiType]) {
+                                this.lingXiTotalData[this.lingXiType] = res.data[this.lingXiType];
+                            } else {
+                                Object.assign(this.lingXiTotalData[this.lingXiType], this.model);
+                            }
+                            break;
+                        case CacheField.lingXiTrendDeal:
+                            this.dealTrendData[this.lingXiType] = res.data[this.lingXiType];
+                            break;
+                        case CacheField.lingXiTrendRate:
+                            this.rateTrendData[this.lingXiType] = res.data[this.lingXiType];
+                            break;
+                        case CacheField.lingXiChannel:
+                            this.lingXiChannelData = res.data;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
 
-            this.globalVars.loaders.pop();
+                this.globalVars.loaders.pop();
 
-            if (!!refresher && this.globalVars.loaders.length == 0) {
-                refresher.complete();
-            }
-            if (!!loader && this.globalVars.loaders.length == 0) {
-                loader.dismiss();
-            }
-        })
+                if (!!refresher && this.globalVars.loaders.length == 0) {
+                    refresher.complete();
+                }
+                if (!!loader && this.globalVars.loaders.length == 0) {
+                    loader.dismiss();
+                }
+            }, err=> {
+                this.globalVars.loaders.pop();
+                if (!!refresher && this.globalVars.loaders.length == 0) {
+                    refresher.complete();
+                }
+                if (!!loader && this.globalVars.loaders.length == 0) {
+                    loader.dismiss();
+                }
+            })
     }
 
     goSegment() {
         let num = Number(this.lingXiType);
         this.mainSlides.slideTo(num);
-        this.slideChange();
     }
 
     //下拉刷新

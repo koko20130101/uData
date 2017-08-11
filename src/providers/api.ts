@@ -60,9 +60,9 @@ export class Api {
                         });
                         break;
                     default:
-                        this.publicFactory.error.emit({
+                        /*this.publicFactory.error.emit({
                             message: '有部分数据没有返回，请下拉刷新重试!'
-                        });
+                        });*/
                         break;
                 }
             });

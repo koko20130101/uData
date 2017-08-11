@@ -57,6 +57,8 @@ export class BankListService {
                 }
                 //存储到本地
                 this.storage.set(cacheKey, this.bankList);
+            },err=>{
+
             });
         return req;
     }

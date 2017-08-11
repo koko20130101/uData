@@ -432,7 +432,11 @@ ion-navbar.toolbar {
 
 .my-toast {
   text-align: center;
-
+  .toast-icon{
+    font-size:1.8rem;
+    color:#ffc75c;
+    margin-right:4px;
+  }
 }
 
 ion-content.has-refresher > .scroll-content {

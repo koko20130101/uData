@@ -1,5 +1,5 @@
 import {Component} from  '@angular/core';
-import {NavController,Refresher} from 'ionic-angular';
+import {NavController, Refresher} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 
 import {LoginPage} from '../login/login';
@@ -20,26 +20,27 @@ import {PopupFactory} from  '../../providers/factory/popup.factory';
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html',
-    providers:[HomeService]
+    providers: [HomeService]
 })
 export class HomePage {
     pageInfo: any = {
-        name:'HomePage',
-        id:1
+        name: 'HomePage',
+        id: 1
     };
     dateList: any;
     dateInstance: any;
-    isShow:boolean = true;
-    totalAmount:any = {
+    isShow: boolean = true;
+    totalAmount: any = {
         platformTotal: 0,
         C2BTotal: 0,
         LingXiTotal: 0
     };
+    errorCount: any = 0; //请求错误次数
 
     constructor(public navCtrl: NavController,
                 public globalVars: GlobalVars,
-                public homeService:HomeService,
-                public user:User,
+                public homeService: HomeService,
+                public user: User,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
                 public storage: Storage) {
@@ -64,13 +65,18 @@ export class HomePage {
     ionViewDidLoad() {
         //订阅请求错误信息
         this.publicFactory.error.subscribe((data)=> {
-            console.log(data)
-
-            this.popupFactory.showToast({
-                message: data.message,
-                duration:3000,
-                position:'top'
-            });
+            if (this.errorCount == 0) {
+                let toast = this.popupFactory.showToast({
+                    message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
+                    duration: 3000,
+                    position: 'top'
+                });
+                toast.onDidDismiss(()=> {
+                    this.errorCount = 0
+                    console.log(this.errorCount);
+                })
+            }
+            this.errorCount++;
         });
     }
 
@@ -80,46 +86,52 @@ export class HomePage {
         this.getHomeData();
     }
 
-    getHomeData(){
+    getHomeData() {
         let _data = this.homeService.getValue();
-        if(!!_data) {
+        if (!!_data) {
             this.totalAmount = _data;
             return;
-        }else{
+        } else {
             //如果没取到，则向服务器取
             var loader = this.popupFactory.loading();
             loader.present().then(()=> {
-                this.loadHomeData(null,loader);
+                this.loadHomeData(null, loader);
             });
         }
     }
 
-    loadHomeData(refresher?:any,loader?:any){
+    loadHomeData(refresher?: any, loader?: any) {
         //从服务器取数据
-        this.homeService.loadValue().subscribe(data =>{
-            let res:any = data;
-            if(res._body.code==1) {
-                this.totalAmount = res._body.data;
-            }
-            if (!!refresher) {
-                refresher.complete();
-            }
-            if(!!loader) {
-                loader.dismiss();
-            }
-        })
+        this.homeService.loadValue()
+            .map(res=>res.json())
+            .subscribe(data => {
+                let res: any = data;
+                if (res.code == 1) {
+                    this.totalAmount = res.data;
+                }
+                if (!!refresher) {
+                    refresher.complete();
+                }
+                if (!!loader) {
+                    loader.dismiss();
+                }
+            }, err=> {
+                if (!!loader) {
+                    loader.dismiss();
+                }
+            })
     }
 
-    removeCache(){
-        for(let key in CacheField) {
+    removeCache() {
+        for (let key in CacheField) {
             this.storage.remove(CacheField[key]);
         }
     }
 
-    doLogout(){
-        this.user.logout({}).subscribe((data) =>{
+    doLogout() {
+        this.user.logout({}).subscribe((data) => {
             let res: any = data;
-            if(res._body.code==1) {
+            if (res._body.code == 1) {
                 this.navCtrl.setRoot(LoginPage);
             }
         });
@@ -132,8 +144,8 @@ export class HomePage {
         }, 500);
     }
 
-    showMomey(){
-        this.isShow = this.isShow ? false :true;
+    showMomey() {
+        this.isShow = this.isShow ? false : true;
     }
 
     openPlatformData() {

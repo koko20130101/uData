@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController,Refresher} from 'ionic-angular';
+import {NavController, Refresher} from 'ionic-angular';
 
 import {BankDetailPage} from '../bank-detail/bank-detail';
 import {HelpPage} from '../help/help';
@@ -20,8 +20,8 @@ import {PopupFactory} from '../../providers/factory/popup.factory'
 })
 export class BankListPage {
     pageInfo: any = {
-        name:'BankListPage',
-        id:5
+        name: 'BankListPage',
+        id: 5
     };
     dateInstance: any;
     bankListData: any;
@@ -64,6 +64,7 @@ export class BankListPage {
     ionViewDidEnter() {
         // console.log(3);
     }
+
     /**
      * 从本地存储中获取数据
      * getDataFromCache(接口,本地存储key,资源类型标识)
@@ -87,19 +88,27 @@ export class BankListPage {
      * loadData(接口,本地存储key,下拉刷新对象,loading对象)
      * */
     loadData(endpoint, cacheKey, refresher?: any, loader?: any, sendData?: any) {
-        this.bankListService.loadBankList(endpoint, cacheKey, sendData).subscribe(data => {
-            let res: any = data;
-            if (res._body.code == 1) {
-                this.bankListData = res._body.data.list;
-            }
+        this.bankListService.loadBankList(endpoint, cacheKey, sendData)
+            .map(res=>res.json())
+            .subscribe(res => {
+                if (res.code == 1) {
+                    this.bankListData = res.data.list;
+                }
 
-            if (!!refresher) {
-                refresher.complete();
-            }
-            if (!!loader) {
-                loader.dismiss();
-            }
-        })
+                if (!!refresher) {
+                    refresher.complete();
+                }
+                if (!!loader) {
+                    loader.dismiss();
+                }
+            }, err=> {
+                if (!!refresher) {
+                    refresher.complete();
+                }
+                if (!!loader) {
+                    loader.dismiss();
+                }
+            })
     }
 
     //下拉刷新
@@ -110,14 +119,14 @@ export class BankListPage {
     }
 
     openBankDetail(bank) {
-        this.navCtrl.push(BankDetailPage,bank);
+        this.navCtrl.push(BankDetailPage, bank);
     }
 
-    openHelpPage(){
+    openHelpPage() {
         this.navCtrl.push(HelpPage);
     }
 
-    logout(){
+    logout() {
         this.user.logout();
     }
 

@@ -64,5 +64,6 @@ export class PopupFactory {
         Object.assign(toastConfig, config);
         let toast = this.toastCtrl.create(toastConfig);
         toast.present();
+        return toast;
     }
 }
