@@ -359,6 +359,20 @@ export class PlatformTotalPage {
     getPlatformSegment() {
         let num = this.platformType;
         this.mainSlides.slideTo(num - this.backCount);
+        switch (this.platformType) {
+            //网金
+            case 1:
+                this.modelContent = [1, 0, 0, 0];
+                break;
+            //竞品
+            case 2:
+                this.modelContent = [0, 1, 1, 0];
+                break;
+            //传统理财
+            case 3:
+                this.modelContent = [0, 0, 1, 1];
+                break;
+        }
     }
 
     getRateTimeSegment() {
@@ -396,21 +410,18 @@ export class PlatformTotalPage {
         switch (this.platformType) {
             //网金
             case 1:
-                this.modelContent = [1, 0, 0, 0];
                 this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
                 this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
                 this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare, this.ucsDataType);
                 break;
             //竞品
             case 2:
-                this.modelContent = [0, 1, 1, 0];
                 this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
                 this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, this.enemyDataType);
                 this.getDataFromCache(Endpoint.enemyBar, CacheField.enemyBar);
                 break;
             //传统理财
             case 3:
-                this.modelContent = [0, 0, 1, 1];
                 this.getDataFromCache(Endpoint.regularCompare, CacheField.regularCompare, 1);
                 this.getDataFromCache(Endpoint.regularCompare, CacheField.regularCompare, 2);
                 this.getDataFromCache(Endpoint.regularTrend, CacheField.regularTrend, 0);

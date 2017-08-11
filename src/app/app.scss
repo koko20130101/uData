@@ -86,7 +86,7 @@ ion-navbar.toolbar {
 
 .my-toolbar {
   .toolbar-background-ios, .toolbar-background-md {
-    background: none;
+    background-color: #1e1e28;
   }
   /*.segment-ios .segment-button{
     border-width:0px 0px 1px 0px ;
@@ -98,7 +98,6 @@ ion-navbar.toolbar {
 
 .my-segment {
   border-bottom: 1px solid color($colors, dark, mid1);
-  background-color: #1e1e28;
   &.segment-ios .segment-button,&.segment-md .segment-button {
     border: 0px;
     font-size: 1.5rem;

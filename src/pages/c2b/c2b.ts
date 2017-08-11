@@ -407,6 +407,20 @@ export class C2bPage {
     goSegment() {
         let num = this.C2BType;
         this.mainSlides.slideTo(this.C2BTypeValue.indexOf(num));
+        switch (this.C2BType) {
+            //引入额
+            case 1:
+                this.modelContent = [1, 0, 0, 0];
+                break;
+            //销售额
+            case 2:
+                this.modelContent = [0, 1, 0, 0];
+                break;
+            //运营分析
+            case 3:
+                this.modelContent = [0, 0, 1, 1];
+                break;
+        }
     }
 
     saleChannelSegmentIn() {
@@ -426,7 +440,6 @@ export class C2bPage {
             //引入额
             case 1:
                 this.inoutFlag = 'in';
-                this.modelContent = [1, 0, 0, 0];
                 this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
                 this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn, this.saleChannelTypeIn);
                 this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut, this.inoutFlag);
@@ -434,14 +447,12 @@ export class C2bPage {
             //销售额
             case 2:
                 this.inoutFlag = 'out';
-                this.modelContent = [0, 1, 0, 0];
                 this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
                 this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelOut, this.saleChannelTypeOut);
                 this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut, this.inoutFlag);
                 break;
             //运营分析
             case 3:
-                this.modelContent = [0, 0, 1, 1];
                 this.getDataFromCache(Endpoint.assetsMain, CacheField.assetsMain);
                 this.getDataFromCache(Endpoint.profitData, CacheField.profitData);
                 this.getDataFromCache(Endpoint.assetsHealthy, CacheField.assetsHealthy);

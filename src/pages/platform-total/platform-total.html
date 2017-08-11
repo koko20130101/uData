@@ -10,8 +10,8 @@
     <ion-toolbar class="time-list" color="dark" text-center>
         <ucs-date [pageInfo]="pageInfo"></ucs-date>
     </ion-toolbar>
-    <ion-toolbar ngClass="my-toolbar" no-border>
-        <ion-segment [(ngModel)]="platformType" ngClass="my-segment">
+    <ion-toolbar class="my-toolbar" no-border>
+        <ion-segment [(ngModel)]="platformType" class="my-segment">
             <ion-segment-button [value]="1" (click)="getPlatformSegment()" *ngIf="dateInstance.adminCode['05']">网 金</ion-segment-button>
             <ion-segment-button [value]="2" (click)="getPlatformSegment()">竞 品</ion-segment-button>
             <ion-segment-button [value]="3" (click)="getPlatformSegment()">传统理财</ion-segment-button>
