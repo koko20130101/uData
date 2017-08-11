@@ -47,12 +47,24 @@ export class Api {
         let seq = this.http.get(endpoint, this.options).share();
         seq.map(res => res.json())
             .subscribe(res => {
-                if (res.code != 1) {
+                console.log(res)
+                if (!!res && res.code != 1) {
                     //发布错误提示
-                    this.publicFactory.error.emit({message:res.description})
+                    this.publicFactory.error.emit({message: res.description});
                 }
             }, err => {
-                console.log(err)
+                switch (err.status) {
+                    case 0:
+                        this.publicFactory.error.emit({
+                            message: '无法链接到网络，请稍后重试!'
+                        });
+                        break;
+                    default:
+                        this.publicFactory.error.emit({
+                            message: '有部分数据没有返回，请下拉刷新重试!'
+                        });
+                        break;
+                }
             });
         return seq;
     }

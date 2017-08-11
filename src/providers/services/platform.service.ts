@@ -99,8 +99,9 @@ export class PlatformService {
         console.log(_sendData);
         //发起请求
         let req = this.api.post(endpoint, _sendData).share();
-        req.map(res => res.json())
+        req.map(res =>res.json())
             .subscribe(res => {
+            console.log(res)
                 let _res: any = res;
                 //当前时间
                 let _thisTime = moment().unix();
@@ -249,6 +250,8 @@ export class PlatformService {
                 }
                 //存储到本地
                 this.storage.set(cacheKey, _cacheData);
+            },err=>{
+                console.log(err)
             });
         return req
     }

@@ -115,10 +115,10 @@ export class C2bPage {
     }
 
     ionViewWillEnter() {
-        this.goSegment();
     }
 
     ionViewDidEnter() {
+        this.slideChange();
     }
 
     ionViewWillLeave() {
@@ -275,6 +275,11 @@ export class C2bPage {
             if (!!loader && this.globalVars.loaders.length == 0) {
                 loader.dismiss();
             }
+        }, err => {
+            this.globalVars.loaders.pop();
+            if (!!loader && this.globalVars.loaders.length == 0) {
+                loader.dismiss();
+            }
         });
     }
 
@@ -398,7 +403,6 @@ export class C2bPage {
     goSegment() {
         let num = this.C2BType;
         this.mainSlides.slideTo(this.C2BTypeValue.indexOf(num));
-        this.slideChange();
     }
 
     saleChannelSegmentIn() {

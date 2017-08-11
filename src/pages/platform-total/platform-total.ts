@@ -124,10 +124,11 @@ export class PlatformTotalPage {
     }
 
     ionViewWillEnter() {
-        this.getPlatformSegment();
+
     }
 
     ionViewDidEnter() {
+        this.getPlatformSegment();
     }
 
     ionViewWillLeave() {
@@ -152,37 +153,38 @@ export class PlatformTotalPage {
      * loadData(接口,本地存储key,下拉刷新对象,loading对象)
      * */
     loadData(endpoint, cacheKey, refresher?: any, loader?: any, sendData?: any) {
-        this.platformService.loadValue(endpoint, cacheKey, sendData).subscribe(data => {
-            let res: any = data;
-            if (res._body.code == 1) {
+        this.platformService.loadValue(endpoint, cacheKey, sendData)
+            .map(res => res.json())
+            .subscribe(res => {
+            if (res.code == 1) {
                 switch (cacheKey) {
                     case CacheField.platformTotal:
-                        this.totalData = res._body.data;
+                        this.totalData = res.data;
                         break;
                     case CacheField.platformsCompare:
-                        Object.assign(this.platformsCompareData, res._body.data);
+                        Object.assign(this.platformsCompareData, res.data);
                         break;
                     case CacheField.platformTrend:
-                        this.trendData = res._body.data;
+                        this.trendData = res.data;
                         break;
                     case CacheField.enemyPlatformsCompare:
-                        Object.assign(this.enemyPlatformsCompareData, res._body.data);
+                        Object.assign(this.enemyPlatformsCompareData, res.data);
                         break;
                     case CacheField.regularCompare:
-                        Object.assign(this.regularCompareData, res._body.data);
+                        Object.assign(this.regularCompareData, res.data);
                         break;
                     case CacheField.enemyBar:
-                        this.barChartWidth = res._body.data.xAxis[0].length * 50;
+                        this.barChartWidth = res.data.xAxis[0].length * 50;
                         let _myTimeOut = setTimeout(function () {
-                            this.enemyBarData = res._body.data;
+                            this.enemyBarData = res.data;
                             clearTimeout(_myTimeOut);
                         }.bind(this), 300);
                         break;
                     case CacheField.regularTrend:
-                        this.regularTrendData = res._body.data[this.rateTime];
+                        this.regularTrendData = res.data[this.rateTime];
                         break;
                     case CacheField.fundTrend:
-                        this.fundTrendData = res._body.data;
+                        this.fundTrendData = res.data;
                         break;
                     default:
                         break;
@@ -197,7 +199,12 @@ export class PlatformTotalPage {
             if (!!loader && this.globalVars.loaders.length == 0) {
                 loader.dismiss();
             }
-        })
+        }, err => {
+            this.globalVars.loaders.pop();
+            if (!!loader && this.globalVars.loaders.length == 0) {
+                loader.dismiss();
+            }
+        });
     }
 
     /**

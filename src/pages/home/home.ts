@@ -58,16 +58,20 @@ export class HomePage {
                 this.getHomeData();
             }
         });
-        //订阅请求错误信息
-        this.publicFactory.error.subscribe((data)=> {
-            this.popupFactory.showAlert({
-                message: data.message
-            });
-        });
+
     }
 
     ionViewDidLoad() {
-        // console.log(2)
+        //订阅请求错误信息
+        this.publicFactory.error.subscribe((data)=> {
+            console.log(data)
+
+            this.popupFactory.showToast({
+                message: data.message,
+                duration:3000,
+                position:'top'
+            });
+        });
     }
 
     //每当当前视图为活动视图时调用
