@@ -13,6 +13,7 @@ import {DateService} from '../../providers/services/date.service';
 import {GlobalVars} from  '../../providers/services/global.service';
 
 import {PopupFactory} from '../../providers/factory/popup.factory';
+import {PublicFactory} from '../../providers/factory/public.factory';
 
 
 export interface Slide {
@@ -30,6 +31,7 @@ export class TutorialPage {
     showSkip = true;
     isLogged: boolean = false;
     count = 5;  //启动页倒计时
+    errorCount:any;
     myInterval: any;
     dataInstance: any;
 
@@ -37,6 +39,7 @@ export class TutorialPage {
                 public user: User,
                 public globalVars: GlobalVars,
                 public popupFactory: PopupFactory,
+                public publicFactory: PublicFactory,
                 public dateService: DateService,
                 public translate: TranslateService) {
         translate.get(["TUTORIAL_SLIDE1_TITLE",
@@ -74,6 +77,26 @@ export class TutorialPage {
 
 
     ionViewDidLoad() {
+
+        //订阅请求错误信息
+        this.publicFactory.error.subscribe((data)=> {
+            console.log(data)
+            if (this.errorCount == 0) {
+                let toast = this.popupFactory.showToast({
+                    message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
+                    duration: 3000,
+                    position: 'top'
+                });
+                toast.onDidDismiss(()=> {
+                    this.errorCount = 0;
+                    console.log(this.errorCount);
+                })
+            }
+            this.errorCount++;
+        });
+    }
+
+    ionViewWillEnter() {
         console.log(2);
         //视图加载完成时启用倒计时
         this.myInterval = setInterval(()=> {
@@ -109,10 +132,16 @@ export class TutorialPage {
         }.bind(this));
     }
 
-    ionViewDidEnter() {
+    ionViewWillUnload() {
+        console.log(4);
+        //取消选择单位订阅
+        this.publicFactory.error.observers.pop();
     }
 
+
+
     ionViewWillLeave() {
+
     }
 
     //进入应用
@@ -136,7 +165,10 @@ export class TutorialPage {
                 })
             }
         } else {
-            this.navCtrl.push(LoginPage);
+            this.navCtrl.setRoot(LoginPage,{},{
+                animate: true,
+                direction: 'forward'
+            });
         }
     }
 

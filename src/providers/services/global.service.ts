@@ -44,6 +44,9 @@ export class GlobalVars {
             iMEI: '',          // 机器唯一识别码
             oSVersion: '',     // 机器型号
         },
+        body:{
+
+        },
         token: ''
     };
 

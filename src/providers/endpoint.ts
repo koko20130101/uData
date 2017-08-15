@@ -1,6 +1,6 @@
 // export const HOST = 'https://example.com/api/v1/';
-export const HOST = 'http://172.17.2.73:8080/';
-// export const HOST = 'http://localhost:8100/';
+// export const HOST = 'http://172.17.2.73:8080/';
+export const HOST = 'http://localhost:8100/';
 // export const HOST = 'http://172.17.20.31:8080/';
 // export const HOST = 'http://192.168.0.102:8100';
 // export const HOST_1 = 'https://reportcenterapi.ucsmy.com/View/Web/';
@@ -13,12 +13,12 @@ export const Endpoint = {
     checkLogin:HOST+'assets/data/check-login.json',  //检查登录
     userPower:HOST+'assets/data/user.json',  //用户权限
     dateList:HOST+'assets/data/date-list.json',  //日期列表
-    homeData:HOST+'assets/data/main.json',  //日期列表
+    homeData:HOST+'assets/data/main.json',  //首页总额
 
     /**
      * 平台数据统计
      * */
-    platformTotal:HOST+'assets/data/',  //平台总数据
+    platformTotal:HOST+'assets/data/main-1.json',  //平台总数据
     platformTrend:HOST+'assets/data/platforms-line-1.json',  //平台折线图数据
     platformsCompare:HOST+'assets/data/platforms-compare-1.json',  //平台指数排行
 

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, RequestOptions, URLSearchParams, Headers} from '@angular/http';
 import {PublicFactory} from './factory/public.factory';
+import {GlobalVars} from './services/global.service';
 import 'rxjs/add/operator/map';
 
 /**
@@ -11,8 +12,11 @@ export class Api {
 
     headers: any = new Headers();
     options: any;
+    globalInstance:any;
 
-    constructor(public http: Http,public publicFactory:PublicFactory) {
+    constructor(public http: Http,
+                public globalVars:GlobalVars,
+                public publicFactory:PublicFactory) {
         //form表单数据被编码为key/value格式发送到服务器（表单默认的提交数据的格式）服务端要用body-parser来解析
         this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
         this.options = {
@@ -20,6 +24,7 @@ export class Api {
             headers: this.headers,
             responseType: 1
         };
+        this.globalInstance = this.globalVars.getInstance();
     }
 
     get(endpoint: string, params?: any, options?: RequestOptions) {
@@ -42,12 +47,12 @@ export class Api {
     }
 
     post(endpoint: string, body: any, options?: RequestOptions) {
-
+        let sendData = Object.assign(this.globalInstance.sendMassage, {body: body});
+        console.log(body)
         // return this.http.post(HOST + '/' + endpoint, body, this.options);
         let seq = this.http.get(endpoint, this.options).share();
         seq.map(res => res.json())
             .subscribe(res => {
-                console.log(res)
                 if (!!res && res.code != 1) {
                     //发布错误提示
                     this.publicFactory.error.emit({message: res.description});

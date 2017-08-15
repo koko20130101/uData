@@ -47,15 +47,19 @@ export class LoginPage {
 
     ngOnInit() {
         this.globalInstance = this.globalVars.getInstance();
+    }
+
+    ionViewDidLoad(){
         //订阅请求错误信息
         this.publicFactory.error.subscribe((data) => {
+            console.log(data)
             this.popupFactory.showAlert({
                 message:data.message
             })
         });
     }
 
-    ionViewDidLoad() {
+    ionViewWillUnload() {
         //取消选择单位订阅
         this.publicFactory.error.observers.pop();
     }
