@@ -10,13 +10,13 @@ export class GlobalVars {
     dateList: any[]=[];
     //单位
     units = [
-        {title: '日', tip: 'date'},
+        {title: '日', tip: 'day'},
         {title: '周', tip: 'week'},
         {title: '月', tip: 'month'},
         {title: '年', tip: 'year'}];
     //时间信息
     dateInfo: any = {
-        unit: {title: '日', tip: 'date'},
+        unit: {title: '日', tip: 'day'},
         index:0,
         currentDateList: [],
         currentDate: null,
@@ -62,7 +62,7 @@ export class GlobalVars {
         if(!!data) {
             for(let key in data) {
                 switch (key) {
-                    case 'date':
+                    case 'day':
                         data[key][0] += ' (今日)';
                         data[key][1] += ' (昨日)';
                         break;

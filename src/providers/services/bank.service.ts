@@ -84,7 +84,6 @@ export class BankService {
         if (!!sendData) {
             Object.assign(_sendData, sendData);
         }
-        console.log(_sendData);
         //发起请求
         let req = this.api.post(endpoint, _sendData).share();
         req.map(res => res.json())

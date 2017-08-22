@@ -1,6 +1,6 @@
 // export const HOST = 'https://example.com/api/v1/';
-// export const HOST = 'http://172.17.2.73:8080/';
-export const HOST = 'http://localhost:8100/';
+export const HOST = 'http://172.17.2.95:8080/';
+// export const HOST = 'http://localhost:8100/';
 // export const HOST = 'http://172.17.20.31:8080/';
 // export const HOST = 'http://192.168.0.102:8100';
 // export const HOST_1 = 'https://reportcenterapi.ucsmy.com/View/Web/';

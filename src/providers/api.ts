@@ -48,7 +48,8 @@ export class Api {
 
     post(endpoint: string, body: any, options?: RequestOptions) {
         let sendData = Object.assign(this.globalInstance.sendMassage, {body: body});
-        console.log(body)
+        console.log(endpoint + ":");
+        console.log(body);
         // return this.http.post(HOST + '/' + endpoint, body, this.options);
         let seq = this.http.get(endpoint, this.options).share();
         seq.map(res => res.json())

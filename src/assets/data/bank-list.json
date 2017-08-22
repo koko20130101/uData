@@ -7,7 +7,10 @@
         "bankCode": "NC",
         "bankLogo":"../assets/img/bank/江西银行.svg",
         "logoBg":["#006fbf" , "#005bac"],
-        "hasB": true,
+        "endPoint": [
+          {"name":"累计融资金额 B端","tip":"B","bankCode":"PF_TRT"},
+          {"name":"累计融资金额 C端","tip":"C","bankCode":"PF_TRT"}
+        ],
         "up": false
       },
       {
@@ -61,7 +64,10 @@
         "bankCode": "PF",
         "bankLogo":"../assets/img/bank/浦发银行.svg",
         "logoBg":["#5259d0" , "#3337a8"],
-        "hasB": true,
+        "endPoint": [
+          {"name":"投融通","tip":"","bankCode":"PF_TRT"},
+          {"name":"累计融资金额 C端","tip":"","bankCode":"PF"}
+        ],
         "up": true
       },
       {
@@ -284,6 +290,6 @@
   "Type": "week",
   "description": "成功返回消息",
   "Token": null,
-  "datatype": 0,
-  "sourcetype": 0
+  "dataType": 0,
+  "sourceType": 0
 }

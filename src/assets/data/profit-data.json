@@ -100,5 +100,5 @@
     "Type": "week",
     "description": "成功返回消息",
     "Token": null,
-    "datatype": 0
+    "dataType": 0
 }

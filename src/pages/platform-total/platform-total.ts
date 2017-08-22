@@ -286,7 +286,7 @@ export class PlatformTotalPage {
                     this.regularTrendData = _totalData;
                     return;
                 } else {
-                    _sendData = null;
+                    _sendData = {sourceType:1,time:source};
                     break;
                 }
             //基金折线图
@@ -411,8 +411,8 @@ export class PlatformTotalPage {
             //网金
             case 1:
                 this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
-                this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
-                this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare, this.ucsDataType);
+                // this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
+                // this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare, this.ucsDataType);
                 break;
             //竞品
             case 2:

@@ -383,13 +383,13 @@ export class C2bPage {
                 case 1:
                     //总额
                     this.loadData(Endpoint.saleTotal, CacheField.saleTotal, refresher);
-                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelIn, refresher, null, {inoutFlag: this.inoutFlag});
+                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelIn, refresher, null, {dataType:this.saleChannelTypeIn,inoutFlag: this.inoutFlag});
                     this.loadData(Endpoint.assetsInOut, CacheField.assetsInOut, refresher, null, {inoutFlag: this.inoutFlag});
                     break;
                 //销售
                 case 2:
                     this.loadData(Endpoint.saleTotal, CacheField.saleTotal, refresher);
-                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelOut, refresher, null, {inoutFlag: this.inoutFlag});
+                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelOut, refresher, null, {dataType:this.saleChannelTypeOut,inoutFlag: this.inoutFlag});
                     this.loadData(Endpoint.assetsInOut, CacheField.assetsInOut, refresher, null, {inoutFlag: this.inoutFlag});
                     break;
                 //远营分析

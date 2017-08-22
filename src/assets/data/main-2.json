@@ -77,6 +77,6 @@
   "Type": "day",
   "description": "成功返回消息",
   "Token": null,
-  "datatype": 0,
-  "sourcetype": 0
+  "dataType": 0,
+  "sourceType": 0
 }

@@ -1,11 +1,11 @@
 {
     "data": {
         "totalUCS": ["1212", "false"],
-        "totalEnemy":  ["332121", "false"]
+        "totalEnemy":  ["332121", "true"]
     },
     "code": 1,
     "Type": "day",
     "description": "",
     "Token": null,
-    "datatype": 0
+    "dataType": 0
 }

@@ -79,7 +79,6 @@ export class LingXiService {
         if (!!sendData) {
             Object.assign(_sendData, sendData);
         }
-        console.log(_sendData);
         let req = this.api.post(endpoint, _sendData).share();
         req.map(res => res.json())
             .subscribe(res => {

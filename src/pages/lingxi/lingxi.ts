@@ -242,13 +242,13 @@ export class LingXiPage {
         let num = Number(this.lingXiType);
         setTimeout(() => {
             //总数据
-            this.loadData(Endpoint.lingXiTotal, CacheField.lingXiTotal, refresher);
-            this.loadData(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal, refresher);
+            this.loadData(Endpoint.lingXiTotal, CacheField.lingXiTotal, refresher,null,{proType: this.lingXiType});
+            this.loadData(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal, refresher,null,{proType: this.lingXiType});
             if (num != 0) {
-                this.loadData(Endpoint.lingXiTrendRate, CacheField.lingXiTrendRate, refresher);
+                this.loadData(Endpoint.lingXiTrendRate, CacheField.lingXiTrendRate, refresher,null,{proType: this.lingXiType});
             }
             if (num == 0) {
-                this.loadData(Endpoint.lingXiChannel, CacheField.lingXiChannel, refresher);
+                this.loadData(Endpoint.lingXiChannel, CacheField.lingXiChannel, refresher,null,{proType: this.lingXiType});
             }
         }, 500);
     }

@@ -90,7 +90,7 @@ export class TutorialPage {
                 toast.onDidDismiss(()=> {
                     this.errorCount = 0;
                     console.log(this.errorCount);
-                })
+                });
             }
             this.errorCount++;
         });
@@ -102,7 +102,7 @@ export class TutorialPage {
         this.myInterval = setInterval(()=> {
             this.count--;
             if (this.count == 0) {
-                this.startApp()
+                this.startApp();
             }
         }, 1000);
 

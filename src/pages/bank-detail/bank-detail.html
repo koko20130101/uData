@@ -16,6 +16,15 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <div ngClass="total-data" text-center>
+        <p>
+            <button ion-button clear icon-only small>
+                <ion-icon name="arrow-left-1"></ion-icon>
+            </button>
+            <button ion-button clear small>{{activeDate}}</button>
+            <button ion-button clear icon-only small>
+                <ion-icon name="arrow-right-1"></ion-icon>
+            </button>
+        </p>
         <p>本日交易额</p>
         <h2 ion-text
             color="{{bankTotalData.total[1]=='true'?'danger':(bankTotalData.total[1]=='false'?'secondary':'')}}">

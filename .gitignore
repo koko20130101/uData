@@ -8,6 +8,8 @@ platforms/
 plugins/
 resources/
 www/
+src/**/*.css
+src/**/*.css.map
 .DS_Store
 .gitignore
 .editorconfig
