@@ -107,8 +107,12 @@ export class BankService {
                         _res.data['total'][0] = this.publicFactory.moneyFormatToHtml(_res.data['total'][0]);
                         _res.data['AverageTerm'][0] = Math.floor(_res.data['AverageTerm'][0]);
                         _res.data['time'][0] = this.publicFactory.formatTime(_res.data['time'][0]*1000);
+                        let _bankTotal: any = {};
+                        _bankTotal[sendData.BankCode] = _res.data;
+
                         //添加时间戳
-                        Object.assign(_res.data, {stamp: _thisTime});
+                        Object.assign(_bankTotal[sendData.BankCode], {stamp: _thisTime});
+                        _res.data = _bankTotal;
                         break;
 
                     //==> 平台交易额折线图

@@ -16,12 +16,12 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <div ngClass="total-data" text-center>
-        <p>
-            <button ion-button clear icon-only small>
+        <p *ngIf="showEndPoint">
+            <button ion-button clear icon-only small ngClass="endPoint-arrow" *ngIf="showEndPointArrow">
                 <ion-icon name="arrow-left-1"></ion-icon>
             </button>
-            <button ion-button clear small>{{activeDate}}</button>
-            <button ion-button clear icon-only small>
+            <button ion-button clear small ngClass="endPoint-text" (click)="showAlert()">{{currentEndPoint.name}}</button>
+            <button ion-button clear icon-only small ngClass="endPoint-arrow" *ngIf="showEndPointArrow">
                 <ion-icon name="arrow-right-1"></ion-icon>
             </button>
         </p>

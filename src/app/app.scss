@@ -166,6 +166,14 @@ ion-navbar.toolbar {
   .icon{
     font-size:1.6rem;
   }
+  .endPoint-arrow{
+    color:color($colors,gray,mid2);
+    font-size:1.2rem;
+  }
+  .endPoint-text{
+    color:color($colors,gray,mid);
+    font-size:1.4rem;
+  }
 }
 
 .total-data-1 {

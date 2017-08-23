@@ -82,6 +82,16 @@ export class BankDetailPage {
     pieChartOption_1: any;
     pieChartOption_2: any;
 
+    //银行数据端口：B端,C端
+    radioList:any[]=[];
+    currentEndPoint:any={
+        name:"",
+        tip:"",
+        bankCode:""
+    };
+    showEndPoint:boolean = true;
+    showEndPointArrow:boolean = true;
+
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
@@ -89,6 +99,13 @@ export class BankDetailPage {
                 public params: NavParams,
                 public globalVars: GlobalVars) {
         this.bankInfo = params.data;
+        Object.assign(this.currentEndPoint, this.bankInfo.endPoint[0]);
+        if(this.bankInfo.endPoint.length==1){
+            this.showEndPointArrow = false
+        }
+        if(this.bankInfo.endPoint.length==1 && this.bankInfo.endPoint[0].name==''){
+            this.showEndPoint = false
+        }
     }
 
     ngOnInit() {
@@ -186,22 +203,33 @@ export class BankDetailPage {
     }
 
     showAlert() {
-        let radioList = [{
-            type: 'radio',
-            label: '累计融资金额 B端',
-            value: 'B',
-            checked: true
-        }];
+        if(this.bankInfo.endPoint.length==1) return;
+        this.radioList = [];
+        for (let i=0;i < this.bankInfo.endPoint.length;i++) {
+            this.radioList.push({
+                type: 'radio',
+                label: this.bankInfo.endPoint[i].name,
+                value: i,
+                checked: this.bankInfo.endPoint[i].name == this.currentEndPoint.name ? true : false
+            });
+        }
         //弹出日期选择弹窗
         this.popupFactory.showAlert({
             title: '',
             subTitle: '',
-            inputs: radioList,
+            inputs: this.radioList,
             buttons: [
                 {
                     text: '确 定',
                     handler: (data)=> {
-                        console.log(data)
+                        Object.assign(this.currentEndPoint, this.bankInfo.endPoint[data]);
+                        this.getDataFromCache(Endpoint.bankTotal, CacheField.bankTotal);
+                        this.getDataFromCache(Endpoint.bankMoney, CacheField.bankMoney);
+                        this.getDataFromCache(Endpoint.bankChannel, CacheField.bankChannel);
+                        this.getDataFromCache(Endpoint.bankTotalSec, CacheField.bankTotalSec);
+                        this.getDataFromCache(Endpoint.bankRateTrendSec, CacheField.bankRateTrendSec);
+                        this.getProjectType();
+                        this.getProjectTrendType();
                     }
                 }
             ]
@@ -213,9 +241,6 @@ export class BankDetailPage {
      * getDataFromCache(接口,本地存储key,资源类型标识)
      * */
     getDataFromCache(endpoint, cacheKey, source?: any) {
-        let _sendData: any = {
-            BankCode: this.bankInfo.bankCode
-        };
         let _cacheData: any = this.bankService.getValue(cacheKey);
         switch (cacheKey) {
             case CacheField.bankTotal:
@@ -223,7 +248,6 @@ export class BankDetailPage {
                     this.bankTotalData = _cacheData;
                     return;
                 } else {
-                    Object.assign(_sendData, {cb: this.bankInfo.hasB});
                     break;
                 }
             case CacheField.bankMoney:
@@ -231,7 +255,6 @@ export class BankDetailPage {
                     this.bankMoneyData = _cacheData;
                     return;
                 } else {
-                    Object.assign(_sendData, {cb: this.bankInfo.hasB});
                     break;
                 }
             case CacheField.bankChannel:
@@ -246,7 +269,6 @@ export class BankDetailPage {
                     this.bankTotalSecData = _cacheData;
                     return;
                 } else {
-                    Object.assign(_sendData, {cb: this.bankInfo.hasB});
                     break;
                 }
             case CacheField.bankRateTrendSec:
@@ -254,7 +276,6 @@ export class BankDetailPage {
                     this.bankRateTrendSecData = _cacheData;
                     return;
                 } else {
-                    Object.assign(_sendData, {cb: this.bankInfo.hasB});
                     break;
                 }
             //==> 资产类型饼图
@@ -263,7 +284,6 @@ export class BankDetailPage {
                     this.setPieOption_1(_cacheData);
                     return;
                 } else {
-                    Object.assign(_sendData, {cb: this.bankInfo.hasB});
                     break;
                 }
             case CacheField.bankTrendRate:
@@ -271,7 +291,6 @@ export class BankDetailPage {
                     this.bankTrendRateData = _cacheData;
                     return;
                 } else {
-                    Object.assign(_sendData, {cb: this.bankInfo.hasB});
                     break;
                 }
             case CacheField.bankTrendTerm:
@@ -279,7 +298,6 @@ export class BankDetailPage {
                     this.bankTrendTermData = _cacheData;
                     return;
                 } else {
-                    Object.assign(_sendData, {cb: this.bankInfo.hasB});
                     break;
                 }
             case CacheField.bankTrendDeal:
@@ -287,7 +305,6 @@ export class BankDetailPage {
                     this.bankTrendDealData = _cacheData;
                     return;
                 } else {
-                    Object.assign(_sendData, {cb: this.bankInfo.hasB});
                     break;
                 }
             default:
@@ -300,12 +317,12 @@ export class BankDetailPage {
             //如果没取到，则向服务器取
             var loader = this.popupFactory.loading();
             loader.present().then(()=> {
-                this.loadData(endpoint, cacheKey, null, loader, _sendData);
+                this.loadData(endpoint, cacheKey, null, loader);
             });
             return;
         }
         this.globalVars.loaders.push(1);
-        this.loadData(endpoint, cacheKey, null, loader, _sendData);
+        this.loadData(endpoint, cacheKey, null, loader);
     }
 
     /**
@@ -313,13 +330,18 @@ export class BankDetailPage {
      * loadData(接口,本地存储key,下拉刷新对象,loading对象)
      * */
     loadData(endpoint, cacheKey, refresher?: any, loader?: any, sendData?: any) {
-        this.bankService.loadValue(endpoint, cacheKey, sendData)
+        let _sendData: any = {
+            BankCode: this.currentEndPoint.bankCode,
+            cb: this.currentEndPoint.tip
+        };
+        Object.assign(_sendData, sendData);
+        this.bankService.loadValue(endpoint, cacheKey, _sendData)
             .map(res =>res.json())
             .subscribe(res => {
                 if (res.code == 1) {
                     switch (cacheKey) {
                         case CacheField.bankTotal:
-                            this.bankTotalData = res.data;
+                            this.bankTotalData = res.data[this.currentEndPoint.bankCode];
                             break;
                         case CacheField.bankMoney:
                             this.bankMoneyData = res.data;
@@ -416,23 +438,23 @@ export class BankDetailPage {
     //下拉刷新
     doRefresh(refresher: Refresher) {
         setTimeout(() => {
-            this.loadData(Endpoint.bankTotal, CacheField.bankTotal, refresher,null, {cb: this.bankInfo.hasB});
-            this.loadData(Endpoint.bankMoney, CacheField.bankMoney, refresher,null, {cb: this.bankInfo.hasB});
+            this.loadData(Endpoint.bankTotal, CacheField.bankTotal, refresher);
+            this.loadData(Endpoint.bankMoney, CacheField.bankMoney, refresher);
             this.loadData(Endpoint.bankChannel, CacheField.bankChannel, refresher);
-            this.loadData(Endpoint.bankTotalSec, CacheField.bankTotalSec, refresher,null, {cb: this.bankInfo.hasB});
-            this.loadData(Endpoint.bankRateTrendSec, CacheField.bankRateTrendSec, refresher,null, {cb: this.bankInfo.hasB});
+            this.loadData(Endpoint.bankTotalSec, CacheField.bankTotalSec, refresher);
+            this.loadData(Endpoint.bankRateTrendSec, CacheField.bankRateTrendSec, refresher);
             if (this.projectType == '2') {
-                this.loadData(Endpoint.bankAssetsType, CacheField.bankAssetsType, refresher,null, {cb: this.bankInfo.hasB});
+                this.loadData(Endpoint.bankAssetsType, CacheField.bankAssetsType, refresher);
             }
             switch (this.projectTrendType) {
                 case '1':
-                    this.loadData(Endpoint.bankTrendRate, CacheField.bankTrendRate, refresher,null, {cb: this.bankInfo.hasB});
+                    this.loadData(Endpoint.bankTrendRate, CacheField.bankTrendRate, refresher);
                     break;
                 case '2':
-                    this.loadData(Endpoint.bankTrendTerm, CacheField.bankTrendTerm, refresher,null, {cb: this.bankInfo.hasB});
+                    this.loadData(Endpoint.bankTrendTerm, CacheField.bankTrendTerm, refresher);
                     break;
                 case '3':
-                    this.loadData(Endpoint.bankTrendDeal, CacheField.bankTrendDeal, refresher,null, {cb: this.bankInfo.hasB});
+                    this.loadData(Endpoint.bankTrendDeal, CacheField.bankTrendDeal, refresher);
                     break;
             }
         }, 500);
