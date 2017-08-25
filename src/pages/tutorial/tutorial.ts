@@ -101,7 +101,6 @@ export class TutorialPage {
 
     }
     ionViewDidEnter(){
-        console.log('ccc')
         //视图加载完成时启用倒计时
         this.myInterval = setInterval(()=> {
             this.count--;

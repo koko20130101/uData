@@ -72,8 +72,9 @@ export class Date {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
             console.log(data)
+            this._setVars(data.unit);
             if(data.page == this.pageInfo.name) {
-                this._setVars(data.unit);
+                this._autoAlert(data.unit);
             }
         });
     }
@@ -193,7 +194,7 @@ export class Date {
                 break;
             case '月':
                 //判断是否是每个月1号，
-                if (this.globalInstance.popupKey.day == null && this._day == 10) {
+                if (this.globalInstance.popupKey.day == null && this._day == 25) {
                     this.popupFactory.showAlert({
                         title: '',
                         message: "本月才刚刚开始，是否切换为" + this.currentDateList[1] + "的数据？",
@@ -279,6 +280,5 @@ export class Date {
         } else {
             this.isStart = false;
         }
-        this._autoAlert(unit);
     }
 }
