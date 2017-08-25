@@ -110,11 +110,12 @@ export class LingXiPage {
 
     ionViewWillEnter() {
         this.getDataFromCache(Endpoint.lingXiTotal, CacheField.lingXiTotal);
+        this.getDataFromCache(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal);
+        this.getDataFromCache(Endpoint.lingXiChannel, CacheField.lingXiChannel);
     }
 
     ionViewDidEnter() {
-        this.getDataFromCache(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal);
-        this.getDataFromCache(Endpoint.lingXiChannel, CacheField.lingXiChannel);
+
     }
 
     ionViewWillLeave() {
@@ -131,56 +132,58 @@ export class LingXiPage {
             BankCode: ''
         };
         let _num = this.lingXiType;
-        let _cacheData: any = this.lingXiService.getValue(cacheKey, _num);
-        switch (cacheKey) {
-            case CacheField.lingXiTotal:
-                if (!!_cacheData) {
-                    this.lingXiTotalData[_num] = _cacheData;
-                    return;
-                } else {
-                    _sendData = {proType: _num};
+        this.lingXiService.getValue(cacheKey, _num).then(data=>{
+            let _cacheData:any = data;
+            switch (cacheKey) {
+                case CacheField.lingXiTotal:
+                    if (!!_cacheData) {
+                        this.lingXiTotalData[_num] = _cacheData;
+                        return;
+                    } else {
+                        _sendData = {proType: _num};
+                        break;
+                    }
+                case CacheField.lingXiTrendDeal:
+                    if (!!_cacheData) {
+                        this.dealTrendData[_num] = _cacheData;
+                        return;
+                    } else {
+                        _sendData = {proType: _num};
+                        break;
+                    }
+                case CacheField.lingXiTrendRate:
+                    if (!!_cacheData) {
+                        this.rateTrendData[_num] = _cacheData;
+                        return;
+                    } else {
+                        _sendData = {proType: _num};
+                        break;
+                    }
+                case CacheField.lingXiChannel:
+                    if (!!_cacheData) {
+                        this.lingXiChannelData = _cacheData;
+                        return;
+                    } else {
+                        _sendData = {proType: _num};
+                        break;
+                    }
+                default:
                     break;
-                }
-            case CacheField.lingXiTrendDeal:
-                if (!!_cacheData) {
-                    this.dealTrendData[_num] = _cacheData;
-                    return;
-                } else {
-                    _sendData = {proType: _num};
-                    break;
-                }
-            case CacheField.lingXiTrendRate:
-                if (!!_cacheData) {
-                    this.rateTrendData[_num] = _cacheData;
-                    return;
-                } else {
-                    _sendData = {proType: _num};
-                    break;
-                }
-            case CacheField.lingXiChannel:
-                if (!!_cacheData) {
-                    this.lingXiChannelData = _cacheData;
-                    return;
-                } else {
-                    _sendData = {proType: _num};
-                    break;
-                }
-            default:
-                break;
-        }
-        //判断请求个数
-        if (this.globalVars.loaders.length == 0) {
-            //记录加载对象个数
+            }
+            //判断请求个数
+            if (this.globalVars.loaders.length == 0) {
+                //记录加载对象个数
+                this.globalVars.loaders.push(1);
+                //如果没取到，则向服务器取
+                var loader = this.popupFactory.loading();
+                loader.present().then(()=> {
+                    this.loadData(endpoint, cacheKey, null, loader, _sendData);
+                });
+                return;
+            }
             this.globalVars.loaders.push(1);
-            //如果没取到，则向服务器取
-            var loader = this.popupFactory.loading();
-            loader.present().then(()=> {
-                this.loadData(endpoint, cacheKey, null, loader, _sendData);
-            });
-            return;
-        }
-        this.globalVars.loaders.push(1);
-        this.loadData(endpoint, cacheKey, null, loader, _sendData);
+            this.loadData(endpoint, cacheKey, null, loader, _sendData);
+        });
     }
 
     /**

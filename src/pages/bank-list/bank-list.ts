@@ -71,16 +71,17 @@ export class BankListPage {
      * */
     getDataFromCache(endpoint, cacheKey) {
         let _sendData: any = null;
-        let _cacheData: any = this.bankListService.getValue(cacheKey);
-        if (!!_cacheData) {
-            this.bankListData = _cacheData;
-        } else {
-            //如果没取到，则向服务器取
-            var loader = this.popupFactory.loading();
-            loader.present().then(()=> {
-                this.loadData(endpoint, cacheKey, null, loader, _sendData);
-            });
-        }
+        this.bankListService.getValue(cacheKey).then(data=>{
+            if (!!data) {
+                this.bankListData = data;
+            } else {
+                //如果没取到，则向服务器取
+                var loader = this.popupFactory.loading();
+                loader.present().then(()=> {
+                    this.loadData(endpoint, cacheKey, null, loader, _sendData);
+                });
+            }
+        });
     }
 
     /**

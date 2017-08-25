@@ -27,7 +27,7 @@ export class BankDetailPage {
     modelContent: any[] = [1, 1, 1, 1, 1];  //list内容展开收起状态
     dateInstance: any;
     bankInfo: any;
-    currentEndpoint:any;
+    currentEndpoint: any;
     //平台数据
     bankTotalData: any = {
         total: ['--', ''],
@@ -83,14 +83,14 @@ export class BankDetailPage {
     pieChartOption_2: any;
 
     //银行数据端口：B端,C端
-    radioList:any[]=[];
-    currentEndPoint:any={
-        name:"",
-        tip:"",
-        bankCode:""
+    radioList: any[] = [];
+    currentEndPoint: any = {
+        name: "",
+        tip: "",
+        bankCode: ""
     };
-    showEndPoint:boolean = true;
-    showEndPointArrow:boolean = true;
+    showEndPoint: boolean = true;
+    showEndPointArrow: boolean = true;
 
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
@@ -101,14 +101,14 @@ export class BankDetailPage {
         this.bankInfo = params.data;
         Object.assign(this.currentEndPoint, this.bankInfo.endPoint[0]);
 
-        if(this.bankInfo.endPoint.length==1){
+        if (this.bankInfo.endPoint.length == 1) {
             this.showEndPointArrow = false
         }
-        if(this.bankInfo.endPoint.length==1 && this.bankInfo.endPoint[0].name==''){
+        if (this.bankInfo.endPoint.length == 1 && this.bankInfo.endPoint[0].name == '') {
             this.showEndPoint = false
         }
         //数据端不能为空
-        if(this.currentEndPoint.tip==''){
+        if (this.currentEndPoint.tip == '') {
             this.currentEndPoint.tip = 'C'
         }
     }
@@ -176,10 +176,11 @@ export class BankDetailPage {
     }
 
     ionViewWillEnter() {
+        this.loadInfo();
     }
 
     ionViewDidEnter() {
-        this.loadInfo();
+        // this.loadInfo();
     }
 
     ionViewWillLeave() {
@@ -196,9 +197,9 @@ export class BankDetailPage {
     }
 
     showAlert() {
-        if(this.bankInfo.endPoint.length==1) return;
+        if (this.bankInfo.endPoint.length == 1) return;
         this.radioList = [];
-        for (let i=0;i < this.bankInfo.endPoint.length;i++) {
+        for (let i = 0; i < this.bankInfo.endPoint.length; i++) {
             this.radioList.push({
                 type: 'radio',
                 label: this.bankInfo.endPoint[i].name,
@@ -223,8 +224,8 @@ export class BankDetailPage {
         })
     }
 
-    loadInfo(){
-        this.getDataFromCache(Endpoint.bankTotal, CacheField.bankTotal,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
+    loadInfo() {
+        this.getDataFromCache(Endpoint.bankTotal, CacheField.bankTotal, [this.currentEndPoint.bankCode, this.currentEndPoint.tip]);
         this.getDataFromCache(Endpoint.bankMoney, CacheField.bankMoney,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
         this.getDataFromCache(Endpoint.bankChannel, CacheField.bankChannel,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
         this.getDataFromCache(Endpoint.bankTotalSec, CacheField.bankTotalSec,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
@@ -238,88 +239,91 @@ export class BankDetailPage {
      * getDataFromCache(接口,本地存储key,资源类型标识)
      * */
     getDataFromCache(endpoint, cacheKey, source?: any) {
-        let _cacheData: any = this.bankService.getValue(cacheKey,source);
-        switch (cacheKey) {
-            case CacheField.bankTotal:
-                if (!!_cacheData) {
-                    this.bankTotalData = _cacheData;
-                    return;
-                } else {
+        this.bankService.getValue(cacheKey, source).then(data=> {
+            let _cacheData:any=data;
+            switch (cacheKey) {
+                case CacheField.bankTotal:
+                    if (!!_cacheData) {
+                        this.bankTotalData = _cacheData;
+                        return;
+                    } else {
+                        break;
+                    }
+                case CacheField.bankMoney:
+                    if (!!_cacheData) {
+                        this.bankMoneyData = _cacheData;
+                        return;
+                    } else {
+                        break;
+                    }
+                case CacheField.bankChannel:
+                    if (!!_cacheData) {
+                        this.bankChannelData = _cacheData;
+                        return;
+                    } else {
+                        break;
+                    }
+                case CacheField.bankTotalSec:
+                    if (!!_cacheData) {
+                        this.bankTotalSecData = _cacheData;
+                        return;
+                    } else {
+                        break;
+                    }
+                case CacheField.bankRateTrendSec:
+                    if (!!_cacheData) {
+                        this.bankRateTrendSecData = _cacheData;
+                        return;
+                    } else {
+                        break;
+                    }
+                //==> 资产类型饼图
+                case CacheField.bankAssetsType:
+                    if (!!_cacheData) {
+                        this.setPieOption_1(_cacheData);
+                        return;
+                    } else {
+                        break;
+                    }
+                case CacheField.bankTrendRate:
+                    if (!!_cacheData) {
+                        this.bankTrendRateData = _cacheData;
+                        return;
+                    } else {
+                        break;
+                    }
+                case CacheField.bankTrendTerm:
+                    if (!!_cacheData) {
+                        this.bankTrendTermData = _cacheData;
+                        return;
+                    } else {
+                        break;
+                    }
+                case CacheField.bankTrendDeal:
+                    if (!!_cacheData) {
+                        this.bankTrendDealData = _cacheData;
+                        return;
+                    } else {
+                        break;
+                    }
+                default:
                     break;
-                }
-            case CacheField.bankMoney:
-                if (!!_cacheData) {
-                    this.bankMoneyData = _cacheData;
-                    return;
-                } else {
-                    break;
-                }
-            case CacheField.bankChannel:
-                if (!!_cacheData) {
-                    this.bankChannelData = _cacheData;
-                    return;
-                } else {
-                    break;
-                }
-            case CacheField.bankTotalSec:
-                if (!!_cacheData) {
-                    this.bankTotalSecData = _cacheData;
-                    return;
-                } else {
-                    break;
-                }
-            case CacheField.bankRateTrendSec:
-                if (!!_cacheData) {
-                    this.bankRateTrendSecData = _cacheData;
-                    return;
-                } else {
-                    break;
-                }
-            //==> 资产类型饼图
-            case CacheField.bankAssetsType:
-                if (!!_cacheData) {
-                    this.setPieOption_1(_cacheData);
-                    return;
-                } else {
-                    break;
-                }
-            case CacheField.bankTrendRate:
-                if (!!_cacheData) {
-                    this.bankTrendRateData = _cacheData;
-                    return;
-                } else {
-                    break;
-                }
-            case CacheField.bankTrendTerm:
-                if (!!_cacheData) {
-                    this.bankTrendTermData = _cacheData;
-                    return;
-                } else {
-                    break;
-                }
-            case CacheField.bankTrendDeal:
-                if (!!_cacheData) {
-                    this.bankTrendDealData = _cacheData;
-                    return;
-                } else {
-                    break;
-                }
-            default:
-                break;
-        }
-        //判断请求个数
-        if (this.globalVars.loaders.length == 0) {
-            //记录加载对象个数
+            }
+            //判断请求个数
+            if (this.globalVars.loaders.length == 0) {
+                //记录加载对象个数
+                this.globalVars.loaders.push(1);
+                //如果没取到，则向服务器取
+                var loader = this.popupFactory.loading();
+                loader.present().then(()=> {
+                    this.loadData(endpoint, cacheKey, null, loader);
+                });
+                return;
+            }
             this.globalVars.loaders.push(1);
-            //如果没取到，则向服务器取
-            var loader = this.popupFactory.loading();
-            loader.present().then(()=> {
-                this.loadData(endpoint, cacheKey, null, loader);
-            });
-            return;
-        }
-        this.globalVars.loaders.push(1);
-        this.loadData(endpoint, cacheKey, null, loader);
+            this.loadData(endpoint, cacheKey, null, loader);
+        });
+
     }
 
     /**
@@ -394,20 +398,20 @@ export class BankDetailPage {
     getProjectTrendType() {
         switch (this.projectTrendType) {
             case '1':
-                this.getDataFromCache(Endpoint.bankTrendRate, CacheField.bankTrendRate,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
+                this.getDataFromCache(Endpoint.bankTrendRate, CacheField.bankTrendRate, [this.currentEndPoint.bankCode, this.currentEndPoint.tip]);
                 break;
             case '2':
-                this.getDataFromCache(Endpoint.bankTrendTerm, CacheField.bankTrendTerm,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
+                this.getDataFromCache(Endpoint.bankTrendTerm, CacheField.bankTrendTerm, [this.currentEndPoint.bankCode, this.currentEndPoint.tip]);
                 break;
             case '3':
-                this.getDataFromCache(Endpoint.bankTrendDeal, CacheField.bankTrendDeal,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
+                this.getDataFromCache(Endpoint.bankTrendDeal, CacheField.bankTrendDeal, [this.currentEndPoint.bankCode, this.currentEndPoint.tip]);
                 break;
         }
     }
 
     getProjectType() {
         if (this.projectType == '2') {
-            this.getDataFromCache(Endpoint.bankAssetsType, CacheField.bankAssetsType,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
+            this.getDataFromCache(Endpoint.bankAssetsType, CacheField.bankAssetsType, [this.currentEndPoint.bankCode, this.currentEndPoint.tip]);
         }
     }
 

@@ -24,51 +24,6 @@ export class BankService {
                 public publicFactory: PublicFactory,
                 public globalVars: GlobalVars,
                 public storage: Storage) {
-        this.storage.get(CacheField.bankTotal).then((data) => {
-            if (!!data) {
-                this.bankTotalData = data;
-            }
-        });
-        this.storage.get(CacheField.bankMoney).then((data) => {
-            if (!!data) {
-                this.bankMoneyData = data;
-            }
-        });
-        this.storage.get(CacheField.bankChannel).then((data) => {
-            if (!!data) {
-                this.bankChannelData = data;
-            }
-        });
-        this.storage.get(CacheField.bankTotalSec).then((data) => {
-            if (!!data) {
-                this.bankTotalSecData = data;
-            }
-        });
-        this.storage.get(CacheField.bankRateTrendSec).then((data) => {
-            if (!!data) {
-                this.bankRateTrendSecData = data;
-            }
-        });
-        this.storage.get(CacheField.bankAssetsType).then((data) => {
-            if (!!data) {
-                this.bankAssetsTypeData = data;
-            }
-        });
-        this.storage.get(CacheField.bankTrendRate).then((data) => {
-            if (!!data) {
-                this.bankTrendRateData = data;
-            }
-        });
-        this.storage.get(CacheField.bankTrendTerm).then((data) => {
-            if (!!data) {
-                this.bankTrendTermData = data;
-            }
-        });
-        this.storage.get(CacheField.bankTrendDeal).then((data) => {
-            if (!!data) {
-                this.bankTrendDealData = data;
-            }
-        });
     }
 
     /**
@@ -309,44 +264,116 @@ export class BankService {
     }
 
     getValue(key,source?:any) {
-        let _data: any;
-        switch (key) {
-            case CacheField.bankTotal:
-                _data = this.publicFactory.checkValueStamp(this.bankTotalData,false,source);
-                break;
-            case CacheField.bankMoney:
-                _data = this.publicFactory.checkValueStamp(this.bankMoneyData,false,source);
-                break;
-            case CacheField.bankChannel:
-                _data = this.publicFactory.checkValueStamp(this.bankChannelData,false,source);
-                break;
-            case CacheField.bankTotalSec:
-                _data = this.publicFactory.checkValueStamp(this.bankTotalSecData,false,source);
-                break;
-            case CacheField.bankRateTrendSec:
-                _data = this.publicFactory.checkValueStamp(this.bankRateTrendSecData,false,source);
-                break;
-            case CacheField.bankAssetsType:
-                _data = this.publicFactory.checkValueStamp(this.bankAssetsTypeData,false,source);
-                break;
-            case CacheField.bankTrendRate:
-                _data = this.publicFactory.checkValueStamp(this.bankTrendRateData,false,source);
-                break;
-            case CacheField.bankTrendTerm:
-                _data = this.publicFactory.checkValueStamp(this.bankTrendTermData,false,source);
-                break;
-            case CacheField.bankTrendDeal:
-                _data = this.publicFactory.checkValueStamp(this.bankTrendDealData,false,source);
-                break;
+        let _data: any = {};
+        return new Promise((resolve, reject)=>{
+            switch (key) {
+                case CacheField.bankTotal:
+                    //提取本地存储
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankTotalData = data;
+                            //查找符合source的数据
+                            _data = this.publicFactory.checkValueStamp(this.bankTotalData,false,source);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
 
-            default:
-                break;
-        }
-        if (!!_data) {
-            return _data;
-        } else {
-            return false;
-        }
+                    });
+                    break;
+                case CacheField.bankMoney:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankMoneyData = data;
+                            _data = this.publicFactory.checkValueStamp(this.bankMoneyData,false,source);
+                            resolve(_data)
+                        }else{
+                            resolve(false)
+                        }
+                    });
+                    break;
+                case CacheField.bankChannel:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankChannelData = data;
+                            _data = this.publicFactory.checkValueStamp(this.bankChannelData,false,source);
+                            resolve(_data)
+                        }else{
+                            resolve(false)
+                        }
+                    });
+                    break;
+                case CacheField.bankTotalSec:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankTotalSecData = data;
+                            _data = this.publicFactory.checkValueStamp(this.bankTotalSecData,false,source);
+                            resolve(_data)
+                        }else{
+                            resolve(false)
+                        }
+                    });
+                    break;
+                case CacheField.bankRateTrendSec:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankRateTrendSecData = data;
+                            _data = this.publicFactory.checkValueStamp(this.bankRateTrendSecData,false,source);
+                            resolve(_data)
+                        }else{
+                            resolve(false)
+                        }
+                    });
+                    break;
+                case CacheField.bankAssetsType:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankAssetsTypeData = data;
+                            _data = this.publicFactory.checkValueStamp(this.bankAssetsTypeData,false,source);
+                            resolve(_data)
+                        }else{
+                            resolve(false)
+                        }
+                    });
+                    break;
+                case CacheField.bankTrendRate:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankTrendRateData = data;
+                            _data = this.publicFactory.checkValueStamp(this.bankTrendRateData,false,source);
+                            resolve(_data)
+                        }else{
+                            resolve(false)
+                        }
+                    });
+                    break;
+                case CacheField.bankTrendTerm:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankTrendTermData = data;
+                            _data = this.publicFactory.checkValueStamp(this.bankTrendTermData,false,source);
+                            resolve(_data)
+                        }else{
+                            resolve(false)
+                        }
+                    });
+                    break;
+                case CacheField.bankTrendDeal:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankTrendDealData = data;
+                            _data = this.publicFactory.checkValueStamp(this.bankTrendDealData,false,source);
+                            resolve(_data)
+                        }else{
+                            resolve(false)
+                        }
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+        });
     }
 
     private handleValue(_data:any){

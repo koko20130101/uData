@@ -115,10 +115,10 @@ export class C2bPage {
     }
 
     ionViewWillEnter() {
+        this.slideChange();
     }
 
     ionViewDidEnter() {
-        this.slideChange();
     }
 
     ionViewWillLeave() {
@@ -137,96 +137,98 @@ export class C2bPage {
      * */
     getDataFromCache(endpoint, cacheKey, source?: any) {
         let _sendData: any = null;
-        let _cacheData: any = this.c2bService.getValue(cacheKey, source);
-        switch (cacheKey) {
-            //引入及销售总额
-            case CacheField.saleTotal:
-                if (!!_cacheData) {
-                    this.saleTotalData = _cacheData;
-                    return;
-                } else {
-                    _sendData = null;
+        this.c2bService.getValue(cacheKey, source).then(data=> {
+            let _cacheData: any = data;
+            switch (cacheKey) {
+                //引入及销售总额
+                case CacheField.saleTotal:
+                    if (!!_cacheData) {
+                        this.saleTotalData = _cacheData;
+                        return;
+                    } else {
+                        _sendData = null;
+                        break;
+                    }
+                //引入渠道分布
+                case CacheField.saleChannelIn:
+                    if (!!_cacheData) {
+                        this.saleChannelDataIn[source] = _cacheData;
+                        return;
+                    } else {
+                        _sendData = {dataType: this.saleChannelTypeIn, inoutFlag: this.inoutFlag};
+                        break;
+                    }
+                //销售渠道分布
+                case CacheField.saleChannelOut:
+                    if (!!_cacheData) {
+                        this.saleChannelDataOut[source] = _cacheData;
+                        return;
+                    } else {
+                        _sendData = {dataType: this.saleChannelTypeOut, inoutFlag: this.inoutFlag};
+                        break;
+                    }
+                //折线图
+                case CacheField.assetsInOut:
+                    if (!!_cacheData) {
+                        this.assetsInOutData[source] = _cacheData;
+                        return;
+                    } else {
+                        _sendData = {inoutFlag: this.inoutFlag};
+                        break;
+                    }
+                //运营分析总额
+                case CacheField.assetsMain:
+                    if (!!_cacheData) {
+                        this.assetsMain = _cacheData;
+                        return;
+                    } else {
+                        _sendData = null;
+                        break;
+                    }
+                //运营分析总额柱状图
+                case CacheField.profitData:
+                    if (!!_cacheData) {
+                        this.setBarChartOption(_cacheData);
+                        return;
+                    } else {
+                        _sendData = null;
+                        break;
+                    }
+                //资产健康值折线图
+                case CacheField.assetsHealthy:
+                    if (!!_cacheData) {
+                        this.assetsHealthyData = _cacheData;
+                        return;
+                    } else {
+                        _sendData = null;
+                        break;
+                    }
+                //毛利率折线图
+                case CacheField.grossMargin:
+                    if (!!_cacheData) {
+                        this.setLineChartOption_2(_cacheData);
+                        return;
+                    } else {
+                        _sendData = null;
+                        break;
+                    }
+                default:
                     break;
-                }
-            //引入渠道分布
-            case CacheField.saleChannelIn:
-                if (!!_cacheData) {
-                    this.saleChannelDataIn[source] = _cacheData;
-                    return;
-                } else {
-                    _sendData = {dataType: this.saleChannelTypeIn, inoutFlag: this.inoutFlag};
-                    break;
-                }
-            //销售渠道分布
-            case CacheField.saleChannelOut:
-                if (!!_cacheData) {
-                    this.saleChannelDataOut[source] = _cacheData;
-                    return;
-                } else {
-                    _sendData = {dataType: this.saleChannelTypeOut, inoutFlag: this.inoutFlag};
-                    break;
-                }
-            //折线图
-            case CacheField.assetsInOut:
-                if (!!_cacheData) {
-                    this.assetsInOutData[source] = _cacheData;
-                    return;
-                } else {
-                    _sendData = {inoutFlag: this.inoutFlag};
-                    break;
-                }
-            //运营分析总额
-            case CacheField.assetsMain:
-                if (!!_cacheData) {
-                    this.assetsMain = _cacheData;
-                    return;
-                } else {
-                    _sendData = null;
-                    break;
-                }
-            //运营分析总额柱状图
-            case CacheField.profitData:
-                if (!!_cacheData) {
-                    this.setBarChartOption(_cacheData);
-                    return;
-                } else {
-                    _sendData = null;
-                    break;
-                }
-            //资产健康值折线图
-            case CacheField.assetsHealthy:
-                if (!!_cacheData) {
-                    this.assetsHealthyData = _cacheData;
-                    return;
-                } else {
-                    _sendData = null;
-                    break;
-                }
-            //毛利率折线图
-            case CacheField.grossMargin:
-                if (!!_cacheData) {
-                    this.setLineChartOption_2(_cacheData);
-                    return;
-                } else {
-                    _sendData = null;
-                    break;
-                }
-            default:
-                break;
-        }
-        //判断请求个数
-        if (this.globalVars.loaders.length == 0) {
-            //记录加载对象个数
+            }
+            //判断请求个数
+            if (this.globalVars.loaders.length == 0) {
+                //记录加载对象个数
+                this.globalVars.loaders.push(1);
+                //如果没取到，则向服务器取
+                var loader = this.popupFactory.loading();
+                loader.present().then(()=> {
+                    this.loadData(endpoint, cacheKey, null, loader, _sendData);
+                });
+                return;
+            }
             this.globalVars.loaders.push(1);
-            //如果没取到，则向服务器取
-            var loader = this.popupFactory.loading();
-            loader.present().then(()=> {
-                this.loadData(endpoint, cacheKey, null, loader, _sendData);
-            });
-            return;
-        }
-        this.globalVars.loaders.push(1);
-        this.loadData(endpoint, cacheKey, null, loader, _sendData);
+            this.loadData(endpoint, cacheKey, null, loader, _sendData);
+        });
     }
 
     /**
@@ -383,13 +385,19 @@ export class C2bPage {
                 case 1:
                     //总额
                     this.loadData(Endpoint.saleTotal, CacheField.saleTotal, refresher);
-                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelIn, refresher, null, {dataType:this.saleChannelTypeIn,inoutFlag: this.inoutFlag});
+                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelIn, refresher, null, {
+                        dataType: this.saleChannelTypeIn,
+                        inoutFlag: this.inoutFlag
+                    });
                     this.loadData(Endpoint.assetsInOut, CacheField.assetsInOut, refresher, null, {inoutFlag: this.inoutFlag});
                     break;
                 //销售
                 case 2:
                     this.loadData(Endpoint.saleTotal, CacheField.saleTotal, refresher);
-                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelOut, refresher, null, {dataType:this.saleChannelTypeOut,inoutFlag: this.inoutFlag});
+                    this.loadData(Endpoint.saleChannelInOut, CacheField.saleChannelOut, refresher, null, {
+                        dataType: this.saleChannelTypeOut,
+                        inoutFlag: this.inoutFlag
+                    });
                     this.loadData(Endpoint.assetsInOut, CacheField.assetsInOut, refresher, null, {inoutFlag: this.inoutFlag});
                     break;
                 //远营分析

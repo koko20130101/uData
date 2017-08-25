@@ -19,26 +19,6 @@ export class LingXiService {
                 public publicFactory: PublicFactory,
                 public globalVars: GlobalVars,
                 public storage: Storage) {
-        this.storage.get(CacheField.lingXiTotal).then((data)=> {
-            if (!!data) {
-                this.lingXiTotalData = data;
-            }
-        });
-        this.storage.get(CacheField.lingXiTrendDeal).then((data)=> {
-            if (!!data) {
-                this.dealTrendData = data;
-            }
-        });
-        this.storage.get(CacheField.lingXiTrendRate).then((data)=> {
-            if (!!data) {
-                this.rateTrendData = data;
-            }
-        });
-        this.storage.get(CacheField.lingXiChannel).then((data)=> {
-            if (!!data) {
-                this.lingXiChannelData = data;
-            }
-        });
     }
 
     private handleValue(_data:any){
@@ -187,26 +167,55 @@ export class LingXiService {
 
     getValue(key,tip?:any){
         let _data:any;
-        switch (key){
-            case CacheField.lingXiTotal:
-                _data = this.publicFactory.checkValueStamp(this.lingXiTotalData,false,[tip]);
-                break;
-            case CacheField.lingXiTrendDeal:
-                _data = this.publicFactory.checkValueStamp(this.dealTrendData,false,[tip]);
-                break;
-            case CacheField.lingXiTrendRate:
-                _data = this.publicFactory.checkValueStamp(this.rateTrendData,false,[tip]);
-                break;
-            case CacheField.lingXiChannel:
-                _data = this.publicFactory.checkValueStamp(this.lingXiChannelData);
-                break;
-            default:
-                break;
-        }
-        if(!!_data) {
-            return _data;
-        }else{
-            return false;
-        }
+        return new Promise((resolve, reject)=> {
+            switch (key) {
+                case CacheField.lingXiTotal:
+                    this.storage.get(key).then((data) => {
+                        if (!!data) {
+                            this.lingXiTotalData = data;
+                            _data = this.publicFactory.checkValueStamp(this.lingXiTotalData, false, [tip]);
+                            resolve(_data)
+                        } else {
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.lingXiTrendDeal:
+                    this.storage.get(key).then((data) => {
+                        if (!!data) {
+                            this.dealTrendData = data;
+                            _data = this.publicFactory.checkValueStamp(this.dealTrendData, false, [tip]);
+                            resolve(_data)
+                        } else {
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.lingXiTrendRate:
+                    this.storage.get(key).then((data) => {
+                        if (!!data) {
+                            this.rateTrendData = data;
+                            _data = this.publicFactory.checkValueStamp(this.rateTrendData, false, [tip]);
+                            resolve(_data)
+                        } else {
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.lingXiChannel:
+                    this.storage.get(key).then((data) => {
+                        if (!!data) {
+                            this.lingXiChannelData = data;
+                            _data = this.publicFactory.checkValueStamp(this.lingXiChannelData);
+                            resolve(_data)
+                        } else {
+                            resolve(false);
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 }

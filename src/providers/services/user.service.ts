@@ -68,7 +68,7 @@ export class User {
                     (data)=> {
                         resolve(data);
                     }, (err)=> {
-                        reject(err)
+                        resolve(err)
                     }
                 );
             return seq;

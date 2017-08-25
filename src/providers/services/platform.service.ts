@@ -33,54 +33,6 @@ export class PlatformService {
                 public globalVars: GlobalVars,
                 public listPipe: ListPipe,
                 public storage: Storage,) {
-        //从本地存储中取数据
-        this.storage.get(CacheField.platformTotal).then((data)=> {
-            if (!!data) {
-                this.totalData = data;
-            }
-        });
-        //从本地存储中取平台比较数据
-        this.storage.get(CacheField.platformsCompare).then((data) => {
-            if (!!data) {
-                this.platformsCompareData = data;
-            }
-        });
-        //从本地存储中取平台比较数据
-        this.storage.get(CacheField.platformTrend).then((data) => {
-            if (!!data) {
-                this.trendData = data;
-            }
-        });
-        //从本地存储中取出竞品平台比较数据
-        this.storage.get(CacheField.enemyPlatformsCompare).then((data) => {
-            if (!!data) {
-                this.enemyPlatformsCompareData = data;
-            }
-        });
-        //从本地存储中取出竞品柱状图数据
-        this.storage.get(CacheField.enemyBar).then((data) => {
-            if (!!data) {
-                this.enemyBarData = data;
-            }
-        });
-        //从本地存储中取出传统理财渠道收益对比数据
-        this.storage.get(CacheField.regularCompare).then((data) => {
-            if (!!data) {
-                this.regularCompareData = data;
-            }
-        });
-        //从本地存储中取出传统理财渠道收益对比数据
-        this.storage.get(CacheField.regularTrend).then((data) => {
-            if (!!data) {
-                this.regularTrendData = data;
-            }
-        });
-        //从本地存储中取出传统理财手线图数据
-        this.storage.get(CacheField.fundTrend).then((data) => {
-            if (!!data) {
-                this.fundTrendData = data;
-            }
-        });
     }
 
     /**
@@ -260,38 +212,107 @@ export class PlatformService {
      * */
     getValue(key,source?:any) {
         let _data: any;
-        switch (key) {
-            case CacheField.platformTotal:
-                //调用公共方法中的对比时间戳方法,得到返回的数据
-                _data = this.publicFactory.checkValueStamp(this.totalData);
-                break;
-            case CacheField.platformsCompare:
-                _data = this.publicFactory.checkValueStamp(this.platformsCompareData,false,[source]);
-                break;
-            case CacheField.platformTrend:
-                _data = this.publicFactory.checkValueStamp(this.trendData);
-                break;
-            case CacheField.enemyPlatformsCompare:
-                _data = this.publicFactory.checkValueStamp(this.enemyPlatformsCompareData,false,[source]);
-                break;
-            case CacheField.enemyBar:
-                _data = this.publicFactory.checkValueStamp(this.enemyBarData);
-                break;
-            case CacheField.regularCompare:
-                _data = this.publicFactory.checkValueStamp(this.regularCompareData,false,[source]);
-                break;
-            case CacheField.regularTrend:
-                _data = this.publicFactory.checkValueStamp(this.regularTrendData,false,[source]);
-                break;
-            case CacheField.fundTrend:
-                _data = this.publicFactory.checkValueStamp(this.fundTrendData);
-                break;
-        }
-        if (!!_data) {
-            return _data;
-        } else {
-            return false;
-        }
+        return new Promise((resolve, reject)=> {
+            switch (key) {
+                case CacheField.platformTotal:
+                    //提取本地存储
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.totalData = data;
+                            //调用公共方法中的对比时间戳方法,得到返回的数据
+                            _data = this.publicFactory.checkValueStamp(this.totalData);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.platformsCompare:
+                    //从本地存储中取平台比较数据
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.platformsCompareData = data;
+                            _data = this.publicFactory.checkValueStamp(this.platformsCompareData,false,[source]);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.platformTrend:
+                    //从本地存储中取平台比较数据
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.trendData = data;
+                            _data = this.publicFactory.checkValueStamp(this.trendData);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.enemyPlatformsCompare:
+                    //从本地存储中取出竞品平台比较数据
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.enemyPlatformsCompareData = data;
+                            _data = this.publicFactory.checkValueStamp(this.enemyPlatformsCompareData,false,[source]);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.enemyBar:
+                    //从本地存储中取出竞品柱状图数据
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.enemyBarData = data;
+                            _data = this.publicFactory.checkValueStamp(this.enemyBarData);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.regularCompare:
+                    //从本地存储中取出传统理财渠道收益对比数据
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.regularCompareData = data;
+                            _data = this.publicFactory.checkValueStamp(this.regularCompareData,false,[source]);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.regularTrend:
+                    //从本地存储中取出传统理财渠道收益对比数据
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.regularTrendData = data;
+                            _data = this.publicFactory.checkValueStamp(this.regularTrendData,false,[source]);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.fundTrend:
+                    //从本地存储中取出传统理财手线图数据
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.fundTrendData = data;
+                            _data = this.publicFactory.checkValueStamp(this.fundTrendData);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+            }
+        });
     }
 
     private handleValue(_data:any){

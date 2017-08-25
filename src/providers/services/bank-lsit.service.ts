@@ -16,12 +16,6 @@ export class BankListService {
                 public publicFactory: PublicFactory,
                 public globalVars: GlobalVars,
                 public storage: Storage) {
-        console.log(5)
-        this.storage.get(CacheField.bankList).then((data) => {
-            if (!!data) {
-                this.bankList = data;
-            }
-        })
     }
 
     loadBankList(endpoint, cacheKey, sendData?: any) {
@@ -65,18 +59,24 @@ export class BankListService {
 
     getValue(key) {
         let _data: any;
-        switch (key) {
-            case CacheField.bankList:
-                _data = this.publicFactory.checkValueStamp(this.bankList);
-                break;
-            default:
-                break;
-        }
-        if (!!_data) {
-            return _data.list;
-        } else {
-            return false;
-        }
-
+        return new Promise((resolve, reject)=> {
+            switch (key) {
+                case CacheField.bankList:
+                    //提取本地存储
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.bankList = data;
+                            //查找符合时间戳的数据
+                            _data = this.publicFactory.checkValueStamp(this.bankList);
+                            resolve(_data.list)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 }

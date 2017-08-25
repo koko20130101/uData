@@ -27,47 +27,6 @@ export class C2bService {
                 public publicFactory: PublicFactory,
                 public listPipe: ListPipe,
                 public storage: Storage) {
-        //从本地存储中取数据
-        this.storage.get(CacheField.saleTotal).then((data)=> {
-            if (!!data) {
-                this.saleData = data;
-            }
-        });
-        this.storage.get(CacheField.saleChannelIn).then((data)=> {
-            if (!!data) {
-                this.saleChannelDataIn = data;
-            }
-        });
-        this.storage.get(CacheField.saleChannelOut).then((data)=> {
-            if (!!data) {
-                this.saleChannelDataOut = data;
-            }
-        });
-        this.storage.get(CacheField.assetsInOut).then((data)=> {
-            if (!!data) {
-                this.assetsInOutData = data;
-            }
-        });
-        this.storage.get(CacheField.assetsMain).then((data)=> {
-            if (!!data) {
-                this.assetsMainData = data;
-            }
-        });
-        this.storage.get(CacheField.profitData).then((data)=> {
-            if (!!data) {
-                this.profitData = data;
-            }
-        });
-        this.storage.get(CacheField.assetsHealthy).then((data)=> {
-            if (!!data) {
-                this.assetsHealthyData = data;
-            }
-        });
-        this.storage.get(CacheField.grossMargin).then((data)=> {
-            if (!!data) {
-                this.grossMarginData = data;
-            }
-        });
     }
 
     private handleValue(_data:any){
@@ -293,39 +252,102 @@ export class C2bService {
      * */
     getValue(key,source?:any) {
         let _data: any;
-        switch (key) {
-            case CacheField.saleTotal:
-                //调用公共方法中的对比时间戳方法,得到返回的数据
-                _data = this.publicFactory.checkValueStamp(this.saleData);
-                break;
-            case CacheField.saleChannelIn:
-                _data = this.publicFactory.checkValueStamp(this.saleChannelDataIn,false,[source]);
-                break;
-            case CacheField.saleChannelOut:
-                _data = this.publicFactory.checkValueStamp(this.saleChannelDataOut,false,[source]);
-                break;
-            case CacheField.assetsInOut:
-                _data = this.publicFactory.checkValueStamp(this.assetsInOutData,false,[source]);
-                break;
-            case CacheField.assetsMain:
-                _data = this.publicFactory.checkValueStamp(this.assetsMainData, true);
-                break;
-            case CacheField.profitData:
-                _data = this.publicFactory.checkValueStamp(this.profitData, true);
-                break;
-            case CacheField.assetsHealthy:
-                _data = this.publicFactory.checkValueStamp(this.assetsHealthyData, true);
-                break;
-            case CacheField.grossMargin:
-                _data = this.publicFactory.checkValueStamp(this.grossMarginData, true);
-                break;
-            default:
-                break;
-        }
-        if (!!_data) {
-            return _data;
-        } else {
-            return false;
-        }
+        return new Promise((resolve, reject)=> {
+            switch (key) {
+                case CacheField.saleTotal:
+                    //调用公共方法中的对比时间戳方法,得到返回的数据
+                    //提取本地存储
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.saleData = data;
+                            //调用公共方法中的对比时间戳方法,得到返回的数据
+                            _data = this.publicFactory.checkValueStamp(this.saleData);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.saleChannelIn:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.saleChannelDataIn = data;
+                            _data = this.publicFactory.checkValueStamp(this.saleChannelDataIn,false,[source]);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.saleChannelOut:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.saleChannelDataOut = data;
+                            _data = this.publicFactory.checkValueStamp(this.saleChannelDataOut,false,[source]);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.assetsInOut:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.assetsInOutData = data;
+                            _data = this.publicFactory.checkValueStamp(this.assetsInOutData,false,[source]);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.assetsMain:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.assetsMainData = data;
+                            _data = this.publicFactory.checkValueStamp(this.assetsMainData,true);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.profitData:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.profitData = data;
+                            _data = this.publicFactory.checkValueStamp(this.profitData,true);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.assetsHealthy:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.assetsHealthyData = data;
+                            _data = this.publicFactory.checkValueStamp(this.assetsHealthyData,true);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                case CacheField.grossMargin:
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.grossMarginData = data;
+                            _data = this.publicFactory.checkValueStamp(this.grossMarginData,true);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 }

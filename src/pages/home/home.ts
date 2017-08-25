@@ -10,6 +10,7 @@ import {BankListPage} from '../bank-list/bank-list';
 import {HelpPage} from '../help/help';
 
 import {CacheField} from '../../providers/cache-field';
+import {Endpoint} from '../../providers/endpoint';
 import {GlobalVars} from  '../../providers/services/global.service';
 import {HomeService} from '../../providers/services/home.service';
 import {User} from '../../providers/providers';
@@ -56,7 +57,7 @@ export class HomePage {
         //订阅选择时间传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
             if (data.page == this.pageInfo.name) {
-                this.getHomeData();
+                this.getHomeData(Endpoint.homeData, CacheField.homeData);
             }
         });
 
@@ -83,26 +84,27 @@ export class HomePage {
     //每当当前视图为活动视图时调用
     ionViewWillEnter() {
         // console.log(3)
-        this.getHomeData();
+        this.getHomeData(Endpoint.homeData, CacheField.homeData);
     }
 
-    getHomeData() {
-        let _data = this.homeService.getValue();
-        if (!!_data) {
-            this.totalAmount = _data;
-            return;
-        } else {
-            //如果没取到，则向服务器取
-            var loader = this.popupFactory.loading();
-            loader.present().then(()=> {
-                this.loadHomeData(null, loader);
-            });
-        }
+    getHomeData(endpoint, cacheKey) {
+        let _sendData: any = null;
+        this.homeService.getValue(cacheKey).then(data=>{
+            if (!!data) {
+                this.totalAmount = data;
+            } else {
+                //如果没取到，则向服务器取
+                var loader = this.popupFactory.loading();
+                loader.present().then(()=> {
+                    this.loadData(endpoint, cacheKey, null, loader, _sendData);
+                });
+            }
+        });
     }
 
-    loadHomeData(refresher?: any, loader?: any) {
+    loadData(endpoint, cacheKey,refresher?: any, loader?: any,sendData?: any) {
         //从服务器取数据
-        this.homeService.loadValue()
+        this.homeService.loadValue(endpoint, cacheKey)
             .map(res=>res.json())
             .subscribe(data => {
                 let res: any = data;
@@ -140,7 +142,7 @@ export class HomePage {
     //下拉刷新
     doRefresh(refresher: Refresher) {
         setTimeout(() => {
-            this.loadHomeData(refresher);
+            this.loadData(Endpoint.homeData, CacheField.homeData,refresher);
         }, 500);
     }
 

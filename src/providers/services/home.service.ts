@@ -3,7 +3,6 @@ import {Storage} from '@ionic/storage'
 import moment from 'moment';
 
 import {Api} from '../api';
-import {Endpoint} from '../endpoint';
 import {CacheField} from '../cache-field';
 
 import {GlobalVars} from '../services/global.service';
@@ -18,17 +17,11 @@ export class HomeService {
     constructor(public publicFactory: PublicFactory,
                 public api:Api,
                 public globalVars:GlobalVars,
-                public storage:Storage,
-    ) {
-        //从本地存储中取数据
-        this.storage.get(CacheField.homeData).then((data)=> {
-            if(!!data) {
-                this.totalAmount = data;
-            }
-        })
+                public storage:Storage) {
+
     }
     //从服务器请求数据
-    loadValue(sendData?:any){
+    loadValue(endpoint, cacheKey, sendData?:any){
         let _instance = this.globalVars.getInstance();
         let _sendData = {
             type: _instance.dateInfo.unit.tip,
@@ -38,7 +31,7 @@ export class HomeService {
             Object.assign(_sendData, sendData);
         }
         //发起请求
-        let req = this.api.post(Endpoint.homeData, _sendData).share();
+        let req = this.api.post(endpoint, _sendData).share();
         req.map(res => res.json())
             .subscribe(res => {
                 let _res: any = res.data;
@@ -58,20 +51,33 @@ export class HomeService {
                 }
                 this.totalAmount[_instance.dateInfo.currentDate] = _res;
 
-                this.storage.set(CacheField.homeData, this.totalAmount);
+                this.storage.set(cacheKey, this.totalAmount);
             },err=>{
 
             });
         return req
     }
-    getValue(){
+    getValue(key){
         let _data:any;
-        //调用公共方法中的对比时间戳方法,得到返回的数据
-        _data = this.publicFactory.checkValueStamp(this.totalAmount);
-        if(!!_data) {
-            return _data;
-        }else{
-            return false;
-        }
+        return new Promise((resolve, reject)=> {
+            switch (key) {
+                case CacheField.homeData:
+                    //提取本地存储
+                    this.storage.get(key).then((data) => {
+                        if(!!data){
+                            this.totalAmount = data;
+                            //查找符合时间戳的数据
+                            //调用公共方法中的对比时间戳方法,得到返回的数据
+                            _data = this.publicFactory.checkValueStamp(this.totalAmount);
+                            resolve(_data)
+                        }else{
+                            resolve(false);
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 }

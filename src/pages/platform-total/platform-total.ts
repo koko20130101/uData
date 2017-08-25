@@ -124,11 +124,10 @@ export class PlatformTotalPage {
     }
 
     ionViewWillEnter() {
-
+        this.slideChange();
     }
 
     ionViewDidEnter() {
-        this.slideChange();
     }
 
     ionViewWillLeave() {
@@ -215,105 +214,107 @@ export class PlatformTotalPage {
      * */
     getDataFromCache(endpoint, cacheKey, source?: any) {
         let _sendData: any = null;
-        let _totalData: any = this.platformService.getValue(cacheKey, source);
-        switch (cacheKey) {
-            //总额
-            case CacheField.platformTotal:
-                if (!!_totalData) {
-                    this.totalData = _totalData;
-                    return;
-                } else {
-                    _sendData = null;
+        this.platformService.getValue(cacheKey, source).then(data=>{
+            let _totalData:any = data;
+            switch (cacheKey) {
+                //总额
+                case CacheField.platformTotal:
+                    if (!!_totalData) {
+                        this.totalData = _totalData;
+                        return;
+                    } else {
+                        _sendData = null;
+                        break;
+                    }
+                //网金平台指数排行
+                case CacheField.platformsCompare:
+                    if (!!_totalData) {
+                        this.platformsCompareData[source] = _totalData;
+                        return;
+                    } else {
+                        _sendData = {dataType: this.ucsDataType};
+                        break;
+                    }
+                //网金成交额折线图
+                case CacheField.platformTrend:
+                    if (!!_totalData) {
+                        this.trendData = _totalData;
+                        return;
+                    } else {
+                        _sendData = null;
+                        break;
+                    }
+                //竞品平台指数排行
+                case CacheField.enemyPlatformsCompare:
+                    if (!!_totalData) {
+                        this.enemyPlatformsCompareData[source] = _totalData;
+                        return;
+                    } else {
+                        _sendData = {dataType: this.enemyDataType};
+                        break;
+                    }
+                //竞品柱状图
+                case CacheField.enemyBar:
+                    if (!!_totalData) {
+                        this.barChartWidth = _totalData.xAxis[0].length * 50;
+                        let _myTimeOut = setTimeout(function () {
+                            this.enemyBarData = _totalData;
+                            this.enemyBarData_1 = {
+                                yAxis: this.enemyBarData.yAxis
+                            };
+                            clearTimeout(_myTimeOut);
+                        }.bind(this), 300);
+                        return;
+                    } else {
+                        _sendData = null;
+                        break;
+                    }
+                //传统理财和基金渠道收益对比
+                case CacheField.regularCompare:
+                    if (!!_totalData) {
+                        this.regularCompareData[source] = _totalData;
+                        return;
+                    } else if (source == 1) {
+                        _sendData = {dataType: 1, sourceType: 1};
+                    } else if (source == 2) {
+                        _sendData = {dataType: 1, sourceType: 2};
+                    }
                     break;
-                }
-            //网金平台指数排行
-            case CacheField.platformsCompare:
-                if (!!_totalData) {
-                    this.platformsCompareData[source] = _totalData;
-                    return;
-                } else {
-                    _sendData = {dataType: this.ucsDataType};
+                //定期理财额折线图
+                case CacheField.regularTrend:
+                    if (!!_totalData) {
+                        this.regularTrendData = _totalData;
+                        return;
+                    } else {
+                        _sendData = {sourceType:1,time:source};
+                        break;
+                    }
+                //基金折线图
+                case CacheField.fundTrend:
+                    if (!!_totalData) {
+                        this.fundTrendData = _totalData;
+                        return;
+                    } else {
+                        _sendData = null;
+                        break;
+                    }
+                default:
                     break;
-                }
-            //网金成交额折线图
-            case CacheField.platformTrend:
-                if (!!_totalData) {
-                    this.trendData = _totalData;
-                    return;
-                } else {
-                    _sendData = null;
-                    break;
-                }
-            //竞品平台指数排行
-            case CacheField.enemyPlatformsCompare:
-                if (!!_totalData) {
-                    this.enemyPlatformsCompareData[source] = _totalData;
-                    return;
-                } else {
-                    _sendData = {dataType: this.enemyDataType};
-                    break;
-                }
-            //竞品柱状图
-            case CacheField.enemyBar:
-                if (!!_totalData) {
-                    this.barChartWidth = _totalData.xAxis[0].length * 50;
-                    let _myTimeOut = setTimeout(function () {
-                        this.enemyBarData = _totalData;
-                        this.enemyBarData_1 = {
-                            yAxis: this.enemyBarData.yAxis
-                        };
-                        clearTimeout(_myTimeOut);
-                    }.bind(this), 300);
-                    return;
-                } else {
-                    _sendData = null;
-                    break;
-                }
-            //传统理财和基金渠道收益对比
-            case CacheField.regularCompare:
-                if (!!_totalData) {
-                    this.regularCompareData[source] = _totalData;
-                    return;
-                } else if (source == 1) {
-                    _sendData = {dataType: 1, sourceType: 1};
-                } else if (source == 2) {
-                    _sendData = {dataType: 1, sourceType: 2};
-                }
-                break;
-            //定期理财额折线图
-            case CacheField.regularTrend:
-                if (!!_totalData) {
-                    this.regularTrendData = _totalData;
-                    return;
-                } else {
-                    _sendData = {sourceType:1,time:source};
-                    break;
-                }
-            //基金折线图
-            case CacheField.fundTrend:
-                if (!!_totalData) {
-                    this.fundTrendData = _totalData;
-                    return;
-                } else {
-                    _sendData = null;
-                    break;
-                }
-            default:
-                break;
-        }
-        //判断请求个数
-        if (this.globalVars.loaders.length == 0) {
-            //记录加载对象个数
+            }
+            //判断请求个数
+            if (this.globalVars.loaders.length == 0) {
+                //记录加载对象个数
+                this.globalVars.loaders.push(1);
+                //如果没取到，则向服务器取
+                var loader = this.popupFactory.loading();
+                loader.present().then(()=> {
+                    this.loadData(endpoint, cacheKey, null, loader, _sendData);
+                });
+                return;
+            }
             this.globalVars.loaders.push(1);
-            //如果没取到，则向服务器取
-            var loader = this.popupFactory.loading();
-            loader.present().then(()=> {
-                this.loadData(endpoint, cacheKey, null, loader, _sendData);
-            });
-            return;
-        }
-        this.globalVars.loaders.push(1);
-        this.loadData(endpoint, cacheKey, null, loader, _sendData);
+            this.loadData(endpoint, cacheKey, null, loader, _sendData);
+        });
     }
 
     //下拉刷新
