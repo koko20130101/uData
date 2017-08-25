@@ -1,10 +1,13 @@
 import {Injectable, Pipe} from '@angular/core';
 
-@Pipe({
+/*@Pipe({
     name: 'ListPipe'
-})
+})*/
 @Injectable()
 export class ListPipe {
+    constructor(){
+
+    }
     //内容筛选
     transform(value, conditions?) {
         //要筛选的字段

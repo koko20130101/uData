@@ -243,7 +243,6 @@ export class BankDetailPage {
             case CacheField.bankTotal:
                 if (!!_cacheData) {
                     this.bankTotalData = _cacheData;
-                    console.log(this.bankTotalData)
                     return;
                 } else {
                     break;

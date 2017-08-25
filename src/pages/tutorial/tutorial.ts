@@ -73,7 +73,6 @@ export class TutorialPage {
 
     ngOnInit() {
         this.dataInstance = this.globalVars.getInstance();
-
     }
 
 

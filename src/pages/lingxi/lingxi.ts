@@ -60,14 +60,15 @@ export class LingXiPage {
                 public popupFactory: PopupFactory,
                 public lingXiService: LingXiService,
                 public globalVars: GlobalVars) {
+
+    }
+
+    ngOnInit() {
         Object.assign(this.lingXiTotalData[0], this.model);
         Object.assign(this.lingXiTotalData[1], this.model);
         Object.assign(this.lingXiTotalData[2], this.model);
         Object.assign(this.lingXiTotalData[3], this.model);
         Object.assign(this.lingXiTotalData[4], this.model);
-    }
-
-    ngOnInit() {
         this.dateInstance = this.globalVars.getInstance();
 
         //交易额折线图设置
