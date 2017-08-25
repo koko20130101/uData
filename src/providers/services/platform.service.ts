@@ -266,22 +266,22 @@ export class PlatformService {
                 _data = this.publicFactory.checkValueStamp(this.totalData);
                 break;
             case CacheField.platformsCompare:
-                _data = this.publicFactory.checkValueStamp(this.platformsCompareData,false,source);
+                _data = this.publicFactory.checkValueStamp(this.platformsCompareData,false,[source]);
                 break;
             case CacheField.platformTrend:
                 _data = this.publicFactory.checkValueStamp(this.trendData);
                 break;
             case CacheField.enemyPlatformsCompare:
-                _data = this.publicFactory.checkValueStamp(this.enemyPlatformsCompareData,false,source);
+                _data = this.publicFactory.checkValueStamp(this.enemyPlatformsCompareData,false,[source]);
                 break;
             case CacheField.enemyBar:
                 _data = this.publicFactory.checkValueStamp(this.enemyBarData);
                 break;
             case CacheField.regularCompare:
-                _data = this.publicFactory.checkValueStamp(this.regularCompareData,false,source);
+                _data = this.publicFactory.checkValueStamp(this.regularCompareData,false,[source]);
                 break;
             case CacheField.regularTrend:
-                _data = this.publicFactory.checkValueStamp(this.regularTrendData,false,source);
+                _data = this.publicFactory.checkValueStamp(this.regularTrendData,false,[source]);
                 break;
             case CacheField.fundTrend:
                 _data = this.publicFactory.checkValueStamp(this.fundTrendData);

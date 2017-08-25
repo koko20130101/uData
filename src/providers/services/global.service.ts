@@ -60,28 +60,6 @@ export class GlobalVars {
         let _index = index | 0;
 
         if(!!data) {
-            for(let key in data) {
-                switch (key) {
-                    case 'day':
-                        data[key][0] += ' (今日)';
-                        data[key][1] += ' (昨日)';
-                        break;
-                    case 'week':
-                        data[key][0] += ' (本周)';
-                        data[key][1] += ' (上周)';
-                        break;
-                    case 'month':
-                        data[key][0] += ' (本月)';
-                        data[key][1] += ' (上月)';
-                        break;
-                    case 'year':
-                        data[key][0] += ' (今年)';
-                        data[key][1] += ' (去年)';
-                        break;
-                    default:
-                        break;
-                }
-            }
              GlobalVars.instance.dateList = data;
         }
 

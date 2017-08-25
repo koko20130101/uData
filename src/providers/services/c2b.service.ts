@@ -299,13 +299,13 @@ export class C2bService {
                 _data = this.publicFactory.checkValueStamp(this.saleData);
                 break;
             case CacheField.saleChannelIn:
-                _data = this.publicFactory.checkValueStamp(this.saleChannelDataIn,false,source);
+                _data = this.publicFactory.checkValueStamp(this.saleChannelDataIn,false,[source]);
                 break;
             case CacheField.saleChannelOut:
-                _data = this.publicFactory.checkValueStamp(this.saleChannelDataOut,false,source);
+                _data = this.publicFactory.checkValueStamp(this.saleChannelDataOut,false,[source]);
                 break;
             case CacheField.assetsInOut:
-                _data = this.publicFactory.checkValueStamp(this.assetsInOutData,false,source);
+                _data = this.publicFactory.checkValueStamp(this.assetsInOutData,false,[source]);
                 break;
             case CacheField.assetsMain:
                 _data = this.publicFactory.checkValueStamp(this.assetsMainData, true);

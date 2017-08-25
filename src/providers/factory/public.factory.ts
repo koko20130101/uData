@@ -66,7 +66,7 @@ export class PublicFactory {
     }
 
     //检查数据时间戳
-    checkValueStamp(data, short?: boolean,tip?:any) {
+    checkValueStamp(data, short?: boolean,tips?:any) {
         let _data: any = data;
         //当前时间戳
         let _thisTime = moment().unix();
@@ -79,8 +79,20 @@ export class PublicFactory {
             //过期时间: 60秒前 (在global.service中设置)
             if (!!_data && !!_data[_currentDate] && !!_data[_currentDate].stamp && _data[_currentDate].stamp + _instance.cacheTime.short > _thisTime) {
                 return _data[_currentDate];
-            } else if(!!_data[_currentDate]  && !!_data[_currentDate][tip] && _data[_currentDate][tip].stamp + _instance.cacheTime.short > _thisTime ) {
-                return _data[_currentDate][tip];
+            } else if(!!_data[_currentDate]  && !!tips) {
+                let temp:any=_data[_currentDate];
+                for(let tip of tips) {
+                    if(!!temp[tip]) {
+                        temp = temp[tip];
+                    }else{
+                        return false
+                    }
+                }
+                if(temp.stamp + _instance.cacheTime.short > _thisTime) {
+                    return temp
+                }else{
+                    return false;
+                }
             }else{
                 return false;
             }
@@ -88,8 +100,20 @@ export class PublicFactory {
             //过期时间: 30天 (在global.service中设置)
             if (!!_data && !!_data[_currentDate] && !!_data[_currentDate].stamp && _data[_currentDate].stamp + _instance.cacheTime.middle > _thisTime) {
                 return _data[_currentDate];
-            } else if(!!_data[_currentDate]  && !!_data[_currentDate][tip] && _data[_currentDate][tip].stamp + _instance.cacheTime.middle > _thisTime ) {
-                return _data[_currentDate][tip];
+            } else if(!!_data[_currentDate]  && !!tips) {
+                let temp2:any=_data[_currentDate];
+                for(let tip of tips) {
+                    if(!!temp2[tip]) {
+                        temp2 = temp2[tip];
+                    }else{
+                        return false
+                    }
+                }
+                if(temp2.stamp + _instance.cacheTime.middle > _thisTime) {
+                    return temp2
+                }else{
+                    return false;
+                }
             }else{
                 return false;
             }

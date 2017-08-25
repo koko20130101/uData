@@ -36,11 +36,11 @@ export class TutorialPage {
     dataInstance: any;
 
     constructor(public navCtrl: NavController,
+                public dateService: DateService,
                 public user: User,
                 public globalVars: GlobalVars,
                 public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
-                public dateService: DateService,
                 public translate: TranslateService) {
         translate.get(["TUTORIAL_SLIDE1_TITLE",
             "TUTORIAL_SLIDE1_DESCRIPTION",
@@ -73,6 +73,7 @@ export class TutorialPage {
 
     ngOnInit() {
         this.dataInstance = this.globalVars.getInstance();
+
     }
 
 
@@ -97,7 +98,10 @@ export class TutorialPage {
     }
 
     ionViewWillEnter() {
-        console.log(2);
+
+    }
+    ionViewDidEnter(){
+        console.log('ccc')
         //视图加载完成时启用倒计时
         this.myInterval = setInterval(()=> {
             this.count--;
@@ -113,21 +117,25 @@ export class TutorialPage {
                 userPower = yield this.user.getUserPower();
             }
             if (userPower.code == 1) {
-                let _date = this.dateService.getValue();
-                //如果没有数据返回，则向服务器请求
-                if (!_date) {
-                    this.dateService.loadDateList({}).subscribe(data => {
-                        let res: any = data;
-                        if (res._body.code == 1) {
-                            this.isLogged = true;
-                            this.globalVars.setDateValue(res._body.data);
-                        }
-                    });
-                } else {
-                    //设置全局变量
-                    this.isLogged = true;
-                    this.globalVars.setDateValue(_date);
-                }
+                //延迟加载日期列表，因为从本地读日期列表要时间
+                let myTimeOut = setTimeout(function () {
+                    let _date = this.dateService.getValue();
+                    //如果没有数据返回，则向服务器请求
+                    if (!_date) {
+                        this.dateService.loadDateList({}).subscribe(data => {
+                            let res: any = data;
+                            if (res._body.code == 1) {
+                                this.isLogged = true;
+                                this.dataInstance.setDateValue(res._body.data);
+                            }
+                        });
+                    } else {
+                        //设置全局变量
+                        this.isLogged = true;
+                        this.dataInstance.setDateValue(_date);
+                    }
+                    clearTimeout(myTimeOut);
+                }.bind(this),300);
             }
         }.bind(this));
     }

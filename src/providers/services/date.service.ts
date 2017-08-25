@@ -6,30 +6,55 @@ import moment from 'moment';
 import {Api} from '../api';
 import {Endpoint} from '../endpoint';
 import {CacheField} from '../cache-field';
+import {GlobalVars} from  '../../providers/services/global.service';
 
 
 @Injectable()
 export class DateService {
     _date: any;
-
-    constructor(public http: Http, public api: Api, public storage: Storage) {
-        this.storage.get(CacheField.dateList).then((data)=>{
-            if(!!data) {
+    dataInstance:any;
+    constructor(public http: Http, public api: Api, public storage: Storage,public globalVars:GlobalVars) {
+        this.storage.get(CacheField.dateList).then((data)=> {
+            if (!!data) {
                 this._date = data;
             }
-        })
+        });
+        this.dataInstance = this.globalVars.getInstance();
     }
 
     loadDateList(sendData: any) {
         let req = this.api.post(Endpoint.dateList, sendData).share();
         req.map(res => res.json())
             .subscribe(res=> {
-                //存储到地本地
-                this._date = res.data;
+                //处理数据
+                for(let key in res.data) {
+                    switch (key) {
+                        case 'day':
+                            res.data[key][0] += ' (今日)';
+                            res.data[key][1] += ' (昨日)';
+                            break;
+                        case 'week':
+                            res.data[key][0] += ' (本周)';
+                            res.data[key][1] += ' (上周)';
+                            break;
+                        case 'month':
+                            res.data[key][0] += ' (本月)';
+                            res.data[key][1] += ' (上月)';
+                            break;
+                        case 'year':
+                            res.data[key][0] += ' (今年)';
+                            res.data[key][1] += ' (去年)';
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 let today = moment().format('YYYYMMDD');
                 //添加时间戳
-                Object.assign(this._date, {stamp:today});
+                Object.assign(res.data, {stamp:today});
+                //存储到地本地
                 this.storage.set(CacheField.dateList, res.data);
+                this._date = res.data;
             }, err=> {
 
             });
@@ -37,6 +62,7 @@ export class DateService {
     }
 
     getValue() {
+        debugger
         let today = moment().format('YYYYMMDD');
         //对比时间戳
         if (!!this._date && this._date.stamp == today) {

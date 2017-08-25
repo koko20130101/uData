@@ -189,13 +189,13 @@ export class LingXiService {
         let _data:any;
         switch (key){
             case CacheField.lingXiTotal:
-                _data = this.publicFactory.checkValueStamp(this.lingXiTotalData,false,tip);
+                _data = this.publicFactory.checkValueStamp(this.lingXiTotalData,false,[tip]);
                 break;
             case CacheField.lingXiTrendDeal:
-                _data = this.publicFactory.checkValueStamp(this.dealTrendData,false,tip);
+                _data = this.publicFactory.checkValueStamp(this.dealTrendData,false,[tip]);
                 break;
             case CacheField.lingXiTrendRate:
-                _data = this.publicFactory.checkValueStamp(this.rateTrendData,false,tip);
+                _data = this.publicFactory.checkValueStamp(this.rateTrendData,false,[tip]);
                 break;
             case CacheField.lingXiChannel:
                 _data = this.publicFactory.checkValueStamp(this.lingXiChannelData);
