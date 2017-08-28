@@ -112,6 +112,8 @@ export class TutorialPage {
             let loginStatus: any = yield this.user.checkLogin({});
             let userPower: any = {};
             if (loginStatus.code == 1) {
+                console.log(loginStatus)
+                this.dataInstance.cryptKey = loginStatus.data.key;
                 userPower = yield this.user.getUserPower();
             }
             if (userPower.code == 1) {

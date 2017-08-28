@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Storage} from '@ionic/storage'
 import moment from 'moment';
 
 import {Api} from '../api';
@@ -7,6 +6,7 @@ import {CacheField} from '../cache-field';
 
 import {GlobalVars} from '../services/global.service';
 import {PublicFactory} from '../factory/public.factory';
+import {StorageFactory} from '../factory/storage.factory';
 
 @Injectable()
 export class HomeService {
@@ -17,7 +17,7 @@ export class HomeService {
     constructor(public publicFactory: PublicFactory,
                 public api:Api,
                 public globalVars:GlobalVars,
-                public storage:Storage) {
+                public storage:StorageFactory) {
 
     }
     //从服务器请求数据

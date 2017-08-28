@@ -62,7 +62,7 @@ export class User {
      * */
     checkLogin(sendData: any) {
         return new Promise((resolve, reject)=> {
-            let seq = this.api.post(Endpoint.checkLogin, sendData).share()
+            let seq = this.api.post(Endpoint.checkLogin, sendData).share();
             seq .map(res => res.json())
                 .subscribe(
                     (data)=> {

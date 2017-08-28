@@ -49,6 +49,8 @@ export class GlobalVars {
         },
         token: ''
     };
+    //本地存储加密密码，每次打开App从后端获取
+    cryptKey: String = '1234567890000000';
 
     constructor() {
 

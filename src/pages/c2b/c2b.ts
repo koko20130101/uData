@@ -109,7 +109,7 @@ export class C2bPage {
         this.publicFactory.unitInfo.subscribe((data) => {
             if (data.page == this.pageInfo.name) {
                 // console.log(data.page)
-                this.goSegment();
+                this.slideChange();
             }
         });
     }

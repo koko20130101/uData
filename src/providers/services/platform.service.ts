@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Storage} from '@ionic/storage'
 import moment from 'moment';
 
 import {Api} from '../api';
@@ -7,6 +6,7 @@ import {CacheField} from '../cache-field';
 
 import {GlobalVars} from '../services/global.service';
 import {PublicFactory} from '../factory/public.factory';
+import {StorageFactory} from '../factory/storage.factory';
 import {ListPipe} from '../../providers/pipes/list.pipe';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class PlatformService {
                 public api: Api,
                 public globalVars: GlobalVars,
                 public listPipe: ListPipe,
-                public storage: Storage,) {
+                public storage: StorageFactory) {
     }
 
     /**
@@ -83,7 +83,7 @@ export class PlatformService {
                         //通过管道排序:1为降序，0为升序
                         _res.data.list = this.listPipe.orderBy(_res.data.list, ['percent'], 1);
                         let temp: any = {};
-                        temp[_res.dataType] = _res.data.list;
+                        temp[_res.dataType] = _res.data;
                         //添加时间戳
                         Object.assign(temp[_res.dataType], {stamp: _thisTime});
                         _res.data = temp;
@@ -233,7 +233,7 @@ export class PlatformService {
                         if(!!data){
                             this.platformsCompareData = data;
                             _data = this.publicFactory.checkValueStamp(this.platformsCompareData,false,[source]);
-                            resolve(_data)
+                            resolve(_data.list)
                         }else{
                             resolve(false);
                         }

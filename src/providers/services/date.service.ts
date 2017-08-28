@@ -1,19 +1,22 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import {Storage} from '@ionic/storage'
 import moment from 'moment';
 
 import {Api} from '../api';
 import {Endpoint} from '../endpoint';
 import {CacheField} from '../cache-field';
 import {GlobalVars} from  '../../providers/services/global.service';
+import {StorageFactory} from '../factory/storage.factory';
 
 
 @Injectable()
 export class DateService {
     _date: any;
     dataInstance:any;
-    constructor(public http: Http, public api: Api, public storage: Storage,public globalVars:GlobalVars) {
+    constructor(public http: Http,
+                public api: Api,
+                public storage: StorageFactory,
+                public globalVars:GlobalVars) {
         this.storage.get(CacheField.dateList).then((data)=> {
             if (!!data) {
                 this._date = data;
@@ -62,7 +65,6 @@ export class DateService {
     }
 
     getValue() {
-        debugger
         let today = moment().format('YYYYMMDD');
         //对比时间戳
         if (!!this._date && this._date.stamp == today) {

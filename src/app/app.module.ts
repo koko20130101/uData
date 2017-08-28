@@ -27,6 +27,8 @@ import {Items} from '../mocks/providers/items';
 import {Settings} from '../providers/settings';
 import {PublicFactory} from '../providers/providers';
 import {PopupFactory} from '../providers/providers';
+import {StorageFactory} from '../providers/providers';
+import {Crypto} from '../providers/providers';
 import {User} from '../providers/services/user.service';
 import {GlobalVars} from '../providers/services/global.service';
 import {DateService} from '../providers/services/date.service';
@@ -139,6 +141,8 @@ export function provideSettings(storage: Storage) {
         User,
         PublicFactory,
         PopupFactory,
+        StorageFactory,
+        Crypto,
         Camera,
         GoogleMaps,
         SplashScreen,

@@ -118,7 +118,7 @@ export class PlatformTotalPage {
         this.publicFactory.unitInfo.subscribe((data) => {
             console.log(data.page);
             if (data.page == this.pageInfo.name) {
-                this.getPlatformSegment();
+                this.slideChange();
             }
         });
     }
@@ -161,7 +161,11 @@ export class PlatformTotalPage {
                             this.totalData = res.data;
                             break;
                         case CacheField.platformsCompare:
-                            Object.assign(this.platformsCompareData, res.data);
+                            if(!!res.data[this.ucsDataType]){
+                                this.platformsCompareData[this.ucsDataType] = res.data[this.ucsDataType]['list'];
+                            }else{
+                                this.platformsCompareData[this.ucsDataType] = []
+                            }
                             break;
                         case CacheField.platformTrend:
                             this.trendData = res.data;
@@ -411,8 +415,8 @@ export class PlatformTotalPage {
         switch (this.platformType) {
             //网金
             case 1:
-                this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
-                this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
+                // this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
+                // this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
                 this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare, this.ucsDataType);
                 break;
             //竞品

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Storage} from '@ionic/storage';
 import moment from 'moment';
 
 import {Api} from '../api';
@@ -7,6 +6,7 @@ import {CacheField} from '../cache-field'
 
 import {GlobalVars} from '../services/global.service';
 import {PublicFactory} from '../factory/public.factory';
+import {StorageFactory} from '../factory/storage.factory';
 import {ListPipe} from '../../providers/pipes/list.pipe';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class C2bService {
                 public globalVars: GlobalVars,
                 public publicFactory: PublicFactory,
                 public listPipe: ListPipe,
-                public storage: Storage) {
+                public storage: StorageFactory) {
     }
 
     private handleValue(_data:any){
