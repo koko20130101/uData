@@ -164,14 +164,18 @@ export class PlatformTotalPage {
                             if(!!res.data[this.ucsDataType]){
                                 this.platformsCompareData[this.ucsDataType] = res.data[this.ucsDataType]['list'];
                             }else{
-                                this.platformsCompareData[this.ucsDataType] = []
+                                this.platformsCompareData[this.ucsDataType] = [];
                             }
                             break;
                         case CacheField.platformTrend:
                             this.trendData = res.data;
                             break;
                         case CacheField.enemyPlatformsCompare:
-                            Object.assign(this.enemyPlatformsCompareData, res.data);
+                            if(!!res.data[this.enemyDataType]){
+                                this.enemyPlatformsCompareData[this.enemyDataType] = res.data[this.enemyDataType]['list'];
+                            }else{
+                                this.enemyPlatformsCompareData[this.enemyDataType] = [];
+                            }
                             break;
                         case CacheField.regularCompare:
                             Object.assign(this.regularCompareData, res.data);

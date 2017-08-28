@@ -109,7 +109,7 @@ export class PlatformService {
                         //通过管道排序:1为降序，0为升序
                         _res.data.list = this.listPipe.orderBy(_res.data.list, ['percent'], 1);
                         let _enemyData: any = {};
-                        _enemyData[_res.dataType] = _res.data.list;
+                        _enemyData[_res.dataType] = _res.data;
                         //添加时间戳
                         Object.assign(_enemyData[_res.dataType], {stamp: _thisTime});
                         _res.data = _enemyData;
@@ -257,7 +257,7 @@ export class PlatformService {
                         if(!!data){
                             this.enemyPlatformsCompareData = data;
                             _data = this.publicFactory.checkValueStamp(this.enemyPlatformsCompareData,false,[source]);
-                            resolve(_data)
+                            resolve(_data.list)
                         }else{
                             resolve(false);
                         }
