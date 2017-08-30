@@ -456,9 +456,9 @@ export class C2bPage {
             //引入额
             case 1:
                 this.inoutFlag = 'in';
-                // this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
+                this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
                 this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn, this.saleChannelTypeIn);
-                // this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut, this.inoutFlag);
+                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut, this.inoutFlag);
                 break;
             //销售额
             case 2:

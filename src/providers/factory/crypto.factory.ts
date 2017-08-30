@@ -27,19 +27,22 @@ export class Crypto {
         let keyUtf8 = CryptoJS.enc.Utf8.parse(key);
         let iv = CryptoJS.enc.Utf8.parse(key);
         let encryptedHexStr = CryptoJS.enc.Hex.parse(data);
+        if(!encryptedHexStr.sigBytes) {
+            return false;
+        }
         let _data = CryptoJS.enc.Base64.stringify(encryptedHexStr);
-        let decrypted = CryptoJS.AES.decrypt(_data, keyUtf8, {
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7,
-            iv: iv
-        });
         try {
-            var decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
+            let decrypted = CryptoJS.AES.decrypt(_data, keyUtf8, {
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7,
+                iv: iv
+            });
+            let decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
             return JSON.parse(decryptedStr);
         } catch (e) {
             console.log(e.name + ": " + e.message);
         }
         /*var decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
-        return JSON.parse(decryptedStr);*/
+         return JSON.parse(decryptedStr);*/
     }
 }
