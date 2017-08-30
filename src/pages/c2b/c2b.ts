@@ -248,10 +248,18 @@ export class C2bPage {
                             this.assetsInOutData = res.data;
                             break;
                         case CacheField.saleChannelIn:
-                            this.saleChannelDataIn = res.data;
+                            if(!!res.data[this.saleChannelTypeIn]){
+                                this.saleChannelDataIn[this.saleChannelTypeIn] = res.data[this.saleChannelTypeIn]['list'];
+                            }else{
+                                this.saleChannelDataIn[this.saleChannelTypeIn] = [];
+                            }
                             break;
                         case CacheField.saleChannelOut:
-                            this.saleChannelDataOut = res.data;
+                            if(!!res.data[this.saleChannelTypeOut]){
+                                this.saleChannelDataOut[this.saleChannelTypeOut] = res.data[this.saleChannelTypeOut]['list'];
+                            }else{
+                                this.saleChannelDataOut[this.saleChannelTypeOut] = [];
+                            }
                             break;
                         case CacheField.assetsMain:
                             this.assetsMain = res.data;
@@ -448,9 +456,9 @@ export class C2bPage {
             //引入额
             case 1:
                 this.inoutFlag = 'in';
-                this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
+                // this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
                 this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn, this.saleChannelTypeIn);
-                this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut, this.inoutFlag);
+                // this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut, this.inoutFlag);
                 break;
             //销售额
             case 2:

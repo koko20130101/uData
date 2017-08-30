@@ -108,7 +108,7 @@ export class C2bService {
                         //通过管道排序:1为降序，0为升序
                         _res.data.list = this.listPipe.orderBy(_res.data.list, ['percent'], 1);
                         let temp: any = {};
-                        temp[_res.dataType] = _res.data.list;
+                        temp[_res.dataType] = _res.data;
                         //添加时间戳
                         Object.assign(temp[_res.dataType], {stamp: _thisTime});
                         _res.data = temp;
@@ -126,7 +126,7 @@ export class C2bService {
                         //通过管道排序:1为降序，0为升序
                         _res.data.list = this.listPipe.orderBy(_res.data.list, ['percent'], 1);
                         let _channelOut: any = {};
-                        _channelOut[_res.dataType] = _res.data.list;
+                        _channelOut[_res.dataType] = _res.data;
                         //添加时间戳
                         Object.assign(_channelOut[_res.dataType], {stamp: _thisTime});
                         _res.data = _channelOut;
@@ -273,7 +273,7 @@ export class C2bService {
                         if(!!data){
                             this.saleChannelDataIn = data;
                             _data = this.publicFactory.checkValueStamp(this.saleChannelDataIn,false,[source]);
-                            resolve(_data)
+                            resolve(_data.list)
                         }else{
                             resolve(false);
                         }
@@ -284,7 +284,7 @@ export class C2bService {
                         if(!!data){
                             this.saleChannelDataOut = data;
                             _data = this.publicFactory.checkValueStamp(this.saleChannelDataOut,false,[source]);
-                            resolve(_data)
+                            resolve(_data.list)
                         }else{
                             resolve(false);
                         }

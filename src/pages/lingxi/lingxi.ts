@@ -103,7 +103,7 @@ export class LingXiPage {
         //订阅选择单位传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
             if (data.page == this.pageInfo.name) {
-                this.goSegment();
+                this.slideChange();
             }
         });
     }

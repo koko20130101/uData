@@ -17,20 +17,27 @@ export class StorageFactory {
     get(key) {
         return this.storage.get(key).then(data=> {
             if (!!data) {
-                let decryptData = this.crypto.decrypt(data, this.globalInstance.cryptKey);
+                return data
+                //AES加密
+                /*let decryptData = this.crypto.decrypt(data, this.globalInstance.cryptKey);
                 if(!!decryptData) {
                     return decryptData
                 }else{
                     this.storage.remove(key);
                     return false
-                }
+                }*/
+            }else{
+                return false
             }
         });
     }
 
     set(cacheKey, data) {
-        let _data = this.crypto.encrypt(data,this.globalInstance.cryptKey);
-        this.storage.set(cacheKey, _data);
+        //AES解密
+        // let _data = this.crypto.encrypt(data,this.globalInstance.cryptKey);
+        // this.storage.set(cacheKey, _data);
+        this.storage.set(cacheKey, data);
+
     }
 
     remove(key){
