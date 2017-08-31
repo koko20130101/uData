@@ -1,0 +1,4 @@
+{
+  "content_url": "http://172.17.2.95:8080/www",
+  "config_url": "http://172.17.2.95:8080/www/chcp.json"
+}

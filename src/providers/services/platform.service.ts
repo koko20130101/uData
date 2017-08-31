@@ -215,6 +215,7 @@ export class PlatformService {
         return new Promise((resolve, reject)=> {
             switch (key) {
                 case CacheField.platformTotal:
+                    console.log(this.totalData)
                     //提取本地存储
                     this.storage.get(key).then((data) => {
                         if(!!data){
