@@ -34,10 +34,9 @@ import {GlobalVars} from '../providers/services/global.service';
 import {DateService} from '../providers/services/date.service';
 import {ListPipe} from '../providers/pipes/list.pipe';
 
-import {Camera} from '@ionic-native/camera';
-import {GoogleMaps} from '@ionic-native/google-maps';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
+import {Device} from '@ionic-native/device';
 
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -143,13 +142,12 @@ export function provideSettings(storage: Storage) {
         PopupFactory,
         StorageFactory,
         Crypto,
-        Camera,
-        GoogleMaps,
-        SplashScreen,
-        StatusBar,
         GlobalVars,
         DateService,
         ListPipe,
+        SplashScreen,
+        StatusBar,
+        Device,
         {provide: Settings, useFactory: provideSettings, deps: [Storage]},
         // Keep this to enable Ionic's runtime error handling during development
         {provide: ErrorHandler, useClass: IonicErrorHandler}

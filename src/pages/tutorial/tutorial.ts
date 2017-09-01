@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
+import {Device} from '@ionic-native/device';
 
 import co from 'co';
 
@@ -41,6 +42,7 @@ export class TutorialPage {
                 public globalVars: GlobalVars,
                 public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
+                public device:Device,
                 public translate: TranslateService) {
         translate.get(["TUTORIAL_SLIDE1_TITLE",
             "TUTORIAL_SLIDE1_DESCRIPTION",
@@ -75,9 +77,7 @@ export class TutorialPage {
         this.dataInstance = this.globalVars.getInstance();
     }
 
-
     ionViewDidLoad() {
-
         //订阅请求错误信息
         this.publicFactory.error.subscribe((data)=> {
             console.log(data)
@@ -97,7 +97,16 @@ export class TutorialPage {
     }
 
     ionViewWillEnter() {
-
+        //设备唯一识别码
+        this.dataInstance.sendMassage.head.UUID = this.device.uuid;
+        //设备制造商
+        this.dataInstance.sendMassage.head.manufacturer = this.device.manufacturer;
+        //设备硬件序列号
+        this.dataInstance.sendMassage.head.serial = this.device.serial;
+        //操作系统名称
+        this.dataInstance.sendMassage.head.platform = this.device.platform;
+        //操作系统版本
+        this.dataInstance.sendMassage.head.oSVersion = this.device.version;
     }
     ionViewDidEnter(){
         //视图加载完成时启用倒计时

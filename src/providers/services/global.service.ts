@@ -40,9 +40,11 @@ export class GlobalVars {
     sendMassage = {
         head: {
             appVersion: '',    // app版本
-            clientModel: '',   // 客户端类型
-            iMEI: '',          // 机器唯一识别码
-            oSVersion: '',     // 机器型号
+            manufacturer: '',  // 设备制造商
+            UUID: '',          // 机器唯一识别码
+            serial: '',     // 设备硬件序列号
+            platform: '',      // 操作系统名称
+            oSVersion: '',     // 操作系统版本
         },
         body:{
 

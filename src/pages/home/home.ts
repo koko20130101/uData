@@ -89,7 +89,7 @@ export class HomePage {
 
     getHomeData(endpoint, cacheKey) {
         let _sendData: any = null;
-        this.homeService.getValue(cacheKey).then(data=>{
+        this.homeService.getValue(cacheKey).then(data=> {
             if (!!data) {
                 this.totalAmount = data;
             } else {
@@ -102,7 +102,7 @@ export class HomePage {
         });
     }
 
-    loadData(endpoint, cacheKey,refresher?: any, loader?: any,sendData?: any) {
+    loadData(endpoint, cacheKey, refresher?: any, loader?: any, sendData?: any) {
         //从服务器取数据
         this.homeService.loadValue(endpoint, cacheKey)
             .map(res=>res.json())
@@ -142,7 +142,7 @@ export class HomePage {
     //下拉刷新
     doRefresh(refresher: Refresher) {
         setTimeout(() => {
-            this.loadData(Endpoint.homeData, CacheField.homeData,refresher);
+            this.loadData(Endpoint.homeData, CacheField.homeData, refresher);
         }, 500);
     }
 

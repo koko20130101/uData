@@ -22,7 +22,7 @@ export class Api {
         this.options = {
             withCredentials: true, //使用withCredentials发送跨域请求凭据
             headers: this.headers,
-            responseType: 1
+            responseType: 1,
         };
         this.globalInstance = this.globalVars.getInstance();
     }
@@ -48,10 +48,10 @@ export class Api {
 
     post(endpoint: string, body: any, options?: RequestOptions) {
         let sendData = Object.assign(this.globalInstance.sendMassage, {body: body});
-        console.log(endpoint + ":");
-        console.log(body);
+        // console.log(endpoint + ":");
+        // console.log(sendData);
         // return this.http.post(HOST + '/' + endpoint, body, this.options);
-        let seq = this.http.get(endpoint, this.options).share();
+        let seq = this.http.post(endpoint, JSON.stringify(sendData), this.options).share();
         seq.map(res => res.json())
             .subscribe(res => {
                 if (!!res && res.code != 1) {

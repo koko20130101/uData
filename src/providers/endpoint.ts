@@ -7,10 +7,10 @@ export const HOST = 'http://172.17.2.95:8080/';
 
 //接口
 export const Endpoint = {
-    smsCode: HOST+'assets/data/sms.json',     //获取短信
+    smsCode: HOST+'checkLogin',     //获取短信
     login: HOST+'assets/data/login.json',   //登录
-    logout:HOST+'assets/data/logout.json',          //登出
-    checkLogin:HOST+'assets/data/check-login.json',  //检查登录
+    logout:HOST+'assets/data/logout.json',    //登出
+    checkLogin:HOST+'checkLogin',  //检查登录
     userPower:HOST+'assets/data/user.json',  //用户权限
     dateList:HOST+'assets/data/date-list.json',  //日期列表
     homeData:HOST+'assets/data/main.json',  //首页总额

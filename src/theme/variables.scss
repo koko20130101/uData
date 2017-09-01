@@ -33,15 +33,18 @@ $colors: (
 $text-color: color($colors,light);
 $background-color: #1e1e28;
 $refresher-icon-color:color($colors,light);
+
 $loading-ios-spinner-color:color($colors,light);
 $loading-ios-background:none;
 $loading-md-background:none;
+$loading-md-box-shadow:none;
+
 $list-ios-background-color:color($colors,dark,mid);
 $list-ios-border-color:color($colors,dark,mid1);
-$note-ios-color:color($colors,gray,mid);
-
 $list-md-background-color:color($colors,dark,mid1);
 $list-md-border-color:color($colors,dark,mid1);
+
+$note-ios-color:color($colors,gray,mid);
 $note-md-color:color($colors,gray,mid);
 
 // App iOS Variables
