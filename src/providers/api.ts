@@ -50,8 +50,8 @@ export class Api {
         let sendData = Object.assign(this.globalInstance.sendMassage, {body: body});
         // console.log(endpoint + ":");
         // console.log(sendData);
-        // return this.http.post(HOST + '/' + endpoint, body, this.options);
-        let seq = this.http.get(endpoint, JSON.stringify(sendData), this.options).share();
+        // return this.http.post(HOST + '/' + endpoint, JSON.stringify(sendData),, this.options);
+        let seq = this.http.get(endpoint, this.options).share();
         seq.map(res => res.json())
             .subscribe(res => {
                 if (!!res && res.code != 1) {

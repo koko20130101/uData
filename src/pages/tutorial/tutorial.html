@@ -1,15 +1,10 @@
 <ion-content no-bounce ngClass="tutorial">
-    <div ngClass="count">
+    <div ngClass="count" *ngIf="showSkip">
         {{count}}
     </div>
-    <ion-slides pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
+    <ion-slides pager="{{(slides.length==0 || slides.length==1) ? false:true}}" (ionSlideWillChange)="onSlideChangeStart($event)">
         <ion-slide *ngFor="let slide of slides">
             <img [src]="slide.image" class="slide-image"/>
-            <h2 class="slide-title" [innerHTML]="slide.title"></h2>
-            <p [innerHTML]="slide.description"></p>
-        </ion-slide>
-        <ion-slide>
-            <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/>
         </ion-slide>
     </ion-slides>
 </ion-content>
@@ -18,10 +13,10 @@
         <ion-row align-items-center>
             <ion-col width-20></ion-col>
             <ion-col width-80 text-center>
-                网金控股
+                <img src="assets/img/logo.png" alt="">
             </ion-col>
             <ion-col width-20 text-center>
-                <button ion-button clear small (click)="startApp()">跳过</button>
+                <button ion-button clear small *ngIf="!showSkip" (click)="startApp()">跳过</button>
             </ion-col>
         </ion-row>
     </div>

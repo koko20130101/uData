@@ -19,7 +19,6 @@ import {PublicFactory} from '../../providers/factory/public.factory';
 
 export interface Slide {
     title: string;
-    description: string;
     image: string;
 }
 
@@ -28,7 +27,7 @@ export interface Slide {
     templateUrl: 'tutorial.html'
 })
 export class TutorialPage {
-    slides: Slide[];
+    slides: Slide[]=[];
     showSkip = true;
     isLogged: boolean = false;
     count = 5;  //启动页倒计时
@@ -44,33 +43,7 @@ export class TutorialPage {
                 public publicFactory: PublicFactory,
                 public device:Device,
                 public translate: TranslateService) {
-        translate.get(["TUTORIAL_SLIDE1_TITLE",
-            "TUTORIAL_SLIDE1_DESCRIPTION",
-            "TUTORIAL_SLIDE2_TITLE",
-            "TUTORIAL_SLIDE2_DESCRIPTION",
-            "TUTORIAL_SLIDE3_TITLE",
-            "TUTORIAL_SLIDE3_DESCRIPTION",
-        ]).subscribe(
-            (values) => {
-                console.log('Loaded values', values);
-                this.slides = [
-                    {
-                        title: values.TUTORIAL_SLIDE1_TITLE,
-                        description: values.TUTORIAL_SLIDE1_DESCRIPTION,
-                        image: 'assets/img/ica-slidebox-img-1.png',
-                    },
-                    {
-                        title: values.TUTORIAL_SLIDE2_TITLE,
-                        description: values.TUTORIAL_SLIDE2_DESCRIPTION,
-                        image: 'assets/img/ica-slidebox-img-2.png',
-                    },
-                    {
-                        title: values.TUTORIAL_SLIDE3_TITLE,
-                        description: values.TUTORIAL_SLIDE3_DESCRIPTION,
-                        image: 'assets/img/ica-slidebox-img-3.png',
-                    }
-                ];
-            });
+
     }
 
     ngOnInit() {
@@ -100,14 +73,6 @@ export class TutorialPage {
 
     }
     ionViewDidEnter(){
-        //视图加载完成时启用倒计时
-        this.myInterval = setInterval(()=> {
-            this.count--;
-            if (this.count == 0) {
-                this.startApp();
-            }
-        }, 1000);
-
         let _timeout = setTimeout(function () {
             //设备唯一识别码
             this.dataInstance.sendMassage.head.UUID = this.device.uuid;
@@ -123,10 +88,17 @@ export class TutorialPage {
             co(function *() {
                 let loginStatus: any = yield this.user.checkLogin({});
                 let userPower: any = {};
+                let tutorial: any = {};
                 if (loginStatus.code == 1) {
-                    console.log(loginStatus)
                     this.dataInstance.cryptKey = loginStatus.data.key;
                     userPower = yield this.user.getUserPower();
+                    //加载启动页面
+                    tutorial = yield this.user.getTutorials();
+                    this.slides = tutorial.data;
+                }else{
+                    this.isLogged = false;
+                    this.startApp();
+                    return;
                 }
                 if (userPower.code == 1) {
                     //延迟加载日期列表，因为从本地读日期列表要时间
@@ -139,12 +111,26 @@ export class TutorialPage {
                                 if (res._body.code == 1) {
                                     this.isLogged = true;
                                     this.dataInstance.setDateValue(res._body.data);
+                                    //判断是否有启动广告
+                                    if(this.slides.length==0) {
+                                        this.showSkip = false;
+                                        this.startApp()
+                                    }else{
+                                        this.doInterval();
+                                    }
                                 }
                             });
                         } else {
                             //设置全局变量
                             this.isLogged = true;
                             this.dataInstance.setDateValue(_date);
+                            //判断是否有启动广告
+                            if(this.slides.length==0) {
+                                this.showSkip = false;
+                                this.startApp()
+                            }else{
+                                this.doInterval();
+                            }
                         }
                         clearTimeout(myTimeOut);
                     }.bind(this),300);
@@ -163,6 +149,16 @@ export class TutorialPage {
 
     ionViewWillLeave() {
 
+    }
+
+    doInterval(){
+        //加载完成时启用倒计时
+        this.myInterval = setInterval(()=> {
+            this.count--;
+            if (this.count == 0) {
+                this.startApp();
+            }
+        }, 1000);
     }
 
     //进入应用
@@ -195,6 +191,7 @@ export class TutorialPage {
 
     onSlideChangeStart(slider) {
         //显示跳过按钮
-        this.showSkip = !slider.isEnd();
+        this.showSkip = false;
+        clearInterval(this.myInterval);
     }
 }

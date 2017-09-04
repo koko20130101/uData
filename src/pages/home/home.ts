@@ -76,7 +76,7 @@ export class HomePage {
                     position: 'top'
                 });
                 toast.onDidDismiss(()=> {
-                    this.errorCount = 0
+                    this.errorCount = 0;
                     console.log(this.errorCount);
                 })
             }

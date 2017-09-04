@@ -7,18 +7,12 @@ page-tutorial {
     border-color: transparent;
   }
 
+  .swiper-slide img{
+    width:100%;
+  }
+
   .slide-zoom {
     height: 100%;
-  }
-
-  .slide-title {
-    margin-top: 2.8rem;
-  }
-
-  .slide-image {
-    max-height: 40%;
-    max-width: 60%;
-    margin: 36px 0;
   }
 
   b {
@@ -47,5 +41,6 @@ page-tutorial {
     border-radius: 50%;
     background-color: color($colors, gray);
     opacity:.5;
+    z-index: 2;
   }
 }
