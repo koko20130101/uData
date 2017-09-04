@@ -1,6 +1,7 @@
 import {Component} from  '@angular/core';
 import {NavController, Refresher} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
+import {Device} from '@ionic-native/device';
 
 import {LoginPage} from '../login/login';
 import {PlatformTotalPage} from '../platform-total/platform-total';
@@ -37,11 +38,13 @@ export class HomePage {
         LingXiTotal: 0
     };
     errorCount: any = 0; //请求错误次数
+    myDevice:any;
 
     constructor(public navCtrl: NavController,
                 public globalVars: GlobalVars,
                 public homeService: HomeService,
                 public user: User,
+                public device:Device,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
                 public storage: Storage) {

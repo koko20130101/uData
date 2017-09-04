@@ -51,7 +51,7 @@ export class Api {
         // console.log(endpoint + ":");
         // console.log(sendData);
         // return this.http.post(HOST + '/' + endpoint, body, this.options);
-        let seq = this.http.post(endpoint, JSON.stringify(sendData), this.options).share();
+        let seq = this.http.get(endpoint, JSON.stringify(sendData), this.options).share();
         seq.map(res => res.json())
             .subscribe(res => {
                 if (!!res && res.code != 1) {

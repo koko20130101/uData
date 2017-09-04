@@ -97,16 +97,7 @@ export class TutorialPage {
     }
 
     ionViewWillEnter() {
-        //设备唯一识别码
-        this.dataInstance.sendMassage.head.UUID = this.device.uuid;
-        //设备制造商
-        this.dataInstance.sendMassage.head.manufacturer = this.device.manufacturer;
-        //设备硬件序列号
-        this.dataInstance.sendMassage.head.serial = this.device.serial;
-        //操作系统名称
-        this.dataInstance.sendMassage.head.platform = this.device.platform;
-        //操作系统版本
-        this.dataInstance.sendMassage.head.oSVersion = this.device.version;
+
     }
     ionViewDidEnter(){
         //视图加载完成时启用倒计时
@@ -117,36 +108,51 @@ export class TutorialPage {
             }
         }, 1000);
 
-        co(function *() {
-            let loginStatus: any = yield this.user.checkLogin({});
-            let userPower: any = {};
-            if (loginStatus.code == 1) {
-                console.log(loginStatus)
-                this.dataInstance.cryptKey = loginStatus.data.key;
-                userPower = yield this.user.getUserPower();
-            }
-            if (userPower.code == 1) {
-                //延迟加载日期列表，因为从本地读日期列表要时间
-                let myTimeOut = setTimeout(function () {
-                    let _date = this.dateService.getValue();
-                    //如果没有数据返回，则向服务器请求
-                    if (!_date) {
-                        this.dateService.loadDateList({}).subscribe(data => {
-                            let res: any = data;
-                            if (res._body.code == 1) {
-                                this.isLogged = true;
-                                this.dataInstance.setDateValue(res._body.data);
-                            }
-                        });
-                    } else {
-                        //设置全局变量
-                        this.isLogged = true;
-                        this.dataInstance.setDateValue(_date);
-                    }
-                    clearTimeout(myTimeOut);
-                }.bind(this),300);
-            }
-        }.bind(this));
+        let _timeout = setTimeout(function () {
+            //设备唯一识别码
+            this.dataInstance.sendMassage.head.UUID = this.device.uuid;
+            //设备制造商
+            this.dataInstance.sendMassage.head.manufacturer = this.device.manufacturer;
+            //设备硬件序列号
+            this.dataInstance.sendMassage.head.serial = this.device.serial;
+            //操作系统名称
+            this.dataInstance.sendMassage.head.platform = this.device.platform;
+            //操作系统版本
+            this.dataInstance.sendMassage.head.oSVersion = this.device.version;
+
+            co(function *() {
+                let loginStatus: any = yield this.user.checkLogin({});
+                let userPower: any = {};
+                if (loginStatus.code == 1) {
+                    console.log(loginStatus)
+                    this.dataInstance.cryptKey = loginStatus.data.key;
+                    userPower = yield this.user.getUserPower();
+                }
+                if (userPower.code == 1) {
+                    //延迟加载日期列表，因为从本地读日期列表要时间
+                    let myTimeOut = setTimeout(function () {
+                        let _date = this.dateService.getValue();
+                        //如果没有数据返回，则向服务器请求
+                        if (!_date) {
+                            this.dateService.loadDateList({}).subscribe(data => {
+                                let res: any = data;
+                                if (res._body.code == 1) {
+                                    this.isLogged = true;
+                                    this.dataInstance.setDateValue(res._body.data);
+                                }
+                            });
+                        } else {
+                            //设置全局变量
+                            this.isLogged = true;
+                            this.dataInstance.setDateValue(_date);
+                        }
+                        clearTimeout(myTimeOut);
+                    }.bind(this),300);
+                }
+            }.bind(this));
+
+            clearTimeout(_timeout);
+        }.bind(this), 1000);
     }
 
     ionViewWillUnload() {
@@ -154,8 +160,6 @@ export class TutorialPage {
         //取消选择单位订阅
         this.publicFactory.error.observers.pop();
     }
-
-
 
     ionViewWillLeave() {
 
@@ -193,5 +197,4 @@ export class TutorialPage {
         //显示跳过按钮
         this.showSkip = !slider.isEnd();
     }
-
 }
