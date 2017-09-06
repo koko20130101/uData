@@ -28,11 +28,12 @@ export interface Slide {
     templateUrl: 'tutorial.html'
 })
 export class TutorialPage {
-    slides: Slide[]=[];
-    showSkip = true;
+    slides: Slide[] = [];
+    showCount: boolean = true;
+    showSkip: boolean = false;
     isLogged: boolean = false;
     count = 6;  //启动页倒计时
-    errorCount:any;
+    errorCount: any = 0;
     myInterval: any;
     dataInstance: any;
 
@@ -42,8 +43,8 @@ export class TutorialPage {
                 public globalVars: GlobalVars,
                 public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
-                public device:Device,
-                private statusBar:StatusBar,
+                public device: Device,
+                private statusBar: StatusBar,
                 public translate: TranslateService) {
 
     }
@@ -51,18 +52,19 @@ export class TutorialPage {
     ngOnInit() {
         this.dataInstance = this.globalVars.getInstance();
     }
+
     ionViewDidLoad() {
         //订阅请求错误信息
         this.publicFactory.error.subscribe((data)=> {
             if (this.errorCount == 0) {
                 let toast = this.popupFactory.showToast({
-                    message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
-                    duration: 3000,
+                    message: data.message,
+                    // message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
+                    duration: 5000,
                     position: 'top'
                 });
                 toast.onDidDismiss(()=> {
                     this.errorCount = 0;
-                    console.log(this.errorCount);
                 });
             }
             this.errorCount++;
@@ -72,8 +74,11 @@ export class TutorialPage {
     ionViewWillEnter() {
         this.statusBar.hide();
     }
-    ionViewDidEnter(){
+
+    ionViewDidEnter() {
         let _timeout = setTimeout(function () {
+            //小米手机延迟
+            this.statusBar.hide();
             //设备唯一识别码
             this.dataInstance.sendMassage.head.UUID = this.device.uuid;
             //设备制造商
@@ -95,9 +100,8 @@ export class TutorialPage {
                     //加载启动页面
                     tutorial = yield this.user.getTutorials();
                     this.slides = tutorial.data;
-                }else{
+                } else {
                     this.isLogged = false;
-                    this.startApp();
                     return;
                 }
                 if (userPower.code == 1) {
@@ -112,10 +116,11 @@ export class TutorialPage {
                                     this.isLogged = true;
                                     this.dataInstance.setDateValue(res._body.data);
                                     //判断是否有启动广告
-                                    if(this.slides.length==0) {
+                                    if (this.slides.length == 0) {
                                         this.showSkip = false;
                                         this.startApp()
-                                    }else{
+                                    } else {
+                                        this.showSkip = true;
                                         this.doInterval();
                                     }
                                 }
@@ -125,15 +130,16 @@ export class TutorialPage {
                             this.isLogged = true;
                             this.dataInstance.setDateValue(_date);
                             //判断是否有启动广告
-                            if(this.slides.length==0) {
+                            if (this.slides.length == 0) {
                                 this.showSkip = false;
                                 this.startApp()
-                            }else{
+                            } else {
+                                this.showSkip = true;
                                 this.doInterval();
                             }
                         }
                         clearTimeout(myTimeOut);
-                    }.bind(this),300);
+                    }.bind(this), 300);
                 }
             }.bind(this));
 
@@ -151,7 +157,7 @@ export class TutorialPage {
 
     }
 
-    doInterval(){
+    doInterval() {
         //加载完成时启用倒计时
         this.myInterval = setInterval(()=> {
             this.count--;
@@ -177,12 +183,12 @@ export class TutorialPage {
                 })
             } else {
                 this.popupFactory.showAlert({
-                    title:'提示',
-                    message:'您还未开通数据查看权限，请联系管理员！'
+                    title: '提示',
+                    message: '您还未开通数据查看权限，请联系管理员！'
                 })
             }
         } else {
-            this.navCtrl.setRoot(LoginPage,{},{
+            this.navCtrl.setRoot(LoginPage, {}, {
                 animate: true,
                 direction: 'forward'
             });
@@ -191,7 +197,7 @@ export class TutorialPage {
 
     onSlideChangeStart(slider) {
         //显示跳过按钮
-        this.showSkip = false;
+        this.showCount = false;
         clearInterval(this.myInterval);
     }
 }

@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {Platform, Config} from 'ionic-angular';
 
-import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {FirstRunPage} from '../pages/pages';
@@ -16,7 +15,7 @@ export class MyApp {
     //第一个呈现的页面
     rootPage = FirstRunPage;
 
-    constructor(private translate: TranslateService, private platform: Platform,private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+    constructor(private translate: TranslateService, private platform: Platform,private config: Config, private splashScreen: SplashScreen) {
         this.initTranslate();
     }
 

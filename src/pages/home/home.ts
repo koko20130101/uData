@@ -55,12 +55,9 @@ export class HomePage {
     ngOnInit() {
         //全局变量实例
         this.dateInstance = this.globalVars.getInstance();
-        this.statusBar.backgroundColorByHexString('#282836');
     }
 
     ngAfterViewInit() {
-        //显示头部状态栏
-        this.statusBar.show();
         // console.log(1)
         //订阅选择时间传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
@@ -76,7 +73,8 @@ export class HomePage {
         this.publicFactory.error.subscribe((data)=> {
             if (this.errorCount == 0) {
                 let toast = this.popupFactory.showToast({
-                    message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
+                    message: data.message,
+                    // message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
                     duration: 3000,
                     position: 'top'
                 });
@@ -96,7 +94,9 @@ export class HomePage {
     }
 
     ionViewDidEnter(){
-
+        this.statusBar.backgroundColorByHexString('#282836');
+        //显示头部状态栏
+        this.statusBar.show();
     }
 
     getHomeData(endpoint, cacheKey) {

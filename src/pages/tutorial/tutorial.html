@@ -1,5 +1,5 @@
 <ion-content no-bounce ngClass="tutorial">
-    <div ngClass="count" *ngIf="showSkip">
+    <div ngClass="count" *ngIf="showSkip && showCount">
         {{count}}
     </div>
     <ion-slides pager="{{(slides.length==0 || slides.length==1) ? false:true}}"  (ionSlideWillChange)="onSlideChangeStart($event)">
@@ -16,7 +16,7 @@
                 <img src="assets/img/logo.png" alt="">
             </ion-col>
             <ion-col col-3>
-                <button ion-button clear small *ngIf="!showSkip" (click)="startApp()">跳过</button>
+                <button ion-button clear small *ngIf="showSkip" (click)="startApp()">跳过</button>
             </ion-col>
         </ion-row>
     </div>
