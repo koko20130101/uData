@@ -30,7 +30,7 @@ export class TutorialPage {
     slides: Slide[]=[];
     showSkip = true;
     isLogged: boolean = false;
-    count = 5;  //启动页倒计时
+    count = 6;  //启动页倒计时
     errorCount:any;
     myInterval: any;
     dataInstance: any;

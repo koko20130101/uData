@@ -18,6 +18,8 @@ emulate.sh
 ionic.config.json
 #package.json
 #package-lock.json
+.chcpenv
+cordova-hcp.json
 tsconfig.json
 tslint.json
 LICENSE

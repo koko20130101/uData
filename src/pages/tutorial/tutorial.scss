@@ -1,4 +1,7 @@
 page-tutorial {
+  .scroll-content{
+    overflow-y:hidden;
+  }
   .tutorial {
     background-color: color($colors, light);
   }
