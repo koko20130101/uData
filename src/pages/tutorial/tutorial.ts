@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {Device} from '@ionic-native/device';
+import {StatusBar} from '@ionic-native/status-bar';
 
 import co from 'co';
 
@@ -42,6 +43,7 @@ export class TutorialPage {
                 public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
                 public device:Device,
+                private statusBar:StatusBar,
                 public translate: TranslateService) {
 
     }
@@ -49,11 +51,9 @@ export class TutorialPage {
     ngOnInit() {
         this.dataInstance = this.globalVars.getInstance();
     }
-
     ionViewDidLoad() {
         //订阅请求错误信息
         this.publicFactory.error.subscribe((data)=> {
-            console.log(data)
             if (this.errorCount == 0) {
                 let toast = this.popupFactory.showToast({
                     message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
@@ -70,7 +70,7 @@ export class TutorialPage {
     }
 
     ionViewWillEnter() {
-
+        this.statusBar.hide();
     }
     ionViewDidEnter(){
         let _timeout = setTimeout(function () {

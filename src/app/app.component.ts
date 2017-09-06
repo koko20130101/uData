@@ -25,7 +25,6 @@ export class MyApp {
         //平台准备好后调用
         this.platform.ready().then(() => {
             // 平台已经准备好，插件也可以使用了
-            this.statusBar.styleDefault();
             this.splashScreen.hide();
         });
     }

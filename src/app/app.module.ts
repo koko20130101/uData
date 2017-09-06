@@ -23,7 +23,6 @@ import {ListPlatform} from '../pages/public/list-platform';
 import {InfoItem} from '../pages/public/info-item';
 
 import {Api} from '../providers/api';
-import {Items} from '../mocks/providers/items';
 import {Settings} from '../providers/settings';
 import {PublicFactory} from '../providers/providers';
 import {PopupFactory} from '../providers/providers';
@@ -136,7 +135,6 @@ export function provideSettings(storage: Storage) {
     ],
     providers: [
         Api,
-        Items,
         User,
         PublicFactory,
         PopupFactory,

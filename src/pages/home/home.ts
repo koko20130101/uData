@@ -2,6 +2,7 @@ import {Component} from  '@angular/core';
 import {NavController, Refresher} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {Device} from '@ionic-native/device';
+import {StatusBar} from '@ionic-native/status-bar';
 
 import {LoginPage} from '../login/login';
 import {PlatformTotalPage} from '../platform-total/platform-total';
@@ -45,6 +46,7 @@ export class HomePage {
                 public homeService: HomeService,
                 public user: User,
                 public device:Device,
+                private statusBar:StatusBar,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
                 public storage: Storage) {
@@ -53,9 +55,12 @@ export class HomePage {
     ngOnInit() {
         //全局变量实例
         this.dateInstance = this.globalVars.getInstance();
+        this.statusBar.backgroundColorByHexString('#282836');
     }
 
     ngAfterViewInit() {
+        //显示头部状态栏
+        this.statusBar.show();
         // console.log(1)
         //订阅选择时间传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
@@ -88,6 +93,10 @@ export class HomePage {
     ionViewWillEnter() {
         // console.log(3)
         this.getHomeData(Endpoint.homeData, CacheField.homeData);
+    }
+
+    ionViewDidEnter(){
+
     }
 
     getHomeData(endpoint, cacheKey) {
