@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {Device} from '@ionic-native/device';
 import {StatusBar} from '@ionic-native/status-bar';
+import {Network} from '@ionic-native/network';
 
 import co from 'co';
 
@@ -32,10 +33,16 @@ export class TutorialPage {
     showCount: boolean = true;
     showSkip: boolean = false;
     isLogged: boolean = false;
+    firstConnect:boolean = true;
     count = 6;  //启动页倒计时
     errorCount: any = 0;
     myInterval: any;
     dataInstance: any;
+
+    myToast:any;
+
+    connectSubscription:any;
+    disConnectSubscription:any;
 
     constructor(public navCtrl: NavController,
                 public dateService: DateService,
@@ -44,26 +51,29 @@ export class TutorialPage {
                 public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
                 public device: Device,
+                public network: Network,
                 private statusBar: StatusBar,
                 public translate: TranslateService) {
 
     }
 
     ngOnInit() {
+        // console.log(1)
         this.dataInstance = this.globalVars.getInstance();
     }
 
     ionViewDidLoad() {
+        // console.log(2)
         //订阅请求错误信息
         this.publicFactory.error.subscribe((data)=> {
             if (this.errorCount == 0) {
-                let toast = this.popupFactory.showToast({
+                this.myToast = this.popupFactory.showToast({
                     message: data.message,
                     // message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
-                    duration: 5000,
+                    duration: data.duration || 5000,
                     position: 'top'
                 });
-                toast.onDidDismiss(()=> {
+                this.myToast.onDidDismiss(()=> {
                     this.errorCount = 0;
                 });
             }
@@ -72,10 +82,61 @@ export class TutorialPage {
     }
 
     ionViewWillEnter() {
+        // console.log(3)
+        //隐藏头部状态栏
         this.statusBar.hide();
+
+        if(this.network.type=='none'){
+            this.publicFactory.error.emit({
+                message: '断网了，请检查网络！',
+                duration: 1000000,
+            })
+        }
+        //订阅断网
+        this.disConnectSubscription = this.network.onDisconnect().subscribe(() => {
+            this.publicFactory.error.emit({
+                message: '断网了，请检查网络！',
+                duration: 1000000,
+            });
+            this.firstConnect = false;
+        });
+        //订阅连网
+        this.connectSubscription = this.network.onConnect().subscribe(() => {
+            this.myToast.dismiss();
+            if(!this.firstConnect) {
+                this.count = 1;
+                this.connectServer();
+            }
+        });
     }
 
     ionViewDidEnter() {
+        this.connectServer();
+    }
+
+    ionViewWillUnload() {
+        console.log(5);
+        //取消订阅
+        this.publicFactory.error.observers.pop();
+        this.connectSubscription.unsubscribe();
+        this.disConnectSubscription.unsubscribe();
+    }
+
+    ionViewWillLeave() {
+        // console.log(6)
+    }
+
+    doInterval() {
+        //加载完成时启用倒计时
+        this.myInterval = setInterval(()=> {
+            this.count--;
+            if (this.count == 0) {
+                this.startApp();
+            }
+        }, 1000);
+    }
+
+    connectServer(){
         let _timeout = setTimeout(function () {
             //小米手机延迟
             this.statusBar.hide();
@@ -147,25 +208,6 @@ export class TutorialPage {
         }.bind(this), 1000);
     }
 
-    ionViewWillUnload() {
-        console.log(4);
-        //取消选择单位订阅
-        this.publicFactory.error.observers.pop();
-    }
-
-    ionViewWillLeave() {
-
-    }
-
-    doInterval() {
-        //加载完成时启用倒计时
-        this.myInterval = setInterval(()=> {
-            this.count--;
-            if (this.count == 0) {
-                this.startApp();
-            }
-        }, 1000);
-    }
 
     //进入应用
     startApp() {

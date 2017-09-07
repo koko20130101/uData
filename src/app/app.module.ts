@@ -36,6 +36,7 @@ import {ListPipe} from '../providers/pipes/list.pipe';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Device} from '@ionic-native/device';
+import {Network} from '@ionic-native/network';
 
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -146,6 +147,7 @@ export function provideSettings(storage: Storage) {
         SplashScreen,
         StatusBar,
         Device,
+        Network,
         {provide: Settings, useFactory: provideSettings, deps: [Storage]},
         // Keep this to enable Ionic's runtime error handling during development
         {provide: ErrorHandler, useClass: IonicErrorHandler}
