@@ -26,6 +26,8 @@ export class BankListPage {
     dateInstance: any;
     bankListData: any;
 
+    unitSubscription:any;
+
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
@@ -47,7 +49,7 @@ export class BankListPage {
     ionViewWillEnter() {
         // console.log(2);
         //订阅选择单位传过来的信息
-        this.publicFactory.unitInfo.subscribe((data) => {
+        this.unitSubscription = this.publicFactory.unitInfo.subscribe((data) => {
             if (data.page == this.pageInfo.name) {
                 this.getDataFromCache(Endpoint.bankList, CacheField.bankList);
             }
@@ -58,7 +60,7 @@ export class BankListPage {
     ionViewWillUnload() {
         // console.log(4);
         //取消选择单位订阅
-        this.publicFactory.unitInfo.observers.pop();
+        this.unitSubscription.unsubscribe();
     }
 
     ionViewDidEnter() {

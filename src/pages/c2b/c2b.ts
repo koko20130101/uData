@@ -67,6 +67,8 @@ export class C2bPage {
 
     barChartInstance: any;
 
+    unitSubscription:any;
+
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
@@ -106,7 +108,7 @@ export class C2bPage {
 
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
-        this.publicFactory.unitInfo.subscribe((data) => {
+        this.unitSubscription = this.publicFactory.unitInfo.subscribe((data) => {
             if (data.page == this.pageInfo.name) {
                 // console.log(data.page)
                 this.slideChange();
@@ -115,15 +117,16 @@ export class C2bPage {
     }
 
     ionViewWillEnter() {
-        this.slideChange();
+
     }
 
     ionViewDidEnter() {
+        this.slideChange();
     }
 
     ionViewWillLeave() {
         //取消选择单位订阅
-        this.publicFactory.unitInfo.observers.pop();
+        this.unitSubscription.unsubscribe();
     }
 
     //得到运营分析的柱图实例

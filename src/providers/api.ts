@@ -61,9 +61,10 @@ export class Api {
             }, err => {
                 switch (err.status) {
                     case 0:
-                        /*this.publicFactory.error.emit({
+                        console.log(err)
+                        this.publicFactory.error.emit({
                             message: '无法链接到网络，请稍后重试!'
-                        });*/
+                        });
                         break;
                     default:
                         /*this.publicFactory.error.emit({

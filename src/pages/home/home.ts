@@ -3,6 +3,7 @@ import {NavController, Refresher} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {Device} from '@ionic-native/device';
 import {StatusBar} from '@ionic-native/status-bar';
+import {Network} from '@ionic-native/network';
 
 import {LoginPage} from '../login/login';
 import {PlatformTotalPage} from '../platform-total/platform-total';
@@ -40,12 +41,17 @@ export class HomePage {
     };
     errorCount: any = 0; //请求错误次数
     myDevice:any;
+    myToast:any;
+
+    errorSubscription:any;
+    disConnectSubscription:any;
 
     constructor(public navCtrl: NavController,
                 public globalVars: GlobalVars,
                 public homeService: HomeService,
                 public user: User,
                 public device:Device,
+                public network: Network,
                 private statusBar:StatusBar,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
@@ -65,20 +71,19 @@ export class HomePage {
                 this.getHomeData(Endpoint.homeData, CacheField.homeData);
             }
         });
-
     }
 
     ionViewDidLoad() {
         //订阅请求错误信息
-        this.publicFactory.error.subscribe((data)=> {
+        this.errorSubscription = this.publicFactory.error.subscribe((data)=> {
             if (this.errorCount == 0) {
-                let toast = this.popupFactory.showToast({
+                this.myToast = this.popupFactory.showToast({
                     message: data.message,
                     // message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
-                    duration: 3000,
+                    duration: data.duration || 3000,
                     position: 'top'
                 });
-                toast.onDidDismiss(()=> {
+                this.myToast.onDidDismiss(()=> {
                     this.errorCount = 0;
                     console.log(this.errorCount);
                 })
@@ -91,12 +96,22 @@ export class HomePage {
     ionViewWillEnter() {
         // console.log(3)
         this.getHomeData(Endpoint.homeData, CacheField.homeData);
+        //订阅断网
+        this.disConnectSubscription = this.network.onDisconnect().subscribe(() => {
+            this.publicFactory.error.emit({
+                message: '断网了，请检查网络！'
+            });
+        });
     }
 
     ionViewDidEnter(){
         this.statusBar.backgroundColorByHexString('#282836');
         //显示头部状态栏
         this.statusBar.show();
+    }
+
+    ionViewWillUnload(){
+        this.disConnectSubscription.unsubscribe();
     }
 
     getHomeData(endpoint, cacheKey) {

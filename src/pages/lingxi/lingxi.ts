@@ -55,6 +55,8 @@ export class LingXiPage {
     //渠道占比饼图设置
     pieChartOption: any;
 
+    unitSubscription:any;
+
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
@@ -101,7 +103,7 @@ export class LingXiPage {
 
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
-        this.publicFactory.unitInfo.subscribe((data) => {
+        this.unitSubscription = this.publicFactory.unitInfo.subscribe((data) => {
             if (data.page == this.pageInfo.name) {
                 this.slideChange();
             }
@@ -109,18 +111,18 @@ export class LingXiPage {
     }
 
     ionViewWillEnter() {
+
+    }
+
+    ionViewDidEnter() {
         this.getDataFromCache(Endpoint.lingXiTotal, CacheField.lingXiTotal);
         this.getDataFromCache(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal);
         this.getDataFromCache(Endpoint.lingXiChannel, CacheField.lingXiChannel);
     }
 
-    ionViewDidEnter() {
-
-    }
-
     ionViewWillLeave() {
         //取消选择单位订阅
-        this.publicFactory.unitInfo.observers.pop();
+        this.unitSubscription.subscribe();
     }
 
     /**

@@ -35,7 +35,7 @@ export class Date {
     _today: any;
     _week: any;
     _day: any;
-
+    unitSubscription:any;
     constructor(public popupFactory: PopupFactory,
                 public publicFactory: PublicFactory,
                 public storage: Storage,
@@ -70,8 +70,7 @@ export class Date {
 
         this._setVars();
         //订阅选择单位传过来的信息
-        this.publicFactory.unitInfo.subscribe((data) => {
-            console.log(data)
+        this.unitSubscription = this.publicFactory.unitInfo.subscribe((data) => {
             this._setVars(data.unit);
             if(data.page == this.pageInfo.name) {
                 this._autoAlert(data.unit);
@@ -82,7 +81,7 @@ export class Date {
     ngOnDestroy() {
         // console.log(2)
         //取消选择单位订阅
-        this.publicFactory.unitInfo.observers.pop();
+        this.unitSubscription.unsubscribe();
     }
 
     _showAlert() {

@@ -70,6 +70,8 @@ export class PlatformTotalPage {
     barChartWidth: any = 320;
     chartInstance: any;
 
+    unitSubscription:any;
+
     constructor(public navCtrl: NavController,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
@@ -115,7 +117,7 @@ export class PlatformTotalPage {
 
     ngAfterViewInit() {
         //订阅选择单位传过来的信息
-        this.publicFactory.unitInfo.subscribe((data) => {
+        this.unitSubscription = this.publicFactory.unitInfo.subscribe((data) => {
             console.log(data.page);
             if (data.page == this.pageInfo.name) {
                 this.slideChange();
@@ -124,15 +126,15 @@ export class PlatformTotalPage {
     }
 
     ionViewWillEnter() {
-        this.slideChange();
     }
 
     ionViewDidEnter() {
+        this.slideChange();
     }
 
     ionViewWillLeave() {
         //取消选择单位订阅
-        this.publicFactory.unitInfo.observers.pop();
+        this.unitSubscription.unsubscribe();
     }
 
     onChartInit(ec) {
@@ -161,9 +163,9 @@ export class PlatformTotalPage {
                             this.totalData = res.data;
                             break;
                         case CacheField.platformsCompare:
-                            if(!!res.data[this.ucsDataType]){
+                            if (!!res.data[this.ucsDataType]) {
                                 this.platformsCompareData[this.ucsDataType] = res.data[this.ucsDataType]['list'];
-                            }else{
+                            } else {
                                 this.platformsCompareData[this.ucsDataType] = [];
                             }
                             break;
@@ -171,9 +173,9 @@ export class PlatformTotalPage {
                             this.trendData = res.data;
                             break;
                         case CacheField.enemyPlatformsCompare:
-                            if(!!res.data[this.enemyDataType]){
+                            if (!!res.data[this.enemyDataType]) {
                                 this.enemyPlatformsCompareData[this.enemyDataType] = res.data[this.enemyDataType]['list'];
-                            }else{
+                            } else {
                                 this.enemyPlatformsCompareData[this.enemyDataType] = [];
                             }
                             break;
@@ -222,8 +224,8 @@ export class PlatformTotalPage {
      * */
     getDataFromCache(endpoint, cacheKey, source?: any) {
         let _sendData: any = null;
-        this.platformService.getValue(cacheKey, source).then(data=>{
-            let _totalData:any = data;
+        this.platformService.getValue(cacheKey, source).then(data=> {
+            let _totalData: any = data;
             switch (cacheKey) {
                 //总额
                 case CacheField.platformTotal:
@@ -294,7 +296,7 @@ export class PlatformTotalPage {
                         this.regularTrendData = _totalData;
                         return;
                     } else {
-                        _sendData = {sourceType:1,time:source};
+                        _sendData = {sourceType: 1, time: source};
                         break;
                     }
                 //基金折线图

@@ -38,9 +38,9 @@ export class TutorialPage {
     errorCount: any = 0;
     myInterval: any;
     dataInstance: any;
-
     myToast:any;
 
+    errorSubscription:any;
     connectSubscription:any;
     disConnectSubscription:any;
 
@@ -61,11 +61,14 @@ export class TutorialPage {
         // console.log(1)
         this.dataInstance = this.globalVars.getInstance();
     }
+    ngAfterViewInit(){
 
+    }
     ionViewDidLoad() {
         // console.log(2)
         //订阅请求错误信息
-        this.publicFactory.error.subscribe((data)=> {
+        this.errorSubscription = this.publicFactory.error.subscribe((data)=> {
+            console.log(this.publicFactory.error)
             if (this.errorCount == 0) {
                 this.myToast = this.popupFactory.showToast({
                     message: data.message,
@@ -114,16 +117,12 @@ export class TutorialPage {
         this.connectServer();
     }
 
-    ionViewWillUnload() {
-        console.log(5);
-        //取消订阅
-        this.publicFactory.error.observers.pop();
-        this.connectSubscription.unsubscribe();
-        this.disConnectSubscription.unsubscribe();
-    }
-
     ionViewWillLeave() {
         // console.log(6)
+        //取消订阅
+        this.errorSubscription.unsubscribe();
+        this.connectSubscription.unsubscribe();
+        this.disConnectSubscription.unsubscribe();
     }
 
     doInterval() {
