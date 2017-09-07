@@ -111,18 +111,17 @@ export class LingXiPage {
     }
 
     ionViewWillEnter() {
-
+        this.getDataFromCache(Endpoint.lingXiTotal, CacheField.lingXiTotal);
     }
 
     ionViewDidEnter() {
-        this.getDataFromCache(Endpoint.lingXiTotal, CacheField.lingXiTotal);
         this.getDataFromCache(Endpoint.lingXiTrendDeal, CacheField.lingXiTrendDeal);
         this.getDataFromCache(Endpoint.lingXiChannel, CacheField.lingXiChannel);
     }
 
     ionViewWillLeave() {
         //取消选择单位订阅
-        this.unitSubscription.subscribe();
+        this.unitSubscription.unsubscribe();
     }
 
     /**

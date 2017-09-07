@@ -117,11 +117,12 @@ export class C2bPage {
     }
 
     ionViewWillEnter() {
-
+        this.getDataFromCache(Endpoint.saleTotal, CacheField.saleTotal);
     }
 
     ionViewDidEnter() {
-        this.slideChange();
+        this.getDataFromCache(Endpoint.saleChannelInOut, CacheField.saleChannelIn, this.saleChannelTypeIn);
+        this.getDataFromCache(Endpoint.assetsInOut, CacheField.assetsInOut, this.inoutFlag);
     }
 
     ionViewWillLeave() {

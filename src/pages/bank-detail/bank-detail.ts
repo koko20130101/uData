@@ -178,11 +178,16 @@ export class BankDetailPage {
     }
 
     ionViewWillEnter() {
-        // this.loadInfo();
+        this.getDataFromCache(Endpoint.bankTotal, CacheField.bankTotal, [this.currentEndPoint.bankCode, this.currentEndPoint.tip]);
     }
 
     ionViewDidEnter() {
-        this.loadInfo();
+        this.getDataFromCache(Endpoint.bankMoney, CacheField.bankMoney,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
+        this.getDataFromCache(Endpoint.bankChannel, CacheField.bankChannel,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
+        this.getDataFromCache(Endpoint.bankTotalSec, CacheField.bankTotalSec,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
+        this.getDataFromCache(Endpoint.bankRateTrendSec, CacheField.bankRateTrendSec,[this.currentEndPoint.bankCode,this.currentEndPoint.tip]);
+        this.getProjectType();
+        this.getProjectTrendType();
     }
 
     ionViewWillLeave() {

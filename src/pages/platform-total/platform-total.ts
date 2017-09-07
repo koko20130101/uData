@@ -126,10 +126,12 @@ export class PlatformTotalPage {
     }
 
     ionViewWillEnter() {
+        this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
     }
 
     ionViewDidEnter() {
-        this.slideChange();
+        this.getDataFromCache(Endpoint.platformTrend, CacheField.platformTrend);
+        this.getDataFromCache(Endpoint.platformsCompare, CacheField.platformsCompare, this.ucsDataType);
     }
 
     ionViewWillLeave() {
