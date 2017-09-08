@@ -19,7 +19,7 @@ export class MyApp {
     //第一个呈现的页面
     rootPage = FirstRunPage;
     backButtonPressed: boolean = false;  //用于判断返回键是否触发
-
+    globalInstance: any;
     constructor(private translate: TranslateService,
                 private platform: Platform,
                 private app: App,
@@ -30,7 +30,8 @@ export class MyApp {
                 private popupFactory: PopupFactory,
                 private splashScreen: SplashScreen) {
         this.initTranslate();
-
+        //全局变量实例
+        this.globalInstance = this.globalVars.getInstance();
         //平台准备好后调用
         this.platform.ready().then(() => {
             //隐藏启动页
@@ -41,25 +42,17 @@ export class MyApp {
             this.statusBar.hide();
             //注册返回按键事件
             this.registerBackButtonAction();
-            //获取设备信息
-            this.getDeviceInfo();
-
+            //设备唯一识别码
+            this.globalInstance.sendMassage.head.UUID = this.device.uuid;
+            //设备制造商
+            this.globalInstance.sendMassage.head.manufacturer = this.device.manufacturer;
+            //设备硬件序列号
+            this.globalInstance.sendMassage.head.serial = this.device.serial;
+            //操作系统名称
+            this.globalInstance.sendMassage.head.platform = this.device.platform;
+            //操作系统版本
+            this.globalInstance.sendMassage.head.oSVersion = this.device.version;
         });
-    }
-
-    getDeviceInfo(){
-        //全局变量实例
-        let globalInstance = this.globalVars.getInstance();
-        //设备唯一识别码
-        globalInstance.sendMassage.head.UUID = this.device.uuid;
-        //设备制造商
-        globalInstance.sendMassage.head.manufacturer = this.device.manufacturer;
-        //设备硬件序列号
-        globalInstance.sendMassage.head.serial = this.device.serial;
-        //操作系统名称
-        globalInstance.sendMassage.head.platform = this.device.platform;
-        //操作系统版本
-        globalInstance.sendMassage.head.oSVersion = this.device.version;
     }
 
     //初始化语言版本
