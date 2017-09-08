@@ -221,6 +221,7 @@ export class C2bPage {
             }
             //判断请求个数
             if (this.globalVars.loaders.length == 0) {
+                console.log(9999)
                 //记录加载对象个数
                 this.globalVars.loaders.push(1);
                 //如果没取到，则向服务器取

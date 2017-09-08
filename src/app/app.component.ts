@@ -1,10 +1,14 @@
 import {Component} from '@angular/core';
-import {Platform, Config} from 'ionic-angular';
+import {Platform, Config, App} from 'ionic-angular';
 
 import {SplashScreen} from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+import {Device} from '@ionic-native/device';
 
 import {FirstRunPage} from '../pages/pages';
-// import {BankDetailPage} from '../pages/bank-detail/bank-detail';
+
+import {GlobalVars} from  '../providers/services/global.service';
+import {PopupFactory} from '../providers/factory/popup.factory';
 
 import {TranslateService} from '@ngx-translate/core'
 
@@ -14,18 +18,48 @@ import {TranslateService} from '@ngx-translate/core'
 export class MyApp {
     //第一个呈现的页面
     rootPage = FirstRunPage;
+    backButtonPressed: boolean = false;  //用于判断返回键是否触发
 
-    constructor(private translate: TranslateService, private platform: Platform,private config: Config, private splashScreen: SplashScreen) {
+    constructor(private translate: TranslateService,
+                private platform: Platform,
+                private app: App,
+                private config: Config,
+                private statusBar: StatusBar,
+                public device: Device,
+                public globalVars: GlobalVars,
+                private popupFactory: PopupFactory,
+                private splashScreen: SplashScreen) {
         this.initTranslate();
-    }
 
-    //当组件都加载完成后调用
-    ionViewDidLoad() {
         //平台准备好后调用
         this.platform.ready().then(() => {
-            // 平台已经准备好，插件也可以使用了
+            //隐藏启动页
             this.splashScreen.hide();
+            //头部状态栏背景色
+            this.statusBar.backgroundColorByHexString('#282836');
+            //隐藏头部状态栏
+            this.statusBar.hide();
+            //注册返回按键事件
+            this.registerBackButtonAction();
+            //获取设备信息
+            this.getDeviceInfo();
+
         });
+    }
+
+    getDeviceInfo(){
+        //全局变量实例
+        let globalInstance = this.globalVars.getInstance();
+        //设备唯一识别码
+        globalInstance.sendMassage.head.UUID = this.device.uuid;
+        //设备制造商
+        globalInstance.sendMassage.head.manufacturer = this.device.manufacturer;
+        //设备硬件序列号
+        globalInstance.sendMassage.head.serial = this.device.serial;
+        //操作系统名称
+        globalInstance.sendMassage.head.platform = this.device.platform;
+        //操作系统版本
+        globalInstance.sendMassage.head.oSVersion = this.device.version;
     }
 
     //初始化语言版本
@@ -42,5 +76,33 @@ export class MyApp {
         this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
             this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
         });
+    }
+
+    //安卓点击返回键
+    registerBackButtonAction() {
+        this.platform.registerBackButtonAction(() => {
+            //如果当前活动页面不能返回
+            if (!this.app.getActiveNav().canGoBack()) {
+                this.exitApp()
+            }else{
+                //返回上一页面
+                this.app.goBack();
+            }
+        }, 1);
+    }
+
+    //双击退出提示框
+    exitApp() {
+        if (this.backButtonPressed) { //当触发标志为true时，即2秒内双击返回按键则退出APP
+            this.platform.exitApp();
+        } else {
+            this.popupFactory.showToast({
+                message: '再按一次退出应用',
+                duration: 2000,
+                position: 'bottom'
+            });
+            this.backButtonPressed = true;
+            setTimeout(() => this.backButtonPressed = false, 2000);//2秒内没有再次点击返回则将触发标志标记为false
+        }
     }
 }

@@ -40,7 +40,7 @@ export class PopupFactory {
         let loaderConfig = {
             duration:10000,
             cssClass:'my-loading',
-            showBackdrop:true, //黑色背景
+            showBackdrop:false, //黑色背景
             dismissOnPageChange:false
         };
         Object.assign(loaderConfig, config);

@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {Slides, NavController, Refresher} from 'ionic-angular';
+import {Slides, NavController, Refresher,App} from 'ionic-angular';
 
 import {Endpoint} from '../../providers/endpoint';
 import {CacheField} from '../../providers/cache-field';
@@ -73,6 +73,7 @@ export class PlatformTotalPage {
     unitSubscription:any;
 
     constructor(public navCtrl: NavController,
+                public app:App,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory,
                 public platformService: PlatformService,
@@ -141,6 +142,10 @@ export class PlatformTotalPage {
 
     onChartInit(ec) {
         this.chartInstance = ec;
+    }
+
+    test(){
+        console.log(this.app.getActiveNav().canGoBack())
     }
 
     showContent(value) {
@@ -315,6 +320,7 @@ export class PlatformTotalPage {
             }
             //判断请求个数
             if (this.globalVars.loaders.length == 0) {
+                console.log(99)
                 //记录加载对象个数
                 this.globalVars.loaders.push(1);
                 //如果没取到，则向服务器取
