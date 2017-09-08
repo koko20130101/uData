@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {Platform, Config, App} from 'ionic-angular';
 
-import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Device} from '@ionic-native/device';
 
@@ -19,7 +18,7 @@ export class MyApp {
     //第一个呈现的页面
     rootPage = FirstRunPage;
     backButtonPressed: boolean = false;  //用于判断返回键是否触发
-    globalInstance: any;
+
     constructor(private translate: TranslateService,
                 private platform: Platform,
                 private app: App,
@@ -27,31 +26,15 @@ export class MyApp {
                 private statusBar: StatusBar,
                 public device: Device,
                 public globalVars: GlobalVars,
-                private popupFactory: PopupFactory,
-                private splashScreen: SplashScreen) {
+                private popupFactory: PopupFactory) {
         this.initTranslate();
-        //全局变量实例
-        this.globalInstance = this.globalVars.getInstance();
+
         //平台准备好后调用
         this.platform.ready().then(() => {
-            //隐藏启动页
-            this.splashScreen.hide();
             //头部状态栏背景色
             this.statusBar.backgroundColorByHexString('#282836');
-            //隐藏头部状态栏
-            this.statusBar.hide();
             //注册返回按键事件
             this.registerBackButtonAction();
-            //设备唯一识别码
-            this.globalInstance.sendMassage.head.UUID = this.device.uuid;
-            //设备制造商
-            this.globalInstance.sendMassage.head.manufacturer = this.device.manufacturer;
-            //设备硬件序列号
-            this.globalInstance.sendMassage.head.serial = this.device.serial;
-            //操作系统名称
-            this.globalInstance.sendMassage.head.platform = this.device.platform;
-            //操作系统版本
-            this.globalInstance.sendMassage.head.oSVersion = this.device.version;
         });
     }
 
