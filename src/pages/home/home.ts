@@ -1,5 +1,5 @@
 import {Component} from  '@angular/core';
-import {NavController, Refresher} from 'ionic-angular';
+import {NavController, Refresher,App} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {Device} from '@ionic-native/device';
 import {StatusBar} from '@ionic-native/status-bar';
@@ -49,6 +49,7 @@ export class HomePage {
     constructor(public navCtrl: NavController,
                 public globalVars: GlobalVars,
                 public homeService: HomeService,
+                public app:App,
                 public user: User,
                 public device:Device,
                 public network: Network,
@@ -105,7 +106,6 @@ export class HomePage {
     }
 
     ionViewDidEnter(){
-        this.statusBar.backgroundColorByHexString('#282836');
         //显示头部状态栏
         this.statusBar.show();
     }
@@ -152,9 +152,10 @@ export class HomePage {
     }
 
     removeCache() {
-        for (let key in CacheField) {
+        console.log(this.app.getActiveNav().canGoBack())
+        /*for (let key in CacheField) {
             this.storage.remove(CacheField[key]);
-        }
+        }*/
     }
 
     doLogout() {

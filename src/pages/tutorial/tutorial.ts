@@ -3,6 +3,7 @@ import {NavController} from 'ionic-angular';
 import {Device} from '@ionic-native/device';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Network} from '@ionic-native/network';
+import {SplashScreen} from '@ionic-native/splash-screen';
 
 import co from 'co';
 
@@ -53,6 +54,7 @@ export class TutorialPage {
                 public device: Device,
                 public network: Network,
                 private statusBar: StatusBar,
+                public splashScreen: SplashScreen,
                 public translate: TranslateService) {
         this.statusBar.hide();
     }
@@ -203,6 +205,8 @@ export class TutorialPage {
                 }
             }.bind(this));
 
+            //隐藏启动页
+            this.splashScreen.hide();
             clearTimeout(_timeout);
         }.bind(this), 1000);
     }

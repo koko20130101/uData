@@ -29,7 +29,7 @@
             </div>
             <div>
                 <div class="total-data">
-                    <p>当日累计交易额</p>
+                    <p (click)="test()">当日累计交易额</p>
                     <h2 ion-text  color="{{totalData.totalUCS[1]=='true'?'danger':(totalData.totalUCS[1]=='false'?'secondary':'')}}">
                         <span [innerHTML]="totalData.totalUCS[0]"></span>
                         <ion-icon name="{{totalData.totalUCS[1]=='true' ?'arrow-up':(totalData.totalUCS[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
