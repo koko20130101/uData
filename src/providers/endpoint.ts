@@ -1,8 +1,9 @@
 // export const HOST = 'https://example.com/api/v1/';
 export const HOST = 'http://172.17.2.95:8080/';
+// export const HOST = 'http://172.17.2.16:8080/';
 // export const HOST = 'http://localhost:8100/';
 // export const HOST = 'http://172.17.20.31:8080/';
-// export const HOST = 'http://192.168.0.102:8100';
+// export const HOST = 'http://192.168.0.100:8080/';
 // export const HOST_1 = 'https://reportcenterapi.ucsmy.com/View/Web/';
 
 //接口
@@ -11,7 +12,7 @@ export const Endpoint = {
     login: HOST+'assets/data/login.json',   //登录
     logout:HOST+'assets/data/logout.json',    //登出
     checkLogin:HOST+'assets/data/check-login.json',  //检查登录
-    // checkLogin:HOST+'checkLogin',  //检查登录
+    //checkLogin:HOST+'checkLogin',  //检查登录
     userPower:HOST+'assets/data/user.json',  //用户权限
     dateList:HOST+'assets/data/date-list.json',  //日期列表
     tutorial:HOST+'assets/data/tutorial.json',  //启动页广告

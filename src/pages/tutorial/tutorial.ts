@@ -54,7 +54,7 @@ export class TutorialPage {
                 public network: Network,
                 private statusBar: StatusBar,
                 public translate: TranslateService) {
-
+        this.statusBar.hide();
     }
 
     ngOnInit() {

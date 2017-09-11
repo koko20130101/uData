@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Platform, Config} from 'ionic-angular';
 
 import {SplashScreen} from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
 
 import {FirstRunPage} from '../pages/pages';
 // import {BankDetailPage} from '../pages/bank-detail/bank-detail';
@@ -15,7 +16,7 @@ export class MyApp {
     //第一个呈现的页面
     rootPage = FirstRunPage;
 
-    constructor(private translate: TranslateService, private platform: Platform,private config: Config, private splashScreen: SplashScreen) {
+    constructor(private translate: TranslateService, private platform: Platform,private config: Config,private statusBar: StatusBar, private splashScreen: SplashScreen) {
         this.initTranslate();
     }
 
@@ -25,6 +26,8 @@ export class MyApp {
         this.platform.ready().then(() => {
             // 平台已经准备好，插件也可以使用了
             this.splashScreen.hide();
+            //隐藏状态栏
+            this.statusBar.hide();
         });
     }
 
