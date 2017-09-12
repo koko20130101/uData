@@ -1,6 +1,13 @@
 page-tutorial {
+  ion-slides{
+    position: fixed;
+    top:0px;
+    bottom:87px;
+    height:auto;
+  }
   .scroll-content{
     overflow-y:hidden;
+    background-color: color($colors, primary);
   }
   .tutorial {
     background-color: color($colors, light);
