@@ -14,7 +14,7 @@ src/**/*.css.map
 .gitignore
 .editorconfig
 emulate.sh
-#config.xml
+config.xml
 ionic.config.json
 #package.json
 #package-lock.json
