@@ -33,7 +33,7 @@
             <p [innerHtml]="totalAmount.C2BTotal" *ngIf="isShow"></p>
             <p *ngIf="!isShow">******</p>
         </div>
-        <div class="platform-data data-3" (click)="openLingXiPage()" *ngIf="dateInstance.adminCode['12']">
+        <div class="platform-data data-3" *ngIf="dateInstance.adminCode['12']">
             <button ion-button clear (click)="openLingXiPage()"></button>
             <h5>{{'PLATFORM_TITLE_3' | translate}}</h5>
             <p [innerHtml]="totalAmount.LingXiTotal" *ngIf="isShow"></p>
