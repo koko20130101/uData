@@ -21,17 +21,20 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <div padding class="platform-data-list">
-        <div class="platform-data data-1" (click)="openPlatformData()" *ngIf="dateInstance.adminCode['01']">
+        <div  class="platform-data data-1"  *ngIf="dateInstance.adminCode['01']">
+            <button ion-button clear (click)="openPlatformData()"></button>
             <h5>{{'PLATFORM_TITLE_1' | translate}}</h5>
             <p [innerHTML]="totalAmount.platformTotal" *ngIf="isShow"></p>
             <p *ngIf="!isShow">******</p>
         </div>
-        <div class="platform-data data-2" (click)="openC2bPage()" *ngIf="dateInstance.adminCode['02']">
+        <div class="platform-data data-2"  *ngIf="dateInstance.adminCode['02']">
+            <button ion-button clear (click)="openC2bPage()"></button>
             <h5>{{'PLATFORM_TITLE_2' | translate}}</h5>
             <p [innerHtml]="totalAmount.C2BTotal" *ngIf="isShow"></p>
             <p *ngIf="!isShow">******</p>
         </div>
         <div class="platform-data data-3" (click)="openLingXiPage()" *ngIf="dateInstance.adminCode['12']">
+            <button ion-button clear (click)="openLingXiPage()"></button>
             <h5>{{'PLATFORM_TITLE_3' | translate}}</h5>
             <p [innerHtml]="totalAmount.LingXiTotal" *ngIf="isShow"></p>
             <p *ngIf="!isShow">******</p>

@@ -15,7 +15,8 @@
     </ion-refresher>
     <ul class="bank-info-list" padding-horizontal>
         <li *ngFor="let item of bankListData" >
-            <div ngClass="bank-cmb" (click)="openBankDetail(item)" [style.background]="'linear-gradient(to bottom right,'+item['logoBg']+')'">
+            <div ngClass="bank-cmb" [style.background]="'linear-gradient(to bottom right,'+item['logoBg']+')'">
+                <button ion-button clear (click)="openBankDetail(item)"></button>
                 <h4 ion-text [innerHTML]="item.money"></h4>
                 <p><span>{{item.bankName}}</span>
                     <ion-icon name="{{item['up'] ? 'up':'down'}}"></ion-icon>
