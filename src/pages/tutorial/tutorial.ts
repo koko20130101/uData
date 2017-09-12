@@ -56,7 +56,7 @@ export class TutorialPage {
                 private statusBar: StatusBar,
                 public splashScreen: SplashScreen,
                 public translate: TranslateService) {
-
+        this.statusBar.hide();
     }
 
     ngOnInit() {

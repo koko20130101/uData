@@ -1,12 +1,20 @@
 page-home {
   .platform-data-list {
     padding: 15px;
-  }
-  .platform-data-list .platform-data {
-    width: 100%;
-    height: 150px;
-    color: #fff;
-    margin-bottom: 15px;
+    .platform-data {
+      width: 100%;
+      height: 150px;
+      color: #fff;
+      margin-bottom: 15px;
+      position: relative;
+      .button{
+        width:100%;
+        height:100%;
+        position: absolute;
+        left:0;
+        top:0;
+      }
+    }
   }
   .platform-data-list .data-1 {
     background: url("../assets/img/platform-data-bg01.png") no-repeat;
@@ -21,13 +29,13 @@ page-home {
     background-size: 100% 150px;
   }
   .platform-data-list p {
-    padding:16px;
-    margin:0;
+    padding: 16px;
+    margin: 0;
   }
-  .platform-data-list h5{
+  .platform-data-list h5 {
     padding-top: 44px;
-    margin-left:16px;
-    margin-bottom:0.6rem;
+    margin-left: 16px;
+    margin-bottom: 0.6rem;
     font-size: 1.2rem;
   }
   .platform-data-list p {
@@ -37,6 +45,6 @@ page-home {
   .platform-data-list p i {
     font-size: 16px;
     font-weight: normal;
-    font-style:normal;
+    font-style: normal;
   }
 }

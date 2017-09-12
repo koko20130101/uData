@@ -1,5 +1,16 @@
-.bank-info-list{ overflow: hidden;padding-left:0;list-style-type:none;}
-.bank-info-list li{ width: 50%; float:left;}
+.bank-info-list{
+  overflow: hidden;
+  padding-left:0;
+  list-style-type:none;
+  .button{
+    position: absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+  }
+}
+.bank-info-list li{ width: 50%; float:left;position: relative}
 .bank-info-list li > div{ margin: 5px; padding: 1px 10px; border-radius: 3px; color: #fff;overflow: hidden}
 .bank-info-list li h4{ font-size:20px;color:#FFF;font-weight: 400;white-space:nowrap;margin-top:1rem;margin-bottom:.5rem;}
 .bank-info-list li h4 i{ font-size: 14px;margin:0 2px;font-style:normal}
