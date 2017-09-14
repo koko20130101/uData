@@ -21,13 +21,13 @@ export class BankDetailPage {
         name: 'BankDetailPage',
         id: 6
     };
+    loader: any;
     projectType = '1';
     projectTrendType = '1';
     userOperateType = '1';
     modelContent: any[] = [1, 1, 1, 1, 1];  //list内容展开收起状态
     dateInstance: any;
     bankInfo: any;
-    currentEndpoint: any;
     //平台数据
     bankTotalData: any = {
         total: ['--', ''],
@@ -321,14 +321,14 @@ export class BankDetailPage {
                 //记录加载对象个数
                 this.globalVars.loaders.push(1);
                 //如果没取到，则向服务器取
-                var loader = this.popupFactory.loading();
-                loader.present().then(()=> {
-                    this.loadData(endpoint, cacheKey, null, loader);
+                this.loader = this.popupFactory.loading();
+                this.loader.present().then(()=> {
+                    this.loadData(endpoint, cacheKey, null, this.loader);
                 });
                 return;
             }
             this.globalVars.loaders.push(1);
-            this.loadData(endpoint, cacheKey, null, loader);
+            this.loadData(endpoint, cacheKey, null, this.loader);
         });
 
     }
@@ -384,20 +384,21 @@ export class BankDetailPage {
                 }
 
                 this.globalVars.loaders.pop();
-
                 if (!!refresher && this.globalVars.loaders.length == 0) {
                     refresher.complete();
                 }
                 if (!!loader && this.globalVars.loaders.length == 0) {
                     loader.dismiss();
+                    this.loader = null;
                 }
-            }, err=> {
+            }, err => {
                 this.globalVars.loaders.pop();
                 if (!!refresher && this.globalVars.loaders.length == 0) {
                     refresher.complete();
                 }
                 if (!!loader && this.globalVars.loaders.length == 0) {
                     loader.dismiss();
+                    this.loader = null;
                 }
             });
     }

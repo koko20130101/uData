@@ -21,6 +21,7 @@ export class LingXiPage {
         name: 'LingXiPage',
         id: 4
     };
+    loader: any;
     lingXiType = 0;
     userOperateType = '1';
     modelContent: any[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];  //list内容展开收起状态
@@ -176,14 +177,14 @@ export class LingXiPage {
                 //记录加载对象个数
                 this.globalVars.loaders.push(1);
                 //如果没取到，则向服务器取
-                var loader = this.popupFactory.loading();
-                loader.present().then(()=> {
-                    this.loadData(endpoint, cacheKey, null, loader, _sendData);
+                this.loader = this.popupFactory.loading();
+                this.loader.present().then(()=> {
+                    this.loadData(endpoint, cacheKey, null, this.loader, _sendData);
                 });
                 return;
             }
             this.globalVars.loaders.push(1);
-            this.loadData(endpoint, cacheKey, null, loader, _sendData);
+            this.loadData(endpoint, cacheKey, null, this.loader, _sendData);
         });
     }
 
@@ -225,14 +226,16 @@ export class LingXiPage {
                 }
                 if (!!loader && this.globalVars.loaders.length == 0) {
                     loader.dismiss();
+                    this.loader = null;
                 }
-            }, err=> {
+            }, err => {
                 this.globalVars.loaders.pop();
                 if (!!refresher && this.globalVars.loaders.length == 0) {
                     refresher.complete();
                 }
                 if (!!loader && this.globalVars.loaders.length == 0) {
                     loader.dismiss();
+                    this.loader = null;
                 }
             })
     }
