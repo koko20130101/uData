@@ -152,10 +152,10 @@ export class HomePage {
     }
 
     removeCache() {
-        console.log(this.app.getActiveNav().canGoBack())
-        /*for (let key in CacheField) {
+        // console.log(this.app.getActiveNav().canGoBack())
+        for (let key in CacheField) {
             this.storage.remove(CacheField[key]);
-        }*/
+        }
     }
 
     doLogout() {

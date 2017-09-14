@@ -56,7 +56,7 @@ export class TutorialPage {
                 private statusBar: StatusBar,
                 public splashScreen: SplashScreen,
                 public translate: TranslateService) {
-        this.statusBar.hide();
+        // this.statusBar.hide();
     }
 
     ngOnInit() {
@@ -67,6 +67,7 @@ export class TutorialPage {
 
     }
     ionViewDidLoad() {
+
         // console.log(2)
         //订阅请求错误信息
         this.errorSubscription = this.publicFactory.error.subscribe((data)=> {
@@ -89,7 +90,7 @@ export class TutorialPage {
     ionViewWillEnter() {
         // console.log(3)
         //隐藏头部状态栏
-        this.statusBar.hide();
+        // this.statusBar.hide();
 
         if(this.network.type=='none'){
             this.publicFactory.error.emit({
@@ -116,6 +117,13 @@ export class TutorialPage {
     }
 
     ionViewDidEnter() {
+        // let abc= document.getElementsByClassName("scroll-content")[0];
+
+        // abc.setAttribute('class', '');
+        // abc.setAttribute('style', '');
+        /*this.popupFactory.showAlert({
+            message:abc.setAttribute('class','')
+        })*/
         this.connectServer();
     }
 
@@ -140,7 +148,7 @@ export class TutorialPage {
     connectServer(){
         let _timeout = setTimeout(function () {
             //小米手机延迟
-            this.statusBar.hide();
+            // this.statusBar.hide();
             //设备唯一识别码
             this.dataInstance.sendMassage.head.UUID = this.device.uuid;
             //设备制造商

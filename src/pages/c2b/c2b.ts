@@ -22,6 +22,7 @@ export class C2bPage {
         name: 'C2bPage',
         id: 3
     };
+    loader: any;
     C2BType = 1;
     C2BTypeValue: any[] = [];
     saleChannelTypeIn = 2;
@@ -221,18 +222,17 @@ export class C2bPage {
             }
             //判断请求个数
             if (this.globalVars.loaders.length == 0) {
-                console.log(9999)
                 //记录加载对象个数
                 this.globalVars.loaders.push(1);
                 //如果没取到，则向服务器取
-                var loader = this.popupFactory.loading();
-                loader.present().then(()=> {
-                    this.loadData(endpoint, cacheKey, null, loader, _sendData);
+                this.loader = this.popupFactory.loading();
+                this.loader.present().then(()=> {
+                    this.loadData(endpoint, cacheKey, null, this.loader, _sendData);
                 });
                 return;
             }
             this.globalVars.loaders.push(1);
-            this.loadData(endpoint, cacheKey, null, loader, _sendData);
+            this.loadData(endpoint, cacheKey, null, this.loader, _sendData);
         });
     }
 
@@ -290,6 +290,7 @@ export class C2bPage {
                 }
                 if (!!loader && this.globalVars.loaders.length == 0) {
                     loader.dismiss();
+                    this.loader = null;
                 }
             }, err => {
                 this.globalVars.loaders.pop();
@@ -298,6 +299,7 @@ export class C2bPage {
                 }
                 if (!!loader && this.globalVars.loaders.length == 0) {
                     loader.dismiss();
+                    this.loader =null;
                 }
             });
     }
