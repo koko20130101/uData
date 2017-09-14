@@ -78,6 +78,7 @@ export class HomePage {
         //订阅请求错误信息
         this.errorSubscription = this.publicFactory.error.subscribe((data)=> {
             if (this.errorCount == 0) {
+                console.log(data)
                 this.myToast = this.popupFactory.showToast({
                     message: data.message,
                     // message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,

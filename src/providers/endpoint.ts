@@ -1,6 +1,6 @@
 // export const HOST = 'https://example.com/api/v1/';
-export const HOST = 'http://172.17.2.95:8080/';
-// export const HOST = 'http://172.17.2.16:8080/';
+// export const HOST = 'http://172.17.2.95:8080/';
+export const HOST = 'http://172.17.9.80:8080/';
 // export const HOST = 'http://localhost:8100/';
 // export const HOST = 'http://172.17.20.31:8080/';
 // export const HOST = 'http://192.168.0.100:8080/';

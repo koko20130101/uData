@@ -60,7 +60,7 @@ export class PopupFactory {
             duration: 1200,
             position: 'middle',
             cssClass: 'my-toast',
-            dismissOnPageChange: true
+            dismissOnPageChange: false
         };
         Object.assign(toastConfig, config);
         let toast = this.toastCtrl.create(toastConfig);
