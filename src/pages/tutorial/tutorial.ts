@@ -172,6 +172,7 @@ export class TutorialPage {
                     this.slides = tutorial.data;
                 } else {
                     this.isLogged = false;
+                    this.startApp();
                     return;
                 }
                 if (userPower.code == 1) {
