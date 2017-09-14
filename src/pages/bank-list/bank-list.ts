@@ -44,16 +44,16 @@ export class BankListPage {
 
     ngAfterViewInit() {
         // console.log(1);
-    }
-
-    ionViewWillEnter() {
-        // console.log(2);
         //订阅选择单位传过来的信息
         this.unitSubscription = this.publicFactory.unitInfo.subscribe((data) => {
             if (data.page == this.pageInfo.name) {
                 this.getDataFromCache(Endpoint.bankList, CacheField.bankList);
             }
         });
+    }
+
+    ionViewWillEnter() {
+        // console.log(2);
         this.getDataFromCache(Endpoint.bankList, CacheField.bankList);
     }
 
