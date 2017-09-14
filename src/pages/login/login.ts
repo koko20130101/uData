@@ -26,10 +26,10 @@ export class LoginPage {
     //子元素 #hackerBox  #hacker
     @ViewChild("hackerBox") hackerBox: ElementRef;
     @ViewChild("hacker") hacker: ElementRef;
-    globalInstance:any;
+    globalInstance: any;
     private hackerInterval;
-    imgCodeLink:any;
-    count:any;
+    imgCodeLink: any;
+    count: any;
     // 登录表单的账户字段
     private account: { mobile: string, imgCode: string,smsCode: string  } = {
         mobile: '',
@@ -37,13 +37,13 @@ export class LoginPage {
         smsCode: ''
     };
 
-    errorSubscription:any;
+    errorSubscription: any;
 
     constructor(public navCtrl: NavController,
                 public user: User,
-                public dateService:DateService,
-                public globalVars:GlobalVars,
-                public publicFactory:PublicFactory,
+                public dateService: DateService,
+                public globalVars: GlobalVars,
+                public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory) {
     }
 
@@ -79,11 +79,11 @@ export class LoginPage {
         this.getImgCode();
     }
 
-    ionViewDidLoad(){
+    ionViewDidLoad() {
         //订阅请求错误信息
         this.errorSubscription = this.publicFactory.error.subscribe((data) => {
             this.popupFactory.showAlert({
-                message:data.message
+                message: data.message
             })
         });
     }
@@ -92,7 +92,6 @@ export class LoginPage {
         //取消选择单位订阅
         this.errorSubscription.unsubscribe();
     }
-
 
 
     /**
@@ -136,7 +135,7 @@ export class LoginPage {
         let errorMsg = this.validateForm();
         if (!!errorMsg) {
             this.popupFactory.showToast({
-                message:errorMsg
+                message: errorMsg
             });
             return false;
         }
@@ -144,45 +143,49 @@ export class LoginPage {
             let loader = this.popupFactory.loading();
             loader.present();
 
-            let loginStatus:any = yield this.user.login(this.account);
+            let loginStatus: any = yield this.user.login(this.account);
             let userPower: any = {};
             if (loginStatus.code == 1) {
                 userPower = yield this.user.getUserPower();
             }
             if (userPower.code == 1) {
-                this.dateService.loadDateList({}).subscribe(data => {
-                    let res: any = data;
-                    if (res._body.code == 1) {
-                        this.globalInstance.setDateValue(res._body.data);
-                        if (this.globalInstance.adminCode['06']) {
-                            this.navCtrl.setRoot(HomePage, {}, {
-                                animate: true,
-                                direction: 'forward'
-                            });
-                        } else if (this.globalInstance.adminCode['13']) {
-                            this.navCtrl.setRoot(BankListPage, {}, {
-                                animate: true,
-                                direction: 'forward'
-                            })
-                        } else {
-                            this.popupFactory.showAlert({
-                                title:'提示',
-                                message:'您还未开通数据查看权限，请联系管理员！'
-                            })
+                this.dateService.loadDateList({}).subscribe(
+                    data => {
+                        let res: any = data;
+                        if (res._body.code == 1) {
+                            this.globalInstance.setDateValue(res._body.data);
+                            if (this.globalInstance.adminCode['06']) {
+                                this.navCtrl.setRoot(HomePage, {}, {
+                                    animate: true,
+                                    direction: 'forward'
+                                });
+                            } else if (this.globalInstance.adminCode['13']) {
+                                this.navCtrl.setRoot(BankListPage, {}, {
+                                    animate: true,
+                                    direction: 'forward'
+                                })
+                            } else {
+                                this.popupFactory.showAlert({
+                                    title: '提示',
+                                    message: '您还未开通数据查看权限，请联系管理员！'
+                                })
+                            }
+                            loader.dismiss();
                         }
+                    },
+                    err=> {
                         loader.dismiss();
-                    }
-                });
+                    });
             }
         }.bind(this));
     }
 
-    getImgCode(){
-        this.imgCodeLink = 'https://reportcenterapi.ucsmy.com/View/Web/GetImageCode.ashx?'+Math.random();
+    getImgCode() {
+        this.imgCodeLink = 'https://reportcenterapi.ucsmy.com/View/Web/GetImageCode.ashx?' + Math.random();
     }
 
     //获取短信验证码
-    getSmsCode(){
+    getSmsCode() {
         //验证对象实例
         let validator = new ValidatorFactory();
         validator.addStrategy(this.account.mobile, [{
@@ -201,7 +204,7 @@ export class LoginPage {
         let errorMsg = validator.startValidate();
         if (!!errorMsg) {
             this.popupFactory.showToast({
-                message:errorMsg
+                message: errorMsg
             });
             return false;
         }
@@ -210,9 +213,9 @@ export class LoginPage {
             mobile: this.account.mobile,
             imgCode: this.account.imgCode
         };
-        this.user.loadSmsCode(_sendData).subscribe((data)=>{
+        this.user.loadSmsCode(_sendData).subscribe((data)=> {
             let res: any = data;
-            if(res._body.code == 1) {
+            if (res._body.code == 1) {
                 this.count = 60;
                 let myInterval = setInterval(()=> {
                     this.count--;
