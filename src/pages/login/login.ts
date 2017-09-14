@@ -37,6 +37,8 @@ export class LoginPage {
         smsCode: ''
     };
 
+    errorSubscription:any;
+
     constructor(public navCtrl: NavController,
                 public user: User,
                 public dateService:DateService,
@@ -47,21 +49,6 @@ export class LoginPage {
 
     ngOnInit() {
         this.globalInstance = this.globalVars.getInstance();
-    }
-
-    ionViewDidLoad(){
-        //订阅请求错误信息
-        this.publicFactory.error.subscribe((data) => {
-            console.log(data)
-            this.popupFactory.showAlert({
-                message:data.message
-            })
-        });
-    }
-
-    ionViewWillUnload() {
-        //取消选择单位订阅
-        this.publicFactory.error.observers.pop();
     }
 
     ngAfterViewInit() {
@@ -91,6 +78,22 @@ export class LoginPage {
         this.hackerInterval = setInterval(draw, 33);
         this.getImgCode();
     }
+
+    ionViewDidLoad(){
+        //订阅请求错误信息
+        this.errorSubscription = this.publicFactory.error.subscribe((data) => {
+            this.popupFactory.showAlert({
+                message:data.message
+            })
+        });
+    }
+
+    ionViewWillLeave() {
+        //取消选择单位订阅
+        this.errorSubscription.unsubscribe();
+    }
+
+
 
     /**
      * 当视图离开时

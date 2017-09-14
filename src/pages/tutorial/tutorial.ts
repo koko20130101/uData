@@ -56,7 +56,7 @@ export class TutorialPage {
                 private statusBar: StatusBar,
                 public splashScreen: SplashScreen,
                 public translate: TranslateService) {
-        // this.statusBar.hide();
+        this.statusBar.hide();
     }
 
     ngOnInit() {
@@ -90,7 +90,7 @@ export class TutorialPage {
     ionViewWillEnter() {
         // console.log(3)
         //隐藏头部状态栏
-        // this.statusBar.hide();
+        this.statusBar.hide();
 
         if(this.network.type=='none'){
             this.publicFactory.error.emit({
@@ -148,7 +148,7 @@ export class TutorialPage {
     connectServer(){
         let _timeout = setTimeout(function () {
             //小米手机延迟
-            // this.statusBar.hide();
+            this.statusBar.hide();
             //设备唯一识别码
             this.dataInstance.sendMassage.head.UUID = this.device.uuid;
             //设备制造商
