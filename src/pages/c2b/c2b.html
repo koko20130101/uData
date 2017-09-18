@@ -1,0 +1,167 @@
+<ion-header>
+    <ion-navbar color="dark">
+        <ion-title>{{'C2B_TITLE'| translate}}</ion-title>
+        <ion-buttons end>
+            <ucs-unit [pageInfo]="pageInfo"></ucs-unit>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar ngClass="time-list" color="dark" text-center>
+        <ucs-date [pageInfo]="pageInfo"></ucs-date>
+    </ion-toolbar>
+    <ion-toolbar ngClass="my-toolbar">
+        <ion-segment ngClass="my-segment" [(ngModel)]="C2BType">
+            <ion-segment-button [value]="1" (click)="goSegment()" *ngIf="dateInstance.adminCode['09']">引入额</ion-segment-button>
+            <ion-segment-button [value]="2" (click)="goSegment()" *ngIf="dateInstance.adminCode['10']">销售额</ion-segment-button>
+            <ion-segment-button [value]="3" (click)="goSegment()" *ngIf="dateInstance.adminCode['11']">运营分析</ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)" ngClass="my-refresher">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-slides #MainSlides ngClass="my-slide" (ionSlideDidChange)="slideChange()">
+        <!--引入额-->
+        <ion-slide *ngIf="dateInstance.adminCode['09']">
+            <div class="total-data">
+                <p>本日引入额</p>
+                <h2 ion-text color="{{saleTotalData.totalAssetsIn[1]=='true'?'danger':(saleTotalData.totalAssetsIn[1]=='false'?'secondary':'')}}">
+                    <span [innerHTML]="saleTotalData.totalAssetsIn[0]"></span>
+                    <ion-icon name="{{saleTotalData.totalAssetsIn[1]=='true' ?'arrow-up':(saleTotalData.totalAssetsIn[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                </h2>
+            </div>
+            <div eCharts [options]="lineChartOption_1" [dataSet]="assetsInOutData.in" ngClass="line-chart-1"></div>
+            <ion-list ngClass="model-title">
+                <ion-item (click)="showContent(0)">
+                    <h2>渠道分布</h2>
+                    <ion-note item-right>
+                        <ion-icon name="{{modelContent[0]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content" *ngIf="modelContent[0]">
+                <ion-segment [(ngModel)]="saleChannelTypeIn" ngClass="my-segment">
+                    <ion-segment-button [value]="2" (click)="saleChannelSegmentIn()">引入额</ion-segment-button>
+                    <ion-segment-button [value]="1" (click)="saleChannelSegmentIn()">收益率</ion-segment-button>
+                    <ion-segment-button [value]="3" (click)="saleChannelSegmentIn()">期 限</ion-segment-button>
+                </ion-segment>
+                <div [ngSwitch]="saleChannelTypeIn" padding>
+                    <div *ngSwitchCase="'2'">
+                        <ion-row>
+                            <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                            <ion-col text-right><span ion-text color="gray">引入额度(万元)</span></ion-col>
+                        </ion-row>
+                        <list-platform [listData]="saleChannelDataIn[2]"></list-platform>
+                    </div>
+                    <div *ngSwitchCase="'1'">
+                        <ion-row>
+                            <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                            <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
+                        </ion-row>
+                        <list-platform [listData]="saleChannelDataIn[1]" [unit]="'%'"></list-platform>
+                    </div>
+                    <div *ngSwitchCase="'3'">
+                        <ion-row>
+                            <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                            <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
+                        </ion-row>
+                        <list-platform [listData]="saleChannelDataIn[3]"></list-platform>
+                    </div>
+                </div>
+            </div>
+        </ion-slide>
+        <!--销售额-->
+        <ion-slide *ngIf="dateInstance.adminCode['10']">
+            <div class="total-data">
+                <p>本日销售额</p>
+                <h2 ion-text color="{{saleTotalData.totalAssetsOut[1]=='true'?'danger':(saleTotalData.totalAssetsOut[1]=='false'?'secondary':'')}}">
+                    <span [innerHTML]="saleTotalData.totalAssetsOut[0]"></span>
+                    <ion-icon name="{{saleTotalData.totalAssetsOut[1]=='true' ?'arrow-up':(saleTotalData.totalAssetsOut[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                </h2>
+            </div>
+            <div eCharts [options]="lineChartOption_1" [dataSet]="assetsInOutData.out" ngClass="line-chart-1"></div>
+            <ion-list ngClass="model-title">
+                <ion-item (click)="showContent(1)">
+                    <h2>渠道分布</h2>
+                    <ion-note item-right>
+                        <ion-icon name="{{modelContent[1]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content" *ngIf="modelContent[1]">
+                <ion-segment [(ngModel)]="saleChannelTypeOut" ngClass="my-segment">
+                    <ion-segment-button [value]="2" (click)="saleChannelSegmentOut()">引入额</ion-segment-button>
+                    <ion-segment-button [value]="1" (click)="saleChannelSegmentOut()">收益率</ion-segment-button>
+                    <ion-segment-button [value]="3" (click)="saleChannelSegmentOut()">期 限</ion-segment-button>
+                </ion-segment>
+                <div [ngSwitch]="saleChannelTypeOut" padding>
+                    <div *ngSwitchCase="'2'">
+                        <ion-row>
+                            <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                            <ion-col text-right><span ion-text color="gray">引入额度(万元)</span></ion-col>
+                        </ion-row>
+                        <list-platform [listData]="saleChannelDataOut[2]"></list-platform>
+                    </div>
+                    <div *ngSwitchCase="'1'">
+                        <ion-row>
+                            <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                            <ion-col text-right><span ion-text color="gray">收益率</span></ion-col>
+                        </ion-row>
+                        <list-platform [listData]="saleChannelDataOut[1]" [unit]="'%'"></list-platform>
+                    </div>
+                    <div *ngSwitchCase="'3'">
+                        <ion-row>
+                            <ion-col text-left><span ion-text color="gray">渠道名称</span></ion-col>
+                            <ion-col text-right><span ion-text color="gray">期限(天)</span></ion-col>
+                        </ion-row>
+                        <list-platform [listData]="saleChannelDataOut[3]"></list-platform>
+                    </div>
+                </div>
+            </div>
+        </ion-slide>
+        <!--运营分析-->
+        <ion-slide *ngIf="dateInstance.adminCode['11']">
+            <ion-row ngClass="total-data">
+                <ion-col text-left>
+                    <p>存量资产</p>
+                    <h3 ion-text [innerHTML]="assetsMain.TotalAssetAmount" color="danger"></h3>
+                </ion-col>
+                <ion-col text-left>
+                    <p>可用资产</p>
+                    <h3 ion-text [innerHTML]="assetsMain.SurplusAmount" color="danger"></h3>
+                </ion-col>
+            </ion-row>
+            <div eCharts [options]="barChartOption" [dataSet]="profitData" (chartInit)="onChartInit($event)" ngClass="bar-chart-1"></div>
+            <ion-list ngClass="model-title" *ngIf="dateInstance.adminCode['04']">
+                <ion-item (click)="showContent(2)">
+                    <h2>利润走势</h2>
+                    <ion-note item-right>
+                        <ion-icon name="{{modelContent[2]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content" *ngIf="modelContent[2] && dateInstance.adminCode['04']">
+                <ion-row ngClass="total-data-1">
+                    <ion-col text-left>
+                        <p>累计营收额</p>
+                        <h3 ion-text [innerHTML]="grossMarginData.total" color="danger"></h3>
+                    </ion-col>
+                </ion-row>
+                <div eCharts [options]="lineChartOption_2" [dataSet]="grossMarginData" ngClass="line-chart-1"></div>
+            </div>
+            <ion-list ngClass="model-title">
+                <ion-item (click)="showContent(3)">
+                    <h2>资产健康值</h2>
+                    <ion-note item-right>
+                        <ion-icon name="{{modelContent[3]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
+                    </ion-note>
+                </ion-item>
+            </ion-list>
+            <div ngClass="model-content" padding *ngIf="modelContent[3]">
+                <div class="axis-label top">资产<br>不足</div>
+                <div class="axis-label bottom">资金<br>不足</div>
+                <div eCharts [options]="lineChartOption_3" [dataSet]="assetsHealthyData" ngClass="line-chart-1"></div>
+            </div>
+        </ion-slide>
+    </ion-slides>
+</ion-content>

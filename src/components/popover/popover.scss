@@ -1,0 +1,26 @@
+page-popover {
+  .popover-page {
+    margin-bottom: -1px;
+  }
+  .item-ios, .item-md {
+    padding-left: 0px;
+    text-align: center;
+  }
+  .item-ios.item-block .item-inner, .item-md.item-block .item-inner {
+    padding-right: 0px;
+  }
+  .label-ios, .label-md {
+    margin: 0px;
+  }
+
+}
+
+.my-popover {
+  .popover-content {
+    background-color:color($colors,light);
+    width: 60px;
+  }
+  .popover-arrow::after{
+    background-color:color($colors,light);
+  }
+}

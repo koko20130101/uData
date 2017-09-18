@@ -1,0 +1,230 @@
+<ion-header>
+    <ion-navbar color="dark">
+        <ion-title>
+            {{bankInfo.bankName}}
+        </ion-title>
+        <ion-buttons end>
+            <ucs-unit [pageInfo]="pageInfo"></ucs-unit>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar ngClass="time-list" color="dark" text-center>
+        <ucs-date [pageInfo]="pageInfo"></ucs-date>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)" ngClass="my-refresher">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <div ngClass="total-data" text-center>
+        <p *ngIf="showEndPoint">
+            <button ion-button clear icon-only small ngClass="endPoint-arrow" *ngIf="showEndPointArrow">
+                <ion-icon name="arrow-left-1"></ion-icon>
+            </button>
+            <button ion-button clear small ngClass="endPoint-text" (click)="showAlert()">{{currentEndPoint.name}}</button>
+            <button ion-button clear icon-only small ngClass="endPoint-arrow" *ngIf="showEndPointArrow">
+                <ion-icon name="arrow-right-1"></ion-icon>
+            </button>
+        </p>
+        <p>本日交易额</p>
+        <h2 ion-text
+            color="{{bankTotalData.total[1]=='true'?'danger':(bankTotalData.total[1]=='false'?'secondary':'')}}">
+            <span [innerHTML]="bankTotalData.total[0]"></span>
+            <ion-icon
+                    name="{{bankTotalData.total[1]=='true' ?'arrow-up':(bankTotalData.total[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+        </h2>
+    </div>
+    <div eCharts [options]="lineChartOption_1" [dataSet]="bankMoneyData" ngClass="line-chart-1"></div>
+    <ion-list ngClass="model-title">
+        <ion-item (click)="showContent(0)">
+            <h2>项目情况</h2>
+            <ion-note item-right>
+                <ion-icon name="{{modelContent[0]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content" *ngIf="modelContent[0]">
+        <ion-segment [(ngModel)]="projectType" ngClass="my-segment">
+            <ion-segment-button value="1">项目情况</ion-segment-button>
+            <ion-segment-button value="2" (click)="getProjectType()">资产类型</ion-segment-button>
+        </ion-segment>
+        <div [ngSwitch]="projectType">
+            <div *ngSwitchCase="'1'" padding>
+                <div ngClass="info-list">
+                    <info-item [itemTitle]="'发布项目数'" [itemInfo]="bankTotalData.ProjectNumber" [unit]="'个'"></info-item>
+                    <info-item [itemTitle]="'融资人数'" [itemInfo]="bankTotalData.financingNumber" [unit]="'人'"></info-item>
+                    <info-item [itemTitle]="'平均满标时间'" [itemInfo]="bankTotalData.time"></info-item>
+                </div>
+            </div>
+            <div *ngSwitchCase="'2'" padding-horizontal>
+                <div eCharts [options]="pieChartOption_1" [dataSet]="bankAssetsTypeData" ngClass="pie-chart-1"></div>
+            </div>
+        </div>
+    </div>
+    <ion-list ngClass="model-title">
+        <ion-item (click)="showContent(1)">
+            <h2>项目走势分析</h2>
+            <ion-note item-right>
+                <ion-icon name="{{modelContent[1]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content" *ngIf="modelContent[1]">
+        <ion-segment [(ngModel)]="projectTrendType" ngClass="my-segment">
+            <ion-segment-button value="1" (click)="getProjectTrendType()">收益率走势</ion-segment-button>
+            <ion-segment-button value="2" (click)="getProjectTrendType()">期限走势</ion-segment-button>
+            <ion-segment-button value="3" (click)="getProjectTrendType()">项目规模走势</ion-segment-button>
+        </ion-segment>
+        <div [ngSwitch]="projectTrendType" padding-vertical>
+            <div *ngSwitchCase="'1'">
+                <div ngClass="sub-total-data" text-center>
+                    <p>平均收益率</p>
+                    <h2 ion-text
+                        color="{{bankTotalData.AverageRate[1]=='true'?'danger':(bankTotalData.AverageRate[1]=='false'?'secondary':'')}}">
+                        <strong ion-text [innerHTML]="bankTotalData.AverageRate[0]"></strong>
+                        <span>%</span>
+                    </h2>
+                </div>
+                <div eCharts [options]="lineChartOption_2" [dataSet]="bankTrendRateData" ngClass="line-chart-1"></div>
+            </div>
+            <div *ngSwitchCase="'2'">
+                <div ngClass="sub-total-data" text-center>
+                    <p>平均期限</p>
+                    <h2 ion-text
+                        color="{{bankTotalData.AverageDeal[1]=='true'?'danger':(bankTotalData.AverageDeal[1]=='false'?'secondary':'')}}">
+                        <strong ion-text [innerHTML]="bankTotalData.AverageDeal[0]"></strong>
+                        <span>天</span>
+                    </h2>
+                </div>
+                <div eCharts [options]="lineChartOption_3" [dataSet]="bankTrendTermData" ngClass="line-chart-1"></div>
+            </div>
+            <div *ngSwitchCase="'3'">
+                <div ngClass="sub-total-data" text-center>
+                    <p>平均发布规模</p>
+                    <h2 ion-text
+                        color="{{bankTotalData.AverageTerm[1]=='true'?'danger':(bankTotalData.AverageTerm[1]=='false'?'secondary':'')}}">
+                        <strong ion-text [innerHTML]="bankTotalData.AverageTerm[0]"></strong>
+                        <span>万元</span>
+                    </h2>
+                </div>
+                <div eCharts [options]="lineChartOption_4" [dataSet]="bankTrendDealData" ngClass="line-chart-1"></div>
+            </div>
+        </div>
+    </div>
+    <ion-list ngClass="model-title">
+        <ion-item (click)="showContent(2)">
+            <h2>用户运营</h2>
+            <ion-note item-right>
+                <ion-icon name="{{modelContent[2]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content" *ngIf="modelContent[2]">
+        <ion-segment [(ngModel)]="userOperateType" ngClass="my-segment">
+            <ion-segment-button value="1">用户概况</ion-segment-button>
+            <ion-segment-button value="2">用户转化</ion-segment-button>
+        </ion-segment>
+        <div [ngSwitch]="userOperateType">
+            <div *ngSwitchCase="'1'" padding>
+                <div ngClass="info-list">
+                    <info-item [itemTitle]="'注册人数'" [itemInfo]="bankTotalData.UserNumber" [unit]="'人'"></info-item>
+                    <info-item [itemTitle]="'投资人数'" [itemInfo]="bankTotalData.PeopleNumber" [unit]="'人'"></info-item>
+                    <info-item [itemTitle]="'投资笔数'" [itemInfo]="bankTotalData.DealNumber" [unit]="'笔'"></info-item>
+                    <info-item [itemTitle]="'重复投资率'" [itemInfo]="bankTotalData.repeatRate" [unit]="'%'"></info-item>
+                    <info-item [itemTitle]="'投资用户活跃度'" [itemInfo]="bankTotalData.activeRate" [unit]="'%'"></info-item>
+                    <info-item [itemTitle]="'本行卡投资占比'" [itemInfo]="bankTotalData.selfBank" [unit]="'%'"></info-item>
+                </div>
+            </div>
+            <div *ngSwitchCase="'2'">
+                <div class="user">
+                    <div class="user-inner">
+                        <div class="user-item item-1">
+                            <span class="number"><span [innerHTML]="bankTotalData.heavyInvest[0] || 0"></span>人</span>
+                            <span class="title">
+                                重复投资
+                                <ion-icon
+                                        color="{{bankTotalData.heavyInvest[1] == 'true' ? 'danger':(bankTotalData.heavyInvest[1] == 'false' ? 'secondary':'')}}"
+                                        name="{{bankTotalData.heavyInvest[1] == 'true' ? 'arrow-up':(bankTotalData.heavyInvest[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                            </span>
+                        </div>
+                        <div class="user-item item-2">
+                            <span class="number"><span [innerHTML]="bankTotalData.newInvest[0] || 0"></span>人</span>
+                            <span class="title">
+                                新增投资
+                                <ion-icon
+                                        color="{{bankTotalData.newInvest[1] == 'true' ? 'danger':(bankTotalData.newInvest[1] == 'false' ? 'secondary':'')}}"
+                                        name="{{bankTotalData.newInvest[1] == 'true' ? 'arrow-up':(bankTotalData.newInvest[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                            </span>
+                        </div>
+                        <div class="user-item item-3">
+                            <span class="number"><span [innerHTML]="bankTotalData.newBindCard[0] || 0"></span>人</span>
+                            <span class="title">
+                                新增绑卡
+                                <ion-icon
+                                        color="{{bankTotalData.newBindCard[1] == 'true' ? 'danger':(bankTotalData.newBindCard[1] == 'false' ? 'secondary':'')}}"
+                                        name="{{bankTotalData.newBindCard[1] == 'true' ? 'arrow-up':(bankTotalData.newBindCard[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                            </span>
+                        </div>
+                        <div class="user-item item-4">
+                            <span class="number"><span [innerHTML]="bankTotalData.newUser[0] || 0"></span>人</span>
+                            <span class="title">
+                                新增注册
+                                <ion-icon
+                                        color="{{bankTotalData.newUser[1] == 'true' ? 'danger':(bankTotalData.newUser[1] == 'false' ? 'secondary':'')}}"
+                                        name="{{bankTotalData.newUser[1] == 'true' ? 'arrow-up':(bankTotalData.newUser[1] == 'false' ? 'arrow-down':'reduce')}}"></ion-icon>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ion-list ngClass="model-title">
+        <ion-item (click)="showContent(3)">
+            <h2>二级市场</h2>
+            <ion-note item-right>
+                <ion-icon name="{{modelContent[3]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content" *ngIf="modelContent[3]">
+        <div ngClass="info-list">
+            <info-item [itemTitle]="'发布项目数'" [itemInfo]="bankTotalSecData.secProjectNumber" [unit]="'个'"></info-item>
+            <info-item [itemTitle]="'转让发布金额'" [itemInfo]="bankTotalSecData.secReleaseNumber"></info-item>
+            <info-item [itemTitle]="'成交金额'" [itemInfo]="bankTotalSecData.secDealNumber"></info-item>
+            <info-item [itemTitle]="'平均期限'" [itemInfo]="bankTotalSecData.secPeriod" [unit]="'天'"></info-item>
+            <info-item [itemTitle]="'平均持有时间'" [itemInfo]="bankTotalSecData.averageTime"></info-item>
+            <info-item [itemTitle]="'转让人数'" [itemInfo]="bankTotalSecData.secUser" [unit]="'人'"></info-item>
+            <info-item [itemTitle]="'重复转让占比'" [itemInfo]="bankTotalSecData.secRepeatRate" [unit]="'%'"></info-item>
+        </div>
+        <div ngClass="sub-total-data have-border" text-center>
+            <p>平均收益率</p>
+            <h2 ion-text
+                color="{{bankTotalSecData.secAverageRate[1]=='true'?'danger':(bankTotalSecData.secAverageRate[1]=='false'?'secondary':'')}}">
+                <strong ion-text [innerHTML]="bankTotalSecData.secAverageRate[0]"></strong>
+                <span>%</span>
+            </h2>
+        </div>
+        <div eCharts [options]="lineChartOption_2" [dataSet]="bankRateTrendSecData" ngClass="line-chart-1"></div>
+    </div>
+    <ion-list ngClass="model-title">
+        <ion-item (click)="showContent(4)">
+            <h2>渠道占比</h2>
+            <ion-note item-right>
+                <ion-icon name="{{modelContent[4]?'arrow-up-2':'arrow-down-2'}}"></ion-icon>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div ngClass="model-content" padding-horizontal *ngIf="modelContent[4]">
+        <div eCharts [options]="pieChartOption_2" [dataSet]="bankChannelData" ngClass="pie-chart-1"></div>
+        <div ngClass="info-list">
+            <ion-row>
+                <ion-col col-5 text-left>注册人数</ion-col>
+                <ion-col text-right ion-text
+                         color="{{bankTotalData.otherDeal[1]=='true'?'danger':(bankTotalData.otherDeal[1]=='false'?'secondary':'')}}">
+                    <span [innerHTML]="bankTotalData.otherDeal[0]"></span><span ngClass="unit">人</span>
+                    <ion-icon name="arrow-down"></ion-icon>
+                </ion-col>
+            </ion-row>
+        </div>
+    </div>
+</ion-content>

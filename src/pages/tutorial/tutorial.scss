@@ -1,0 +1,55 @@
+page-tutorial {
+  ion-slides{
+    position: fixed;
+    top:0px;
+    bottom:87px;
+    height:auto;
+  }
+  .scroll-content{
+    overflow-y:hidden;
+  }
+  .tutorial {
+    background-color: color($colors, light);
+  }
+  .toolbar-background {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .swiper-slide img{
+    width:100%;
+  }
+
+  .slide-zoom {
+    height: 100%;
+  }
+
+  b {
+    font-weight: 500;
+  }
+
+  p {
+    padding: 0 40px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #60646B;
+
+    b {
+      color: #000000;
+    }
+  }
+  .count {
+    position: fixed;
+    right: 16px;
+    top: 16px;
+    height:20px;
+    width: 20px;
+    line-height:20px;
+    text-align:center;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: color($colors, gray);
+    opacity:.5;
+    z-index: 2;
+  }
+}

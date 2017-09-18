@@ -1,0 +1,23 @@
+<ion-content no-bounce ngClass="tutorial">
+    <div ngClass="count" *ngIf="showSkip && showCount">
+        {{count}}
+    </div>
+    <ion-slides pager="{{(slides.length==0 || slides.length==1) ? false:true}}"  (ionSlideWillChange)="onSlideChangeStart($event)">
+        <ion-slide *ngFor="let slide of slides">
+            <img [src]="slide.image" class="slide-image"/>
+        </ion-slide>
+    </ion-slides>
+</ion-content>
+<ion-footer no-border>
+    <div ngClass="my-footer">
+        <ion-row align-items-center>
+            <ion-col col-3></ion-col>
+            <ion-col col-6>
+                <img src="assets/img/logo.png" alt="">
+            </ion-col>
+            <ion-col col-3>
+                <button ion-button clear small *ngIf="showSkip" (click)="startApp()">跳过</button>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-footer>

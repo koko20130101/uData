@@ -1,0 +1,8 @@
+{
+  "name": "uData-super",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar color="dark">
+        <ion-title>{{'BANK_TITLE' | translate}}</ion-title>
+        <ion-buttons end>
+            <ucs-unit [pageInfo]="pageInfo"></ucs-unit>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar ngClass="time-list" color="dark" text-center>
+        <ucs-date [pageInfo]="pageInfo"></ucs-date>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)" ngClass="my-refresher">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ul class="bank-info-list" padding-horizontal>
+        <li *ngFor="let item of bankListData" >
+            <div ngClass="bank-cmb" [style.background]="'linear-gradient(to bottom right,'+item['logoBg']+')'">
+                <button ion-button clear (click)="openBankDetail(item)"></button>
+                <h4 ion-text [innerHTML]="item.money"></h4>
+                <p><span>{{item.bankName}}</span>
+                    <ion-icon name="{{item['up'] ? 'up':'down'}}"></ion-icon>
+                </p>
+                <div class="bank-logo"><img [src]="item.bankLogo"></div>
+            </div>
+        </li>
+    </ul>
+</ion-content>
+<ion-footer *ngIf="!dateInstance.adminCode['06']" ngClass="footer-bar">
+    <ion-navbar color="dark">
+        <ion-row text-center>
+            <ion-col no-padding>
+                <button ion-button clear icon-left color="light" (click)="openHelpPage()">
+                    <ion-icon name="help"></ion-icon>
+                    帮助
+                </button>
+            </ion-col>
+            <ion-col no-padding>
+                <button ion-button clear icon-left color="light" (click)="logout()">
+                    <ion-icon name="leave"></ion-icon>
+                    退出
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-navbar>
+</ion-footer>

@@ -1,0 +1,68 @@
+<ion-header>
+    <ion-navbar color="dark">
+        <ion-title>
+            {{'MAIN_TITLE' | translate}}
+        </ion-title>
+        <ion-buttons left *ngIf="dateInstance.adminCode['01']">
+            <button ion-button icon-only color="light" (click)="openBankListPage()">
+                <ion-icon name="list"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <ucs-unit [pageInfo]="pageInfo"></ucs-unit>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar class="time-list" color="dark" text-center>
+        <ucs-date [pageInfo]="pageInfo"></ucs-date>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)" ngClass="my-refresher">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <div padding class="platform-data-list">
+        <div  class="platform-data data-1"  *ngIf="dateInstance.adminCode['01']">
+            <button ion-button clear (click)="openPlatformData()"></button>
+            <h5>{{'PLATFORM_TITLE_1' | translate}}</h5>
+            <p [innerHTML]="totalAmount.platformTotal" *ngIf="isShow"></p>
+            <p *ngIf="!isShow">******</p>
+        </div>
+        <div class="platform-data data-2"  *ngIf="dateInstance.adminCode['02']">
+            <button ion-button clear (click)="openC2bPage()"></button>
+            <h5>{{'PLATFORM_TITLE_2' | translate}}</h5>
+            <p [innerHtml]="totalAmount.C2BTotal" *ngIf="isShow"></p>
+            <p *ngIf="!isShow">******</p>
+        </div>
+        <div class="platform-data data-3" *ngIf="dateInstance.adminCode['12']">
+            <button ion-button clear (click)="openLingXiPage()"></button>
+            <h5>{{'PLATFORM_TITLE_3' | translate}}</h5>
+            <p [innerHtml]="totalAmount.LingXiTotal" *ngIf="isShow"></p>
+            <p *ngIf="!isShow">******</p>
+        </div>
+    </div>
+</ion-content>
+<ion-footer ngClass="footer-bar">
+    <ion-navbar color="dark">
+        <ion-row text-center>
+            <ion-col no-padding *ngIf="dateInstance.adminCode['04']">
+                <button ion-button clear icon-left (click)="showMomey()">
+                    <ion-icon name="{{isShow ? 'show':'hide'}}"></ion-icon>
+                    <span *ngIf="isShow">隐藏</span>
+                    <span *ngIf="!isShow">显示</span>
+                </button>
+            </ion-col>
+            <ion-col no-padding>
+                <button ion-button clear icon-left (click)="openHelpPage()">
+                    <ion-icon name="help"></ion-icon>
+                    帮助
+                </button>
+            </ion-col>
+            <ion-col no-padding>
+                <button ion-button clear icon-left (click)="removeCache()">
+                    <ion-icon name="leave"></ion-icon>
+                    退出
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-navbar>
+</ion-footer>
