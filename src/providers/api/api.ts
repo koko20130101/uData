@@ -53,9 +53,9 @@ export class Api {
         // console.log(endpoint + ":");
         // console.log(sendData);
         // return this.http.post(HOST + '/' + endpoint, JSON.stringify(sendData), this.options);
-        let seq = this.http.get(endpoint, this.options).share();
-        seq.timeout(6000)
-            .map(res => res.json())
+        let seq = this.http.get(endpoint, this.options).timeout(10000).share();
+
+        seq.map(res => res.json())
             .subscribe(
                 res => {
                     if (!!res && res.code != 1) {
@@ -71,12 +71,13 @@ export class Api {
                             });
                             break;
                         default:
-                            /*this.publicFactory.error.emit({
-                             message: '有部分数据没有返回，请下拉刷新重试!'
-                             });*/
+                            this.publicFactory.error.emit({
+                                message: '请求数据超时，请稍后重试!'
+                            });
                             break;
                     }
-                });
+                }
+            );
         return seq;
     }
 
