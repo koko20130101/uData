@@ -1,23 +1,25 @@
+import {Api} from './api/api';
+import {Endpoint} from './api/endpoint';
+import {CacheField} from './api/cache-field';
+import {Settings} from './settings/settings';
 import {User} from './services/user.service';
-import {Api} from './api';
-import {Settings} from './settings';
 import {GlobalVars} from './services/global.service';
-import {PublicFactory} from './factory/public.factory';
-import {PopupFactory} from './factory/popup.factory';
-import {StorageFactory} from './factory/storage.factory';
-import {Crypto} from './factory/crypto.factory';
-import {ValidatorFactory} from './factory/validator.factory';
-import {ListPipe} from './pipes/list.pipe';
+import {PublicFactory} from './factories/public.factory';
+import {PopupFactory} from './factories/popup.factory';
+import {StorageFactory} from './factories/storage.factory';
+import {Crypto} from './factories/crypto.factory';
+import {ValidatorFactory} from './factories/validator.factory';
 
 export {
     Api,
-    User,
+    Endpoint,
+    CacheField,
     Settings,
+    User,
     GlobalVars,
     PublicFactory,
     PopupFactory,
     ValidatorFactory,
     StorageFactory,
-    Crypto,
-    ListPipe
+    Crypto
 };

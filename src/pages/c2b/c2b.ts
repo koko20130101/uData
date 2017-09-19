@@ -1,16 +1,17 @@
 import {Component, ViewChild} from '@angular/core';
-import {Slides, NavController, Refresher} from 'ionic-angular';
+import {IonicPage,Slides, NavController, Refresher} from 'ionic-angular';
 
-import {Endpoint} from '../../providers/endpoint';
-import {CacheField} from '../../providers/cache-field';
+import {Endpoint} from '../../providers/providers';
+import {CacheField} from '../../providers/providers';
 import {C2bService} from '../../providers/services/c2b.service';
 import {GlobalVars} from '../../providers/services/global.service';
 
-import {PublicFactory} from '../../providers/factory/public.factory';
-import {PopupFactory} from '../../providers/factory/popup.factory';
+import {PublicFactory} from '../../providers/providers';
+import {PopupFactory} from '../../providers/providers';
 
 import * as chartOptions from '../../providers/charts-option'
 
+@IonicPage()
 @Component({
     selector: 'c2b-page',
     templateUrl: 'c2b.html',

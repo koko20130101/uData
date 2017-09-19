@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import moment from 'moment';
 
-import {Api} from '../api';
-import {CacheField} from '../cache-field'
+import {Api} from '../api/api';
+import {CacheField} from '../api/cache-field'
 
-import {GlobalVars} from '../services/global.service';
-import {PublicFactory} from '../factory/public.factory';
-import {StorageFactory} from '../factory/storage.factory';
-import {ListPipe} from '../../providers/pipes/list.pipe';
+import {GlobalVars} from './global.service';
+import {PublicFactory} from '../factories/public.factory';
+import {StorageFactory} from '../factories/storage.factory';
+import {ListPipe} from '../../pipes/list/list';
 
 @Injectable()
 export class C2bService {

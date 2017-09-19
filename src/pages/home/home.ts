@@ -1,26 +1,27 @@
 import {Component} from  '@angular/core';
-import {NavController, Refresher,App} from 'ionic-angular';
+import {IonicPage,NavController, Refresher,App} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {Device} from '@ionic-native/device';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Network} from '@ionic-native/network';
 
-import {LoginPage} from '../login/login';
-import {PlatformTotalPage} from '../platform-total/platform-total';
-import {C2bPage} from '../c2b/c2b';
-import {LingXiPage} from '../lingxi/lingXi';
-import {BankListPage} from '../bank-list/bank-list';
-import {HelpPage} from '../help/help';
+// import {LoginPage} from '../login/login';
+// import {PlatformTotalPage} from '../platform-total/platform-total';
+// import {C2bPage} from '../c2b/c2b';
+// import {LingXiPage} from '../lingxi/lingXi';
+// import {BankListPage} from '../bank-list/bank-list';
+// import {HelpPage} from '../help/help';
 
-import {CacheField} from '../../providers/cache-field';
-import {Endpoint} from '../../providers/endpoint';
+import {CacheField} from '../../providers/providers';
+import {Endpoint} from '../../providers/providers';
 import {GlobalVars} from  '../../providers/services/global.service';
 import {HomeService} from '../../providers/services/home.service';
 import {User} from '../../providers/providers';
 
-import {PublicFactory} from  '../../providers/factory/public.factory';
-import {PopupFactory} from  '../../providers/factory/popup.factory';
+import {PublicFactory} from  '../../providers/providers';
+import {PopupFactory} from  '../../providers/providers';
 
+@IonicPage()
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html',
@@ -68,6 +69,7 @@ export class HomePage {
         // console.log(1)
         //订阅选择时间传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
+            console.log(data)
             if (data.page == this.pageInfo.name) {
                 this.getHomeData(Endpoint.homeData, CacheField.homeData);
             }
@@ -163,7 +165,7 @@ export class HomePage {
         this.user.logout({}).subscribe((data) => {
             let res: any = data;
             if (res._body.code == 1) {
-                this.navCtrl.setRoot(LoginPage);
+                this.navCtrl.setRoot('LoginPage');
             }
         });
     }
@@ -180,22 +182,22 @@ export class HomePage {
     }
 
     openPlatformData() {
-        this.navCtrl.push(PlatformTotalPage)
+        this.navCtrl.push('PlatformTotalPage')
     }
 
     openC2bPage() {
-        this.navCtrl.push(C2bPage)
+        this.navCtrl.push('C2bPage')
     }
 
     openLingXiPage() {
-        this.navCtrl.push(LingXiPage)
+        this.navCtrl.push('LingXiPage')
     }
 
     openHelpPage() {
-        this.navCtrl.push(HelpPage)
+        this.navCtrl.push('HelpPage')
     }
 
     openBankListPage() {
-        this.navCtrl.push(BankListPage)
+        this.navCtrl.push('BankListPage')
     }
 }

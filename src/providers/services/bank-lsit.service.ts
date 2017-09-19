@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import moment from 'moment';
 
-import {Api} from '../api';
-import {CacheField} from '../cache-field';
-import {GlobalVars} from '../services/global.service';
+import {Api} from '../api/api';
+import {CacheField} from '../api/cache-field';
+import {GlobalVars} from './global.service';
 
-import {PublicFactory} from '../factory/public.factory';
-import {StorageFactory} from '../factory/storage.factory';
+import {PublicFactory} from '../factories/public.factory';
+import {StorageFactory} from '../factories/storage.factory';
 
 @Injectable()
 export class BankListService {

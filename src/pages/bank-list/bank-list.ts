@@ -1,18 +1,16 @@
 import {Component} from '@angular/core';
-import {NavController, Refresher} from 'ionic-angular';
+import {IonicPage,NavController, Refresher} from 'ionic-angular';
 
-import {BankDetailPage} from '../bank-detail/bank-detail';
-import {HelpPage} from '../help/help';
-
-import {CacheField} from '../../providers/cache-field';
-import {Endpoint} from '../../providers/endpoint';
+import {CacheField} from '../../providers/providers';
+import {Endpoint} from '../../providers/providers';
 import {GlobalVars} from '../../providers/services/global.service';
 import {BankListService} from '../../providers/services/bank-lsit.service';
 import {User} from '../../providers/services/user.service';
 
-import {PublicFactory} from '../../providers/factory/public.factory'
-import {PopupFactory} from '../../providers/factory/popup.factory'
+import {PublicFactory} from '../../providers/providers'
+import {PopupFactory} from '../../providers/providers'
 
+@IonicPage()
 @Component({
     selector: 'bank-page',
     templateUrl: 'bank-list.html',
@@ -122,11 +120,11 @@ export class BankListPage {
     }
 
     openBankDetail(bank) {
-        this.navCtrl.push(BankDetailPage, bank);
+        this.navCtrl.push('BankDetailPage', bank);
     }
 
     openHelpPage() {
-        this.navCtrl.push(HelpPage);
+        this.navCtrl.push('HelpPage');
     }
 
     logout() {

@@ -6,13 +6,13 @@ import {Device} from '@ionic-native/device';
 
 import {FirstRunPage} from '../pages/pages';
 
-import {GlobalVars} from  '../providers/services/global.service';
-import {PopupFactory} from '../providers/factory/popup.factory';
+import {GlobalVars} from  '../providers/providers';
+import {PopupFactory} from '../providers/providers';
 
 import {TranslateService} from '@ngx-translate/core'
 
 @Component({
-    templateUrl: 'app.html'
+    template: `<ion-nav [root]="rootPage"></ion-nav>`
 })
 export class MyApp {
     //第一个呈现的页面
@@ -60,7 +60,7 @@ export class MyApp {
             //如果当前活动页面不能返回
             if (!this.app.getActiveNav().canGoBack()) {
                 this.exitApp()
-            }else{
+            } else {
                 //返回上一页面
                 this.app.goBack();
             }

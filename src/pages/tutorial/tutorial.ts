@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {IonicPage,NavController} from 'ionic-angular';
 import {Device} from '@ionic-native/device';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Network} from '@ionic-native/network';
@@ -7,17 +7,15 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 
 import co from 'co';
 
-import {HomePage} from '../home/home';
-import {BankListPage} from '../bank-list/bank-list';
-import {LoginPage} from '../login/login';
+// import {BankListPage} from '../bank-list/bank-list';
 
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../providers/services/user.service';
 import {DateService} from '../../providers/services/date.service';
 import {GlobalVars} from  '../../providers/services/global.service';
 
-import {PopupFactory} from '../../providers/factory/popup.factory';
-import {PublicFactory} from '../../providers/factory/public.factory';
+import {PopupFactory} from '../../providers/factories/popup.factory';
+import {PublicFactory} from '../../providers/factories/public.factory';
 
 
 export interface Slide {
@@ -25,6 +23,7 @@ export interface Slide {
     image: string;
 }
 
+@IonicPage()
 @Component({
     selector: 'page-tutorial',
     templateUrl: 'tutorial.html'
@@ -226,12 +225,12 @@ export class TutorialPage {
         clearInterval(this.myInterval);
         if (this.isLogged) {
             if (this.dataInstance.adminCode['06']) {
-                this.navCtrl.setRoot(HomePage, {}, {
+                this.navCtrl.setRoot('HomePage', {}, {
                     animate: true,
                     direction: 'forward'
                 });
             } else if (this.dataInstance.adminCode['13']) {
-                this.navCtrl.setRoot(BankListPage, {}, {
+                this.navCtrl.setRoot('BankListPage', {}, {
                     animate: true,
                     direction: 'forward'
                 })
@@ -242,7 +241,7 @@ export class TutorialPage {
                 })
             }
         } else {
-            this.navCtrl.setRoot(LoginPage, {}, {
+            this.navCtrl.setRoot('LoginPage', {}, {
                 animate: true,
                 direction: 'forward'
             });

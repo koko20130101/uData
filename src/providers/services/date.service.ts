@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import moment from 'moment';
 
-import {Api} from '../api';
-import {Endpoint} from '../endpoint';
-import {CacheField} from '../cache-field';
-import {GlobalVars} from  '../../providers/services/global.service';
-import {StorageFactory} from '../factory/storage.factory';
+import {Api} from '../api/api';
+import {Endpoint} from '../api/endpoint';
+import {CacheField} from '../api/cache-field';
+import {GlobalVars} from  './global.service';
+import {StorageFactory} from '../factories/storage.factory';
 
 
 @Injectable()

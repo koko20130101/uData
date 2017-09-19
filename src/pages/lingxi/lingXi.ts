@@ -1,15 +1,16 @@
 import {Component, ViewChild} from '@angular/core';
-import {Slides, NavController, Refresher} from 'ionic-angular';
+import {IonicPage,Slides, NavController, Refresher} from 'ionic-angular';
 
-import {Endpoint} from '../../providers/endpoint';
-import {CacheField} from '../../providers/cache-field';
+import {Endpoint} from '../../providers/providers';
+import {CacheField} from '../../providers/providers';
 import {GlobalVars} from '../../providers/services/global.service';
 import {LingXiService} from '../../providers/services/lingXi.service';
 import * as chartOptions from '../../providers/charts-option';
 
-import {PublicFactory} from '../../providers/factory/public.factory';
-import {PopupFactory} from '../../providers/factory/popup.factory'
+import {PublicFactory} from '../../providers/providers';
+import {PopupFactory} from '../../providers/providers'
 
+@IonicPage()
 @Component({
     selector: 'linXi-page',
     templateUrl: 'lingXi.html',

@@ -1,47 +1,29 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule, Http} from '@angular/http';
-import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {Storage, IonicStorageModule} from '@ionic/storage';
-
-import {MyApp} from './app.component';
-
-import {HomePage} from  '../pages/home/home';
-import {TutorialPage} from '../pages/tutorial/tutorial';
-import {LoginPage} from '../pages/login/login';
-import {PlatformTotalPage} from '../pages/platform-total/platform-total';
-import {C2bPage} from '../pages/c2b/c2b';
-import {LingXiPage} from '../pages/lingxi/lingXi';
-import {BankListPage} from '../pages/bank-list/bank-list';
-import {BankDetailPage} from '../pages/bank-detail/bank-detail';
-import {HelpPage} from '../pages/help/help';
-import {SettingsPage} from '../pages/settings/settings';
-import {PopOverPage} from '../pages/public/popover';
-import {Date} from '../pages/public/date';
-import {Unit} from '../pages/public/unit';
-import {ListPlatform} from '../pages/public/list-platform';
-import {InfoItem} from '../pages/public/info-item';
-
-import {Api} from '../providers/api';
-import {Settings} from '../providers/settings';
-import {PublicFactory} from '../providers/providers';
-import {PopupFactory} from '../providers/providers';
-import {StorageFactory} from '../providers/providers';
-import {Crypto} from '../providers/providers';
-import {User} from '../providers/services/user.service';
-import {GlobalVars} from '../providers/services/global.service';
-import {DateService} from '../providers/services/date.service';
-import {ListPipe} from '../providers/pipes/list.pipe';
-
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Device} from '@ionic-native/device';
 import {Network} from '@ionic-native/network';
+import {IonicApp, IonicModule,IonicErrorHandler} from 'ionic-angular';
 
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {MyApp} from './app.component';
+import {PopoverPage} from '../components/popover/popover';
 
-import {MyECharts} from '../directives/echarts.directive';
+import {Api} from '../providers/providers';
+import {Settings} from '../providers/providers';
+import {PublicFactory} from '../providers/providers';
+import {PopupFactory} from '../providers/providers';
+import {StorageFactory} from '../providers/providers';
+import {Crypto} from '../providers/providers';
+import {User} from '../providers/providers';
+import {GlobalVars} from '../providers/providers';
+import {DateService} from '../providers/services/date.service';
+import {ListPipe} from '../pipes/list/list';
+
 
 
 // The translate loader needs to know where to load i18n files
@@ -68,22 +50,7 @@ export function provideSettings(storage: Storage) {
 @NgModule({
     declarations: [
         MyApp,
-        LoginPage,
-        HomePage,
-        PlatformTotalPage,
-        C2bPage,
-        LingXiPage,
-        BankListPage,
-        BankDetailPage,
-        HelpPage,
-        SettingsPage,
-        TutorialPage,
-        PopOverPage,
-        Date,
-        Unit,
-        ListPlatform,
-        InfoItem,
-        MyECharts
+        PopoverPage,
     ],
     imports: [
         BrowserModule,
@@ -95,44 +62,13 @@ export function provideSettings(storage: Storage) {
                 deps: [Http]
             }
         }),
-        IonicModule.forRoot(MyApp, {
-            //设置app
-            //二级页面隐藏底部菜单
-            tabsHideOnSubPages: true,
-            //导航位置
-            tabsPlacement: 'bottom',
-            backButtonText: '',
-            // pageTransition: 'ios-transition',
-            // iconMode: 'ios',
-            // activator:'highlight'
-            menuType: 'overlay',  //菜单进入方式
-            platforms: {
-                ios: {
-                    menuType: 'overlay',
-                }
-            }
-        }),
-        IonicStorageModule.forRoot(),
-        // MyECharts
+        IonicModule.forRoot(MyApp),
+        IonicStorageModule.forRoot()
     ],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        LoginPage,
-        HomePage,
-        PlatformTotalPage,
-        C2bPage,
-        LingXiPage,
-        BankListPage,
-        BankDetailPage,
-        HelpPage,
-        SettingsPage,
-        TutorialPage,
-        PopOverPage,
-        Date,
-        Unit,
-        ListPlatform,
-        InfoItem
+        PopoverPage,
     ],
     providers: [
         Api,

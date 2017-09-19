@@ -1,9 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {IonicPage,NavController} from 'ionic-angular';
 import co from 'co';
-
-import {HomePage} from '../home/home';
-import {BankListPage} from '../bank-list/bank-list';
 
 import {User} from  '../../providers/services/user.service';
 import {GlobalVars} from '../../providers/providers';
@@ -12,12 +9,7 @@ import {PublicFactory} from '../../providers/providers';
 import {ValidatorFactory} from '../../providers/providers';
 import {DateService} from '../../providers/services/date.service';
 
-/**
- * The Welcome Page is a splash page that quickly describes the app,
- * and then directs the user to create an account or log in.
- * If you'd like to immediately put the user onto a login/signup page,
- * we recommend not using the Welcome page.
- */
+@IonicPage()
 @Component({
     selector: 'page-login',
     templateUrl: 'login.html'
@@ -155,12 +147,12 @@ export class LoginPage {
                         if (res._body.code == 1) {
                             this.globalInstance.setDateValue(res._body.data);
                             if (this.globalInstance.adminCode['06']) {
-                                this.navCtrl.setRoot(HomePage, {}, {
+                                this.navCtrl.setRoot('HomePage', {}, {
                                     animate: true,
                                     direction: 'forward'
                                 });
                             } else if (this.globalInstance.adminCode['13']) {
-                                this.navCtrl.setRoot(BankListPage, {}, {
+                                this.navCtrl.setRoot('BankListPage', {}, {
                                     animate: true,
                                     direction: 'forward'
                                 })
