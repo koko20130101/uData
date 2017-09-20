@@ -5,6 +5,17 @@ page-tutorial {
     bottom:87px;
     height:auto;
   }
+  .refresh-btn-box{
+    position: fixed;
+    top: 0px;
+    bottom:0;
+    left:0;
+    right:0;
+  }
+  .refresh-button{
+    font-size:3.4rem;
+    color:color($colors,gray,mid2);
+  }
   .scroll-content{
     overflow-y:hidden;
   }

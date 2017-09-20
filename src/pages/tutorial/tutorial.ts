@@ -29,6 +29,7 @@ export interface Slide {
     templateUrl: 'tutorial.html'
 })
 export class TutorialPage {
+    loader: any;
     slides: Slide[] = [];
     showCount: boolean = true;
     showSkip: boolean = false;
@@ -39,6 +40,8 @@ export class TutorialPage {
     myInterval: any;
     dataInstance: any;
     myToast:any;
+
+    showRefreshButton:boolean = false;
 
     errorSubscription:any;
     connectSubscription:any;
@@ -70,7 +73,6 @@ export class TutorialPage {
         // console.log(2)
         //订阅请求错误信息
         this.errorSubscription = this.publicFactory.error.subscribe((data)=> {
-            console.log(this.publicFactory.error)
             if (this.errorCount == 0) {
                 this.myToast = this.popupFactory.showToast({
                     message: data.message,
@@ -160,20 +162,33 @@ export class TutorialPage {
             this.dataInstance.sendMassage.head.oSVersion = this.device.version;
 
             co(function *() {
+                this.loader = this.popupFactory.loading({
+                    showBackdrop:false,
+                });
+                this.loader.present();
+
                 let loginStatus: any = yield this.user.checkLogin({});
                 let userPower: any = {};
                 let tutorial: any = {};
+
+                this.loader.dismiss();
+
                 if (loginStatus.code == 1) {
                     this.dataInstance.cryptKey = loginStatus.data.key;
                     userPower = yield this.user.getUserPower();
                     //加载启动页面
                     tutorial = yield this.user.getTutorials();
                     this.slides = tutorial.data;
+                    //隐藏APP启动页
+                    this.splashScreen.hide();
                 } else if(loginStatus.code == 0) {
                     this.isLogged = false;
                     this.startApp();
                     return;
                 }else{
+                    //隐藏启动页
+                    this.splashScreen.hide();
+                    this.showRefreshButton = true;
                     this.isLogged = false;
                     return;
                 }
@@ -216,10 +231,13 @@ export class TutorialPage {
                 }
             }.bind(this));
 
-            //隐藏启动页
-            this.splashScreen.hide();
             clearTimeout(_timeout);
         }.bind(this), 1000);
+    }
+
+    reload(){
+        this.showRefreshButton = this.showRefreshButton ? false : true;
+        this.connectServer();
     }
 
 

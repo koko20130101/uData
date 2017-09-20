@@ -31,6 +31,7 @@
 
 .ion-ios-no-content:before { content: "\e61c"; }
 .ion-ios-close:before { content: "\e61e"; }
+.ion-ios-arrow-back:before { content: "\e630"; }
 .ion-ios-arrow-left-1:before { content: "\e604"; }
 .ion-ios-arrow-right-2:before { content: "\e605"; }
 .ion-ios-arrow-right-1:before { content: "\e601"; }
@@ -47,9 +48,11 @@
 .ion-ios-warning:before { content: "\e628"; }
 .ion-ios-help:before { content: "\e696"; }
 .ion-ios-reduce:before { content: "\e629"; }
+.ion-ios-refresh:before { content: "\e654"; }
 
 .ion-md-no-content:before { content: "\e61c"; }
 .ion-md-close:before { content: "\e61e"; }
+
 .ion-md-arrow-left-1:before { content: "\e604"; }
 .ion-md-arrow-right-2:before { content: "\e605"; }
 .ion-md-arrow-right-1:before { content: "\e601"; }
@@ -66,6 +69,7 @@
 .ion-md-warning:before { content: "\e628"; }
 .ion-md-help:before { content: "\e696"; }
 .ion-md-reduce:before { content: "\e629"; }
+.ion-md-refresh:before { content: "\e654"; }
 
 
 .toolbar-ios.time-list, .toolbar-md.time-list {
@@ -448,5 +452,9 @@ ion-navbar.toolbar {
 
 ion-content.has-refresher > .scroll-content {
   border: none;
+}
+
+.my-loading .spinner-ios line {
+  stroke: color($colors, gray);
 }
 

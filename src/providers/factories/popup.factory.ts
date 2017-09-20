@@ -38,7 +38,7 @@ export class PopupFactory {
      * */
     public loading(config?) {
         let loaderConfig = {
-            duration:10000,
+            duration:15000,
             cssClass:'my-loading',
             showBackdrop:true //黑色背景
             // dismissOnPageChange:false
