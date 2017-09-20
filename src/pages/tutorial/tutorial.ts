@@ -76,7 +76,7 @@ export class TutorialPage {
                     message: data.message,
                     // message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
                     duration: data.duration || 5000,
-                    position: 'top'
+                    position: data.position || 'top'
                 });
                 this.myToast.onDidDismiss(()=> {
                     this.errorCount = 0;
@@ -169,9 +169,12 @@ export class TutorialPage {
                     //加载启动页面
                     tutorial = yield this.user.getTutorials();
                     this.slides = tutorial.data;
-                } else {
+                } else if(loginStatus.code == 0) {
                     this.isLogged = false;
                     this.startApp();
+                    return;
+                }else{
+                    this.isLogged = false;
                     return;
                 }
                 if (userPower.code == 1) {

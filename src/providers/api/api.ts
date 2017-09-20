@@ -64,15 +64,18 @@ export class Api {
                     }
                 },
                 err => {
+                    console.log(err)
                     switch (err.status) {
                         case 0:
                             this.publicFactory.error.emit({
-                                message: '无法链接到网络，请稍后重试!'
+                                message: '无法链接到网络，请稍后重试!',
+                                position: 'middle',
                             });
                             break;
                         default:
                             this.publicFactory.error.emit({
-                                message: '请求数据超时，请稍后重试!'
+                                message: '请求数据超时，请稍后重试!',
+                                position:'middle'
                             });
                             break;
                     }

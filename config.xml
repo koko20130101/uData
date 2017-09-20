@@ -26,7 +26,6 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="4000" />
     <preference name="loadUrlTimeoutValue" value="10000" />
-    <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <platform name="android">
         <allow-intent href="market:*" />
@@ -48,6 +47,7 @@
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+        <preference name="ShowSplashScreenSpinner" value="false" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
