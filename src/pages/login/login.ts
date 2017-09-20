@@ -160,12 +160,15 @@ export class LoginPage {
         this.loader.present();
         co(function *() {
             let loginStatus: any = yield this.user.login(this.account);
-            console.log(loginStatus)
             let userPower: any = {};
-
             if (loginStatus.code == 1) {
                 userPower = yield this.user.getUserPower();
             }
+
+            if(!!this.loader) {
+                this.loader.dismiss();
+            }
+
             if (userPower.code == 1) {
                 this.dateService.loadDateList({}).subscribe(
                     data => {
@@ -190,10 +193,6 @@ export class LoginPage {
                             }
                         }
                     });
-            }
-
-            if(!!this.loader) {
-                this.loader.dismiss();
             }
 
         }.bind(this));

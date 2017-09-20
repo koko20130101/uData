@@ -163,9 +163,11 @@ export class TutorialPage {
 
             co(function *() {
                 this.loader = this.popupFactory.loading({
+                    cssClass:'black-loading',
                     showBackdrop:false,
                 });
                 this.loader.present();
+
 
                 let loginStatus: any = yield this.user.checkLogin({});
                 let userPower: any = {};
@@ -173,7 +175,9 @@ export class TutorialPage {
 
                 //隐藏启动页
                 this.splashScreen.hide();
-                this.loader.dismiss();
+                if(!!this.loader) {
+                    this.loader.dismiss();
+                }
 
                 if (loginStatus.code == 1) {
                     this.dataInstance.cryptKey = loginStatus.data.key;
@@ -227,6 +231,8 @@ export class TutorialPage {
                         clearTimeout(myTimeOut);
                     }.bind(this), 300);
                 }
+
+
             }.bind(this));
 
             clearTimeout(_timeout);

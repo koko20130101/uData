@@ -61,12 +61,13 @@ export class HomePage {
     }
 
     ngOnInit() {
+        console.log(1)
         //全局变量实例
         this.dateInstance = this.globalVars.getInstance();
     }
 
     ngAfterViewInit() {
-        // console.log(1)
+        console.log(2)
         //订阅选择时间传过来的信息
         this.publicFactory.unitInfo.subscribe((data) => {
             console.log(data)
@@ -77,6 +78,7 @@ export class HomePage {
     }
 
     ionViewDidLoad() {
+        console.log(3)
         //订阅请求错误信息
         this.errorSubscription = this.publicFactory.error.subscribe((data)=> {
             if (this.errorCount == 0) {
@@ -100,7 +102,7 @@ export class HomePage {
 
     //每当当前视图为活动视图时调用
     ionViewWillEnter() {
-        // console.log(3)
+        console.log(4)
         this.getHomeData(Endpoint.homeData, CacheField.homeData);
         //订阅断网
         this.disConnectSubscription = this.network.onDisconnect().subscribe(() => {
@@ -111,11 +113,13 @@ export class HomePage {
     }
 
     ionViewDidEnter(){
+        console.log(5)
         //显示头部状态栏
         this.statusBar.show();
     }
 
     ionViewWillUnload(){
+        console.log(6)
         this.disConnectSubscription.unsubscribe();
     }
 
