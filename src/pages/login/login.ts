@@ -1,5 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {IonicPage,NavController} from 'ionic-angular';
+import {Device} from '@ionic-native/device';
+import {StatusBar} from '@ionic-native/status-bar';
 import co from 'co';
 
 import {User} from  '../../providers/services/user.service';
@@ -32,11 +34,14 @@ export class LoginPage {
     errorSubscription: any;
 
     constructor(public navCtrl: NavController,
+                public device:Device,
+                public statusBar: StatusBar,
                 public user: User,
                 public dateService: DateService,
                 public globalVars: GlobalVars,
                 public publicFactory: PublicFactory,
                 public popupFactory: PopupFactory) {
+
     }
 
     ngOnInit() {
@@ -69,6 +74,10 @@ export class LoginPage {
         };
         this.hackerInterval = setInterval(draw, 33);
         this.getImgCode();
+    }
+
+    ionViewDidEnter(){
+        this.statusBar.show();
     }
 
     ionViewDidLoad() {

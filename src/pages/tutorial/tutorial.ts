@@ -171,6 +171,8 @@ export class TutorialPage {
                 let userPower: any = {};
                 let tutorial: any = {};
 
+                //隐藏启动页
+                this.splashScreen.hide();
                 this.loader.dismiss();
 
                 if (loginStatus.code == 1) {
@@ -179,15 +181,11 @@ export class TutorialPage {
                     //加载启动页面
                     tutorial = yield this.user.getTutorials();
                     this.slides = tutorial.data;
-                    //隐藏APP启动页
-                    this.splashScreen.hide();
                 } else if(loginStatus.code == 0) {
                     this.isLogged = false;
                     this.startApp();
                     return;
                 }else{
-                    //隐藏启动页
-                    this.splashScreen.hide();
                     this.showRefreshButton = true;
                     this.isLogged = false;
                     return;

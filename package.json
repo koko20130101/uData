@@ -32,7 +32,6 @@
         "@ngx-translate/http-loader": "0.0.3",
         "co": "^4.6.0",
         "cordova-android": "^6.2.3",
-        "cordova-hot-code-push-plugin": "^1.5.3",
         "cordova-ios": "^4.4.0",
         "cordova-plugin-console": "^1.0.5",
         "cordova-plugin-device": "^1.1.4",
@@ -63,8 +62,7 @@
             "cordova-plugin-statusbar": {},
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
-            "cordova-plugin-network-information": {},
-            "cordova-hot-code-push-plugin": {}
+            "cordova-plugin-network-information": {}
         },
         "platforms": [
             "android",
