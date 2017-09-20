@@ -22,19 +22,18 @@ export class User {
     login(accountInfo: any) {
         return new Promise((resolve, reject)=> {
             let globalInstance = this.globalVars.getInstance();
-            let seq = this.api.post(Endpoint.login, accountInfo).share();
-            seq
-                .map(res => res.json())
-                .subscribe(res => {
-                    if (res.code == 1) {
-                        this.storage.set('MTK', res.data.token);
-                        globalInstance.sendMassage.token = res.data.token;
+            let seq = this.api.post(Endpoint.login, accountInfo);
+            seq.map(res => res.json())
+                .subscribe(
+                    (res) => {
+                        if (res.code == 1) {
+                            this.storage.set('MTK', res.data.token);
+                            globalInstance.sendMassage.token = res.data.token;
+                        }
                         resolve(res);
-                    }
-                }, err => {
-                    console.error('ERROR', err);
-                    reject(err);
-                });
+                    }, (err)=> {
+                        resolve(err)
+                    });
             return seq;
         });
     }
@@ -44,11 +43,11 @@ export class User {
      * */
     checkLogin(sendData: any) {
         return new Promise((resolve, reject)=> {
-            let seq = this.api.post(Endpoint.checkLogin, sendData).share();
-            seq .map(res => res.json())
+            let seq = this.api.post(Endpoint.checkLogin, sendData);
+            seq.map(res => res.json())
                 .subscribe(
-                    (data)=> {
-                        resolve(data);
+                    (res)=> {
+                        resolve(res);
                     }, (err)=> {
                         resolve(err)
                     }
@@ -60,11 +59,11 @@ export class User {
     /**
      * 登出
      */
-    logout(sendData?:any) {
-        let seq = this.api.post(Endpoint.logout,sendData).share();
+    logout(sendData?: any) {
+        let seq = this.api.post(Endpoint.logout, sendData);
         seq.map(res => res.json())
             .subscribe(res => {
-                if(res.code == 1) {
+                if (res.code == 1) {
                     this.storage.remove(CacheField.MTK);
                 }
             });
@@ -76,8 +75,8 @@ export class User {
      * */
     getUserPower(sendData?: any) {
         return new Promise((resolve, reject)=> {
-            let seq = this.api.post(Endpoint.userPower, sendData).share()
-                .map(res => res.json())
+            let seq = this.api.post(Endpoint.userPower, sendData);
+            seq.map(res => res.json())
                 .subscribe(
                     (res) => {
                         if (res.code == 1) {
@@ -107,7 +106,7 @@ export class User {
         };
         console.log('当前页面：' + _sendData.CurrentPage);
         console.log('埋点：' + _sendData.PointID);
-        let seq = this.api.post(Endpoint.recordOperationLog, _sendData).share();
+        let seq = this.api.post(Endpoint.recordOperationLog, _sendData);
         seq.map(res => res.json())
             .subscribe(res => {
 
@@ -115,19 +114,22 @@ export class User {
         return seq;
     };
 
-    getTutorials(sendData?: any){
+    getTutorials(sendData?: any) {
         return new Promise((resolve, reject)=> {
-            let seq = this.api.post(Endpoint.tutorial, sendData).share();
+            let seq = this.api.post(Endpoint.tutorial, sendData);
             seq.map(res => res.json())
-                .subscribe(res => {
-                    resolve(res);
-                });
+                .subscribe(
+                    (res) => {
+                        resolve(res);
+                    }, (err)=> {
+                        reject(err)
+                    });
             return seq;
         });
     }
 
-    loadSmsCode(sendData?:any){
-        let seq = this.api.post(Endpoint.smsCode,sendData).share();
+    loadSmsCode(sendData?: any) {
+        let seq = this.api.post(Endpoint.smsCode, sendData);
         return seq;
     }
 }

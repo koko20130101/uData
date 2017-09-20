@@ -32,6 +32,7 @@ export class HomePage {
         name: 'HomePage',
         id: 1
     };
+    refresher:any;
     dateList: any;
     dateInstance: any;
     isShow: boolean = true;
@@ -41,7 +42,6 @@ export class HomePage {
         LingXiTotal: 0
     };
     errorCount: any = 0; //请求错误次数
-    myDevice:any;
     myToast:any;
 
     errorSubscription:any;
@@ -80,17 +80,19 @@ export class HomePage {
         //订阅请求错误信息
         this.errorSubscription = this.publicFactory.error.subscribe((data)=> {
             if (this.errorCount == 0) {
-                console.log(data)
                 this.myToast = this.popupFactory.showToast({
                     message: data.message,
                     // message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
                     duration: data.duration || 3000,
-                    position: 'top'
+                    position: data.position || 'top'
                 });
                 this.myToast.onDidDismiss(()=> {
                     this.errorCount = 0;
                     console.log(this.errorCount);
-                })
+                });
+                if(!!this.refresher) {
+                    this.refresher.complete();
+                }
             }
             this.errorCount++;
         });
@@ -172,6 +174,7 @@ export class HomePage {
 
     //下拉刷新
     doRefresh(refresher: Refresher) {
+        this.refresher = refresher;
         setTimeout(() => {
             this.loadData(Endpoint.homeData, CacheField.homeData, refresher);
         }, 500);

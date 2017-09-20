@@ -60,7 +60,10 @@ export class Api {
                 res => {
                     if (!!res && res.code != 1) {
                         //发布错误提示
-                        this.publicFactory.error.emit({message: res.description});
+                        this.publicFactory.error.emit({
+                            type:1,
+                            message: res.description
+                        });
                     }
                 },
                 err => {
@@ -68,12 +71,14 @@ export class Api {
                     switch (err.status) {
                         case 0:
                             this.publicFactory.error.emit({
+                                type:0,
                                 message: '无法链接到网络，请稍后重试!',
                                 position: 'middle',
                             });
                             break;
                         default:
                             this.publicFactory.error.emit({
+                                type:0,
                                 message: '请求数据超时，请稍后重试!',
                                 position:'middle'
                             });

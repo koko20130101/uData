@@ -20,6 +20,9 @@ export class LoginPage {
     //子元素 #hackerBox  #hacker
     @ViewChild("hackerBox") hackerBox: ElementRef;
     @ViewChild("hacker") hacker: ElementRef;
+    loader:any;
+    myToast:any;
+    errorCount:any;
     globalInstance: any;
     private hackerInterval;
     imgCodeLink: any;
@@ -83,9 +86,22 @@ export class LoginPage {
     ionViewDidLoad() {
         //订阅请求错误信息
         this.errorSubscription = this.publicFactory.error.subscribe((data) => {
-            this.popupFactory.showAlert({
-                message: data.message
-            })
+            if(data.type == 0) {
+                this.myToast = this.popupFactory.showToast({
+                    message: data.message,
+                    // message: '<i class="icon icon-ios ion-ios-warning toast-icon" ></i>' + data.message,
+                    duration: data.duration || 3000,
+                    position: data.position || 'top'
+                });
+                this.myToast.onDidDismiss(()=> {
+                    this.errorCount = 0;
+                });
+            }
+            if(data.type == 1) {
+                this.popupFactory.showAlert({
+                    message: data.message
+                });
+            }
         });
     }
 
@@ -140,12 +156,13 @@ export class LoginPage {
             });
             return false;
         }
+        this.loader = this.popupFactory.loading();
+        this.loader.present();
         co(function *() {
-            let loader = this.popupFactory.loading();
-            loader.present();
-
             let loginStatus: any = yield this.user.login(this.account);
+            console.log(loginStatus)
             let userPower: any = {};
+
             if (loginStatus.code == 1) {
                 userPower = yield this.user.getUserPower();
             }
@@ -171,13 +188,14 @@ export class LoginPage {
                                     message: '您还未开通数据查看权限，请联系管理员！'
                                 })
                             }
-                            loader.dismiss();
                         }
-                    },
-                    err=> {
-                        loader.dismiss();
                     });
             }
+
+            if(!!this.loader) {
+                this.loader.dismiss();
+            }
+
         }.bind(this));
     }
 
