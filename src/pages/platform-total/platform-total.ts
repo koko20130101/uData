@@ -379,6 +379,8 @@ export class PlatformTotalPage {
     }
 
     getPlatformSegment() {
+        //解锁手动滑动
+        this.mainSlides.lockSwipes(false);
         let num = this.platformType;
         this.mainSlides.slideTo(num - this.backCount);
         switch (this.platformType) {
@@ -429,7 +431,6 @@ export class PlatformTotalPage {
         let total = this.mainSlides.length();
         if (active == total) return;
         this.platformType = active + this.backCount;
-        this.mainSlides.lockSwipes(false);
         switch (this.platformType) {
             //网金
             case 1:
@@ -439,6 +440,7 @@ export class PlatformTotalPage {
                 break;
             //竞品
             case 2:
+                //禁止滑动
                 this.mainSlides.lockSwipes(true);
                 this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
                 this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, this.enemyDataType);

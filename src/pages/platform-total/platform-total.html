@@ -22,7 +22,7 @@
     <ion-refresher (ionRefresh)="doRefresh($event)" ngClass="my-refresher">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <ion-slides #MainSlides pager="false" class="my-slide" (ionSlideDidChange)="slideChange()">
+    <ion-slides #MainSlides pager="false" paginationType="fraction" class="my-slide" (ionSlideDidChange)="slideChange()">
         <!--网金-->
         <ion-slide *ngIf="dateInstance.adminCode['05']">
             <div class="padding warning">
