@@ -73,14 +73,14 @@ export class Api {
                             this.publicFactory.error.emit({
                                 type:0,
                                 message: '无法链接到网络，请稍后重试!',
-                                position: 'middle',
+                                position: 'top',
                             });
                             break;
                         default:
                             this.publicFactory.error.emit({
                                 type:0,
                                 message: '请求数据超时，请稍后重试!',
-                                position:'middle'
+                                position:'top'
                             });
                             break;
                     }

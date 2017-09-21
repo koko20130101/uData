@@ -429,6 +429,7 @@ export class PlatformTotalPage {
         let total = this.mainSlides.length();
         if (active == total) return;
         this.platformType = active + this.backCount;
+        this.mainSlides.lockSwipes(false);
         switch (this.platformType) {
             //网金
             case 1:
@@ -438,6 +439,7 @@ export class PlatformTotalPage {
                 break;
             //竞品
             case 2:
+                this.mainSlides.lockSwipes(true);
                 this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
                 this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, this.enemyDataType);
                 this.getDataFromCache(Endpoint.enemyBar, CacheField.enemyBar);
