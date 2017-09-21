@@ -22,7 +22,7 @@
     <ion-refresher (ionRefresh)="doRefresh($event)" ngClass="my-refresher">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <ion-slides #MainSlides pager="false" paginationType="fraction" class="my-slide" (ionSlideDidChange)="slideChange()">
+    <ion-slides #MainSlides pager="false" class="my-slide" (ionSlideDidChange)="slideChange()">
         <!--网金-->
         <ion-slide *ngIf="dateInstance.adminCode['05']">
             <div class="padding warning">
@@ -102,14 +102,14 @@
                     </h2>
                 </div>
                 <div class="model-content">
-                    <div eCharts [options]="barChartOption_1" [dataSet]="enemyBarData" style="height: 420px;"></div>
-                    <div class="scroll-box">
+                    <div eCharts [options]="barChartOption_1" [dataSet]="enemyBarData" [style.height]="barChartWidth +'px'" ></div>
+                    <!--<div class="scroll-box">
                         <ion-scroll scrollX="true" style="height: 420px;">
                             <div eCharts [options]="barChartOption_2" [dataSet]="enemyBarData" ngClass="bar-chart-1"
                                  [style.width]="barChartWidth +'px'" (chartInit)="onChartInit($event)"></div>
                         </ion-scroll>
-                    </div>
-                    <div class="scroll-bg"></div>
+                    </div>-->
+                    <!--<div class="scroll-bg"></div>-->
                 </div>
                 <ion-list class="model-title">
                     <ion-item (click)="showContent(1)">

@@ -45,27 +45,31 @@ export const BarChartOptions_1 = () =>({
         },
     },
     grid: {
-        left: 70,
+        left:50,
         right: '4%',
-        bottom: '8%',
+        bottom: '15%',
         containLabel: false
     },
     xAxis: [
         {
-            type: 'category',
+            type: 'value',
             show: true,
             boundaryGap: true, //坐标轴两端空白策略
             axisLabel: {  //X坐标文字属性
+                rotate:45,
                 textStyle: {
                     color: '#474754',
                     fontWeight: 700
                 }
             },
             axisLine: {
-                show: false  //显示X坐标
+                show: true  //显示X坐标
             },
             splitLine: { //垂直网格线
-                show: false
+                lineStyle: {
+                    color: ['#262633']
+                },
+                show: true
             },
             textStyle: {
                 color: ['#FFF']
@@ -76,7 +80,7 @@ export const BarChartOptions_1 = () =>({
     ],
     yAxis: [
         {
-            type: 'value',
+            type: 'category',
             axisLine: {
                 show: false
             },
@@ -93,6 +97,7 @@ export const BarChartOptions_1 = () =>({
                     color: ['#262633']
                 }
             },
+            data:[]
         }
     ],
     series: [

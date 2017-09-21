@@ -108,12 +108,12 @@ export class PlatformTotalPage {
         });
 
         this.barChartOption_1 = chartOptions.BarChartOptions_1();
-        this.barChartOption_1.xAxis[0].show = false;
+        // this.barChartOption_1.xAxis[0].show = false;
 
         this.barChartOption_2 = chartOptions.BarChartOptions_1();
         this.barChartOption_2.legend.show = false;
         this.barChartOption_2.title.show = false;
-        this.barChartOption_2.yAxis[0].axisLabel.show = false;
+        // this.barChartOption_2.yAxis[0].axisLabel.show = false;
         this.barChartOption_2.grid.left = '0%';
 
     }
@@ -192,7 +192,7 @@ export class PlatformTotalPage {
                             Object.assign(this.regularCompareData, res.data);
                             break;
                         case CacheField.enemyBar:
-                            this.barChartWidth = res.data.xAxis[0].length * 50;
+                            this.barChartWidth = res.data.yAxis[0].data.length * 50;
                             let _myTimeOut = setTimeout(function () {
                                 this.enemyBarData = res.data;
                                 clearTimeout(_myTimeOut);
@@ -277,7 +277,8 @@ export class PlatformTotalPage {
                 //竞品柱状图
                 case CacheField.enemyBar:
                     if (!!_totalData) {
-                        this.barChartWidth = _totalData.xAxis[0].length * 50;
+                        this.barChartWidth = _totalData.yAxis[0].data.length * 50;
+                        console.log(_totalData)
                         let _myTimeOut = setTimeout(function () {
                             this.enemyBarData = _totalData;
                             this.enemyBarData_1 = {
@@ -379,8 +380,6 @@ export class PlatformTotalPage {
     }
 
     getPlatformSegment() {
-        //解锁手动滑动
-        this.mainSlides.lockSwipes(false);
         let num = this.platformType;
         this.mainSlides.slideTo(num - this.backCount);
         switch (this.platformType) {
@@ -441,7 +440,6 @@ export class PlatformTotalPage {
             //竞品
             case 2:
                 //禁止滑动
-                this.mainSlides.lockSwipes(true);
                 this.getDataFromCache(Endpoint.platformTotal, CacheField.platformTotal);
                 this.getDataFromCache(Endpoint.enemyPlatformsCompare, CacheField.enemyPlatformsCompare, this.enemyDataType);
                 this.getDataFromCache(Endpoint.enemyBar, CacheField.enemyBar);

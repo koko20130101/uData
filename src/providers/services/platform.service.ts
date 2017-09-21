@@ -334,7 +334,7 @@ export class PlatformService {
                     _newData.xAxis.push({data: _data['time']});
                     break;
                 case 'bank':
-                    _newData.xAxis.push({data: _data['bank']});
+                    _newData.yAxis.push({data: _data['bank']});
                     break;
                 case 'data':
                     _newData.series.push(_data['data_' + _key[1]]);
