@@ -47,7 +47,7 @@ export const BarChartOptions_1 = () =>({
     grid: {
         left:50,
         right: '4%',
-        bottom: '15%',
+        bottom: '12%',
         containLabel: false
     },
     xAxis: [
