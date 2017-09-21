@@ -108,13 +108,13 @@ export class PlatformTotalPage {
         });
 
         this.barChartOption_1 = chartOptions.BarChartOptions_1();
-        // this.barChartOption_1.xAxis[0].show = false;
-
-        this.barChartOption_2 = chartOptions.BarChartOptions_1();
-        this.barChartOption_2.legend.show = false;
-        this.barChartOption_2.title.show = false;
-        // this.barChartOption_2.yAxis[0].axisLabel.show = false;
-        this.barChartOption_2.grid.left = '0%';
+        this.barChartOption_1.tooltip.formatter = function (params) {
+            let res = params[0].name;
+            for (var i = 0; i < params.length; i++) {
+                res += '<br/>' + params[i].seriesName + ' : ' + this.publicFactory.moneyFormat(params[i].data, true);
+            }
+            return res;
+        }.bind(this);
 
     }
 
