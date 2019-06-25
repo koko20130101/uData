@@ -1,0 +1,42 @@
+{
+  "data": {
+    "secProjectNumber": [
+      "43",
+      "true"
+    ],
+    "secReleaseNumber": [
+      "1110778",
+      "true"
+    ],
+    "secDealNumber": [
+      "445796",
+      "false"
+    ],
+    "secPeriod": [
+      "285.81",
+      "true"
+    ],
+    "averageTime": [
+      "3762221.000000",
+      "false"
+    ],
+    "secUser": [
+      "14",
+      ""
+    ],
+    "secRepeatRate": [
+      "50.00",
+      "true"
+    ],
+    "secAverageRate": [
+      "5.23",
+      "false"
+    ]
+  },
+  "code": 1,
+  "Type": "day",
+  "description": "成功返回消息",
+  "Token": null,
+  "dataType": 0,
+  "sourceType": 0
+}

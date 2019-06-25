@@ -1,0 +1,328 @@
+{
+  "data": {
+    "list": [
+      {
+        "money": 14552.73,
+        "bankName": "江西",
+        "bankLogo":"./assets/img/bank/江西银行.svg",
+        "logoBg":["#006fbf" , "#005bac"],
+        "endPoint": [
+          {"name":"累计融资金额 C端","tip":"C","bankCode":"NC"},
+          {"name":"累计融资金额 B端","tip":"B","bankCode":"NC"}
+        ],
+        "up": false
+      },
+      {
+        "money": 4496.85,
+        "bankName": "珲春",
+        "bankLogo":"./assets/img/bank/珲春农商.svg",
+        "logoBg":["#f38d38" , "#f28535"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"HCUN"}
+        ],
+        "up": true
+      },
+      {
+        "money": 3625.06,
+        "bankName": "颍淮",
+        "bankLogo":"./assets/img/bank/颍淮银行.svg",
+        "logoBg":["#df3036" , "#d6272c"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"YH"}
+        ],
+        "up": false
+      },
+      {
+        "money": 1480.88,
+        "bankName": "天府银行",
+        "bankLogo":"./assets/img/bank/天府银行.svg",
+        "logoBg":["#deb51e" , "#dbb01c"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"NCHONG"}
+        ],
+        "up": false
+      },
+      {
+        "money": 1433,
+        "bankName": "甘肃",
+        "bankLogo":"./assets/img/bank/甘肃银行.svg",
+        "logoBg":["#cf773b" , "#cc7138"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"GS"}
+        ],
+        "up": true
+      },
+      {
+        "money": 722,
+        "bankName": "尧都",
+        "bankCode": "YD",
+        "bankLogo":"./assets/img/bank/尧都银行.svg",
+        "logoBg":["#11ae66" , "#0e9553"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"YD"}
+        ],
+        "up": false
+      },
+      {
+        "money": 660,
+        "bankName": "浦发",
+        "bankCode": "PF",
+        "bankLogo":"./assets/img/bank/浦发银行.svg",
+        "logoBg":["#5259d0" , "#3337a8"],
+        "endPoint": [
+          {"name":"投融通","tip":"","bankCode":"PF_TRT"},
+          {"name":"累计融资金额 C端","tip":"","bankCode":"PF"}
+        ],
+        "up": true
+      },
+      {
+        "money": 250,
+        "bankName": "柳州",
+        "bankCode": "GXLZ",
+        "bankLogo":"./assets/img/bank/柳州银行.svg",
+        "logoBg":["#f39e28" , "#f29625"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"GXLZ"}
+        ],
+        "up": false
+      },
+      {
+        "money": 132.15,
+        "bankName": "浙商",
+        "bankLogo":"./assets/img/bank/浙商银行.svg",
+        "logoBg":["#de262e" , "#d41f25"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"ZS"}
+        ],
+        "up": false
+      },
+      {
+        "money": 110,
+        "bankName": "常熟",
+        "bankLogo":"./assets/img/bank/常熟银行.svg",
+        "logoBg":["#b71a38" , "#b11834"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"CRCB"}
+        ],
+        "up": false
+      },
+      {
+        "money": 71.48,
+        "bankName": "鄞州",
+        "bankLogo":"./assets/img/bank/鄞州银行.svg",
+        "logoBg":["#29ae3d" , "#27a839"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"YZOfZJ"}
+        ],
+        "up": false
+      },
+      {
+        "money": 18.44,
+        "bankName": "绵阳",
+        "bankLogo":"./assets/img/bank/绵阳.svg",
+        "logoBg":["#1c31e5" , "#1a2ee3"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"Mysyyh"}
+        ],
+        "up": false
+      },
+      {
+        "money": 7.9,
+        "bankName": "德清",
+        "bankLogo":"./assets/img/bank/德清农商.svg",
+        "logoBg":["#0052a9" , "#004da2"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"DQ"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "广州农商",
+        "bankLogo":"./assets/img/bank/广州农商.svg",
+        "logoBg":["#1194b4" , "#0e799e"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"GZNS"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "华瑞",
+        "bankCode": "HRUI",
+        "bankLogo":"./assets/img/bank/华瑞银行.svg",
+        "logoBg":["#4a0888" , "#3a0888"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"HRUI"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "金谷农商",
+        "bankLogo":"./assets/img/bank/金谷农商行.svg",
+        "logoBg":["#d9b054" , "#cb9241"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"JG"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "南粤",
+        "bankLogo":"./assets/img/bank/南粤银行.svg",
+        "logoBg":["#d60a19" , "#cf0916"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"GDNY"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "江苏",
+        "bankLogo":"./assets/img/bank/江苏银行.svg",
+        "logoBg":["#debe53" , "#d4ab44"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"JS"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "齐鲁",
+        "bankLogo":"./assets/img/bank/齐鲁银行.svg",
+        "logoBg":["#006cba" , "#005bab"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"QL"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "华润",
+        "bankLogo":"./assets/img/bank/华润银行.svg",
+        "logoBg":["#eeb109" , "#e89907"],
+        "endPoint": [
+          {"name":"累计融资金额 B端","tip":"B","bankCode":"HR"},
+          {"name":"累计融资金额 C端","tip":"C","bankCode":"HR"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "中信",
+        "bankLogo":"./assets/img/bank/中信银行.svg",
+        "logoBg":["#f3314c" , "#f22e47"],
+        "endPoint": [
+          {"name":"投融通","tip":"","bankCode":"CiticZX"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "郏县",
+        "bankLogo":"./assets/img/bank/郏县农信社.svg",
+        "logoBg":["#da2e09" , "#d82b09"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"JXIAN"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "青岛",
+        "bankLogo":"./assets/img/bank/青岛银行.svg",
+        "logoBg":["#e52336" , "#dd1d2c"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"QD"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "华兴",
+        "bankLogo":"./assets/img/bank/华兴银行.svg",
+        "logoBg":["#b3232e" , "#ab202a"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"GZHX"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "泰安",
+        "bankLogo":"./assets/img/bank/泰安银行.svg",
+        "logoBg":["#db2a31" , "#d9272e"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"TAN"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "洛阳",
+        "bankLogo":"./assets/img/bank/洛阳银行.svg",
+        "logoBg":["#054195" , "#053d8e"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"LUOYANG"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "招行",
+        "bankLogo":"./assets/img/bank/招商银行.svg",
+        "logoBg":["#f3394a" , "#ef2e3c"],
+        "endPoint": [
+          {"name":"累计融资金额 B端","tip":"B","bankCode":"CMBC"},
+          {"name":"累计融资金额 C端","tip":"C","bankCode":"CMBC"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "西宁",
+        "bankLogo":"./assets/img/bank/西宁农商.svg",
+        "logoBg":["#006cba" , "#005bab"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"XN"}
+        ],
+        "up": false
+      },
+      {
+        "money": 0,
+        "bankName": "新昌",
+        "bankLogo":"./assets/img/bank/新昌农商.svg",
+        "logoBg":["#4a0888" , "#3a0888"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"XinChang"}
+        ],
+        "up": false
+      },{
+        "money": 0,
+        "bankName": "富滇",
+        "bankLogo":"./assets/img/bank/富滇银行.svg",
+        "logoBg":["#a32533" , "#9d2330"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"XinChang"}
+        ],
+        "up": false
+      },{
+        "money": 0,
+        "bankName": "乌当",
+        "bankLogo":"./assets/img/bank/乌当.svg",
+        "logoBg":["#12a138" , "#119b35"],
+        "endPoint": [
+          {"name":"","tip":"","bankCode":"WuDang"}
+        ],
+        "up": false
+      }
+    ]
+  },
+  "code": 1,
+  "Type": "week",
+  "description": "成功返回消息",
+  "Token": null,
+  "dataType": 0,
+  "sourceType": 0
+}

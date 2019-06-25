@@ -1,0 +1,29 @@
+{
+  "data": {
+    "list": [
+      {
+        "value": 0.503227,
+        "name": "PC",
+        "number": 200000,
+        "up": false
+      },
+      {
+        "value": 0.003559,
+        "name": "WAP",
+        "number": 0,
+        "up": false
+      },
+      {
+        "value": 0.493213,
+        "name": "APP",
+        "number": 0,
+        "up": false
+      }
+    ]
+  },
+  "code": 1,
+  "Type": "week",
+  "description": "sss",
+  "Token": null,
+  "dataType": 0
+}

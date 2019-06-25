@@ -102,6 +102,8 @@ export class HomePage {
 
     //每当当前视图为活动视图时调用
     ionViewWillEnter() {
+        //显示头部状态栏
+        this.statusBar.show();
         console.log(4)
         this.getHomeData(Endpoint.homeData, CacheField.homeData);
         //订阅断网
@@ -114,8 +116,7 @@ export class HomePage {
 
     ionViewDidEnter(){
         console.log(5)
-        //显示头部状态栏
-        this.statusBar.show();
+
     }
 
     ionViewWillUnload(){

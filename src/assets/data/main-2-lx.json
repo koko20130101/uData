@@ -1,0 +1,21 @@
+{
+  "data": {
+    "total": ["13212","true"],
+    "inTotal": ["121", ""],
+    "outTotal": ["999999999", "false"],
+    "entrustUser": ["33", ""],
+    "entrustOrder": ["4232", ""],
+    "entrustRepeatRate": ["80.00", "false"],
+    "entrustActiveRate": ["80.00", "true"],
+    "heavyInvest":["22", ""],
+    "newInvest":["345", "true"],
+    "newBindCard":["423", "false"],
+    "newUser":["432", "true"]
+  },
+  "code": 1,
+  "Type": "day",
+  "description": "成功返回消息",
+  "Token": null,
+  "dataType": 0,
+  "sourceType": 0
+}

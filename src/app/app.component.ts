@@ -31,6 +31,10 @@ export class MyApp {
 
         //平台准备好后调用
         this.platform.ready().then(() => {
+            //使用浅色文本，深色背景状态栏
+            statusBar.styleLightContent();
+            //头部状态栏背景色
+            this.statusBar.overlaysWebView(false);
             //头部状态栏背景色
             this.statusBar.backgroundColorByHexString('#282836');
             //注册返回按键事件
